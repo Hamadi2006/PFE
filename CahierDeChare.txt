@@ -1,0 +1,103 @@
+CAHIER DES CHARGES – SAKANCOM
+Application Web de Gestion Immobilière
+
+1. Présentation Générale
+Contexte :
+L’entreprise SakanCom veut moderniser la gestion de ses annonces et faciliter la communication avec ses clients.
+Le projet consiste à créer une application web responsive qui permet :
+- Aux clients de consulter et rechercher des offres immobilières
+- À l’administrateur de gérer les annonces et les messages
+
+Objectif :
+Créer un site web clair, rapide et sécurisé qui simplifie la gestion des biens immobiliers.
+
+2. Objectifs du Projet
+Objectifs Fonctionnels :
+- Afficher et rechercher des offres immobilières
+- Permettre l’envoi de messages et de réservations
+- Gérer les annonces depuis un espace administrateur
+
+Objectifs Techniques :
+- Site web responsive (PC, tablette, mobile)
+- Chargement rapide
+- Sécurité des données garantie
+
+3. Périmètre du Projet
+Fonctionnalités incluses :
+Côté utilisateur :
+- Recherche par ville, type, prix, surface, pièces, chambres, salles de bain
+- Filtrage et tri des offres
+- Consultation des détails d’une offre
+- Envoi d’un message à l’agence
+- Demande d’ajout d’annonce
+- Demande de réservation
+
+Côté administrateur :
+- Connexion sécurisée
+- Gestion des annonces (ajouter, modifier, supprimer)
+- Gestion des messages, réservations et utilisateurs
+
+Fonctionnalités non incluses :
+- Paiement en ligne
+- Application mobile
+- Multi-langues
+- Chat en direct
+
+4. Spécifications Fonctionnelles
+Pages principales :
+Accueil : Présente les offres récentes et la barre de recherche
+Offres : Liste complète des annonces avec filtres
+Détail d’offre : Détails du bien avec galerie photo et options de contact
+Contact : Formulaire de message
+Espace admin : Gestion des annonces, messages, réservations
+
+Formulaires :
+- Contact : nom, email, téléphone, message
+- Ajout d’annonce : informations du bien + photos
+- Réservation : nom, contact, date souhaitée
+
+5. Spécifications Techniques
+Front-end : React.js + Tailwind CSS
+Back-end : Laravel (PHP)
+Base de données : MySQL
+Serveur : Apache / Nginx
+Versionnement : Git / GitHub
+
+Architecture :
+Front-end (React) <--> API (Laravel) <--> Base de données (MySQL)
+
+Sécurité :
+- Hashage des mots de passe (bcrypt)
+- Validation des données
+- Protection contre injections SQL et XSS
+- Sessions sécurisées
+
+6. Ressources
+Humaines : 1 développeur , encadrant, testeur
+Matérielles : Ordinateur, serveur local (XAMPP), hébergement web
+Logiciels : VS Code, GitHub, phpMyAdmin, Figma, Postman
+
+7. Planning Prévisionnel
+Analyse et conception : 2 semaines → Cahier des charges + maquettes
+Développement Front-end : 4 semaines → Interface utilisateur
+Développement Back-end : 4 semaines → API + Base de données
+Intégration & Tests : 3 semaines → Application complète et testée
+Déploiement : 1 semaine → Site en ligne
+Durée totale : 14 semaines (3 à 4 mois)
+
+8. Critères de Validation
+- Toutes les fonctions prévues opérationnelles
+- Chargement < 3 secondes
+- Compatible PC, tablette, mobile
+- Authentification et validation OK
+- Aucune erreur sur les pages
+
+9. Conclusion
+Le projet SakanCom vise à fournir une application web complète, simple d’utilisation et moderne, permettant de :
+- Gérer efficacement les offres immobilières
+- Améliorer la communication avec les clients
+- Faciliter la gestion interne pour l’administrateur
+
+Durée : 4 mois
+Technologies : React.js, Laravel, MySQL
+Livrable final : Site web fonctionnel et responsive
