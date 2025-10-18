@@ -16,5 +16,12 @@
     "happy_clients": "Clients Satisfaits",
     "years_experience": "Années d'Expérience",
     "cities_covered": "Villes Couvertes"
+  },
+  "properties": {
+    "section_title": "Nos Dernières Offres",
+    "section_subtitle": "Découvrez nos biens immobiliers sélectionnés avec soin",
+    "view_details": "Voir Détails",
+    "view_all": "Voir Toutes les Offres",
+    "badge_new": "Nouveau"
   }
 }

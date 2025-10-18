@@ -16,5 +16,12 @@
     "happy_clients": "Happy Clients",
     "years_experience": "Years of Experience",
     "cities_covered": "Cities Covered"
+  },
+  "properties": {
+    "section_title": "Our Latest Offers",
+    "section_subtitle": "Discover our carefully selected real estate properties",
+    "view_details": "View Details",
+    "view_all": "View All Offers",
+    "badge_new": "New"
   }
 }

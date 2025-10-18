@@ -16,5 +16,12 @@
     "happy_clients": "العملاء الراضون",
     "years_experience": "سنوات الخبرة",
     "cities_covered": "المدن المشمولة"
+  },
+   "properties": {
+    "section_title": "أحدث عروضنا",
+    "section_subtitle": "اكتشف عقاراتنا المختارة بعناية",
+    "view_details": "عرض التفاصيل",
+    "view_all": "عرض جميع العروض",
+    "badge_new": "جديد"
   }
 }
