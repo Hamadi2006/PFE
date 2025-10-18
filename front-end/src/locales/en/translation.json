@@ -2,5 +2,13 @@
   "home": "Home",
   "real_estate": "Real Estate",
   "services": "Services",
-  "contact": "Contact"
+  "contact": "Contact",
+  "hero": {
+    "title": "Your real estate project, our priority.",
+    "brand": "With SakanCom.ma",
+    "subtitle": "Find your dream property among thousands of verified listings.",
+    "placeholder": "Search by city, neighborhood...",
+    "search": "Search",
+    "image_alt": "Modern house"
+  }
 }
