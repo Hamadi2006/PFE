@@ -10,5 +10,11 @@
     "placeholder": "Search by city, neighborhood...",
     "search": "Search",
     "image_alt": "Modern house"
+  },
+  "stats": {
+    "sold_properties": "Properties Sold",
+    "happy_clients": "Happy Clients",
+    "years_experience": "Years of Experience",
+    "cities_covered": "Cities Covered"
   }
 }

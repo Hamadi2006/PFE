@@ -10,5 +10,11 @@
     "placeholder": "Rechercher par ville, quartier...",
     "search": "Rechercher",
     "image_alt": "Maison moderne"
+  },
+  "stats": {
+    "sold_properties": "Biens Vendus",
+    "happy_clients": "Clients Satisfaits",
+    "years_experience": "Années d'Expérience",
+    "cities_covered": "Villes Couvertes"
   }
 }

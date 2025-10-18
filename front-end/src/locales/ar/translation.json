@@ -10,5 +10,11 @@
     "placeholder": "ابحث حسب المدينة أو الحي...",
     "search": "بحث",
     "image_alt": "منزل عصري"
+  },
+  "stats": {
+    "sold_properties": "العقارات المباعة",
+    "happy_clients": "العملاء الراضون",
+    "years_experience": "سنوات الخبرة",
+    "cities_covered": "المدن المشمولة"
   }
 }
