@@ -23,5 +23,27 @@
     "view_details": "View Details",
     "view_all": "View All Offers",
     "badge_new": "New"
+  },
+  "howitworks": {
+    "title": "How It Works?",
+    "subtitle": "Find your dream property in 4 simple steps",
+    "steps": {
+      "search": {
+        "title": "Search",
+        "desc": "Browse through thousands of verified listings"
+      },
+      "visit": {
+        "title": "Visit",
+        "desc": "Schedule visits with our agents"
+      },
+      "negotiate": {
+        "title": "Negotiate",
+        "desc": "We help you get the best possible deal"
+      },
+      "movein": {
+        "title": "Move In",
+        "desc": "Finalize and move into your new home"
+      }
+    }
   }
 }

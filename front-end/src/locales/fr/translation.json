@@ -23,5 +23,27 @@
     "view_details": "Voir Détails",
     "view_all": "Voir Toutes les Offres",
     "badge_new": "Nouveau"
+  },
+   "howitworks": {
+    "title": "Comment Ça Marche ?",
+    "subtitle": "Trouvez votre bien immobilier en 4 étapes simples",
+    "steps": {
+      "search": {
+        "title": "Recherchez",
+        "desc": "Parcourez nos milliers d'annonces vérifiées"
+      },
+      "visit": {
+        "title": "Visitez",
+        "desc": "Organisez des visites avec nos agents"
+      },
+      "negotiate": {
+        "title": "Négociez",
+        "desc": "Nous vous aidons à obtenir le meilleur prix"
+      },
+      "movein": {
+        "title": "Emménagez",
+        "desc": "Finalisez et emménagez dans votre nouveau bien"
+      }
+    }
   }
 }
