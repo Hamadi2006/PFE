@@ -3,6 +3,7 @@ import HeroSection from '../components/HeroSection'
 import StatistiquesSection from '../components/StatistiqueSection'
 import PropertiesSection from '../components/PropertiesSection'
 import HowItWork from '../components/HowItWork'
+import CTA from '../components/CTA'
 
 function HomePage() {
   return (
@@ -14,6 +15,8 @@ function HomePage() {
   <PropertiesSection />
 
   <HowItWork/>
+
+  <CTA/>
     </>
 
   )

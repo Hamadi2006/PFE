@@ -45,5 +45,11 @@
         "desc": "Finalisez et emménagez dans votre nouveau bien"
       }
     }
+  },
+  "cta": {
+    "title": "Prêt à Trouver Votre Bien Idéal ?",
+    "subtitle": "Rejoignez des milliers de clients satisfaits et trouvez la propriété de vos rêves.",
+    "browse": "Parcourir les Offres",
+    "estimate": "Estimer Mon Bien"
   }
 }
