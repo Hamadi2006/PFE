@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, Globe, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-
+import { Link } from 'react-router-dom';
 function Header() {
   const { t, i18n } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,12 +32,12 @@ function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#accueil" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
+            <Link to="/" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
               {t('home')}
-            </a>
-            <a href="#immobilier" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
+            </Link>
+            <Link to="/immobilier" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
               {t('real_estate')}
-            </a>
+            </Link>
             <a href="#services" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
               {t('services')}
             </a>

@@ -70,5 +70,59 @@
     "rights": "All rights reserved.",
     "legal": "Legal Notice",
     "privacy": "Privacy Policy"
+  },
+  "filters": {
+    "title": "Filters",
+    "reset": "Reset",
+    "price": { "label": "Price (MAD)", "min": "Min", "max": "Max" },
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "surface": { "label": "Surface (m²)", "min": "Min", "max": "Max" },
+    "city": {
+      "label": "City",
+      "options": ["All Cities", "Casablanca", "Rabat", "Marrakech", "Fez", "Tangier", "Agadir", "Meknes", "Oujda"]
+    },
+    "amenities": {
+      "label": "Amenities",
+      "items": {
+        "parking": "Parking",
+        "balcony": "Balcony",
+        "garden": "Garden",
+        "pool": "Pool",
+        "wifi": "Wi-Fi"
+      }
+    },
+    "apply": "Apply Filters"
+  },
+  "heroFilter": {
+    "title": "Find Your Dream Property",
+    "subtitle": "Over 2,500 real estate listings available in Morocco",
+    "searchPlaceholder": "City, district...",
+    "allTypes": "All types",
+    "villa": "Villa",
+    "apartment": "Apartment",
+    "riad": "Riad",
+    "land": "Land",
+    "office": "Office",
+    "saleRent": "Sale / Rent",
+    "sale": "Sale",
+    "rent": "Rent",
+    "search": "Search"
+  },
+  "results": {
+    "title": "Search Results",
+    "found": "properties found",
+    "grid": "Grid view",
+    "list": "List view",
+    "prev": "Previous",
+    "next": "Next",
+    "sort": {
+      "relevance": "Relevance",
+      "priceAsc": "Price ascending",
+      "priceDesc": "Price descending",
+      "newest": "Newest",
+      "surfaceAsc": "Surface ascending",
+      "surfaceDesc": "Surface descending"
+    }
   }
 }

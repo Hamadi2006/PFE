@@ -4,14 +4,14 @@ import Header from "./components/Header";
 import {  Route, Routes} from 'react-router-dom';
 import HomePage from "./Pages/HomePage";
 import Footer from "./components/Footer";
+import Immobilier from "./Pages/Immobiler";
 function App() {
   return (
     <>
       <Header />
       <Routes>
-        {/* Define your routes here */}
         <Route path="/" element={<HomePage/>} />
-        {/* Add more routes as needed */}
+        <Route path="/immobilier" element={<Immobilier/>} />
       </Routes>
       <Footer/>
     </>

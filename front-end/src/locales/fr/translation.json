@@ -71,5 +71,59 @@
     "rights": "Tous droits réservés.",
     "legal": "Mentions Légales",
     "privacy": "Politique de Confidentialité"
+  },
+  "filters": {
+    "title": "Filtres",
+    "reset": "Réinitialiser",
+    "price": { "label": "Prix (MAD)", "min": "Min", "max": "Max" },
+    "bedrooms": "Chambres",
+    "bathrooms": "Salles de bain",
+    "surface": { "label": "Surface (m²)", "min": "Min", "max": "Max" },
+    "city": {
+      "label": "Ville",
+      "options": ["Toutes les villes", "Casablanca", "Rabat", "Marrakech", "Fès", "Tanger", "Agadir", "Meknès", "Oujda"]
+    },
+    "amenities": {
+      "label": "Équipements",
+      "items": {
+        "parking": "Parking",
+        "balcony": "Balcon",
+        "garden": "Jardin",
+        "pool": "Piscine",
+        "wifi": "Wi-Fi"
+      }
+    },
+    "apply": "Appliquer les Filtres"
+  },
+  "heroFilter": {
+    "title": "Trouvez Votre Bien Idéal",
+    "subtitle": "Plus de 2,500 biens immobiliers disponibles au Maroc",
+    "searchPlaceholder": "Ville, quartier...",
+    "allTypes": "Tous les types",
+    "villa": "Villa",
+    "apartment": "Appartement",
+    "riad": "Riad",
+    "land": "Terrain",
+    "office": "Bureau",
+    "saleRent": "Vente / Location",
+    "sale": "Vente",
+    "rent": "Location",
+    "search": "Rechercher"
+  },
+  "results": {
+    "title": "Résultats de Recherche",
+    "found": "biens trouvés",
+    "grid": "Vue grille",
+    "list": "Vue liste",
+    "prev": "Précédent",
+    "next": "Suivant",
+    "sort": {
+      "relevance": "Pertinence",
+      "priceAsc": "Prix croissant",
+      "priceDesc": "Prix décroissant",
+      "newest": "Plus récent",
+      "surfaceAsc": "Surface croissante",
+      "surfaceDesc": "Surface décroissante"
+    }
   }
 }
