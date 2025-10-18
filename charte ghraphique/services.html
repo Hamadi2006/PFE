@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>SakanCom - Nos Services Immobiliers</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0891B2",
+                        secondary: "#06B6D4",
+                        "background-light": "#FFF7F0",
+                        "background-dark": "#1A202C",
+                        "text-light": "#1A202C",
+                        "text-dark": "#EDF2F7",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#2D3748",
+                    },
+                    fontFamily: {
+                        display: ["Poppins", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24 }
+        .hover-lift { transition: transform 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-8px); }
+        .gradient-bg { background: linear-gradient(135deg, #0891B2 0%, #06B6D4 100%); }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+    
+    <!-- Header -->
+    <div class="container mx-auto px-6 py-4">
+        <header class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-primary">SakanCom</h1>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a class="text-text-light dark:text-text-dark hover:text-primary font-medium" href="index.html">Accueil</a>
+                <span class="text-gray-300 dark:text-gray-600">|</span>
+                <a class="text-text-light dark:text-text-dark hover:text-primary font-medium" href="immobilier.html">Immobilier</a>
+                <span class="text-gray-300 dark:text-gray-600">|</span>
+                <a class="text-primary font-bold" href="services.html">Services</a>
+                <span class="text-gray-300 dark:text-gray-600">|</span>
+                <a class="text-text-light dark:text-text-dark hover:text-primary font-medium" href="#contact">Contact</a>
+            </nav>
+            <button class="md:hidden">
+                <span class="material-icons text-text-light dark:text-text-dark">menu</span>
+            </button>
+        </header>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg py-20 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold">Nos Services Immobiliers</h1>
+            <p class="mt-6 text-xl opacity-90 max-w-3xl mx-auto">
+                Des solutions complètes et personnalisées pour tous vos projets immobiliers au Maroc
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Services -->
+    <section class="py-20 bg-background-light dark:bg-background-dark">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Service 1: Vente -->
+                <div class="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-xl hover-lift text-center">
+                    <div class="w-20 h-20 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto">
+                        <span class="material-symbols-outlined text-primary text-4xl">sell</span>
+                    </div>
+                    <h3 class="mt-6 text-2xl font-bold text-text-light dark:text-text-dark">Vente</h3>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400">Vendez votre bien immobilier rapidement et au meilleur prix grâce à notre réseau d'acheteurs qualifiés.</p>
+                    <button class="mt-6 px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-opacity-90 transition w-full">
+                        En Savoir Plus
+                    </button>
+                </div>
+
+                <!-- Service 2: Location -->
+                <div class="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-xl hover-lift text-center">
+                    <div class="w-20 h-20 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto">
+                        <span class="material-symbols-outlined text-primary text-4xl">key</span>
+                    </div>
+                    <h3 class="mt-6 text-2xl font-bold text-text-light dark:text-text-dark">Location</h3>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400">Trouvez le locataire idéal pour votre propriété avec notre service de gestion locative complète.</p>
+                    <button class="mt-6 px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-opacity-90 transition w-full">
+                        En Savoir Plus
+                    </button>
+                </div>
+
+                <!-- Service 3: Estimation -->
+                <div class="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-xl hover-lift text-center">
+                    <div class="w-20 h-20 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto">
+                        <span class="material-symbols-outlined text-primary text-4xl">analytics</span>
+                    </div>
+                    <h3 class="mt-6 text-2xl font-bold text-text-light dark:text-text-dark">Estimation</h3>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400">Obtenez une estimation gratuite et précise de votre bien par nos experts certifiés.</p>
+                    <button class="mt-6 px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-opacity-90 transition w-full">
+                        Estimer Mon Bien
+                    </button>
+                </div>
+
+                <!-- Service 4: Conseil -->
+                <div class="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-xl hover-lift text-center">
+                    <div class="w-20 h-20 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto">
+                        <span class="material-symbols-outlined text-primary text-4xl">support_agent</span>
+                    </div>
+                    <h3 class="mt-6 text-2xl font-bold text-text-light dark:text-text-dark">Conseil</h3>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400">Bénéficiez de l'accompagnement personnalisé de nos conseillers immobiliers experts.</p>
+                    <button class="mt-6 px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-opacity-90 transition w-full">
+                        Nous Contacter
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Vente Détaillé -->
+    <section class="py-20 bg-card-light dark:bg-card-dark">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop" alt="Service Vente" class="rounded-lg shadow-2xl"/>
+                </div>
+                <div class="lg:w-1/2">
+                    <span class="inline-block px-4 py-2 bg-primary bg-opacity-10 text-primary rounded-full text-sm font-semibold mb-4">VENTE IMMOBILIÈRE</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-text-light dark:text-text-dark">Vendez Votre Bien en Toute Confiance</h2>
+                    <p class="mt-6 text-gray-600 dark:text-gray-400 text-lg">
+                        Notre équipe d'experts vous accompagne à chaque étape de la vente de votre propriété pour obtenir le meilleur prix dans les meilleurs délais.
+                    </p>
+                    <div class="mt-8 space-y-4">
+                        <div class="flex items-start">
+                            <span class="material-symbols-outlined text-primary mr-4 mt-1">check_circle</span>
+                            <div>
+                                <h4 class="font-bold text-text-light dark:text-text-dark">Évaluation Professionnelle</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Estimation précise basée sur le marché actuel</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="material-symbols-outlined text-primary mr-4 mt-1">check_circle</span>
+                            <div>
+                                <h4 class="font-bold text-text-light dark:text-text-dark">Marketing Ciblé</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Diffusion sur tous les canaux pertinents</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="material-symbols-outlined text-primary mr-4 mt-1">check_circle</span>
+                            <div>
+                                <h4 class="font-bold text-text-light dark:text-text-dark">Visites Organisées</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Gestion complète des visites et des négociations</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="material-symbols-outlined text-primary mr-4 mt-1">check_circle</span>
+                            <div>
+                                <h4 class="font-bold text-text-light dark:text-text-dark">Accompagnement Juridique</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Assistance complète jusqu'à la signature</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mt-8 px-8 py-4 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition">
+                        Vendre Mon Bien
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Location Détaillé -->
+    <section class="py-20 bg-background-light dark:bg-background-dark">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row-reverse items-center gap-12">
+                <div class="lg:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&h=400&fit=crop" alt="Service Location" class="rounded-lg shadow-2xl"/>
+                </div>
+                <div class="lg:w-1/2">
+                    <span class="inline-block px-4 py-2 bg-primary bg-opacity-10 text-primary rounded-full text-sm font-semibold mb-4">GESTION LOCATIVE</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-text-light dark:text-text-dark">Gestion Locative Sans Souci</h2>
+                    <p class="mt-6 text-gray-600 dark:text-gray-400 text-lg">
+                        Confiez-nous la gestion de votre bien locatif et profitez de revenus réguliers sans les tracas administratifs.
+                    </p>
+                    <div class="mt-8 space-y-4">
+                        <div class="flex items-start">
+                            <span class="material-symbols-outlined text-primary mr-4 mt-1">check_circle</span>
+                            <div>
+                                <h4 class="font-bold text-text-light dark:text-text-dark">Sélection des Locataires</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Vérification complète des dossiers et solvabilité</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="material-symbols-outlined text-primary mr-4 mt-1">check_circle</span>
+                            <div>
+                                <h4 class="font-bold text-text-light dark:text-text-dark">Rédaction des Baux</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Contrats conformes à la législation marocaine</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="material-symbols-outlined text-primary mr-4 mt-1">check_circle</span>
+                            <div>
+                                <h4 class="font-bold text-text-light dark:text-text-dark">Gestion des Loyers</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Encaissement et suivi des paiements</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="material-symbols-outlined text-primary mr-4 mt-1">check_circle</span>
+                            <div>
+                                <h4 class="font-bold text-text-light dark:text-text-dark">Entretien et Réparations</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Coordination des interventions nécessaires</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mt-8 px-8 py-4 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition">
+                        Gérer Ma Location
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Estimation -->
+    <section class="py-20 bg-card-light dark:bg-card-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="inline-block px-4 py-2 bg-primary bg-opacity-10 text-primary rounded-full text-sm font-semibold mb-4">ESTIMATION GRATUITE</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-text-light dark:text-text-dark">Estimez Votre Bien en 3 Étapes</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">Obtenez une estimation précise et gratuite de votre propriété en quelques minutes</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary text-white rounded-full flex items-center justify-center mx-auto text-3xl font-bold">1</div>
+                    <h3 class="mt-6 text-xl font-bold text-text-light dark:text-text-dark">Remplissez le Formulaire</h3>
+                    <p class="mt-3 text-gray-600 dark:text-gray-400">Indiquez les caractéristiques de votre bien</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary text-white rounded-full flex items-center justify-center mx-auto text-3xl font-bold">2</div>
+                    <h3 class="mt-6 text-xl font-bold text-text-light dark:text-text-dark">Analyse du Marché</h3>
+                    <p class="mt-3 text-gray-600 dark:text-gray-400">Nos experts analysent les données</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary text-white rounded-full flex items-center justify-center mx-auto text-3xl font-bold">3</div>
+                    <h3 class="mt-6 text-xl font-bold text-text-light dark:text-text-dark">Recevez l'Estimation</h3>
+                    <p class="mt-3 text-gray-600 dark:text-gray-400">Rapport détaillé sous 24h</p>
+                </div>
+            </div>
+
+            <!-- Estimation Form -->
+            <div class="mt-16 max-w-3xl mx-auto bg-background-light dark:bg-background-dark p-8 rounded-lg shadow-xl">
+                <h3 class="text-2xl font-bold text-center text-text-light dark:text-text-dark mb-8">Demander une Estimation Gratuite</h3>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 text-text-light dark:text-text-dark">Type de Bien</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-card-light dark:bg-card-dark focus:ring-2 focus:ring-primary focus:outline-none">
+                                <option>Villa</option>
+                                <option>Appartement</option>
+                                <option>Riad</option>
+                                <option>Terrain</option>
+                                <option>Bureau</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 text-text-light dark:text-text-dark">Ville</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-card-light dark:bg-card-dark focus:ring-2 focus:ring-primary focus:outline-none">
+                                <option>Casablanca</option>
+                                <option>Rabat</option>
+                                <option>Marrakech</option>
+                                <option>Fès</option>
+                                <option>Tanger</option>
+                                <option>Agadir</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 text-text-light dark:text-text-dark">Surface (m²)</label>
+                            <input type="number" placeholder="120" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-card-light dark:bg-card-dark focus:ring-2 focus:ring-primary focus:outline-none"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 text-text-light dark:text-text-dark">Chambres</label>
+                            <input type="number" placeholder="3" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-card-light dark:bg-card-dark focus:ring-2 focus:ring-primary focus:outline-none"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 text-text-light dark:text-text-dark">Salles de bain</label>
+                            <input type="number" placeholder="2" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-card-light dark:bg-card-dark focus:ring-2 focus:ring-primary focus:outline-none"/>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 text-text-light dark:text-text-dark">Nom Complet</label>
+                            <input type="text" placeholder="Votre nom" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-card-light dark:bg-card-dark focus:ring-2 focus:ring-primary focus:outline-none"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 text-text-light dark:text-text-dark">Téléphone</label>
+                            <input type="tel" placeholder="+212 6XX XXX XXX" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-card-light dark:bg-card-dark focus:ring-2 focus:ring-primary focus:outline-none"/>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2 text-text-light dark:text-text-dark">Email</label>
+                        <input type="email" placeholder="votre@email.com" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-card-light dark:bg-card-dark focus:ring-2 focus:ring-primary focus:outline-none"/>
+                    </div>
+                    <button type="submit" class="w-full bg-primary text-white py-4 rounded-lg font-bold hover:bg-opacity-90 transition">
+                        <span class="material-symbols-outlined inline mr-2 align-middle">send</span>
+                        Obtenir Mon Estimation Gratuite
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Services -->
+    <section class="py-20 bg-background-light dark:bg-background-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-text-light dark:text-text-dark">Services Complémentaires</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-400 text-lg">Des solutions additionnelles pour faciliter votre projet</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-lg">
+                    <span class="material-symbols-outlined text-primary text-4xl">gavel</span>
+                    <h3 class="mt-4 text-xl font-bold text-text-light dark:text-text-dark">Assistance Juridique</h3>
+                    <p class="mt-3 text-gray-600 dark:text-gray-400">Accompagnement juridique complet pour toutes vos transactions immobilières</p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-lg">
+                    <span class="material-symbols-outlined text-primary text-4xl">account_balance</span>
+                    <h3 class="mt-4 text-xl font-bold text-text-light dark:text-text-dark">Financement</h3>
+                    <p class="mt-3 text-gray-600 dark:text-gray-400">Mise en relation avec nos partenaires bancaires pour votre crédit immobilier</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-lg">
+                    <span class="material-symbols-outlined text-primary text-4xl">construction</span>
+                    <h3 class="mt-4 text-xl font-bold text-text-light dark:text-text-dark">Travaux & Rénovation</h3>
+                    <p class="mt-3 text-gray-600 dark:text-gray-400">Coordination de travaux de rénovation avec nos artisans partenaires</p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-lg">
+                    <span class="material-symbols-outlined text-primary text-4xl">home_work</span>
+                    <h3 class="mt-4 text-xl font-bold text-text-light dark:text-text-dark">Home Staging</h3>
+                    <p class="mt-3 text-gray-600 dark:text-gray-400">Valorisation de votre bien pour une vente plus rapide et au meilleur prix</p>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-lg">
+                    <span class="material-symbols-outlined text-primary text-4xl">photo_camera</span>
+                    <h3 class="mt-4 text-xl font-bold text-text-light dark:text-text-dark">Photographie Pro</h3>
+                    <p class="mt-3 text-gray-600 dark:text-gray-400">Reportage photo et vidéo professionnels pour sublimer votre propriété</p>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-lg">
+                    <span class="material-symbols-outlined text-primary text-4xl">admin_panel_settings</span>
+                    <h3 class="mt-4 text-xl font-bold text-text-light dark:text-text-dark">Syndic de Copropriété</h3>
+                    <p class="mt-3 text-gray-600 dark:text-gray-400">Gestion professionnelle de votre copropriété en toute transparence</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing / Tarifs -->
+    <section class="py-20 bg-card-light dark:bg-card-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-text-light dark:text-text-dark">Nos Tarifs Transparents</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-400 text-lg">Des honoraires clairs et compétitifs</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Vente -->
+                <div class="bg-background-light dark:bg-background-dark p-8 rounded-lg shadow-lg border-2 border-transparent hover:border-primary transition">
+                    <div class="text-center">
+                        <span class="material-symbols-outlined text-primary text-5xl">sell</span>
+                        <h3 class="mt-4 text-2xl font-bold text-text-light dark:text-text-dark">Vente</h3>
+                        <div class="mt-6">
+                            <span class="text-4xl font-bold text-primary">3%</span>
+                            <span class="text-gray-600 dark:text-gray-400"> + TVA</span>
+                        </div>
+                        <p class="mt-4 text-gray-600 dark:text-gray-400">Du prix de vente</p>
+                    </div>
+                    <ul class="mt-8 space-y-3">
+                        <li class="flex items-center text-gray-600 dark:text-gray-400">
+                            <span class="material-symbols-outlined text-primary mr-2 text-sm">check</span>
+                            Diffusion multicanal
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-400">
+                            <span class="material-symbols-outlined text-primary mr-2 text-sm">check</span>
+                            Accompagnement complet
+                        </li>
+                    </ul>
+                    <button class="mt-8 w-full px-6 py-3 border-2 border-primary text-primary rounded-lg font-semibold hover:bg-primary hover:text-white transition">
+                        Choisir
+                    </button>
+                </div>
+
+                <!-- Location -->
+                <div class="bg-background-light dark:bg-background-dark p-8 rounded-lg shadow-lg border-2 border-primary">
+                    <div class="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-lg rounded-tr-lg text-sm font-semibold">
+                        POPULAIRE
+                    </div>
+                    <div class="text-center">
+                        <span class="material-symbols-outlined text-primary text-5xl">key</span>
+                        <h3 class="mt-4 text-2xl font-bold text-text-light dark:text-text-dark">Location</h3>
+                        <div class="mt-6">
+                            <span class="text-4xl font-bold text-primary">8%</span>
+                            <span class="text-gray-600 dark:text-gray-400"> + TVA</span>
+                        </div>
+                        <p class="mt-4 text-gray-600 dark:text-gray-400">Du loyer annuel HT</p>
+                    </div>
+                    <ul class="mt-8 space-y-3">
+                        <li class="flex items-center text-gray-600 dark:text-gray-400">
+                            <span class="material-symbols-outlined text-primary mr-2 text-sm">check</span>
+                            Sélection locataires
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-400">
+                            <span class="material-symbols-outlined text-primary mr-2 text-sm">check</span>
+                            Rédaction du bail
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-400">
+                            <span class="material-symbols-outlined text-primary mr-2 text-sm">check</span>
+                            État des lieux
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-400">
+                            <span class="material-symbols-outlined text-primary mr-2 text-sm">check</span>
+                            Gestion des loyers
+                        </li>
+                    </ul>
+                    <button class="mt-8 w-full px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-opacity-90 transition">
+                        Choisir
+                    </button>
+                </div>
+
+                <!-- Gestion Locative -->
+                <div class="bg-background-light dark:bg-background-dark p-8 rounded-lg shadow-lg border-2 border-transparent hover:border-primary transition">
+                    <div class="text-center">
+                        <span class="material-symbols-outlined text-primary text-5xl">settings</span>
+                        <h3 class="mt-4 text-2xl font-bold text-text-light dark:text-text-dark">Gestion</h3>
+                        <div class="mt-6">
+                            <span class="text-4xl font-bold text-primary">6%</span>
+                            <span class="text-gray-600 dark:text-gray-400"> + TVA</span>
+                        </div>
+                        <p class="mt-4 text-gray-600 dark:text-gray-400">Du loyer mensuel HT</p>
+                    </div>
+                    <ul class="mt-8 space-y-3">
+                        <li class="flex items-center text-gray-600 dark:text-gray-400">
+                            <span class="material-symbols-outlined text-primary mr-2 text-sm">check</span>
+                            Tout service location
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-400">
+                            <span class="material-symbols-outlined text-primary mr-2 text-sm">check</span>
+                            Suivi des paiements
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-400">
+                            <span class="material-symbols-outlined text-primary mr-2 text-sm">check</span>
+                            Gestion travaux
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-400">
+                            <span class="material-symbols-outlined text-primary mr-2 text-sm">check</span>
+                            Reporting mensuel
+                        </li>
+                    </ul>
+                    <button class="mt-8 w-full px-6 py-3 border-2 border-primary text-primary rounded-lg font-semibold hover:bg-primary hover:text-white transition">
+                        Choisir
+                    </button>
+                </div>
+            </div>
+
+            <p class="text-center mt-8 text-gray-600 dark:text-gray-400">
+                * Estimation gratuite et sans engagement | Tarifs dégressifs selon valeur du bien
+            </p>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-20 bg-background-light dark:bg-background-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-text-light dark:text-text-dark">Pourquoi Choisir SakanCom?</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-400 text-lg">15 ans d'expertise au service de vos projets immobiliers</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto">
+                        <span class="material-symbols-outlined text-primary text-3xl">workspace_premium</span>
+                    </div>
+                    <h3 class="mt-4 text-xl font-bold text-text-light dark:text-text-dark">Expertise Reconnue</h3>
+                    <p class="mt-2 text-gray-600 dark:text-gray-400">Plus de 15 ans d'expérience dans l'immobilier marocain</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto">
+                        <span class="material-symbols-outlined text-primary text-3xl">groups</span>
+                    </div>
+                    <h3 class="mt-4 text-xl font-bold text-text-light dark:text-text-dark">Équipe Dédiée</h3>
+                    <p class="mt-2 text-gray-600 dark:text-gray-400">Conseillers experts disponibles 7j/7</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto">
+                        <span class="material-symbols-outlined text-primary text-3xl">verified</span>
+                    </div>
+                    <h3 class="mt-4 text-xl font-bold text-text-light dark:text-text-dark">Transparence Totale</h3>
+                    <p class="mt-2 text-gray-600 dark:text-gray-400">Tarifs clairs, sans frais cachés</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto">
+                        <span class="material-symbols-outlined text-primary text-3xl">speed</span>
+                    </div>
+                    <h3 class="mt-4 text-xl font-bold text-text-light dark:text-text-dark">Réactivité</h3>
+                    <p class="mt-2 text-gray-600 dark:text-gray-400">Réponse sous 24h garantie</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-card-light dark:bg-card-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-text-light dark:text-text-dark">Témoignages Clients</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-400 text-lg">Ce que nos clients disent de nos services</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-background-light dark:bg-background-dark p-8 rounded-lg shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary text-xl">★★★★★</div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 italic">"Service d'estimation très professionnel. J'ai vendu ma villa à Marrakech en moins de 3 semaines grâce à leur expertise. Équipe réactive et compétente!"</p>
+                    <div class="mt-6 flex items-center">
+                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">KM</div>
+                        <div class="ml-4">
+                            <h5 class="font-bold text-text-light dark:text-text-dark">Karim Mansouri</h5>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Propriétaire - Marrakech</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-background-light dark:bg-background-dark p-8 rounded-lg shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary text-xl">★★★★★</div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 italic">"Excellent service de gestion locative. Ils s'occupent de tout et je reçois mes loyers à temps chaque mois. Je recommande vivement SakanCom."</p>
+                    <div class="mt-6 flex items-center">
+                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">NE</div>
+                        <div class="ml-4">
+                            <h5 class="font-bold text-text-light dark:text-text-dark">Nadia El Amrani</h5>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Investisseuse - Casablanca</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-background-light dark:bg-background-dark p-8 rounded-lg shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary text-xl">★★★★★</div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 italic">"Accompagnement exceptionnel pour l'achat de notre premier appartement. Conseils précieux et négociation au top. Merci à toute l'équipe!"</p>
+                    <div class="mt-6 flex items-center">
+                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">YB</div>
+                        <div class="ml-4">
+                            <h5 class="font-bold text-text-light dark:text-text-dark">Youssef Bennani</h5>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Acheteur - Rabat</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-20 bg-background-light dark:bg-background-dark">
+        <div class="container mx-auto px-6">
+            <div class="gradient-bg rounded-2xl p-12 md:p-16 text-center text-white">
+                <h3 class="text-3xl md:text-5xl font-bold">Prêt à Démarrer Votre Projet?</h3>
+                <p class="mt-6 text-xl opacity-90">Contactez nos experts pour un accompagnement personnalisé</p>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="px-8 py-4 bg-white text-primary font-bold rounded-lg shadow-lg hover:bg-gray-100 transition">
+                        <span class="material-symbols-outlined inline mr-2 align-middle">call</span>Appelez-nous Maintenant
+                    </button>
+                    <button class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-primary transition">
+                        <span class="material-symbols-outlined inline mr-2 align-middle">calendar_month</span>Prendre RDV
+                    </button>
+                </div>
+                <p class="mt-6 text-sm opacity-75">Disponible 7j/7 de 9h à 20h | Réponse garantie sous 24h</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 bg-card-light dark:bg-card-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-text-light dark:text-text-dark">Questions Fréquentes</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-400 text-lg">Tout ce que vous devez savoir sur nos services</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-4">
+                <details class="bg-background-light dark:bg-background-dark rounded-lg shadow-lg p-6 group">
+                    <summary class="font-bold text-lg text-text-light dark:text-text-dark cursor-pointer flex justify-between items-center">
+                        Combien de temps faut-il pour vendre un bien?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400">En moyenne, nos biens se vendent en 45-60 jours. Ce délai peut varier selon le type de bien, sa localisation et le prix demandé. Nous mettons tout en œuvre pour accélérer la vente.</p>
+                </details>
+
+                <details class="bg-background-light dark:bg-background-dark rounded-lg shadow-lg p-6 group">
+                    <summary class="font-bold text-lg text-text-light dark:text-text-dark cursor-pointer flex justify-between items-center">
+                        L'estimation est-elle vraiment gratuite?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400">Oui, l'estimation de votre bien est 100% gratuite et sans engagement. Nos experts analysent le marché et vous fournissent un rapport détaillé sous 24-48h.</p>
+                </details>
+
+                <details class="bg-background-light dark:bg-background-dark rounded-lg shadow-lg p-6 group">
+                    <summary class="font-bold text-lg text-text-light dark:text-text-dark cursor-pointer flex justify-between items-center">
+                        Quels sont les frais annexes lors d'une vente?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400">Les frais incluent généralement: nos honoraires (3% + TVA), les frais de notaire (environ 5% du prix), et éventuellement des frais de diagnostics. Nous vous détaillons tous les coûts avant de commencer.</p>
+                </details>
+
+                <details class="bg-background-light dark:bg-background-dark rounded-lg shadow-lg p-6 group">
+                    <summary class="font-bold text-lg text-text-light dark:text-text-dark cursor-pointer flex justify-between items-center">
+                        Puis-je changer d'agence si je ne suis pas satisfait?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400">Oui, nos mandats ne sont jamais exclusifs sauf demande de votre part. Vous êtes libre de mettre fin à notre collaboration à tout moment avec un préavis de 15 jours.</p>
+                </details>
+
+                <details class="bg-background-light dark:bg-background-dark rounded-lg shadow-lg p-6 group">
+                    <summary class="font-bold text-lg text-text-light dark:text-text-dark cursor-pointer flex justify-between items-center">
+                        Comment se passe la gestion locative?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <p class="mt-4 text-gray-600 dark:text-gray-400">Nous nous occupons de tout: recherche de locataires, vérification des dossiers, rédaction du bail, encaissement des loyers, gestion des réparations et reporting mensuel. Vous n'avez plus rien à gérer!</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-text-light dark:bg-background-dark text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <h2 class="text-2xl font-bold text-primary mb-4">SakanCom</h2>
+                    <p class="text-gray-300">Votre partenaire de confiance pour tous vos projets immobiliers au Maroc.</p>
+                    <div class="mt-6 flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-opacity-80 transition">
+                            <span class="material-symbols-outlined">facebook</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-opacity-80 transition">
+                            <span class="material-symbols-outlined">photo_camera</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-opacity-80 transition">
+                            <span class="material-symbols-outlined">badge</span>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Liens Rapides</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="index.html" class="hover:text-primary transition">Accueil</a></li>
+                        <li><a href="immobilier.html" class="hover:text-primary transition">Nos Offres</a></li>
+                        <li><a href="services.html" class="hover:text-primary transition">Services</a></li>
+                        <li><a href="#contact" class="hover:text-primary transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-primary transition">Achat</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Vente</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Location</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Estimation Gratuite</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact</h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start">
+                            <span class="material-symbols-outlined mr-2 text-primary">location_on</span>
+                            <span>123 Avenue Mohammed V<br/>Casablanca, Maroc</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-primary">call</span>
+                            <span>+212 5XX XXX XXX</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-primary">mail</span>
+                            <span>contact@sakancom.ma</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 SakanCom. Tous droits réservés. | <a href="#" class="hover:text-primary">Mentions Légales</a> | <a href="#" class="hover:text-primary">Politique de Confidentialité</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/212XXXXXXXXX" target="_blank" class="fixed bottom-8 right-8 z-50">
+        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition hover:scale-110">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+        </div>
+    </a>
+
+</body>
+</html

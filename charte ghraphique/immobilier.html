@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>SakanCom - Recherche Immobilier</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0891B2",
+                        secondary: "#06B6D4",
+                        "background-light": "#FFF7F0",
+                        "background-dark": "#1A202C",
+                        "text-light": "#1A202C",
+                        "text-dark": "#EDF2F7",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#2D3748",
+                    },
+                    fontFamily: {
+                        display: ["Poppins", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24 }
+        .hover-lift { transition: transform 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-8px); }
+        .filter-active { background-color: #0891B2; color: white; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+    
+    <!-- Header -->
+    <div class="container mx-auto px-6 py-4">
+        <header class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-primary">SakanCom</h1>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a class="text-text-light dark:text-text-dark hover:text-primary font-medium" href="index.html">Accueil</a>
+                <span class="text-gray-300 dark:text-gray-600">|</span>
+                <a class="text-primary font-bold" href="immobilier.html">Immobilier</a>
+                <span class="text-gray-300 dark:text-gray-600">|</span>
+                <a class="text-text-light dark:text-text-dark hover:text-primary font-medium" href="#services">Services</a>
+                <span class="text-gray-300 dark:text-gray-600">|</span>
+                <a class="text-text-light dark:text-text-dark hover:text-primary font-medium" href="#contact">Contact</a>
+            </nav>
+            <button class="md:hidden">
+                <span class="material-icons text-text-light dark:text-text-dark">menu</span>
+            </button>
+        </header>
+    </div>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-primary to-secondary py-16 text-white">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-bold">Trouvez Votre Bien Idéal</h1>
+            <p class="mt-4 text-xl opacity-90">Plus de 2,500 biens immobiliers disponibles au Maroc</p>
+            
+            <!-- Search Bar -->
+            <div class="mt-8 bg-white rounded-lg shadow-2xl p-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                        <input id="searchInput" type="text" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-primary focus:outline-none" placeholder="Ville, quartier..."/>
+                    </div>
+                    <select id="typeFilter" class="px-4 py-3 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-primary focus:outline-none">
+                        <option value="">Tous les types</option>
+                        <option value="villa">Villa</option>
+                        <option value="appartement">Appartement</option>
+                        <option value="riad">Riad</option>
+                        <option value="terrain">Terrain</option>
+                        <option value="bureau">Bureau</option>
+                    </select>
+                    <select id="transactionFilter" class="px-4 py-3 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-primary focus:outline-none">
+                        <option value="">Vente / Location</option>
+                        <option value="vente">Vente</option>
+                        <option value="location">Location</option>
+                    </select>
+                    <button class="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition flex items-center justify-center">
+                        <span class="material-symbols-outlined mr-2">search</span>
+                        Rechercher
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-8">
+                
+                <!-- Sidebar Filters -->
+                <aside class="lg:w-1/4">
+                    <div class="bg-card-light dark:bg-card-dark rounded-lg shadow-lg p-6 sticky top-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold text-text-light dark:text-text-dark">Filtres</h3>
+                            <button id="resetFilters" class="text-primary text-sm hover:underline">Réinitialiser</button>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold mb-3 text-text-light dark:text-text-dark">Prix (MAD)</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <input type="number" placeholder="Min" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-background-light dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:outline-none"/>
+                                <input type="number" placeholder="Max" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-background-light dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:outline-none"/>
+                            </div>
+                        </div>
+
+                        <!-- Bedrooms -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold mb-3 text-text-light dark:text-text-dark">Chambres</label>
+                            <div class="grid grid-cols-4 gap-2">
+                                <button class="filter-btn px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-primary hover:text-white transition" data-value="1">1+</button>
+                                <button class="filter-btn px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-primary hover:text-white transition" data-value="2">2+</button>
+                                <button class="filter-btn px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-primary hover:text-white transition" data-value="3">3+</button>
+                                <button class="filter-btn px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-primary hover:text-white transition" data-value="4">4+</button>
+                            </div>
+                        </div>
+
+                        <!-- Bathrooms -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold mb-3 text-text-light dark:text-text-dark">Salles de bain</label>
+                            <div class="grid grid-cols-4 gap-2">
+                                <button class="filter-btn px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-primary hover:text-white transition" data-value="1">1+</button>
+                                <button class="filter-btn px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-primary hover:text-white transition" data-value="2">2+</button>
+                                <button class="filter-btn px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-primary hover:text-white transition" data-value="3">3+</button>
+                                <button class="filter-btn px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-primary hover:text-white transition" data-value="4">4+</button>
+                            </div>
+                        </div>
+
+                        <!-- Surface Area -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold mb-3 text-text-light dark:text-text-dark">Surface (m²)</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <input type="number" placeholder="Min" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-background-light dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:outline-none"/>
+                                <input type="number" placeholder="Max" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-background-light dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:outline-none"/>
+                            </div>
+                        </div>
+
+                        <!-- Cities -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold mb-3 text-text-light dark:text-text-dark">Ville</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-background-light dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:outline-none">
+                                <option value="">Toutes les villes</option>
+                                <option value="casablanca">Casablanca</option>
+                                <option value="rabat">Rabat</option>
+                                <option value="marrakech">Marrakech</option>
+                                <option value="fes">Fès</option>
+                                <option value="tanger">Tanger</option>
+                                <option value="agadir">Agadir</option>
+                                <option value="meknes">Meknès</option>
+                                <option value="oujda">Oujda</option>
+                            </select>
+                        </div>
+
+                        <!-- Amenities -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold mb-3 text-text-light dark:text-text-dark">Équipements</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"/>
+                                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Piscine</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"/>
+                                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Jardin</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"/>
+                                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Parking</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"/>
+                                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Ascenseur</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"/>
+                                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Climatisation</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition">
+                            Appliquer les Filtres
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Properties Grid -->
+                <main class="lg:w-3/4">
+                    <!-- Results Header -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-text-light dark:text-text-dark">Résultats de Recherche</h2>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">2,457 biens trouvés</p>
+                        </div>
+                        <select class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-card-light dark:bg-card-dark focus:ring-2 focus:ring-primary focus:outline-none">
+                            <option>Pertinence</option>
+                            <option>Prix croissant</option>
+                            <option>Prix décroissant</option>
+                            <option>Plus récent</option>
+                            <option>Surface croissante</option>
+                            <option>Surface décroissante</option>
+                        </select>
+                    </div>
+
+                    <!-- View Toggle -->
+                    <div class="flex gap-2 mb-6">
+                        <button id="gridView" class="px-4 py-2 bg-primary text-white rounded-lg">
+                            <span class="material-symbols-outlined">grid_view</span>
+                        </button>
+                        <button id="listView" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg">
+                            <span class="material-symbols-outlined">view_list</span>
+                        </button>
+                    </div>
+
+                    <!-- Properties Grid -->
+                    <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        
+                        <!-- Property Card 1 -->
+                        <div class="property-card bg-card-light dark:bg-card-dark rounded-lg shadow-lg overflow-hidden hover-lift">
+                            <div class="relative">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUcCnjgUOi4Q3jIJ_-8TC_JhlkzuGHyNbfHUm6G_gqpPJEBfOF19-xV92U96bImetnDDWttlTZK2oyVsBKusOGm1qlWpiGDpSG5kwcYSS0NrlkPMmbDVbHmsFvaOCSQC19KQEpliny1qRVEXPrPNe_W6LRNVTs33xFouM_dld792JsNJPnVYJq-001PmX47UNQKgyp65OhwewpeP8SPO-h3B1aX4RFOBiZJoT5Qpt5DaXiSJA09h6tZWW19wUOHbSqZa4LEa9Lxm8w" alt="Villa Marrakech" class="w-full h-48 object-cover"/>
+                                <span class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">Nouveau</span>
+                                <button class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition">
+                                    <span class="material-symbols-outlined text-gray-700">favorite_border</span>
+                                </button>
+                                <span class="absolute bottom-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold">À Louer</span>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-lg font-bold text-text-light dark:text-text-dark">Appartement Standing</h3>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-3 flex items-center">
+                                    <span class="material-symbols-outlined text-sm mr-1">location_on</span>
+                                    Tanger, Malabata
+                                </p>
+                                <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bed</span>3
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bathtub</span>2
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">square_foot</span>140 m²
+                                    </span>
+                                </div>
+                                <div class="flex items-center justify-between border-t pt-4 dark:border-gray-700">
+                                    <div>
+                                        <span class="text-2xl font-bold text-primary">6 500 MAD</span>
+                                        <span class="text-sm text-gray-500">/mois</span>
+                                    </div>
+                                    <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-opacity-90 transition">Détails</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Property Card 6 -->
+                        <div class="property-card bg-card-light dark:bg-card-dark rounded-lg shadow-lg overflow-hidden hover-lift">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&h=300&fit=crop" alt="Maison" class="w-full h-48 object-cover"/>
+                                <span class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">Nouveau</span>
+                                <button class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition">
+                                    <span class="material-symbols-outlined text-gray-700">favorite_border</span>
+                                </button>
+                                <span class="absolute bottom-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold">À Vendre</span>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-lg font-bold text-text-light dark:text-text-dark">Maison avec Jardin</h3>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-3 flex items-center">
+                                    <span class="material-symbols-outlined text-sm mr-1">location_on</span>
+                                    Agadir, Founty
+                                </p>
+                                <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bed</span>4
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bathtub</span>3
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">square_foot</span>200 m²
+                                    </span>
+                                </div>
+                                <div class="flex items-center justify-between border-t pt-4 dark:border-gray-700">
+                                    <span class="text-2xl font-bold text-primary">1 650 000 MAD</span>
+                                    <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-opacity-90 transition">Détails</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="mt-12 flex justify-center items-center gap-2">
+                        <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white hover:border-primary transition">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button class="px-4 py-2 bg-primary text-white rounded-lg font-semibold">1</button>
+                        <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white hover:border-primary transition">2</button>
+                        <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white hover:border-primary transition">3</button>
+                        <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white hover:border-primary transition">4</button>
+                        <span class="px-4 py-2 text-gray-500">...</span>
+                        <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white hover:border-primary transition">25</button>
+                        <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white hover:border-primary transition">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-card-light dark:bg-card-dark">
+        <div class="container mx-auto px-6">
+            <div class="bg-gradient-to-r from-primary to-secondary rounded-2xl p-12 text-center text-white">
+                <h3 class="text-3xl md:text-4xl font-bold">Vous ne trouvez pas ce que vous cherchez?</h3>
+                <p class="mt-4 text-xl opacity-90">Contactez nos experts pour une recherche personnalisée</p>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="px-8 py-4 bg-white text-primary font-bold rounded-lg shadow-lg hover:bg-gray-100 transition">
+                        <span class="material-symbols-outlined inline mr-2 align-middle">call</span>Appelez-nous
+                    </button>
+                    <button class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-primary transition">
+                        <span class="material-symbols-outlined inline mr-2 align-middle">mail</span>Envoyez un Email
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-text-light dark:bg-background-dark text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <h2 class="text-2xl font-bold text-primary mb-4">SakanCom</h2>
+                    <p class="text-gray-300">Votre partenaire de confiance pour tous vos projets immobiliers au Maroc.</p>
+                    <div class="mt-6 flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-opacity-80 transition">
+                            <span class="material-symbols-outlined">facebook</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-opacity-80 transition">
+                            <span class="material-symbols-outlined">photo_camera</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-opacity-80 transition">
+                            <span class="material-symbols-outlined">badge</span>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Liens Rapides</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="index.html" class="hover:text-primary transition">Accueil</a></li>
+                        <li><a href="immobilier.html" class="hover:text-primary transition">Nos Offres</a></li>
+                        <li><a href="#services" class="hover:text-primary transition">Services</a></li>
+                        <li><a href="#contact" class="hover:text-primary transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-primary transition">Achat</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Vente</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Location</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Estimation Gratuite</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact</h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start">
+                            <span class="material-symbols-outlined mr-2 text-primary">location_on</span>
+                            <span>123 Avenue Mohammed V<br/>Casablanca, Maroc</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-primary">call</span>
+                            <span>+212 5XX XXX XXX</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-primary">mail</span>
+                            <span>contact@sakancom.ma</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 SakanCom. Tous droits réservés. | <a href="#" class="hover:text-primary">Mentions Légales</a> | <a href="#" class="hover:text-primary">Politique de Confidentialité</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/212XXXXXXXXX" target="_blank" class="fixed bottom-8 right-8 z-50">
+        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition hover:scale-110">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+        </div>
+    </a>
+
+    <script>
+        // Filter buttons toggle
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('filter-active');
+            });
+        });
+
+        // Reset filters
+        document.getElementById('resetFilters').addEventListener('click', function() {
+            // Reset all filter buttons
+            filterButtons.forEach(btn => btn.classList.remove('filter-active'));
+            
+            // Reset all inputs and selects
+            document.querySelectorAll('input[type="number"], input[type="text"], select').forEach(input => {
+                input.value = '';
+            });
+            
+            // Reset checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        });
+
+        // View toggle
+        const gridView = document.getElementById('gridView');
+        const listView = document.getElementById('listView');
+        const propertiesGrid = document.getElementById('propertiesGrid');
+
+        gridView.addEventListener('click', function() {
+            propertiesGrid.classList.remove('grid-cols-1');
+            propertiesGrid.classList.add('grid-cols-1', 'md:grid-cols-2', 'xl:grid-cols-3');
+            gridView.classList.add('bg-primary', 'text-white');
+            gridView.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+            listView.classList.remove('bg-primary', 'text-white');
+            listView.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+        });
+
+        listView.addEventListener('click', function() {
+            propertiesGrid.classList.remove('md:grid-cols-2', 'xl:grid-cols-3');
+            propertiesGrid.classList.add('grid-cols-1');
+            listView.classList.add('bg-primary', 'text-white');
+            listView.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+            gridView.classList.remove('bg-primary', 'text-white');
+            gridView.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+        });
+
+        // Favorite toggle
+        document.querySelectorAll('.property-card button[class*="favorite"]').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const icon = this.querySelector('.material-symbols-outlined');
+                if (icon.textContent === 'favorite_border') {
+                    icon.textContent = 'favorite';
+                    icon.classList.add('text-red-500');
+                } else {
+                    icon.textContent = 'favorite_border';
+                    icon.classList.remove('text-red-500');
+                }
+            });
+        });
+    </script>
+</body>
+</html>-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition">
+                                    <span class="material-symbols-outlined text-gray-700">favorite_border</span>
+                                </button>
+                                <span class="absolute bottom-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold">À Vendre</span>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-lg font-bold text-text-light dark:text-text-dark">Villa Moderne de Luxe</h3>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-3 flex items-center">
+                                    <span class="material-symbols-outlined text-sm mr-1">location_on</span>
+                                    Marrakech, Hivernage
+                                </p>
+                                <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bed</span>4
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bathtub</span>3
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">square_foot</span>350 m²
+                                    </span>
+                                </div>
+                                <div class="flex items-center justify-between border-t pt-4 dark:border-gray-700">
+                                    <span class="text-2xl font-bold text-primary">2 500 000 MAD</span>
+                                    <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-opacity-90 transition">Détails</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Property Card 2 -->
+                        <div class="property-card bg-card-light dark:bg-card-dark rounded-lg shadow-lg overflow-hidden hover-lift">
+                            <div class="relative">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7G85YUzEyzFHyqYuucLFzzGkqUpjiRnBmEy_9FoHBNX3_A1dJki00g6OYgGChVSUqEP6ZDiwD4RDpn6QisUo9RyOYkEqfPStv7_Ux-luAentpMuW8gnBwERq1e8ZTfOcauyMQZ4EQIHu_IdDh1hkGH4TB0J7-O2owuJgfh40oaHCp2ok1n8xrUZf6jIbrhWgsedqalzCe7auYHReXBwFA5VA-jpooxYqx9Y9WOPg1ZODA4Bg7F7RCi0WEHD0_cLWcpW0E0TY_wsPT" alt="Appartement Casablanca" class="w-full h-48 object-cover"/>
+                                <button class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition">
+                                    <span class="material-symbols-outlined text-gray-700">favorite_border</span>
+                                </button>
+                                <span class="absolute bottom-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold">À Louer</span>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-lg font-bold text-text-light dark:text-text-dark">Appartement Vue Mer</h3>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-3 flex items-center">
+                                    <span class="material-symbols-outlined text-sm mr-1">location_on</span>
+                                    Casablanca, Ain Diab
+                                </p>
+                                <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bed</span>2
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bathtub</span>2
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">square_foot</span>120 m²
+                                    </span>
+                                </div>
+                                <div class="flex items-center justify-between border-t pt-4 dark:border-gray-700">
+                                    <div>
+                                        <span class="text-2xl font-bold text-primary">8 000 MAD</span>
+                                        <span class="text-sm text-gray-500">/mois</span>
+                                    </div>
+                                    <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-opacity-90 transition">Détails</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Property Card 3 -->
+                        <div class="property-card bg-card-light dark:bg-card-dark rounded-lg shadow-lg overflow-hidden hover-lift">
+                            <div class="relative">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyFKglZrcKOy16HISRyOq16uw2MtxM2qg0hI30LvuVYrUgWftjFD4fAiwzu7J1_XS0WGf8Nej8mKFB7qIpT5qL_ljHSNtQP2V2X5gNtQ25nyNjDhLb2qvBHdfeNYdchaRjPNU-UbV6VMAtAX4Hjk4OzuiwY0wFLRtavF9ayRBS4pXYTcPAQNANxhIs3Lhc3BWAEzHQcV_h_9z7N29WFkJPmQGZ9htzq-nLeb25hsmBfYLt7VSNBra1Byrm25T4yJE7ADaheIHXMBn7" alt="Riad Fès" class="w-full h-48 object-cover"/>
+                                <span class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">Nouveau</span>
+                                <button class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition">
+                                    <span class="material-symbols-outlined text-gray-700">favorite_border</span>
+                                </button>
+                                <span class="absolute bottom-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold">À Vendre</span>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-lg font-bold text-text-light dark:text-text-dark">Riad Traditionnel Authentique</h3>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-3 flex items-center">
+                                    <span class="material-symbols-outlined text-sm mr-1">location_on</span>
+                                    Fès, Médina
+                                </p>
+                                <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bed</span>5
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bathtub</span>4
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">square_foot</span>280 m²
+                                    </span>
+                                </div>
+                                <div class="flex items-center justify-between border-t pt-4 dark:border-gray-700">
+                                    <span class="text-2xl font-bold text-primary">980 000 MAD</span>
+                                    <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-opacity-90 transition">Détails</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Property Card 4 -->
+                        <div class="property-card bg-card-light dark:bg-card-dark rounded-lg shadow-lg overflow-hidden hover-lift">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop" alt="Villa Rabat" class="w-full h-48 object-cover"/>
+                                <button class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition">
+                                    <span class="material-symbols-outlined text-gray-700">favorite_border</span>
+                                </button>
+                                <span class="absolute bottom-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold">À Vendre</span>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-lg font-bold text-text-light dark:text-text-dark">Villa Contemporaine</h3>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-3 flex items-center">
+                                    <span class="material-symbols-outlined text-sm mr-1">location_on</span>
+                                    Rabat, Souissi
+                                </p>
+                                <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bed</span>3
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">bathtub</span>2
+                                    </span>
+                                    <span class="flex items-center">
+                                        <span class="material-symbols-outlined text-base mr-1">square_foot</span>220 m²
+                                    </span>
+                                </div>
+                                <div class="flex items-center justify-between border-t pt-4 dark:border-gray-700">
+                                    <span class="text-2xl font-bold text-primary">1 800 000 MAD</span>
+                                    <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-opacity-90 transition">Détails</button>
+                                </div>
+                            </div>
+                        </div>
+                        
