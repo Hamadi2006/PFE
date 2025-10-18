@@ -51,5 +51,25 @@
     "subtitle": "Rejoignez des milliers de clients satisfaits et trouvez la propriété de vos rêves.",
     "browse": "Parcourir les Offres",
     "estimate": "Estimer Mon Bien"
+  },
+  "footer": {
+    "about": "Votre partenaire de confiance pour tous vos projets immobiliers au Maroc.",
+    "quickLinks": {
+      "title": "Liens Rapides",
+      "items": ["Accueil", "Nos Offres", "Services", "Contact"]
+    },
+    "services": {
+      "title": "Services",
+      "items": ["Achat", "Vente", "Location", "Estimation Gratuite"]
+    },
+    "contact": {
+      "title": "Contact",
+      "address": "123 Avenue Mohammed V\nCasablanca, Maroc",
+      "phone": "+212 5XX XXX XXX",
+      "email": "contact@sakancom.ma"
+    },
+    "rights": "Tous droits réservés.",
+    "legal": "Mentions Légales",
+    "privacy": "Politique de Confidentialité"
   }
 }

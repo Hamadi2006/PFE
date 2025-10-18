@@ -51,5 +51,24 @@
     "subtitle": "Join thousands of happy clients and discover your dream home today.",
     "browse": "Browse Listings",
     "estimate": "Estimate My Property"
+  },"footer": {
+    "about": "Your trusted partner for all real estate projects in Morocco.",
+    "quickLinks": {
+      "title": "Quick Links",
+      "items": ["Home", "Listings", "Services", "Contact"]
+    },
+    "services": {
+      "title": "Services",
+      "items": ["Buy", "Sell", "Rent", "Free Valuation"]
+    },
+    "contact": {
+      "title": "Contact",
+      "address": "123 Mohammed V Avenue\nCasablanca, Morocco",
+      "phone": "+212 5XX XXX XXX",
+      "email": "contact@sakancom.ma"
+    },
+    "rights": "All rights reserved.",
+    "legal": "Legal Notice",
+    "privacy": "Privacy Policy"
   }
 }
