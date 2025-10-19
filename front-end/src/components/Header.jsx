@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X, Globe, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import Logo from "../assets/sakanComImage.png";
 function Header() {
   const { t, i18n } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -28,7 +29,14 @@ function Header() {
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <h1 className="text-3xl font-bold text-cyan-600">SakanCom</h1>
+        <div className="flex items-center gap-3">
+            <img 
+              src={Logo} 
+              alt="SakanCom Logo" 
+              className="h-10 w-10 object-contain"
+            />
+            <h1 className="text-3xl font-bold text-cyan-600">SakanCom</h1>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
