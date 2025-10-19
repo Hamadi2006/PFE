@@ -10,7 +10,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     */
+     */ 
     public function up(): void
     {
         Schema::create('admins', function (Blueprint $table) {
@@ -30,16 +30,7 @@ return new class extends Migration
             $table->index('actif');
         });
 
-        // Insert default admin
-        DB::table('admins')->insert([
-            'nom' => 'Admin',
-            'prenom' => 'SakanCom',
-            'email' => 'admin@sakancom.ma',
-            'mot_de_passe' => Hash::make('admin123'),
-            'actif' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+       
     }
 
     /**

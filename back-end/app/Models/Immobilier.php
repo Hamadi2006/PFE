@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
-class Immobilier extends Model
+class Immobilier extends Model implements HasApiTokens
 {
+    use HasApiTokens;
     protected $table = 'immobilier';
     protected $fillable = [
         'titre',
