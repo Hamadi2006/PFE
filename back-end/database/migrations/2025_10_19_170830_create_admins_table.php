@@ -1,0 +1,52 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('admins', function (Blueprint $table) {
+            $table->id();
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('email')->unique();
+            $table->string('mot_de_passe');
+            $table->string('telephone', 20)->nullable();
+            $table->string('photo')->nullable();
+            $table->boolean('actif')->default(true);
+            $table->timestamp('derniere_connexion')->nullable();
+            $table->rememberToken();
+            $table->timestamps();
+            
+            $table->index('email');
+            $table->index('actif');
+        });
+
+        // Insert default admin
+        DB::table('admins')->insert([
+            'nom' => 'Admin',
+            'prenom' => 'SakanCom',
+            'email' => 'admin@sakancom.ma',
+            'mot_de_passe' => Hash::make('admin123'),
+            'actif' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('admins');
+    }
+};
