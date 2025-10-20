@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X, Globe, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import Logo from "../assets/sakanComImage.png";
+import LogoOfHeqder from "../assets/sakanComImage.png";
 function Header() {
   const { t, i18n } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -31,7 +31,7 @@ function Header() {
           {/* Logo */}
         <div className="flex items-center gap-3">
             <img 
-              src={Logo} 
+              src={LogoOfHeqder} 
               alt="SakanCom Logo" 
               className="h-10 w-10 object-contain"
             />
