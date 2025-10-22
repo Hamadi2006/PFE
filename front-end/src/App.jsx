@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -8,9 +8,19 @@ import Immobilier from "./Pages/Immobiler";
 import AdminLogin from "./components/admin/LoginPage";
 import axios from "axios";
 import Dash from "./components/admin/Dash";
+import { GlobaleContext } from "./context/GlobaleContext";
+import SuccessAlert from "./components/AlertSucc";
 
 function App() {
   const navigate = useNavigate();
+  const {
+    alertSucc,
+    setAlertSucc,
+    alertFail,
+    setAlertFail,
+    alertMsg,
+    setAlertMsg,
+  } = useContext(GlobaleContext);
 
   function AuthAdmin(objet) {
     if (!objet) {
@@ -18,66 +28,80 @@ function App() {
       return;
     }
 
-    axios.post(
-      "http://127.0.0.1:8000/api/admin/login",
-      {
-        email: objet.email,
-        mot_de_passe: objet.password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+    axios
+      .post(
+        "http://127.0.0.1:8000/api/admin/login",
+        {
+          email: objet.email,
+          mot_de_passe: objet.password,
         },
-      }
-    )
-    .then((response) => {
-      console.log("Response from server:", response.data);
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Response from server:", response.data);
 
-      // test du code HTTP correct
-      if (response.status === 201) {
-        localStorage.setItem("admin_token", response.data.token);
-        localStorage.setItem(
-          "admin_name",
-          response.data.user.nom + " " + response.data.user.prenom
+        if (response.status === 201) {
+          setAlertSucc(true);
+          setAlertMsg("Authentification réussie !");
+          navigate("/backoffise/admin/adminPage/dashboard");
+        } else {
+          console.warn("Authentication failed with status:", response.status);
+          setAlertFail(true);
+          setAlertMsg("Échec d'authentification.");
+        }
+      })
+      .catch((error) => {
+        console.error(
+          "Erreur durant l'authentification:",
+          error.response?.data || error.message
         );
-        navigate("/backoffise/admin/adminPage/dashboard");
-      } else {
-        console.warn("Authentication failed with status:", response.status);
-      }
-    })
-    .catch((error) => {
-      console.error(
-        "There was an error during authentication:",
-        error.response?.data || error.message
-      );
-    });
+        setAlertFail(true);
+        setAlertMsg("Erreur serveur ou identifiants invalides.");
+      });
   }
 
   return (
-    <Routes>
-      {/* Frontoffice */}
-      <Route
-        path="/*"
-        element={
-          <>
-            <Header />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/immobilier" element={<Immobilier />} />
-              <Route path="/backoffise/admin/adminPage/dashboard" element={<Dash />} />
-            </Routes>
-            <Footer />
-          </>
-        }
-      />
+    <>
+      {alertSucc && (
+        <SuccessAlert
+          message={alertMsg}
+          duration={3000}
+          onClose={() => setAlertSucc(false)}
+        />
+      )}
 
-      {/* Backoffice */}
-      <Route
-        path="/backoffise/admin/adminPage/authentification"
-        element={<AdminLogin AuthAdmin={AuthAdmin} />}
-      />
-    </Routes>
+      <Routes>
+        {/* Frontoffice */}
+        <Route
+          path="/*"
+          element={
+            <>
+              <Header />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/immobilier" element={<Immobilier />} />
+                <Route
+                  path="/backoffise/admin/adminPage/dashboard"
+                  element={<Dash />}
+                />
+              </Routes>
+              <Footer />
+            </>
+          }
+        />
+
+        {/* Backoffice */}
+        <Route
+          path="/backoffise/admin/adminPage/authentification"
+          element={<AdminLogin AuthAdmin={AuthAdmin} />}
+        />
+      </Routes>
+    </>
   );
 }
 
