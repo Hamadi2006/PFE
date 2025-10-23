@@ -125,5 +125,15 @@
       "surfaceAsc": "المساحة تصاعدية",
       "surfaceDesc": "المساحة تنازلية"
     }
+  },
+  "sidebar": {
+    "dashboard": "لوحة التحكم",
+    "overview": "نظرة عامة",
+    "properties": "العقارات",
+    "admins": "المديرون",
+    "requests": "الطلبات",
+    "settings": "الإعدادات",
+    "help": "مساعدة",
+    "logout": "تسجيل الخروج"
   }
 }

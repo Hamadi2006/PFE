@@ -125,5 +125,15 @@
       "surfaceAsc": "Surface croissante",
       "surfaceDesc": "Surface décroissante"
     }
+  },
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "overview": "Vue d'ensemble",
+    "properties": "Propriétés",
+    "admins": "Administrateurs",
+    "requests": "Demandes",
+    "settings": "Paramètres",
+    "help": "Aide",
+    "logout": "Déconnexion"
   }
 }

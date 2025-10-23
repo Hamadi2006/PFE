@@ -124,5 +124,15 @@
       "surfaceAsc": "Surface ascending",
       "surfaceDesc": "Surface descending"
     }
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "overview": "Overview",
+    "properties": "Properties",
+    "admins": "Administrators",
+    "requests": "Requests",
+    "settings": "Settings",
+    "help": "Help",
+    "logout": "Logout"
   }
 }

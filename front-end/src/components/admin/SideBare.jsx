@@ -1,0 +1,205 @@
+import { useState } from "react";
+import {
+  Home,
+  Building2,
+  Users,
+  Mail,
+  Settings,
+  HelpCircle,
+  LogOut,
+  Menu,
+  X,
+  Globe,
+  ChevronDown,
+} from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/sakanComImage.png";
+import { GlobaleContext } from "../../context/GlobaleContext";
+import { useContext } from "react";
+function Sidebar({ activePage, setActivePage }) {
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
+  const {
+    alertSucc,
+    setAlertSucc,
+    alertFail,
+    setAlertFail,
+    alertMsg,
+    setAlertMsg,
+  } = useContext(GlobaleContext);
+  const menuItems = [
+    { id: "overview", label: t("sidebar.overview"), icon: Home },
+    { id: "properties", label: t("sidebar.properties"), icon: Building2 },
+    { id: "admins", label: t("sidebar.admins"), icon: Users },
+    { id: "requests", label: t("sidebar.requests"), icon: Mail },
+    { id: "settings", label: t("sidebar.settings"), icon: Settings },
+    { id: "help", label: t("sidebar.help"), icon: HelpCircle },
+    { id: "logout", label: t("sidebar.logout"), icon: LogOut },
+  ];
+
+  const languages = [
+    { code: "FR", name: "Français", flag: "🇫🇷" },
+    { code: "EN", name: "English", flag: "🇬🇧" },
+    { code: "AR", name: "العربية", flag: "🇲🇦" },
+  ];
+
+  const handleMenuClick = (id) => {
+    if (id === "logout") {
+      // Clear authentication data
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      setAlertSucc(true);
+      setAlertMsg("Déconnexion réussie !");
+      // Navigate to login page
+      navigate("/backoffise/admin/adminPage/authentification");
+
+      return;
+    }
+
+    setActivePage(id);
+    if (window.innerWidth < 1024) {
+      setIsOpen(false);
+    }
+  };
+
+  const handleLanguageChange = (langCode) => {
+    i18n.changeLanguage(langCode);
+    setLanguageDropdownOpen(false);
+    localStorage.setItem("language", langCode);
+  };
+
+  const currentLanguage =
+    languages.find((lang) => lang.code === i18n.language) || languages[0];
+
+  return (
+    <>
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-lg border border-slate-200 hover:bg-slate-50 transition-colors"
+        aria-label="Toggle menu"
+      >
+        {isOpen ? (
+          <X className="w-6 h-6 text-slate-700" />
+        ) : (
+          <Menu className="w-6 h-6 text-slate-700" />
+        )}
+      </button>
+
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-30 z-30 transition-opacity"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div
+        className={`
+          fixed lg:static inset-y-0 left-0 z-40
+          w-72 bg-white shadow-xl border-r border-slate-200
+          transform transition-transform duration-300 ease-in-out
+          ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+        `}
+      >
+        <div className="p-6 h-full overflow-y-auto flex flex-col">
+          {/* Logo Section */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <img
+                  src={Logo}
+                  alt="SakanCom Logo"
+                  className="w-8 h-8 object-contain"
+                />
+                {t("sidebar.dashboard")}
+              </h1>
+
+              {/* Close button for mobile */}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="lg:hidden p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="w-5 h-5 text-slate-600" />
+              </button>
+            </div>
+
+            {/* Language Selector Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
+                className="w-full flex items-center justify-between gap-2 px-3 py-2 bg-slate-50 rounded-lg border border-slate-200 hover:border-blue-400 transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <Globe className="w-4 h-4 text-blue-600" />
+                  <span className="text-sm font-medium text-slate-700">
+                    {currentLanguage.flag} {currentLanguage.name}
+                  </span>
+                </div>
+                <ChevronDown
+                  size={16}
+                  className={`text-slate-500 transition-transform ${
+                    languageDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {languageDropdownOpen && (
+                <div className="absolute left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-slate-200 py-2 z-50">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => handleLanguageChange(lang.code)}
+                      className={`w-full px-4 py-2 text-left hover:bg-blue-50 flex items-center gap-3 transition-colors ${
+                        i18n.language === lang.code
+                          ? "bg-blue-50 text-blue-600"
+                          : "text-slate-700"
+                      }`}
+                    >
+                      <span className="text-xl">{lang.flag}</span>
+                      <span className="font-medium text-sm">{lang.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <nav className="space-y-2 flex-1">
+            {menuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activePage === item.id;
+              const isLogout = item.id === "logout";
+
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleMenuClick(item.id)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                    isActive && !isLogout
+                      ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/30"
+                      : isLogout
+                      ? "text-red-600 hover:bg-red-50"
+                      : "text-slate-600 hover:bg-slate-100"
+                  }`}
+                >
+                  <Icon className="w-5 h-5" />
+                  <span className="font-medium">{item.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Sidebar;
