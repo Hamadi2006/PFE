@@ -5,14 +5,17 @@ import "./i18n.js";
 import { BrowserRouter as Router} from 'react-router-dom';
 import { FilterProvider } from "./context/FilterContext";
 import { GlobaleProvider } from  "./context/GlobaleContext";
+import { UserProvider } from './context/UserContext.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Router>
+      <UserProvider>
       <GlobaleProvider >
       <FilterProvider>
         <App />
       </FilterProvider>
       </GlobaleProvider >
+      </UserProvider>
     </Router>
   </StrictMode>,
 )
