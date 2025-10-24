@@ -135,5 +135,86 @@
     "settings": "Paramètres",
     "help": "Aide",
     "logout": "Déconnexion"
+  },
+  "properties": {
+    "title": "Propriétés",
+    "subtitle": "Gérez toutes vos propriétés",
+    "addButton": "Ajouter Immobilier",
+    "listTitle": "Liste des Propriétés",
+    "listSubtitle": "Contenu de la page propriétés à venir...",
+    
+    "modal": {
+      "title": "Ajouter un Immobilier",
+      "cancel": "Annuler",
+      "submit": "Ajouter"
+    },
+    
+    "sections": {
+      "basicInfo": "Informations de base",
+      "location": "Localisation",
+      "characteristics": "Caractéristiques",
+      "amenities": "Équipements",
+      "images": "Images",
+      "contact": "Informations de contact"
+    },
+    
+    "fields": {
+      "titre": "Titre",
+      "description": "Description",
+      "type": "Type",
+      "transaction": "Transaction",
+      "prix": "Prix (MAD)",
+      "surface": "Surface (m²)",
+      "ville": "Ville",
+      "adresse": "Adresse",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "chambres": "Chambres",
+      "salles_de_bain": "Salles de bain",
+      "annee_construction": "Année construction",
+      "etage": "Étage",
+      "nombre_etages": "Nombre d'étages",
+      "statut": "Statut",
+      "image_principale": "Image principale",
+      "images_supplementaires": "Images supplémentaires (multiple)",
+      "images_note": "Vous pouvez sélectionner plusieurs images",
+      "nom_contact": "Nom contact",
+      "telephone_contact": "Téléphone",
+      "email_contact": "Email"
+    },
+    
+    "types": {
+      "appartement": "Appartement",
+      "maison": "Maison",
+      "villa": "Villa",
+      "studio": "Studio",
+      "terrain": "Terrain",
+      "bureau": "Bureau",
+      "commerce": "Commerce"
+    },
+    
+    "transactions": {
+      "vente": "Vente",
+      "location": "Location"
+    },
+    
+    "status": {
+      "disponible": "Disponible",
+      "reserve": "Réservé",
+      "vendu": "Vendu",
+      "loue": "Loué"
+    },
+    
+    "amenities": {
+      "piscine": "Piscine",
+      "jardin": "Jardin",
+      "parking": "Parking",
+      "ascenseur": "Ascenseur",
+      "climatisation": "Climatisation",
+      "en_vedette": "En vedette"
+    },
+    
+    "required": "*"
   }
 }
+

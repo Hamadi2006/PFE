@@ -93,22 +93,6 @@ function AdminLogin({AuthAdmin}) {
             )}
           </div>
 
-          {/* Remember & Forgot */}
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 text-cyan-600 border-gray-300 rounded focus:ring-cyan-500"
-              />
-              <span className="ml-2 text-gray-600">Se souvenir de moi</span>
-            </label>
-            <a href="#" className="text-cyan-600 hover:text-cyan-700 font-medium">
-              Mot de passe oublié ?
-            </a>
-          </div>
-
           {/* Submit */}
           <button
             type="submit"

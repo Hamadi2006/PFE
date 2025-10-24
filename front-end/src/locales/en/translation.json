@@ -134,5 +134,87 @@
     "settings": "Settings",
     "help": "Help",
     "logout": "Logout"
+  },
+  
+  "properties": {
+    "title": "Properties",
+    "subtitle": "Manage all your properties",
+    "addButton": "Add Property",
+    "listTitle": "Properties List",
+    "listSubtitle": "Properties page content coming soon...",
+    
+    "modal": {
+      "title": "Add New Property",
+      "cancel": "Cancel",
+      "submit": "Add"
+    },
+    
+    "sections": {
+      "basicInfo": "Basic Information",
+      "location": "Location",
+      "characteristics": "Characteristics",
+      "amenities": "Amenities",
+      "images": "Images",
+      "contact": "Contact Information"
+    },
+    
+    "fields": {
+      "titre": "Title",
+      "description": "Description",
+      "type": "Type",
+      "transaction": "Transaction",
+      "prix": "Price (MAD)",
+      "surface": "Area (m²)",
+      "ville": "City",
+      "adresse": "Address",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "chambres": "Bedrooms",
+      "salles_de_bain": "Bathrooms",
+      "annee_construction": "Year Built",
+      "etage": "Floor",
+      "nombre_etages": "Number of Floors",
+      "statut": "Status",
+      "image_principale": "Main Image",
+      "images_supplementaires": "Additional Images (multiple)",
+      "images_note": "You can select multiple images",
+      "nom_contact": "Contact Name",
+      "telephone_contact": "Phone",
+      "email_contact": "Email"
+    },
+    
+    "types": {
+      "appartement": "Apartment",
+      "maison": "House",
+      "villa": "Villa",
+      "studio": "Studio",
+      "terrain": "Land",
+      "bureau": "Office",
+      "commerce": "Commercial"
+    },
+    
+    "transactions": {
+      "vente": "Sale",
+      "location": "Rent"
+    },
+    
+    "status": {
+      "disponible": "Available",
+      "reserve": "Reserved",
+      "vendu": "Sold",
+      "loue": "Rented"
+    },
+    
+    "amenities": {
+      "piscine": "Swimming Pool",
+      "jardin": "Garden",
+      "parking": "Parking",
+      "ascenseur": "Elevator",
+      "climatisation": "Air Conditioning",
+      "en_vedette": "Featured"
+    },
+    
+    "required": "*"
   }
 }
+

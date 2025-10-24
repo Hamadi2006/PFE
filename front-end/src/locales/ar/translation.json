@@ -135,5 +135,87 @@
     "settings": "الإعدادات",
     "help": "مساعدة",
     "logout": "تسجيل الخروج"
+  },
+  
+  "properties": {
+    "title": "العقارات",
+    "subtitle": "إدارة جميع عقاراتك",
+    "addButton": "إضافة عقار",
+    "listTitle": "قائمة العقارات",
+    "listSubtitle": "محتوى صفحة العقارات قريباً...",
+    
+    "modal": {
+      "title": "إضافة عقار جديد",
+      "cancel": "إلغاء",
+      "submit": "إضافة"
+    },
+    
+    "sections": {
+      "basicInfo": "المعلومات الأساسية",
+      "location": "الموقع",
+      "characteristics": "الخصائص",
+      "amenities": "المرافق",
+      "images": "الصور",
+      "contact": "معلومات الاتصال"
+    },
+    
+    "fields": {
+      "titre": "العنوان",
+      "description": "الوصف",
+      "type": "النوع",
+      "transaction": "المعاملة",
+      "prix": "السعر (درهم)",
+      "surface": "المساحة (م²)",
+      "ville": "المدينة",
+      "adresse": "العنوان",
+      "latitude": "خط العرض",
+      "longitude": "خط الطول",
+      "chambres": "غرف النوم",
+      "salles_de_bain": "الحمامات",
+      "annee_construction": "سنة البناء",
+      "etage": "الطابق",
+      "nombre_etages": "عدد الطوابق",
+      "statut": "الحالة",
+      "image_principale": "الصورة الرئيسية",
+      "images_supplementaires": "صور إضافية (متعددة)",
+      "images_note": "يمكنك اختيار صور متعددة",
+      "nom_contact": "اسم جهة الاتصال",
+      "telephone_contact": "الهاتف",
+      "email_contact": "البريد الإلكتروني"
+    },
+    
+    "types": {
+      "appartement": "شقة",
+      "maison": "منزل",
+      "villa": "فيلا",
+      "studio": "ستوديو",
+      "terrain": "أرض",
+      "bureau": "مكتب",
+      "commerce": "محل تجاري"
+    },
+    
+    "transactions": {
+      "vente": "بيع",
+      "location": "إيجار"
+    },
+    
+    "status": {
+      "disponible": "متاح",
+      "reserve": "محجوز",
+      "vendu": "مباع",
+      "loue": "مؤجر"
+    },
+    
+    "amenities": {
+      "piscine": "مسبح",
+      "jardin": "حديقة",
+      "parking": "موقف سيارات",
+      "ascenseur": "مصعد",
+      "climatisation": "تكييف",
+      "en_vedette": "مميز"
+    },
+    
+    "required": "*"
   }
 }
+
