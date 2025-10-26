@@ -41,7 +41,7 @@ return new class extends Migration
             $table->string('email_contact')->nullable();
             $table->string('nom_contact')->nullable();
             $table->timestamps();
-            
+            $table->softDeletes();
             $table->index('type');
             $table->index('transaction');
             $table->index('ville');

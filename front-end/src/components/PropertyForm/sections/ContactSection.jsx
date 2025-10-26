@@ -5,18 +5,18 @@ export const ContactSection = ({ formData, errors, touched, handlers, t }) => {
   return (
     <div className="mb-6">
       <h4 className="text-lg font-semibold text-slate-800 mb-4">
-        {t('properties.sections.contact')}
+        {t('properties2.sections.contact')}
       </h4>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <FormInput
-          label={t('properties.fields.nom_contact')}
+          label={t('properties2.fields.nom_contact')}
           name="nom_contact"
           value={formData.nom_contact}
           onChange={handlers.handleInputChange}
         />
 
         <FormInput
-          label={t('properties.fields.telephone_contact')}
+          label={t('properties2.fields.telephone_contact')}
           name="telephone_contact"
           type="tel"
           value={formData.telephone_contact}
@@ -27,7 +27,7 @@ export const ContactSection = ({ formData, errors, touched, handlers, t }) => {
         />
 
         <FormInput
-          label={t('properties.fields.email_contact')}
+          label={t('properties2.fields.email_contact')}
           name="email_contact"
           type="email"
           value={formData.email_contact}

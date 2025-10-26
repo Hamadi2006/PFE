@@ -30,6 +30,6 @@ class AdminController extends Controller
             'token' => $token,
             'user' => $user,
             'status' => 200,
-        ], 201); // code 201 = Created
+        ], 201); 
     }
 }

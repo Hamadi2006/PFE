@@ -3,20 +3,20 @@ import { FormInput, FormSelect } from '../index';
 
 export const CharacteristicsSection = ({ formData, errors, touched, handlers, t }) => {
   const statutOptions = [
-    { value: 'disponible', label: t('properties.status.disponible') },
-    { value: 'reserve', label: t('properties.status.reserve') },
-    { value: 'vendu', label: t('properties.status.vendu') },
-    { value: 'loue', label: t('properties.status.loue') }
+    { value: 'disponible', label: t('properties2.status.disponible') },
+    { value: 'reserve', label: t('properties2.status.reserve') },
+    { value: 'vendu', label: t('properties2.status.vendu') },
+    { value: 'loue', label: t('properties2.status.loue') }
   ];
 
   return (
     <div className="mb-6">
       <h4 className="text-lg font-semibold text-slate-800 mb-4">
-        {t('properties.sections.characteristics')}
+        {t('properties2.sections.characteristics')}
       </h4>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <FormInput
-          label={t('properties.fields.chambres')}
+          label={t('properties2.fields.chambres')}
           name="chambres"
           type="number"
           value={formData.chambres}
@@ -28,7 +28,7 @@ export const CharacteristicsSection = ({ formData, errors, touched, handlers, t 
         />
 
         <FormInput
-          label={t('properties.fields.salles_de_bain')}
+          label={t('properties2.fields.salles_de_bain')}
           name="salles_de_bain"
           type="number"
           value={formData.salles_de_bain}
@@ -40,7 +40,7 @@ export const CharacteristicsSection = ({ formData, errors, touched, handlers, t 
         />
 
         <FormInput
-          label={t('properties.fields.annee_construction')}
+          label={t('properties2.fields.annee_construction')}
           name="annee_construction"
           type="number"
           value={formData.annee_construction}
@@ -51,7 +51,7 @@ export const CharacteristicsSection = ({ formData, errors, touched, handlers, t 
         />
 
         <FormInput
-          label={t('properties.fields.etage')}
+          label={t('properties2.fields.etage')}
           name="etage"
           type="number"
           value={formData.etage}
@@ -62,7 +62,7 @@ export const CharacteristicsSection = ({ formData, errors, touched, handlers, t 
         />
 
         <FormInput
-          label={t('properties.fields.nombre_etages')}
+          label={t('properties2.fields.nombre_etages')}
           name="nombre_etages"
           type="number"
           value={formData.nombre_etages}
@@ -73,7 +73,7 @@ export const CharacteristicsSection = ({ formData, errors, touched, handlers, t 
         />
 
         <FormSelect
-          label={t('properties.fields.statut')}
+          label={t('properties2.fields.statut')}
           name="statut"
           value={formData.statut}
           onChange={handlers.handleInputChange}

@@ -136,7 +136,7 @@
     "help": "Aide",
     "logout": "Déconnexion"
   },
-  "properties": {
+  "properties2": { 
     "title": "Propriétés",
     "subtitle": "Gérez toutes vos propriétés",
     "addButton": "Ajouter Immobilier",
@@ -215,6 +215,21 @@
     },
     
     "required": "*"
-  }
+  },
+  "no_image": "Aucune image disponible",
+  "featured": "EN VEDETTE",
+  "surface": "Surface",
+  "bedrooms": "Chambres",
+  "bathrooms": "Salles de bain",
+  "floor": "Étage",
+  "ground_floor": "RDC",
+  "description": "Description",
+  "no_description": "Aucune description disponible.",
+  "contactP": "Contact",
+  "name": "Nom",
+  "email": "Email",
+  "phone": "Téléphone",
+  "contact_button": "Contacter",
+  "close": "Fermer"
 }
 

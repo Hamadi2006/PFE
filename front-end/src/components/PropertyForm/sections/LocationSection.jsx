@@ -5,11 +5,11 @@ export const LocationSection = ({ formData, errors, touched, handlers, t }) => {
   return (
     <div className="mb-6">
       <h4 className="text-lg font-semibold text-slate-800 mb-4">
-        {t('properties.sections.location')}
+        {t('properties2.sections.location')}
       </h4>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormInput
-          label={t('properties.fields.ville')}
+          label={t('properties2.fields.ville')}
           name="ville"
           value={formData.ville}
           onChange={handlers.handleInputChange}
@@ -20,14 +20,14 @@ export const LocationSection = ({ formData, errors, touched, handlers, t }) => {
         />
 
         <FormInput
-          label={t('properties.fields.adresse')}
+          label={t('properties2.fields.adresse')}
           name="adresse"
           value={formData.adresse}
           onChange={handlers.handleInputChange}
         />
 
         <FormInput
-          label={t('properties.fields.latitude')}
+          label={t('properties2.fields.latitude')}
           name="latitude"
           type="number"
           value={formData.latitude}
@@ -39,7 +39,7 @@ export const LocationSection = ({ formData, errors, touched, handlers, t }) => {
         />
 
         <FormInput
-          label={t('properties.fields.longitude')}
+          label={t('properties2.fields.longitude')}
           name="longitude"
           type="number"
           value={formData.longitude}

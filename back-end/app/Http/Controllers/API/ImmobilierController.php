@@ -152,7 +152,7 @@ class ImmobilierController extends Controller
 
         } catch (\Exception $e) {
             // Log error for debugging
-            \Log::error('Error creating immobilier: ' . $e->getMessage());
+            Log::error('Error creating immobilier: ' . $e->getMessage());
             
             return response()->json([
                 'success' => false,
@@ -167,38 +167,9 @@ class ImmobilierController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Immobilier::query();
+        $immobiliers = Immobilier::all();
 
-        // Apply filters
-        if ($request->has('type')) {
-            $query->where('type', $request->type);
-        }
-
-        if ($request->has('transaction')) {
-            $query->where('transaction', $request->transaction);
-        }
-
-        if ($request->has('ville')) {
-            $query->where('ville', 'LIKE', '%' . $request->ville . '%');
-        }
-
-        if ($request->has('prix_min')) {
-            $query->where('prix', '>=', $request->prix_min);
-        }
-
-        if ($request->has('prix_max')) {
-            $query->where('prix', '<=', $request->prix_max);
-        }
-
-        if ($request->has('statut')) {
-            $query->where('statut', $request->statut);
-        }
-
-        // Get featured properties first
-        $query->orderBy('en_vedette', 'desc')
-              ->orderBy('created_at', 'desc');
-
-        $immobiliers = $query->paginate(20);
+        
 
         return response()->json([
             'success' => true,

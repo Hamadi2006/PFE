@@ -1,5 +1,5 @@
-import {axios} from "axios" ; 
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Building2, Plus, X } from "lucide-react";
 import { usePropertyForm } from "../hooks/usePropertyForm";
@@ -11,6 +11,8 @@ import {
   ImagesSection,
   ContactSection,
 } from "../PropertyForm";
+import { ImmobilierContext } from "../../context/ImmobilierContext";
+import ImmobilierAdmin from "./Immobilier";
 
 const INITIAL_FORM_DATA = {
   titre: "",
@@ -44,6 +46,7 @@ const INITIAL_FORM_DATA = {
 
 export default function PropertiesPage() {
   const { t } = useTranslation();
+  const { immobilier } = useContext(ImmobilierContext);
   const [showAddModal, setShowAddModal] = useState(false);
 
   const {
@@ -59,90 +62,82 @@ export default function PropertiesPage() {
     validateAllFields,
   } = usePropertyForm(INITIAL_FORM_DATA);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!validateAllFields()) {
-    alert("❌ Veuillez corriger les erreurs dans le formulaire");
-    return;
-  }
-
-  setLoading(true);
-
-  const submitData = new FormData();
-
-  // Ajouter tous les champs texte
-  Object.keys(formData).forEach((key) => {
-    if (key === "image_principale" || key === "images") return;
-
-    const value = formData[key];
-    if (typeof value === "boolean") {
-      submitData.append(key, value ? 1 : 0);
-    } else if (value !== null && value !== "") {
-      submitData.append(key, value);
-    } else {
-      submitData.append(key, "");
+    if (!validateAllFields()) {
+      alert("❌ Veuillez corriger les erreurs dans le formulaire");
+      return;
     }
-  });
 
-  // Ajouter l’image principale
-  if (formData.image_principale) {
-    submitData.append("image_principale", formData.image_principale);
-  }
+    setLoading(true);
 
-  // Ajouter les images supplémentaires
-  if (formData.images && formData.images.length > 0) {
-    formData.images.forEach((image, index) => {
-      submitData.append(`images[${index}]`, image);
-    });
-  }
+    const submitData = new FormData();
 
-  // Vérifier le contenu du FormData
-  for (let [key, value] of submitData.entries()) {
-    console.log(key, value);
-  }
+    Object.keys(formData).forEach((key) => {
+      if (key === "image_principale" || key === "images") return;
 
-  try {
-    const response = await axios.post(
-      "http://localhost:8000/api/immobilier",
-      submitData,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
+      const value = formData[key];
+      if (typeof value === "boolean") {
+        submitData.append(key, value ? 1 : 0);
+      } else if (value !== null && value !== "") {
+        submitData.append(key, value);
+      } else {
+        submitData.append(key, "");
       }
-    );
+    });
 
-    if (response.status === 201) {
-      alert("✅ Immobilier ajouté avec succès !");
-      setShowAddModal(false);
-      resetForm();
-    } else {
-      console.error("❌ Erreur:", response.data);
-      alert("❌ Erreur: " + (response.data.message || "Échec de l'envoi"));
+    if (formData.image_principale) {
+      submitData.append("image_principale", formData.image_principale);
     }
-  } catch (error) {
-    console.error("❌ Erreur réseau:", error);
-    if (error.response && error.response.data) {
-      alert("❌ " + (error.response.data.message || "Erreur serveur"));
-    } else {
-      alert("❌ Erreur de connexion: " + error.message);
-    }
-  } finally {
-    setLoading(false);
-  }
-};
 
+    if (formData.images && formData.images.length > 0) {
+      formData.images.forEach((image, index) => {
+        submitData.append(`images[${index}]`, image);
+      });
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/immobilier",
+        submitData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      if (response.status === 201) {
+        alert("✅ Immobilier ajouté avec succès !");
+        setShowAddModal(false);
+        resetForm();
+      } else {
+        console.error("❌ Erreur:", response.data);
+        alert("❌ Erreur: " + (response.data.message || "Échec de l'envoi"));
+      }
+    } catch (error) {
+      console.error("❌ Erreur réseau:", error);
+      if (error.response && error.response.data) {
+        alert("❌ " + (error.response.data.message || "Erreur serveur"));
+      } else {
+        alert("❌ Erreur de connexion: " + error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleCloseModal = () => {
     setShowAddModal(false);
     resetForm();
   };
 
-  // Handlers object for passing to sections
   const handlers = {
     handleInputChange,
     handleBlur,
     handleFileChange,
   };
+
+  console.log(immobilier);
 
   return (
     <div>
@@ -150,38 +145,42 @@ const handleSubmit = async (e) => {
       <div className="mb-8 flex justify-between items-center">
         <div>
           <h2 className="text-3xl font-bold text-slate-800 mb-2">
-            {t("properties.title")}
+            {t("properties2.title")}
           </h2>
-          <p className="text-slate-600">{t("properties.subtitle")}</p>
+          <p className="text-slate-600">{t("properties2.subtitle")}</p>
         </div>
         <button
           onClick={() => setShowAddModal(true)}
           className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors shadow-lg"
         >
           <Plus className="w-5 h-5" />
-          {t("properties.addButton")}
+          {t("properties2.addButton")}
         </button>
       </div>
 
-      {/* Empty State */}
-      <div className="bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
-        <div className="text-center py-12">
-          <Building2 className="w-16 h-16 mx-auto text-blue-500 mb-4" />
-          <h3 className="text-xl font-bold text-slate-800 mb-2">
-            {t("properties.listTitle")}
-          </h3>
-          <p className="text-slate-600">{t("properties.listSubtitle")}</p>
+      {/* Properties List */}
+      {immobilier && immobilier.length > 0 ? (
+        <ImmobilierAdmin immobilier={immobilier} />
+      ) : (
+        // Empty State
+        <div className="bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
+          <div className="text-center py-12">
+            <Building2 className="w-16 h-16 mx-auto text-blue-500 mb-4" />
+            <h3 className="text-xl font-bold text-slate-800 mb-2">
+              {t("properties2.listTitle")}
+            </h3>
+            <p className="text-slate-600">{t("properties.listSubtitle")}</p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Add Property Modal */}
       {showAddModal && (
         <div className="fixed inset-0 backdrop-blur-sm bg-white bg-opacity-30 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            {/* Modal Header */}
             <div className="sticky top-0 bg-white border-b border-slate-200 p-6 flex justify-between items-center z-10">
               <h3 className="text-2xl font-bold text-slate-800">
-                {t("properties.modal.title")}
+                {t("properties2.modal.title")}
               </h3>
               <button
                 onClick={handleCloseModal}
@@ -191,7 +190,6 @@ const handleSubmit = async (e) => {
               </button>
             </div>
 
-            {/* Modal Form */}
             <form onSubmit={handleSubmit} className="p-6">
               <BasicInfoSection
                 formData={formData}
@@ -235,7 +233,6 @@ const handleSubmit = async (e) => {
                 t={t}
               />
 
-              {/* Form Actions */}
               <div className="flex justify-end gap-4 pt-4 border-t border-slate-200">
                 <button
                   type="button"
@@ -243,14 +240,14 @@ const handleSubmit = async (e) => {
                   className="px-6 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors"
                   disabled={loading}
                 >
-                  {t("properties.modal.cancel")}
+                  {t("properties2.modal.cancel")}
                 </button>
                 <button
                   type="submit"
                   className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={loading}
                 >
-                  {loading ? "En cours..." : t("properties.modal.submit")}
+                  {loading ? "En cours..." : t("properties2.modal.submit")}
                 </button>
               </div>
             </form>

@@ -137,7 +137,7 @@
     "logout": "تسجيل الخروج"
   },
   
-  "properties": {
+  "properties2": {
     "title": "العقارات",
     "subtitle": "إدارة جميع عقاراتك",
     "addButton": "إضافة عقار",
@@ -216,6 +216,21 @@
     },
     
     "required": "*"
-  }
+  },
+  "no_image": "لا توجد صور متاحة",
+  "featured": "مميز",
+  "surface": "المساحة",
+  "bedrooms": "غرف النوم",
+  "bathrooms": "الحمامات",
+  "floor": "الطابق",
+  "ground_floor": "الطابق الأرضي",
+  "description": "الوصف",
+  "no_description": "لا يوجد وصف متاح.",
+  "contactP": "معلومات الاتصال",
+  "name": "الاسم",
+  "email": "البريد الإلكتروني",
+  "phone": "الهاتف",
+  "contact_button": "اتصال",
+  "close": "إغلاق"
 }
 
