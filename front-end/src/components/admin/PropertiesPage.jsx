@@ -169,7 +169,7 @@ export default function PropertiesPage() {
             <h3 className="text-xl font-bold text-slate-800 mb-2">
               {t("properties2.listTitle")}
             </h3>
-            <p className="text-slate-600">{t("properties.listSubtitle")}</p>
+            <p className="text-slate-600">{t("properties2.listSubtitle")}</p>
           </div>
         </div>
       )}

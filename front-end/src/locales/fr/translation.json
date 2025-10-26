@@ -141,7 +141,7 @@
     "subtitle": "Gérez toutes vos propriétés",
     "addButton": "Ajouter Immobilier",
     "listTitle": "Liste des Propriétés",
-    "listSubtitle": "Contenu de la page propriétés à venir...",
+    "listSubtitle": "La liste des propriétés est actuellement vide. Commencez par ajouter de nouvelles propriétés en utilisant le bouton ci-dessus.",
     
     "modal": {
       "title": "Ajouter un Immobilier",
@@ -230,6 +230,12 @@
   "email": "Email",
   "phone": "Téléphone",
   "contact_button": "Contacter",
-  "close": "Fermer"
+  "close": "Fermer",
+  "confirmDelete": {
+    "title": "Confirmer la suppression",
+    "message": "Voulez-vous vraiment supprimer",
+    "delete": "Supprimer",
+    "cancel": "Annuler"
+  }
 }
 

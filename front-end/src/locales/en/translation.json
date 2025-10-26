@@ -141,7 +141,7 @@
     "subtitle": "Manage all your properties",
     "addButton": "Add Property",
     "listTitle": "Properties List",
-    "listSubtitle": "Properties page content coming soon...",
+    "listSubtitle": "The properties list is currently empty. Start by adding new properties using the button above.",
     
     "modal": {
       "title": "Add New Property",
@@ -230,6 +230,12 @@
   "email": "Email",
   "phone": "Phone",
   "contact_button": "Contact",
-  "close": "Close"
+  "close": "Close",
+   "confirmDelete": {
+    "title": "Confirm deletion",
+    "message": "Do you really want to delete",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  }
 }
 

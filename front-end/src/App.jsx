@@ -12,6 +12,7 @@ import { GlobaleContext } from "./context/GlobaleContext";
 import SuccessAlert from "./components/AlertSucc";
 import { UserContext } from "./context/UserContext";
 import RequireAuth from "./midleware/Auth";
+import FailAlert from "./components/FailAlert";
 
 function App() {
   const navigate = useNavigate();
@@ -85,7 +86,13 @@ function App() {
           onClose={() => setAlertSucc(false)}
         />
       )}
-
+      {alertFail && (
+        <FailAlert
+          message={alertMsg}
+          duration={3000}
+          onClose={() => setAlertSucc(false)}
+        />
+      )}
       <Routes>
         {/* Frontoffice */}
         <Route

@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
-import { MapPin, Square, Bed, Bath, Eye, Edit, Trash2, X } from 'lucide-react';
-import PropertyModal from './PropertyModal';
- function Immobilier({ immobilier }) {
+import React, { useState } from "react";
+import { MapPin, Square, Bed, Bath, Eye, Edit, Trash2 } from "lucide-react";
+import PropertyModal from "./PropertyModal";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import axios from "axios";
+import { GlobaleContext } from "../../context/GlobaleContext";
+import { useContext } from "react";
+export default function Immobilier({ immobilier }) {
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const {alertSucc,
+        setAlertSucc,
+        alertFail,
+        setAlertFail,
+        alertMsg,
+        setAlertMsg}= useContext(GlobaleContext);
   const handleView = (e, property) => {
     e.stopPropagation();
     setSelectedProperty(property);
@@ -13,15 +23,37 @@ import PropertyModal from './PropertyModal';
 
   const handleEdit = (e, property) => {
     e.stopPropagation();
-    console.log('Modifier:', property);
+    console.log("Modifier:", property);
   };
 
   const handleDelete = (e, property) => {
     e.stopPropagation();
-    if (window.confirm(`Êtes-vous sûr de vouloir supprimer "${property.titre}" ?`)) {
-      console.log('Supprimer:', property);
-    }
+    setSelectedProperty(property);
+    setIsDeleteModalOpen(true);
   };
+
+ const confirmDelete = () => {
+  if (!selectedProperty) return;
+
+  axios
+    .delete(`http://localhost:8000/api/immobilier/${selectedProperty.id}`)
+    .then((res) => {
+      console.log("Propriété supprimée avec succès", res);
+      setAlertMsg("Propriété supprimée avec succès");
+      setAlertSucc(true);
+      document.location.reload();
+    })
+    .catch((err) => {
+      console.error("Erreur lors de la suppression de la propriété", err);
+      setAlertMsg("Erreur lors de la suppression de la propriété");
+      setAlertFail(true);
+    })
+    .finally(() => {
+      setIsDeleteModalOpen(false);
+      setSelectedProperty(null);
+    });
+};
+
 
   return (
     <>
@@ -40,7 +72,9 @@ import PropertyModal from './PropertyModal';
                 />
               ) : (
                 <div className="w-full sm:w-40 md:w-48 h-48 sm:h-32 md:h-40 bg-slate-200 flex items-center justify-center rounded-lg flex-shrink-0">
-                  <span className="text-slate-400 text-xs sm:text-sm">Aucune image</span>
+                  <span className="text-slate-400 text-xs sm:text-sm">
+                    Aucune image
+                  </span>
                 </div>
               )}
 
@@ -53,7 +87,9 @@ import PropertyModal from './PropertyModal';
                       </h4>
                       <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-600">
                         <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-                        <span className="truncate">{property.ville}, {property.adresse}</span>
+                        <span className="truncate">
+                          {property.ville}, {property.adresse}
+                        </span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 flex-wrap">
@@ -77,41 +113,46 @@ import PropertyModal from './PropertyModal';
                     </div>
                     <div className="flex items-center gap-1">
                       <Bed className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-                      <span className="font-medium">{property.chambres} <span className="hidden sm:inline">chambres</span><span className="sm:hidden">ch</span></span>
+                      <span className="font-medium">
+                        {property.chambres} ch
+                      </span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Bath className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-                      <span className="font-medium">{property.salles_de_bain} SDB</span>
+                      <span className="font-medium">
+                        {property.salles_de_bain} SDB
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-200">
                   <div className="font-bold text-xl sm:text-2xl text-blue-600">
-                    {property.prix?.toLocaleString()} <span className="text-base sm:text-xl">DH</span>
+                    {property.prix?.toLocaleString()}{" "}
+                    <span className="text-base sm:text-xl">DH</span>
                   </div>
-                  
+
                   <div className="flex items-center gap-2 sm:gap-3">
                     <button
                       onClick={(e) => handleView(e, property)}
-                      className="text-blue-600 hover:text-blue-700 transition-colors p-1 sm:p-0"
+                      className="text-blue-600 hover:text-blue-700"
                       title="Voir les détails"
                     >
-                      <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <Eye className="w-5 h-5" />
                     </button>
                     <button
                       onClick={(e) => handleEdit(e, property)}
-                      className="text-amber-600 hover:text-amber-700 transition-colors p-1 sm:p-0"
+                      className="text-amber-600 hover:text-amber-700"
                       title="Modifier"
                     >
-                      <Edit className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <Edit className="w-5 h-5" />
                     </button>
                     <button
                       onClick={(e) => handleDelete(e, property)}
-                      className="text-red-600 hover:text-red-700 transition-colors p-1 sm:p-0"
+                      className="text-red-600 hover:text-red-700"
                       title="Supprimer"
                     >
-                      <Trash2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <Trash2 className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
@@ -121,14 +162,20 @@ import PropertyModal from './PropertyModal';
         ))}
       </div>
 
-      {/* Modal */}
-      <PropertyModal 
+      {/* Modal détails */}
+      <PropertyModal
         property={selectedProperty}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
+
+      {/* Modal confirmation suppression */}
+      <ConfirmDeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        property={selectedProperty}
+      />
     </>
   );
 }
-
-export default Immobilier;
