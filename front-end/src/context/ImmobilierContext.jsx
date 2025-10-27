@@ -1,24 +1,30 @@
-import {createContext, useState} from "react";
+import { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect } from "react";
+
 export const ImmobilierContext = createContext();
 
-export const ImmobilierProvider = ({children}) => {
-    const [immobilier, setImmobilier] = useState([]);
+export const ImmobilierProvider = ({ children }) => {
+  const [immobilier, setImmobilier] = useState([]);
 
-useEffect(()=>{
-    axios.get("http://localhost:8000/api/immobilier").then((res)=>{
-        setImmobilier(res.data.data);
-    }).catch((err)=>{
-        console.log(err);
-    })
-},[])
+  useEffect(() => {
+    const fetchData = () => {
+      axios
+        .get("http://localhost:8000/api/immobilier")
+        .then((res) => setImmobilier(res.data.data))
+        .catch((err) => console.log(err));
+    };
 
-    return (
-        <ImmobilierContext.Provider value={{immobilier, setImmobilier}}>
-            {children}
-        </ImmobilierContext.Provider>
-    );
+    fetchData(); 
+    const interval = setInterval(fetchData, 300000); // chaque 5 min
+
+    return () => clearInterval(interval); 
+  }, []);
+
+  return (
+    <ImmobilierContext.Provider value={{ immobilier, setImmobilier }}>
+      {children}
+    </ImmobilierContext.Provider>
+  );
 };
 
 export default ImmobilierProvider;
