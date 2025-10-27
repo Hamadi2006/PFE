@@ -219,7 +219,28 @@ class ImmobilierController extends Controller
             'prix' => 'sometimes|required|numeric|min:0',
             'surface' => 'sometimes|required|numeric|min:0',
             'ville' => 'sometimes|required|string|min:2|max:100',
-            // ... other validation rules
+            'description' => 'nullable|string|max:2000',
+            'adresse' => 'nullable|string|max:255',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
+            'chambres' => 'nullable|integer|min:0|max:50',
+            'salles_de_bain' => 'nullable|integer|min:0|max:20',
+            'annee_construction' => 'nullable|integer|min:1800|max:' . (date('Y') + 5),
+            'etage' => 'nullable|integer|min:-5|max:200',
+            'nombre_etages' => 'nullable|integer|min:1|max:200',
+            'statut' => 'nullable|in:disponible,reserve,vendu,loue',
+            'piscine' => 'nullable|boolean',
+            'jardin' => 'nullable|boolean',
+            'parking' => 'nullable|boolean',
+            'ascenseur' => 'nullable|boolean',
+            'climatisation' => 'nullable|boolean',
+            'en_vedette' => 'nullable|boolean',
+            'nom_contact' => 'nullable|string|max:100',
+            'telephone_contact' => 'nullable|string|max:20',
+            'email_contact' => 'nullable|email|max:100',
+            'image_principale' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+            'images.*' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+            
         ]);
 
         if ($validator->fails()) {

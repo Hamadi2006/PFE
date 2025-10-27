@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { MapPin, Square, Bed, Bath, Eye, Edit, Trash2 } from "lucide-react";
 import PropertyModal from "./PropertyModal";
+import EditPropertyModal from "./EditPropertyModal";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
 import axios from "axios";
 import { GlobaleContext } from "../../context/GlobaleContext";
-import { useContext } from "react";
+
 export default function Immobilier({ immobilier }) {
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const {alertSucc,
-        setAlertSucc,
-        alertFail,
-        setAlertFail,
-        alertMsg,
-        setAlertMsg}= useContext(GlobaleContext);
+
+  const { setAlertSucc, setAlertFail, setAlertMsg } = useContext(GlobaleContext);
+
   const handleView = (e, property) => {
     e.stopPropagation();
     setSelectedProperty(property);
@@ -23,7 +22,8 @@ export default function Immobilier({ immobilier }) {
 
   const handleEdit = (e, property) => {
     e.stopPropagation();
-    console.log("Modifier:", property);
+    setSelectedProperty(property);
+    setIsEditModalOpen(true);
   };
 
   const handleDelete = (e, property) => {
@@ -32,28 +32,86 @@ export default function Immobilier({ immobilier }) {
     setIsDeleteModalOpen(true);
   };
 
- const confirmDelete = () => {
-  if (!selectedProperty) return;
+  // Fonction pour gérer la mise à jour - appelée par le modal
+  const handleUpdate = async (formData, imagePrincipale) => {
+    try {
+      const formDataToSend = new FormData();
 
-  axios
-    .delete(`http://localhost:8000/api/immobilier/${selectedProperty.id}`)
-    .then((res) => {
-      console.log("Propriété supprimée avec succès", res);
-      setAlertMsg("Propriété supprimée avec succès");
-      setAlertSucc(true);
-      document.location.reload();
-    })
-    .catch((err) => {
-      console.error("Erreur lors de la suppression de la propriété", err);
-      setAlertMsg("Erreur lors de la suppression de la propriété");
+      // Ajouter toutes les données du formulaire
+      Object.keys(formData).forEach((key) => {
+        const value = formData[key];
+        
+        // Ne pas envoyer les valeurs vides
+        if (value === "" || value === null || value === undefined) {
+          return;
+        }
+        
+        // Convertir les booléens en 0 ou 1 pour Laravel
+        if (typeof value === 'boolean') {
+          formDataToSend.append(key, value ? '1' : '0');
+        } else {
+          formDataToSend.append(key, value);
+        }
+      });
+
+      // Ajouter l'image si elle existe
+      if (imagePrincipale) {
+        formDataToSend.append("image_principale", imagePrincipale);
+      }
+
+      // Laravel nécessite _method pour PUT avec FormData
+      formDataToSend.append("_method", "PUT");
+
+      // Envoyer la requête
+      const response = await axios.post(
+        `http://localhost:8000/api/immobilier/${selectedProperty.id}`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.data.success) {
+        setAlertMsg("Propriété mise à jour avec succès");
+        setAlertSucc(true);
+        setIsEditModalOpen(false);
+        setTimeout(() => {
+          document.location.reload();
+        }, 1500);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour:", error);
+      setAlertMsg(
+        error.response?.data?.message ||
+          "Erreur lors de la mise à jour de la propriété"
+      );
       setAlertFail(true);
-    })
-    .finally(() => {
-      setIsDeleteModalOpen(false);
-      setSelectedProperty(null);
-    });
-};
+    }
+  };
 
+  const confirmDelete = () => {
+    if (!selectedProperty) return;
+
+    axios
+      .delete(`http://localhost:8000/api/immobilier/${selectedProperty.id}`)
+      .then((res) => {
+        console.log("Propriété supprimée avec succès", res);
+        setAlertMsg("Propriété supprimée avec succès");
+        setAlertSucc(true);
+        document.location.reload();
+      })
+      .catch((err) => {
+        console.error("Erreur lors de la suppression de la propriété", err);
+        setAlertMsg("Erreur lors de la suppression de la propriété");
+        setAlertFail(true);
+      })
+      .finally(() => {
+        setIsDeleteModalOpen(false);
+        setSelectedProperty(null);
+      });
+  };
 
   return (
     <>
@@ -167,6 +225,17 @@ export default function Immobilier({ immobilier }) {
         property={selectedProperty}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+      />
+
+      {/* Modal modification */}
+      <EditPropertyModal
+        property={selectedProperty}
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setSelectedProperty(null);
+        }}
+        onUpdate={handleUpdate}
       />
 
       {/* Modal confirmation suppression */}
