@@ -1,7 +1,9 @@
 import React from "react";
 import { useFilters } from "../context/FilterContext";
+import { useTranslation } from "react-i18next";
 
 function LeftFilter() {
+  const { t } = useTranslation();
   const {
     filters,
     setFilters,
@@ -39,20 +41,20 @@ function LeftFilter() {
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sticky top-6">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-bold text-gray-800 dark:text-white">
-            Filtres
+            {t("filters.title")}
           </h3>
           <button
             onClick={resetFilters}
             className="text-cyan-600 text-sm hover:underline"
           >
-            Réinitialiser
+            {t("filters.reset")}
           </button>
         </div>
 
         {/* Price Range */}
         <div className="mb-6">
           <label className="block text-sm font-semibold mb-3 text-gray-800 dark:text-white">
-            Prix (MAD)
+            {t("filters.price")}
           </label>
           <div className="grid grid-cols-2 gap-3">
             <input
@@ -61,7 +63,7 @@ function LeftFilter() {
               onChange={(e) =>
                 setFilters({ ...filters, priceMin: e.target.value })
               }
-              placeholder="Min"
+              placeholder={t("filters.min")}
               className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 focus:ring-2 focus:ring-cyan-600 focus:outline-none"
             />
             <input
@@ -70,7 +72,7 @@ function LeftFilter() {
               onChange={(e) =>
                 setFilters({ ...filters, priceMax: e.target.value })
               }
-              placeholder="Max"
+              placeholder={t("filters.max")}
               className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 focus:ring-2 focus:ring-cyan-600 focus:outline-none"
             />
           </div>
@@ -79,7 +81,7 @@ function LeftFilter() {
         {/* Bedrooms */}
         <div className="mb-6">
           <label className="block text-sm font-semibold mb-3 text-gray-800 dark:text-white">
-            Chambres
+            {t("filters.bedrooms")}
           </label>
           <div className="grid grid-cols-4 gap-2">
             {[1, 2, 3, 4].map((num) => (
@@ -89,7 +91,7 @@ function LeftFilter() {
                 className={`px-3 py-2 border rounded-lg text-sm transition ${
                   selectedBedrooms.includes(num)
                     ? "bg-cyan-600 text-white border-cyan-600"
-                    : "border-gray-300 hover:bg-cyan-600 hover:text-white"
+                    : "border-gray-300 dark:border-gray-600 hover:bg-cyan-600 hover:text-white dark:text-gray-300"
                 }`}
               >
                 {num}+
@@ -101,7 +103,7 @@ function LeftFilter() {
         {/* Bathrooms */}
         <div className="mb-6">
           <label className="block text-sm font-semibold mb-3 text-gray-800 dark:text-white">
-            Salles de bain
+            {t("filters.bathrooms")}
           </label>
           <div className="grid grid-cols-4 gap-2">
             {[1, 2, 3, 4].map((num) => (
@@ -111,7 +113,7 @@ function LeftFilter() {
                 className={`px-3 py-2 border rounded-lg text-sm transition ${
                   selectedBathrooms.includes(num)
                     ? "bg-cyan-600 text-white border-cyan-600"
-                    : "border-gray-300 hover:bg-cyan-600 hover:text-white"
+                    : "border-gray-300 dark:border-gray-600 hover:bg-cyan-600 hover:text-white dark:text-gray-300"
                 }`}
               >
                 {num}+
@@ -123,7 +125,7 @@ function LeftFilter() {
         {/* Surface Area */}
         <div className="mb-6">
           <label className="block text-sm font-semibold mb-3 text-gray-800 dark:text-white">
-            Surface (m²)
+            {t("filters.surface")}
           </label>
           <div className="grid grid-cols-2 gap-3">
             <input
@@ -132,7 +134,7 @@ function LeftFilter() {
               onChange={(e) =>
                 setFilters({ ...filters, surfaceMin: e.target.value })
               }
-              placeholder="Min"
+              placeholder={t("filters.min")}
               className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 focus:ring-2 focus:ring-cyan-600 focus:outline-none"
             />
             <input
@@ -141,7 +143,7 @@ function LeftFilter() {
               onChange={(e) =>
                 setFilters({ ...filters, surfaceMax: e.target.value })
               }
-              placeholder="Max"
+              placeholder={t("filters.max")}
               className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 focus:ring-2 focus:ring-cyan-600 focus:outline-none"
             />
           </div>
@@ -150,50 +152,58 @@ function LeftFilter() {
         {/* Cities */}
         <div className="mb-6">
           <label className="block text-sm font-semibold mb-3 text-gray-800 dark:text-white">
-            Ville
+            {t("filters.city")}
           </label>
           <select
             value={filters.city}
             onChange={(e) => setFilters({ ...filters, city: e.target.value })}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 focus:ring-2 focus:ring-cyan-600 focus:outline-none"
           >
-            <option value="">Toutes les villes</option>
-            <option value="casablanca">Casablanca</option>
-            <option value="rabat">Rabat</option>
-            <option value="marrakech">Marrakech</option>
-            <option value="fes">Fès</option>
-            <option value="tanger">Tanger</option>
-            <option value="agadir">Agadir</option>
-            <option value="meknes">Meknès</option>
-            <option value="oujda">Oujda</option>
+            <option value="">{t("filters.allCities")}</option>
+            {[
+              "casablanca",
+              "rabat",
+              "marrakech",
+              "fes",
+              "tanger",
+              "agadir",
+              "meknes",
+              "oujda",
+              "tetouan",
+              "sale",
+              "kenitra",
+              "essaouira",
+            ].map((city) => (
+              <option key={city} value={city}>
+                {t(`cities.${city}`)}
+              </option>
+            ))}
           </select>
         </div>
 
         {/* Amenities */}
         <div className="mb-6">
           <label className="block text-sm font-semibold mb-3 text-gray-800 dark:text-white">
-            Équipements
+            {t("filters.amenities")}
           </label>
           <div className="space-y-2">
-            {Object.keys(filters.amenities).map((amenity) => (
-              <label key={amenity} className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={filters.amenities[amenity]}
-                  onChange={() => handleAmenityChange(amenity)}
-                  className="w-4 h-4 text-cyan-600 border-gray-300 rounded focus:ring-cyan-600"
-                />
-                <span className="ml-2 text-sm text-gray-700 dark:text-gray-300 capitalize">
-                  {amenity}
-                </span>
-              </label>
-            ))}
+            {["piscine", "jardin", "parking", "ascenseur", "climatisation"].map(
+              (a) => (
+                <label key={a} className="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={filters.amenities?.[a] || false}
+                    onChange={() => handleAmenityChange(a)}
+                    className="w-4 h-4 text-cyan-600 border-gray-300 rounded focus:ring-cyan-600"
+                  />
+                  <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                    {t(`amenities.${a}`)}
+                  </span>
+                </label>
+              )
+            )}
           </div>
         </div>
-
-        <button className="w-full bg-cyan-600 text-white py-3 rounded-lg font-semibold hover:bg-cyan-700 transition">
-          Appliquer les Filtres
-        </button>
       </div>
     </aside>
   );

@@ -3,6 +3,7 @@
   "real_estate": "العقارات",
   "services": "الخدمات",
   "contact": "اتصل بنا",
+
   "hero": {
     "title": "مشروعك العقاري هو أولويتنا.",
     "brand": "مع SakanCom.ma",
@@ -11,47 +12,40 @@
     "search": "بحث",
     "image_alt": "منزل عصري"
   },
+
   "stats": {
     "sold_properties": "العقارات المباعة",
     "happy_clients": "العملاء الراضون",
     "years_experience": "سنوات الخبرة",
     "cities_covered": "المدن المشمولة"
   },
-   "properties": {
+
+  "properties": {
     "section_title": "أحدث عروضنا",
     "section_subtitle": "اكتشف عقاراتنا المختارة بعناية",
     "view_details": "عرض التفاصيل",
     "view_all": "عرض جميع العروض",
     "badge_new": "جديد"
   },
+
   "howitworks": {
     "title": "كيف تعمل المنصة؟",
     "subtitle": "ابحث عن عقارك الحلم في 4 خطوات بسيطة",
     "steps": {
-      "search": {
-        "title": "ابحث",
-        "desc": "تصفح آلاف الإعلانات الموثوقة"
-      },
-      "visit": {
-        "title": "قم بالزيارة",
-        "desc": "نسق الزيارات مع وكلائنا"
-      },
-      "negotiate": {
-        "title": "تفاوض",
-        "desc": "نساعدك على الحصول على أفضل سعر ممكن"
-      },
-      "movein": {
-        "title": "انتقل للسكن",
-        "desc": "أكمل الصفقة وانتقل إلى منزلك الجديد"
-      }
+      "search": { "title": "ابحث", "desc": "تصفح آلاف الإعلانات الموثوقة" },
+      "visit": { "title": "قم بالزيارة", "desc": "نسق الزيارات مع وكلائنا" },
+      "negotiate": { "title": "تفاوض", "desc": "نساعدك على الحصول على أفضل سعر ممكن" },
+      "movein": { "title": "انتقل للسكن", "desc": "أكمل الصفقة وانتقل إلى منزلك الجديد" }
     }
   },
-   "cta": {
+
+  "cta": {
     "title": "هل أنت مستعد للعثور على عقارك المثالي؟",
     "subtitle": "انضم إلى آلاف العملاء السعداء وابحث عن منزل أحلامك اليوم.",
     "browse": "تصفح العروض",
     "estimate": "قيّم عقارك"
   },
+
   "footer": {
     "about": "شريكك الموثوق لجميع مشاريعك العقارية في المغرب.",
     "quickLinks": {
@@ -72,29 +66,45 @@
     "legal": "الشروط القانونية",
     "privacy": "سياسة الخصوصية"
   },
+
   "filters": {
-    "title": "فلاتر",
+    "title": "الفلاتر",
     "reset": "إعادة التعيين",
-    "price": { "label": "السعر (MAD)", "min": "الحد الأدنى", "max": "الحد الأقصى" },
-    "bedrooms": "الغرف",
+    "price": "السعر (درهم مغربي)",
+    "min": "الحد الأدنى",
+    "max": "الحد الأقصى",
+    "bedrooms": "غرف النوم",
     "bathrooms": "الحمامات",
-    "surface": { "label": "المساحة (م²)", "min": "الحد الأدنى", "max": "الحد الأقصى" },
-    "city": {
-      "label": "المدينة",
-      "options": ["كل المدن", "الدار البيضاء", "الرباط", "مراكش", "فاس", "طنجة", "أكادير", "مكناس", "وجدة"]
-    },
-    "amenities": {
-      "label": "المرافق",
-      "items": {
-        "parking": " موقف سيارات",
-        "balcony": "شفة",
-        "garden": "حديقة",
-        "pool": "مسبح",
-        "wifi": "واي فاي"
-      }
-    },
+    "surface": "المساحة (متر مربع)",
+    "city": "المدينة",
+    "allCities": "كل المدن",
+    "amenities": "المرافق",
     "apply": "تطبيق الفلاتر"
   },
+
+  "cities": {
+    "casablanca": "الدار البيضاء",
+    "rabat": "الرباط",
+    "marrakech": "مراكش",
+    "fes": "فاس",
+    "tanger": "طنجة",
+    "agadir": "أكادير",
+    "meknes": "مكناس",
+    "oujda": "وجدة",
+    "tetouan": "تطوان",
+    "sale": "سلا",
+    "kenitra": "القنيطرة",
+    "essaouira": "الصويرة"
+  },
+
+  "amenities": {
+    "piscine": "مسبح",
+    "jardin": "حديقة",
+    "parking": "موقف سيارات",
+    "ascenseur": "مصعد",
+    "climatisation": "تكييف"
+  },
+
   "heroFilter": {
     "title": "اعثر على عقارك المثالي",
     "subtitle": "أكثر من 2500 عقار متوفر في المغرب",
@@ -110,6 +120,7 @@
     "rent": "كراء",
     "search": "بحث"
   },
+
   "results": {
     "title": "نتائج البحث",
     "found": "عقار تم العثور عليه",
@@ -117,6 +128,8 @@
     "list": "عرض قائمة",
     "prev": "السابق",
     "next": "التالي",
+    "details": "عرض التفاصيل",
+    "new": "جديد",
     "sort": {
       "relevance": "الأهمية",
       "priceAsc": "السعر تصاعدي",
@@ -126,6 +139,7 @@
       "surfaceDesc": "المساحة تنازلية"
     }
   },
+
   "sidebar": {
     "dashboard": "لوحة التحكم",
     "overview": "نظرة عامة",
@@ -136,20 +150,14 @@
     "help": "مساعدة",
     "logout": "تسجيل الخروج"
   },
-  
+
   "properties2": {
     "title": "العقارات",
     "subtitle": "إدارة جميع عقاراتك",
     "addButton": "إضافة عقار",
     "listTitle": "قائمة العقارات",
     "listSubtitle": "لائحة العقارات فارغة حالياً. ابدأ بإضافة عقارات جديدة باستخدام الزر أعلاه.",
-    
-    "modal": {
-      "title": "إضافة عقار جديد",
-      "cancel": "إلغاء",
-      "submit": "إضافة"
-    },
-    
+    "modal": { "title": "إضافة عقار جديد", "cancel": "إلغاء", "submit": "إضافة" },
     "sections": {
       "basicInfo": "المعلومات الأساسية",
       "location": "الموقع",
@@ -158,7 +166,6 @@
       "images": "الصور",
       "contact": "معلومات الاتصال"
     },
-    
     "fields": {
       "titre": "العنوان",
       "description": "الوصف",
@@ -183,7 +190,6 @@
       "telephone_contact": "الهاتف",
       "email_contact": "البريد الإلكتروني"
     },
-    
     "types": {
       "appartement": "شقة",
       "maison": "منزل",
@@ -193,19 +199,13 @@
       "bureau": "مكتب",
       "commerce": "محل تجاري"
     },
-    
-    "transactions": {
-      "vente": "بيع",
-      "location": "إيجار"
-    },
-    
+    "transactions": { "vente": "بيع", "location": "إيجار" },
     "status": {
       "disponible": "متاح",
       "reserve": "محجوز",
       "vendu": "مباع",
       "loue": "مؤجر"
     },
-    
     "amenities": {
       "piscine": "مسبح",
       "jardin": "حديقة",
@@ -214,9 +214,9 @@
       "climatisation": "تكييف",
       "en_vedette": "مميز"
     },
-    
     "required": "*"
   },
+
   "no_image": "لا توجد صور متاحة",
   "featured": "مميز",
   "surface": "المساحة",
@@ -232,11 +232,11 @@
   "phone": "الهاتف",
   "contact_button": "اتصال",
   "close": "إغلاق",
-   "confirmDelete": {
+
+  "confirmDelete": {
     "title": "تأكيد الحذف",
     "message": "هل تريد حقًا حذف",
     "delete": "حذف",
     "cancel": "إلغاء"
   }
 }
-

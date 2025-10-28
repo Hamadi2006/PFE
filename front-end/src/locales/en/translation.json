@@ -3,6 +3,7 @@
   "real_estate": "Real Estate",
   "services": "Services",
   "contact": "Contact",
+
   "hero": {
     "title": "Your real estate project, our priority.",
     "brand": "With SakanCom.ma",
@@ -11,12 +12,14 @@
     "search": "Search",
     "image_alt": "Modern house"
   },
+
   "stats": {
     "sold_properties": "Properties Sold",
     "happy_clients": "Happy Clients",
     "years_experience": "Years of Experience",
     "cities_covered": "Cities Covered"
   },
+
   "properties": {
     "section_title": "Our Latest Offers",
     "section_subtitle": "Discover our carefully selected real estate properties",
@@ -24,43 +27,29 @@
     "view_all": "View All Offers",
     "badge_new": "New"
   },
+
   "howitworks": {
     "title": "How It Works?",
     "subtitle": "Find your dream property in 4 simple steps",
     "steps": {
-      "search": {
-        "title": "Search",
-        "desc": "Browse through thousands of verified listings"
-      },
-      "visit": {
-        "title": "Visit",
-        "desc": "Schedule visits with our agents"
-      },
-      "negotiate": {
-        "title": "Negotiate",
-        "desc": "We help you get the best possible deal"
-      },
-      "movein": {
-        "title": "Move In",
-        "desc": "Finalize and move into your new home"
-      }
+      "search": { "title": "Search", "desc": "Browse through thousands of verified listings" },
+      "visit": { "title": "Visit", "desc": "Schedule visits with our agents" },
+      "negotiate": { "title": "Negotiate", "desc": "We help you get the best possible deal" },
+      "movein": { "title": "Move In", "desc": "Finalize and move into your new home" }
     }
   },
+
   "cta": {
     "title": "Ready to Find Your Dream Property?",
     "subtitle": "Join thousands of happy clients and discover your dream home today.",
     "browse": "Browse Listings",
     "estimate": "Estimate My Property"
-  },"footer": {
+  },
+
+  "footer": {
     "about": "Your trusted partner for all real estate projects in Morocco.",
-    "quickLinks": {
-      "title": "Quick Links",
-      "items": ["Home", "Listings", "Services", "Contact"]
-    },
-    "services": {
-      "title": "Services",
-      "items": ["Buy", "Sell", "Rent", "Free Valuation"]
-    },
+    "quickLinks": { "title": "Quick Links", "items": ["Home", "Listings", "Services", "Contact"] },
+    "services": { "title": "Services", "items": ["Buy", "Sell", "Rent", "Free Valuation"] },
     "contact": {
       "title": "Contact",
       "address": "123 Mohammed V Avenue\nCasablanca, Morocco",
@@ -71,29 +60,51 @@
     "legal": "Legal Notice",
     "privacy": "Privacy Policy"
   },
+
   "filters": {
     "title": "Filters",
     "reset": "Reset",
-    "price": { "label": "Price (MAD)", "min": "Min", "max": "Max" },
+    "apply": "Apply Filters",
+    "price": "Price (MAD)",
+    "priceLabel": "Price (MAD)",
+    "surface": "Surface (m²)",
+    "surfaceLabel": "Surface (m²)",
     "bedrooms": "Bedrooms",
     "bathrooms": "Bathrooms",
-    "surface": { "label": "Surface (m²)", "min": "Min", "max": "Max" },
-    "city": {
-      "label": "City",
-      "options": ["All Cities", "Casablanca", "Rabat", "Marrakech", "Fez", "Tangier", "Agadir", "Meknes", "Oujda"]
-    },
-    "amenities": {
-      "label": "Amenities",
-      "items": {
-        "parking": "Parking",
-        "balcony": "Balcony",
-        "garden": "Garden",
-        "pool": "Pool",
-        "wifi": "Wi-Fi"
-      }
-    },
-    "apply": "Apply Filters"
+    "city": "City",
+    "cityLabel": "City",
+    "allCities": "All Cities",
+    "amenities": "Amenities",
+    "amenitiesLabel": "Amenities",
+    "min": "Min",
+    "max": "Max"
   },
+
+  "amenities": {
+    "piscine": "Swimming Pool",
+    "jardin": "Garden",
+    "parking": "Parking",
+    "ascenseur": "Elevator",
+    "climatisation": "Air Conditioning",
+    "balcony": "Balcony",
+    "wifi": "Wi-Fi"
+  },
+
+  "cities": {
+    "casablanca": "Casablanca",
+    "rabat": "Rabat",
+    "marrakech": "Marrakech",
+    "fes": "Fez",
+    "tanger": "Tangier",
+    "agadir": "Agadir",
+    "meknes": "Meknes",
+    "oujda": "Oujda",
+    "tetouan": "Tetouan",
+    "sale": "Sale",
+    "kenitra": "Kenitra",
+    "essaouira": "Essaouira"
+  },
+
   "heroFilter": {
     "title": "Find Your Dream Property",
     "subtitle": "Over 2,500 real estate listings available in Morocco",
@@ -109,6 +120,7 @@
     "rent": "Rent",
     "search": "Search"
   },
+
   "results": {
     "title": "Search Results",
     "found": "properties found",
@@ -116,6 +128,8 @@
     "list": "List view",
     "prev": "Previous",
     "next": "Next",
+    "details": "View Details",
+    "new": "New",
     "sort": {
       "relevance": "Relevance",
       "priceAsc": "Price ascending",
@@ -125,6 +139,7 @@
       "surfaceDesc": "Surface descending"
     }
   },
+
   "sidebar": {
     "dashboard": "Dashboard",
     "overview": "Overview",
@@ -135,29 +150,15 @@
     "help": "Help",
     "logout": "Logout"
   },
-  
+
   "properties2": {
     "title": "Properties",
     "subtitle": "Manage all your properties",
     "addButton": "Add Property",
     "listTitle": "Properties List",
     "listSubtitle": "The properties list is currently empty. Start by adding new properties using the button above.",
-    
-    "modal": {
-      "title": "Add New Property",
-      "cancel": "Cancel",
-      "submit": "Add"
-    },
-    
-    "sections": {
-      "basicInfo": "Basic Information",
-      "location": "Location",
-      "characteristics": "Characteristics",
-      "amenities": "Amenities",
-      "images": "Images",
-      "contact": "Contact Information"
-    },
-    
+    "modal": { "title": "Add New Property", "cancel": "Cancel", "submit": "Add" },
+    "sections": { "basicInfo": "Basic Information", "location": "Location", "characteristics": "Characteristics", "amenities": "Amenities", "images": "Images", "contact": "Contact Information" },
     "fields": {
       "titre": "Title",
       "description": "Description",
@@ -182,40 +183,13 @@
       "telephone_contact": "Phone",
       "email_contact": "Email"
     },
-    
-    "types": {
-      "appartement": "Apartment",
-      "maison": "House",
-      "villa": "Villa",
-      "studio": "Studio",
-      "terrain": "Land",
-      "bureau": "Office",
-      "commerce": "Commercial"
-    },
-    
-    "transactions": {
-      "vente": "Sale",
-      "location": "Rent"
-    },
-    
-    "status": {
-      "disponible": "Available",
-      "reserve": "Reserved",
-      "vendu": "Sold",
-      "loue": "Rented"
-    },
-    
-    "amenities": {
-      "piscine": "Swimming Pool",
-      "jardin": "Garden",
-      "parking": "Parking",
-      "ascenseur": "Elevator",
-      "climatisation": "Air Conditioning",
-      "en_vedette": "Featured"
-    },
-    
+    "types": { "appartement": "Apartment", "maison": "House", "villa": "Villa", "studio": "Studio", "terrain": "Land", "bureau": "Office", "commerce": "Commercial" },
+    "transactions": { "vente": "Sale", "location": "Rent" },
+    "status": { "disponible": "Available", "reserve": "Reserved", "vendu": "Sold", "loue": "Rented" },
+    "amenities": { "piscine": "Swimming Pool", "jardin": "Garden", "parking": "Parking", "ascenseur": "Elevator", "climatisation": "Air Conditioning", "en_vedette": "Featured" },
     "required": "*"
   },
+
   "no_image": "No image available",
   "featured": "FEATURED",
   "surface": "Area",
@@ -231,11 +205,11 @@
   "phone": "Phone",
   "contact_button": "Contact",
   "close": "Close",
-   "confirmDelete": {
-    "title": "Confirm deletion",
-    "message": "Do you really want to delete",
-    "delete": "Delete",
-    "cancel": "Cancel"
+
+  "confirmDelete": { 
+    "title": "Confirm deletion", 
+    "message": "Do you really want to delete", 
+    "delete": "Delete", 
+    "cancel": "Cancel" 
   }
 }
-

@@ -1,52 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-function Results() {
+function Results({immobilier}) {
   const { t } = useTranslation();
   const [viewMode, setViewMode] = useState('grid');
   const [favorites, setFavorites] = useState([]);
-
-  const properties = [
-    {
-      id: 1,
-      title: 'Appartement Standing',
-      location: 'Tanger, Malabata',
-      price: '6 500',
-      priceType: '/mois',
-      type: 'location',
-      bedrooms: 3,
-      bathrooms: 2,
-      surface: 140,
-      image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=300&fit=crop',
-      isNew: true
-    },
-    {
-      id: 2,
-      title: 'Villa Luxueuse',
-      location: 'Marrakech, Palmeraie',
-      price: '4 500 000',
-      priceType: '',
-      type: 'vente',
-      bedrooms: 5,
-      bathrooms: 4,
-      surface: 350,
-      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&h=300&fit=crop',
-      isNew: true
-    },
-    {
-      id: 3,
-      title: 'Riad Traditionnel',
-      location: 'Fès, Médina',
-      price: '3 200 000',
-      priceType: '',
-      type: 'vente',
-      bedrooms: 4,
-      bathrooms: 3,
-      surface: 250,
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop',
-      isNew: false
-    }
-  ];
 
   const toggleFavorite = (id) => {
     setFavorites(prev =>
@@ -61,17 +19,10 @@ function Results() {
         <div>
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{t('results.title')}</h2>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
-            {properties.length} {t('results.found')}
+            {immobilier.length} {t('results.found')}
           </p>
         </div>
-        <select className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-cyan-600 focus:outline-none">
-          <option>{t('results.sort.relevance')}</option>
-          <option>{t('results.sort.priceAsc')}</option>
-          <option>{t('results.sort.priceDesc')}</option>
-          <option>{t('results.sort.newest')}</option>
-          <option>{t('results.sort.surfaceAsc')}</option>
-          <option>{t('results.sort.surfaceDesc')}</option>
-        </select>
+        
       </div>
 
       {/* View Mode */}
@@ -106,11 +57,21 @@ function Results() {
 
       {/* Cards */}
       <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}>
-        {properties.map(property => (
+        {immobilier.map(property => (
           <div key={property.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-transform hover:-translate-y-2">
             <div className="relative">
-              <img src={property.image} alt={property.title} className="w-full h-48 object-cover"/>
-              {property.isNew && (
+              {property.image_principale ? (
+                <img 
+                  src={`http://localhost:8000/storage/${property.image_principale}`} 
+                  alt={property.titre} 
+                  className="w-full h-48 object-cover"
+                />
+              ) : (
+                <div className="w-full h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                  <span className="text-gray-400">Aucune image</span>
+                </div>
+              )}
+              {property.en_vedette && (
                 <span className="absolute top-4 left-4 bg-cyan-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
                   {t('results.new')}
                 </span>
@@ -129,34 +90,30 @@ function Results() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </button>
-              <span className={`absolute bottom-4 left-4 px-3 py-1 rounded-full text-xs font-semibold ${
-                property.type === 'location' ? 'bg-blue-500' : 'bg-green-500'
-              } text-white`}>
-                {property.type === 'location' ? t('results.forRent') : t('results.forSale')}
-              </span>
+              
             </div>
             <div className="p-5">
-              <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">{property.title}</h3>
+              <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">{property.titre}</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 flex items-center">
                 <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                 </svg>
-                {property.location}
+                {property.ville}, {property.adresse}
               </p>
               <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
-                {property.bedrooms > 0 && (
+                {property.chambres > 0 && (
                   <span className="flex items-center">
                     <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                     </svg>
-                    {property.bedrooms}
+                    {property.chambres}
                   </span>
                 )}
                 <span className="flex items-center">
                   <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clipRule="evenodd" />
                   </svg>
-                  {property.bathrooms}
+                  {property.salles_de_bain}
                 </span>
                 <span className="flex items-center">
                   <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -167,8 +124,8 @@ function Results() {
               </div>
               <div className="flex items-center justify-between border-t pt-4 dark:border-gray-700">
                 <div>
-                  <span className="text-2xl font-bold text-cyan-600">{property.price} MAD</span>
-                  {property.priceType && <span className="text-sm text-gray-500">{property.priceType}</span>}
+                  <span className="text-2xl font-bold text-cyan-600">{property.prix?.toLocaleString()} DH</span>
+                  {property.transaction === 'location' && <span className="text-sm text-gray-500">/mois</span>}
                 </div>
                 <button className="px-4 py-2 bg-cyan-600 text-white rounded-lg text-sm font-semibold hover:bg-cyan-700 transition">
                   {t('results.details')}

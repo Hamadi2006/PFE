@@ -24,7 +24,7 @@
     "view_all": "Voir Toutes les Offres",
     "badge_new": "Nouveau"
   },
-   "howitworks": {
+  "howitworks": {
     "title": "Comment Ça Marche ?",
     "subtitle": "Trouvez votre bien immobilier en 4 étapes simples",
     "steps": {
@@ -75,25 +75,37 @@
   "filters": {
     "title": "Filtres",
     "reset": "Réinitialiser",
-    "price": { "label": "Prix (MAD)", "min": "Min", "max": "Max" },
+    "price": "Prix (DH)",
+    "min": "Min",
+    "max": "Max",
     "bedrooms": "Chambres",
     "bathrooms": "Salles de bain",
-    "surface": { "label": "Surface (m²)", "min": "Min", "max": "Max" },
-    "city": {
-      "label": "Ville",
-      "options": ["Toutes les villes", "Casablanca", "Rabat", "Marrakech", "Fès", "Tanger", "Agadir", "Meknès", "Oujda"]
-    },
-    "amenities": {
-      "label": "Équipements",
-      "items": {
-        "parking": "Parking",
-        "balcony": "Balcon",
-        "garden": "Jardin",
-        "pool": "Piscine",
-        "wifi": "Wi-Fi"
-      }
-    },
-    "apply": "Appliquer les Filtres"
+    "surface": "Surface (m²)",
+    "city": "Ville",
+    "allCities": "Toutes les villes",
+    "apply": "Appliquer les filtres",
+    "amenities": "Équipements"
+  },
+  "cities": {
+    "casablanca": "Casablanca",
+    "rabat": "Rabat",
+    "marrakech": "Marrakech",
+    "fes": "Fès",
+    "tanger": "Tanger",
+    "agadir": "Agadir",
+    "meknes": "Meknès",
+    "oujda": "Oujda",
+    "tetouan": "Tétouan",
+    "sale": "Salé",
+    "kenitra": "Kénitra",
+    "essaouira": "Essaouira"
+  },
+  "amenities": {
+    "piscine": "Piscine",
+    "jardin": "Jardin",
+    "parking": "Parking",
+    "ascenseur": "Ascenseur",
+    "climatisation": "Climatisation"
   },
   "heroFilter": {
     "title": "Trouvez Votre Bien Idéal",
@@ -117,6 +129,8 @@
     "list": "Vue liste",
     "prev": "Précédent",
     "next": "Suivant",
+    "details": "Voir Détails",
+    "new": "Nouveau",
     "sort": {
       "relevance": "Pertinence",
       "priceAsc": "Prix croissant",
@@ -136,19 +150,17 @@
     "help": "Aide",
     "logout": "Déconnexion"
   },
-  "properties2": { 
+  "properties2": {
     "title": "Propriétés",
     "subtitle": "Gérez toutes vos propriétés",
     "addButton": "Ajouter Immobilier",
     "listTitle": "Liste des Propriétés",
     "listSubtitle": "La liste des propriétés est actuellement vide. Commencez par ajouter de nouvelles propriétés en utilisant le bouton ci-dessus.",
-    
     "modal": {
       "title": "Ajouter un Immobilier",
       "cancel": "Annuler",
       "submit": "Ajouter"
     },
-    
     "sections": {
       "basicInfo": "Informations de base",
       "location": "Localisation",
@@ -157,7 +169,6 @@
       "images": "Images",
       "contact": "Informations de contact"
     },
-    
     "fields": {
       "titre": "Titre",
       "description": "Description",
@@ -182,7 +193,6 @@
       "telephone_contact": "Téléphone",
       "email_contact": "Email"
     },
-    
     "types": {
       "appartement": "Appartement",
       "maison": "Maison",
@@ -192,19 +202,16 @@
       "bureau": "Bureau",
       "commerce": "Commerce"
     },
-    
     "transactions": {
       "vente": "Vente",
       "location": "Location"
     },
-    
     "status": {
       "disponible": "Disponible",
       "reserve": "Réservé",
       "vendu": "Vendu",
       "loue": "Loué"
     },
-    
     "amenities": {
       "piscine": "Piscine",
       "jardin": "Jardin",
@@ -213,7 +220,6 @@
       "climatisation": "Climatisation",
       "en_vedette": "En vedette"
     },
-    
     "required": "*"
   },
   "no_image": "Aucune image disponible",
@@ -238,4 +244,3 @@
     "cancel": "Annuler"
   }
 }
-
