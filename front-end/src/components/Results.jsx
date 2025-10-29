@@ -5,6 +5,8 @@ function Results({immobilier}) {
   const { t } = useTranslation();
   const [viewMode, setViewMode] = useState('grid');
   const [favorites, setFavorites] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9; // 9 properties per page (3x3 grid)
 
   const toggleFavorite = (id) => {
     setFavorites(prev =>
@@ -12,6 +14,155 @@ function Results({immobilier}) {
     );
   };
 
+  // Pagination calculations
+  const totalPages = Math.ceil(immobilier.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentProperties = immobilier.slice(startIndex, endIndex);
+
+  // Pagination handlers
+  const goToPage = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const goToPrevious = () => {
+    if (currentPage > 1) {
+      goToPage(currentPage - 1);
+    }
+  };
+
+  const goToNext = () => {
+    if (currentPage < totalPages) {
+      goToPage(currentPage + 1);
+    }
+  };
+
+  // Generate page numbers to display
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxPagesToShow = 5;
+
+    if (totalPages <= maxPagesToShow) {
+      // Show all pages if total is less than max
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Always show first page
+      pages.push(1);
+
+      if (currentPage > 3) {
+        pages.push('...');
+      }
+
+      // Show pages around current page
+      const startPage = Math.max(2, currentPage - 1);
+      const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+
+      if (currentPage < totalPages - 2) {
+        pages.push('...');
+      }
+
+      // Always show last page
+      pages.push(totalPages);
+    }
+
+    return pages;
+  };
+
+  // Empty State Component
+  if (immobilier.length === 0) {
+    return (
+      <main className="lg:w-3/4">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{t('results.title')}</h2>
+            <p className="text-gray-600 dark:text-gray-400 mt-1">
+              0 {t('results.found')}
+            </p>
+          </div>
+        </div>
+
+        {/* Empty State Message */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-12 text-center">
+          <div className="max-w-md mx-auto">
+            {/* Icon */}
+            <div className="mb-6">
+              <svg 
+                className="w-24 h-24 mx-auto text-gray-300 dark:text-gray-600" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={1.5} 
+                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" 
+                />
+              </svg>
+            </div>
+
+            {/* Title */}
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">
+              {t('results.emptyTitle')}
+            </h3>
+
+            {/* Description */}
+            <p className="text-gray-600 dark:text-gray-400 mb-8">
+              {t('results.emptyDescription')}
+            </p>
+
+            {/* Suggestions */}
+            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6 text-left">
+              <h4 className="font-semibold text-gray-800 dark:text-white mb-3">
+                {t('results.suggestions')}
+              </h4>
+              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 mr-2 text-cyan-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span>{t('results.suggestion1')}</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 mr-2 text-cyan-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span>{t('results.suggestion2')}</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 mr-2 text-cyan-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span>{t('results.suggestion3')}</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 mr-2 text-cyan-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span>{t('results.suggestion4')}</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Action Button */}
+            <button className="px-6 py-3 bg-cyan-600 text-white rounded-lg font-semibold hover:bg-cyan-700 transition">
+              {t('results.resetFilters')}
+            </button>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  // Regular Results Display
   return (
     <main className="lg:w-3/4">
       {/* Header */}
@@ -22,7 +173,6 @@ function Results({immobilier}) {
             {immobilier.length} {t('results.found')}
           </p>
         </div>
-        
       </div>
 
       {/* View Mode */}
@@ -57,7 +207,7 @@ function Results({immobilier}) {
 
       {/* Cards */}
       <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}>
-        {immobilier.map(property => (
+        {currentProperties.map(property => (
           <div key={property.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-transform hover:-translate-y-2">
             <div className="relative">
               {property.image_principale ? (
@@ -90,7 +240,6 @@ function Results({immobilier}) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </button>
-              
             </div>
             <div className="p-5">
               <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">{property.titre}</h3>
@@ -137,21 +286,62 @@ function Results({immobilier}) {
       </div>
 
       {/* Pagination */}
-      <div className="mt-12 flex justify-center items-center gap-2">
-        <button className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-cyan-600 hover:text-white hover:border-cyan-600 transition" title={t('results.prev')}>
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
-        </button>
-        <button className="px-4 py-2 bg-cyan-600 text-white rounded-lg font-semibold">1</button>
-        <button className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-cyan-600 hover:text-white hover:border-cyan-600 transition">2</button>
-        <span className="px-4 py-2 text-gray-500">...</span>
-        <button className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-cyan-600 hover:text-white hover:border-cyan-600 transition" title={t('results.next')}>
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-        </button>
-      </div>
+      {totalPages > 1 && (
+        <div className="mt-12 flex justify-center items-center gap-2">
+          {/* Previous Button */}
+          <button 
+            onClick={goToPrevious}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 border rounded-lg transition ${
+              currentPage === 1
+                ? 'border-gray-300 dark:border-gray-600 text-gray-400 cursor-not-allowed'
+                : 'border-gray-300 dark:border-gray-600 hover:bg-cyan-600 hover:text-white hover:border-cyan-600'
+            }`}
+            title={t('results.prev')}
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+          </button>
+
+          {/* Page Numbers */}
+          {getPageNumbers().map((page, index) => (
+            page === '...' ? (
+              <span key={`ellipsis-${index}`} className="px-4 py-2 text-gray-500 dark:text-gray-400">
+                ...
+              </span>
+            ) : (
+              <button
+                key={page}
+                onClick={() => goToPage(page)}
+                className={`px-4 py-2 rounded-lg font-semibold transition ${
+                  currentPage === page
+                    ? 'bg-cyan-600 text-white'
+                    : 'border border-gray-300 dark:border-gray-600 hover:bg-cyan-600 hover:text-white hover:border-cyan-600'
+                }`}
+              >
+                {page}
+              </button>
+            )
+          ))}
+
+          {/* Next Button */}
+          <button 
+            onClick={goToNext}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 border rounded-lg transition ${
+              currentPage === totalPages
+                ? 'border-gray-300 dark:border-gray-600 text-gray-400 cursor-not-allowed'
+                : 'border-gray-300 dark:border-gray-600 hover:bg-cyan-600 hover:text-white hover:border-cyan-600'
+            }`}
+            title={t('results.next')}
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
+      )}
     </main>
   );
 }

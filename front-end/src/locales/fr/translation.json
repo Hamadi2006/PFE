@@ -3,6 +3,7 @@
   "real_estate": "Immobilier",
   "services": "Services",
   "contact": "Contact",
+
   "hero": {
     "title": "Votre projet immobilier, notre priorité.",
     "brand": "Avec SakanCom.ma",
@@ -11,12 +12,14 @@
     "search": "Rechercher",
     "image_alt": "Maison moderne"
   },
+
   "stats": {
     "sold_properties": "Biens Vendus",
     "happy_clients": "Clients Satisfaits",
     "years_experience": "Années d'Expérience",
     "cities_covered": "Villes Couvertes"
   },
+
   "properties": {
     "section_title": "Nos Dernières Offres",
     "section_subtitle": "Découvrez nos biens immobiliers sélectionnés avec soin",
@@ -24,6 +27,7 @@
     "view_all": "Voir Toutes les Offres",
     "badge_new": "Nouveau"
   },
+
   "howitworks": {
     "title": "Comment Ça Marche ?",
     "subtitle": "Trouvez votre bien immobilier en 4 étapes simples",
@@ -46,12 +50,14 @@
       }
     }
   },
+
   "cta": {
     "title": "Prêt à Trouver Votre Bien Idéal ?",
     "subtitle": "Rejoignez des milliers de clients satisfaits et trouvez la propriété de vos rêves.",
     "browse": "Parcourir les Offres",
     "estimate": "Estimer Mon Bien"
   },
+
   "footer": {
     "about": "Votre partenaire de confiance pour tous vos projets immobiliers au Maroc.",
     "quickLinks": {
@@ -72,20 +78,36 @@
     "legal": "Mentions Légales",
     "privacy": "Politique de Confidentialité"
   },
+
   "filters": {
     "title": "Filtres",
     "reset": "Réinitialiser",
+    "apply": "Appliquer les filtres",
     "price": "Prix (DH)",
-    "min": "Min",
-    "max": "Max",
+    "priceLabel": "Prix (DH)",
+    "surface": "Surface (m²)",
+    "surfaceLabel": "Surface (m²)",
     "bedrooms": "Chambres",
     "bathrooms": "Salles de bain",
-    "surface": "Surface (m²)",
     "city": "Ville",
+    "cityLabel": "Ville",
     "allCities": "Toutes les villes",
-    "apply": "Appliquer les filtres",
-    "amenities": "Équipements"
+    "amenities": "Équipements",
+    "amenitiesLabel": "Équipements",
+    "min": "Min",
+    "max": "Max"
   },
+
+  "amenities": {
+    "piscine": "Piscine",
+    "jardin": "Jardin",
+    "parking": "Parking",
+    "ascenseur": "Ascenseur",
+    "climatisation": "Climatisation",
+    "balcony": "Balcon",
+    "wifi": "Wi-Fi"
+  },
+
   "cities": {
     "casablanca": "Casablanca",
     "rabat": "Rabat",
@@ -100,13 +122,7 @@
     "kenitra": "Kénitra",
     "essaouira": "Essaouira"
   },
-  "amenities": {
-    "piscine": "Piscine",
-    "jardin": "Jardin",
-    "parking": "Parking",
-    "ascenseur": "Ascenseur",
-    "climatisation": "Climatisation"
-  },
+
   "heroFilter": {
     "title": "Trouvez Votre Bien Idéal",
     "subtitle": "Plus de 2,500 biens immobiliers disponibles au Maroc",
@@ -122,6 +138,7 @@
     "rent": "Location",
     "search": "Rechercher"
   },
+
   "results": {
     "title": "Résultats de Recherche",
     "found": "biens trouvés",
@@ -131,6 +148,15 @@
     "next": "Suivant",
     "details": "Voir Détails",
     "new": "Nouveau",
+    "favorite": "Ajouter aux favoris",
+    "emptyTitle": "Aucun Bien Trouvé",
+    "emptyDescription": "Nous n'avons trouvé aucun bien correspondant à vos critères de recherche. Essayez d'ajuster vos filtres pour voir plus de résultats.",
+    "suggestions": "Essayez les suggestions suivantes :",
+    "suggestion1": "Élargissez votre fourchette de prix",
+    "suggestion2": "Sélectionnez une autre ville ou supprimez les filtres de localisation",
+    "suggestion3": "Réduisez le nombre de chambres ou de salles de bain requis",
+    "suggestion4": "Supprimez certains filtres d'équipements",
+    "resetFilters": "Réinitialiser Tous les Filtres",
     "sort": {
       "relevance": "Pertinence",
       "priceAsc": "Prix croissant",
@@ -140,6 +166,7 @@
       "surfaceDesc": "Surface décroissante"
     }
   },
+
   "sidebar": {
     "dashboard": "Tableau de bord",
     "overview": "Vue d'ensemble",
@@ -150,6 +177,7 @@
     "help": "Aide",
     "logout": "Déconnexion"
   },
+
   "properties2": {
     "title": "Propriétés",
     "subtitle": "Gérez toutes vos propriétés",
@@ -222,6 +250,7 @@
     },
     "required": "*"
   },
+
   "no_image": "Aucune image disponible",
   "featured": "EN VEDETTE",
   "surface": "Surface",
@@ -237,6 +266,7 @@
   "phone": "Téléphone",
   "contact_button": "Contacter",
   "close": "Fermer",
+
   "confirmDelete": {
     "title": "Confirmer la suppression",
     "message": "Voulez-vous vraiment supprimer",
