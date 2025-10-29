@@ -1,5 +1,5 @@
 import React from "react";
-import { useFilters } from "../context/FilterContext";
+import { useFilters } from "../../context/FilterContext";
 import { useTranslation } from "react-i18next";
 
 function LeftFilter() {

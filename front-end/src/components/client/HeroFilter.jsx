@@ -2,8 +2,7 @@
 
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useFilters } from "../context/FilterContext";
-
+import {useFilters} from "../../context/FilterContext";
 function HeroFilter() {
   const { t } = useTranslation();
   const { filters, setFilters } = useFilters();

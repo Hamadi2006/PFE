@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Menu, X, Globe, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import LogoOfHeqder from "../assets/sakanComImage.png";
+import LogoOfHeqder from "../../assets/sakanComImage.png";
+
 function Header() {
   const { t, i18n } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

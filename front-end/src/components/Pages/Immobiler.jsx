@@ -1,9 +1,9 @@
 import { useContext, useMemo } from "react";
-import HeroFilter from "../components/HeroFilter";
-import LeftFilter from "../components/LeftFilter";
-import Results from "../components/Results";
-import { ImmobilierContext } from "../context/ImmobilierContext";
-import { useFilters } from "../context/FilterContext";
+import HeroFilter from "../client/HeroFilter";
+import LeftFilter from "../client/LeftFilter";
+import Results from "../client/Results";
+import { ImmobilierContext } from "../../context/ImmobilierContext";
+import { useFilters } from "../../context/FilterContext";
 
 export default function Immobilier() {
   const { immobilier } = useContext(ImmobilierContext);

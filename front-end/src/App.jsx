@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 import "./App.css";
-import Header from "./components/Header";
+import Header from "./components/client/Header";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import HomePage from "./Pages/HomePage";
-import Footer from "./components/Footer";
-import Immobilier from "./Pages/Immobiler";
+import HomePage from "./components/Pages/HomePage"
+import Footer from "./components/client/Footer";
+import Immobilier from "./components/Pages/Immobiler"
 import AdminLogin from "./components/admin/LoginPage";
 import axios from "axios";
 import Dash from "./components/admin/Dash";
 import { GlobaleContext } from "./context/GlobaleContext";
-import SuccessAlert from "./components/AlertSucc";
+import SuccessAlert from "./components/client/AlertSucc";
 import { UserContext } from "./context/UserContext";
 import RequireAuth from "./midleware/Auth";
-import FailAlert from "./components/FailAlert";
+import FailAlert from "./components/client/FailAlert";
 
 function App() {
   const navigate = useNavigate();
