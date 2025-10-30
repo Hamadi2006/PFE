@@ -19,7 +19,7 @@ function OverviewPage() {
       date: '2024-07-25',
       user: 'Admin 2',
       type: 'user'
-    },
+    }, 
     { 
       activity: 'Demande reçue: Appartement à Casablanca',
       date: '2024-07-24',

@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\ImmobilierController;
 // Route de login admin
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 
+Route::get('/admin/getAdmins', [AdminController::class, 'getAdmins']);
+
 // Routes Immobilier (CRUD)
 Route::prefix('immobilier')->group(function () {
     
@@ -30,19 +32,3 @@ Route::prefix('immobilier')->group(function () {
 });
 
 
-// ============================================
-// IMPORTANT: Déplacer le contrôleur
-// ============================================
-/*
-Votre contrôleur est dans: 
-app/Http/Controllers/Api/ImmobilierController.php
-
-Il faut le déplacer vers:
-app/Http/Controllers/ImmobilierController.php
-
-OU changer le namespace dans le contrôleur:
-
-De:   namespace App\Http\Controllers\Api;
-Vers: namespace App\Http\Controllers;
-
-*/

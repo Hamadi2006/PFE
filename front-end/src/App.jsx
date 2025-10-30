@@ -25,7 +25,7 @@ function App() {
     alertMsg,
     setAlertMsg,
   } = useContext(GlobaleContext);
-  const { user, setUser, token, setToken } = useContext(UserContext);
+  const { user, setUser, token, setToken, admins } = useContext(UserContext);
 
   // Fonction d’authentification admin
   function AuthAdmin(objet) {
@@ -75,8 +75,7 @@ function App() {
       });
   }
 
-  console.log("Current user in App component:", user);
-  console.log("Current token in App component:", token);
+  console.log(admins)
 
   return (
     <>

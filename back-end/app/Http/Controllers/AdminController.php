@@ -8,6 +8,11 @@ use App\Models\Admin;
 
 class AdminController extends Controller
 {
+    public function getAdmins(){
+        return Admin::all();
+    }
+
+
     public function login(Request $request)
     {
         $request->validate([
