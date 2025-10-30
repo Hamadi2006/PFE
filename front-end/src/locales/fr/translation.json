@@ -325,5 +325,40 @@
     "mapUnavailable": "Carte non disponible",
     "noCoordinates": "Coordonnées GPS non fournies",
     "location": "Localisation"
+  },
+  "overview": {
+    "title": "Vue d'ensemble",
+    "subtitle": "Bienvenue sur votre tableau de bord",
+    "stats": {
+      "totalProperties": "Total Propriétés",
+      "administrators": "Administrateurs",
+      "openRequests": "Demandes Ouvertes",
+      "availableProperties": "Propriétés Disponibles",
+      "forSale": "En Vente",
+      "forRent": "En Location",
+      "properties": "biens"
+    },
+    "distributionByType": "Répartition par type",
+    "recentActivities": "Activités Récentes",
+    "propertyTypes": {
+      "appartement": "Appartement",
+      "villa": "Villa",
+      "maison": "Maison",
+      "terrain": "Terrain",
+      "commerce": "Commerce",
+      "bureau": "Bureau"
+    },
+    "activities": {
+      "noActivity": "Aucune activité récente",
+      "system": "Système",
+      "newProperty": "Nouvelle propriété",
+      "in": "à"
+    },
+    "table": {
+      "type": "Type",
+      "activity": "Activité",
+      "date": "Date",
+      "user": "Utilisateur"
+    }
   }
 }

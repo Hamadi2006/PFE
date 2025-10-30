@@ -273,5 +273,40 @@
     "mapUnavailable": "Map Unavailable",
     "noCoordinates": "GPS coordinates not provided",
     "location": "Location"
+  },
+  "overview": {
+    "title": "Overview",
+    "subtitle": "Welcome to your dashboard",
+    "stats": {
+      "totalProperties": "Total Properties",
+      "administrators": "Administrators",
+      "openRequests": "Open Requests",
+      "availableProperties": "Available Properties",
+      "forSale": "For Sale",
+      "forRent": "For Rent",
+      "properties": "properties"
+    },
+    "distributionByType": "Distribution by Type",
+    "recentActivities": "Recent Activities",
+    "propertyTypes": {
+      "appartement": "Apartment",
+      "villa": "Villa",
+      "maison": "House",
+      "terrain": "Land",
+      "commerce": "Commercial",
+      "bureau": "Office"
+    },
+    "activities": {
+      "noActivity": "No recent activity",
+      "system": "System",
+      "newProperty": "New property",
+      "in": "in"
+    },
+    "table": {
+      "type": "Type",
+      "activity": "Activity",
+      "date": "Date",
+      "user": "User"
+    }
   }
 }

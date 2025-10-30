@@ -306,5 +306,40 @@
     "mapUnavailable": "الخريطة غير متوفرة",
     "noCoordinates": "إحداثيات GPS غير متوفرة",
     "location": "الموقع"
+  },
+  "overview": {
+    "title": "نظرة عامة",
+    "subtitle": "مرحبا بك في لوحة التحكم",
+    "stats": {
+      "totalProperties": "إجمالي العقارات",
+      "administrators": "المسؤولون",
+      "openRequests": "الطلبات المفتوحة",
+      "availableProperties": "العقارات المتاحة",
+      "forSale": "للبيع",
+      "forRent": "للإيجار",
+      "properties": "عقار"
+    },
+    "distributionByType": "التوزيع حسب النوع",
+    "recentActivities": "الأنشطة الأخيرة",
+    "propertyTypes": {
+      "appartement": "شقة",
+      "villa": "فيلا",
+      "maison": "منزل",
+      "terrain": "أرض",
+      "commerce": "تجاري",
+      "bureau": "مكتب"
+    },
+    "activities": {
+      "noActivity": "لا توجد أنشطة حديثة",
+      "system": "النظام",
+      "newProperty": "عقار جديد",
+      "in": "في"
+    },
+    "table": {
+      "type": "النوع",
+      "activity": "النشاط",
+      "date": "التاريخ",
+      "user": "المستخدم"
+    }
   }
 }
