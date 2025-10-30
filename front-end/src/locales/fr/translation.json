@@ -272,5 +272,58 @@
     "message": "Voulez-vous vraiment supprimer",
     "delete": "Supprimer",
     "cancel": "Annuler"
+  },
+  "additionalDetails": {
+    "title": "Détails Supplémentaires",
+    "type": "Type",
+    "yearConstruction": "Année Construction",
+    "floor": "Étage",
+    "groundFloor": "Rez-de-chaussée",
+    "state": "État",
+    "available": "Disponible",
+    "notAvailable": "Non disponible",
+    "reference": "Référence"
+  },
+  "propertyAmenities": {
+    "title": "Équipements",
+    "pool": "Piscine",
+    "garden": "Jardin",
+    "parking": "Parking",
+    "elevator": "Ascenseur",
+    "airConditioning": "Climatisation"
+  },
+    "contactCard": {
+    "negotiablePrice": "Prix négociable",
+    "fullName": "Nom Complet",
+    "email": "Email",
+    "phone": "Téléphone",
+    "message": "Message...",
+    "sendRequest": "Envoyer une Demande",
+    "call": "Appeler",
+    "whatsapp": "WhatsApp",
+    "contactedBy": "Contacté par:",
+    "realEstateAgent": "Agent Immobilier"
+  },
+  "keyFeatures": {
+    "bedrooms": "Chambres",
+    "bedroom": "Chambre",
+    "bathrooms": "Salles de bain",
+    "bathroom": "Salle de bain",
+    "squareMeters": "m²",
+    "gardenAvailable": "Jardin disponible",
+    "noGarden": "Sans jardin"
+  },
+  "imageGallery": {
+    "new": "Nouveau",
+    "forSale": "À Vendre",
+    "forRent": "À Louer",
+    "share": "Partager",
+    "favorite": "Favori",
+    "imageAlt": "Image"
+  },
+   "propertyMap": {
+    "mapUnavailable": "Carte non disponible",
+    "noCoordinates": "Coordonnées GPS non fournies",
+    "location": "Localisation"
   }
 }

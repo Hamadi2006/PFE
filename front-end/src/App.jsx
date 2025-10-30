@@ -13,6 +13,7 @@ import SuccessAlert from "./components/client/AlertSucc";
 import { UserContext } from "./context/UserContext";
 import RequireAuth from "./midleware/Auth";
 import FailAlert from "./components/client/FailAlert";
+import InfoPage from "./components/Pages/InfoPage";
 
 function App() {
   const navigate = useNavigate();
@@ -103,6 +104,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/immobilier" element={<Immobilier />} />
+                <Route path="/immobilier/:id" element={<InfoPage />} />
               </Routes>
               <Footer />
             </>

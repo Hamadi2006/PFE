@@ -1,4 +1,5 @@
 import React from 'react';
+import { Check } from "lucide-react";
 import { InputError } from './InputError';
 
 export const FormFileUpload = ({
@@ -32,17 +33,24 @@ export const FormFileUpload = ({
       <InputError error={touched && error} />
       
       {file && (
-        <p className="text-xs text-green-600 mt-1">
-          ✓ {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
+        <p className="text-xs text-green-600 mt-1 flex items-center">
+          <Check className="w-4 h-4 mr-1" />
+          {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
         </p>
       )}
       
       {files && files.length > 0 && (
         <div className="mt-2">
-          <p className="text-xs text-green-600">✓ {files.length} image(s) sélectionnée(s)</p>
+          <p className="text-xs text-green-600 flex items-center">
+            <Check className="w-4 h-4 mr-1" />
+            {files.length} image(s) sélectionnée(s)
+          </p>
           <ul className="text-xs text-slate-600 mt-1 space-y-1">
             {files.map((img, idx) => (
-              <li key={idx}>• {img.name} ({(img.size / 1024 / 1024).toFixed(2)} MB)</li>
+              <li key={idx} className="flex items-center">
+                <Check className="w-4 h-4 mr-1 text-slate-400" />
+                {img.name} ({(img.size / 1024 / 1024).toFixed(2)} MB)
+              </li>
             ))}
           </ul>
         </div>

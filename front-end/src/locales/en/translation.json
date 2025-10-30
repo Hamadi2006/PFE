@@ -220,5 +220,58 @@
     "message": "Do you really want to delete", 
     "delete": "Delete", 
     "cancel": "Cancel" 
+  },
+  "additionalDetails": {
+    "title": "Additional Details",
+    "type": "Type",
+    "yearConstruction": "Year of Construction",
+    "floor": "Floor",
+    "groundFloor": "Ground Floor",
+    "state": "Status",
+    "available": "Available",
+    "notAvailable": "Not Available",
+    "reference": "Reference"
+  },
+    "propertyAmenities": {
+    "title": "Amenities",
+    "pool": "Pool",
+    "garden": "Garden",
+    "parking": "Parking",
+    "elevator": "Elevator",
+    "airConditioning": "Air Conditioning"
+  },
+  "contactCard": {
+    "negotiablePrice": "Negotiable Price",
+    "fullName": "Full Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message...",
+    "sendRequest": "Send Request",
+    "call": "Call",
+    "whatsapp": "WhatsApp",
+    "contactedBy": "Contacted by:",
+    "realEstateAgent": "Real Estate Agent"
+  },
+  "keyFeatures": {
+    "bedrooms": "Bedrooms",
+    "bedroom": "Bedroom",
+    "bathrooms": "Bathrooms",
+    "bathroom": "Bathroom",
+    "squareMeters": "m²",
+    "gardenAvailable": "Garden Available",
+    "noGarden": "No Garden"
+  },
+  "imageGallery": {
+    "new": "New",
+    "forSale": "For Sale",
+    "forRent": "For Rent",
+    "share": "Share",
+    "favorite": "Favorite",
+    "imageAlt": "Image"
+  },
+  "propertyMap": {
+    "mapUnavailable": "Map Unavailable",
+    "noCoordinates": "GPS coordinates not provided",
+    "location": "Location"
   }
 }

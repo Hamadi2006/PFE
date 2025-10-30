@@ -253,5 +253,58 @@
     "message": "هل تريد حقًا حذف",
     "delete": "حذف",
     "cancel": "إلغاء"
+  },
+  "additionalDetails": {
+    "title": "تفاصيل إضافية",
+    "type": "النوع",
+    "yearConstruction": "سنة البناء",
+    "floor": "الطابق",
+    "groundFloor": "الطابق الأرضي",
+    "state": "الحالة",
+    "available": "متاح",
+    "notAvailable": "غير متاح",
+    "reference": "المرجع"
+  },
+   "propertyAmenities": {
+    "title": "المرافق",
+    "pool": "مسبح",
+    "garden": "حديقة",
+    "parking": "موقف سيارات",
+    "elevator": "مصعد",
+    "airConditioning": "تكييف"
+  },
+   "contactCard": {
+    "negotiablePrice": "السعر قابل للتفاوض",
+    "fullName": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "message": "رسالة...",
+    "sendRequest": "إرسال طلب",
+    "call": "اتصل",
+    "whatsapp": "واتساب",
+    "contactedBy": "للتواصل مع:",
+    "realEstateAgent": "وكيل عقاري"
+  },
+  "keyFeatures": {
+    "bedrooms": "غرف نوم",
+    "bedroom": "غرفة نوم",
+    "bathrooms": "حمامات",
+    "bathroom": "حمام",
+    "squareMeters": "م²",
+    "gardenAvailable": "حديقة متوفرة",
+    "noGarden": "بدون حديقة"
+  },
+  "imageGallery": {
+    "new": "جديد",
+    "forSale": "للبيع",
+    "forRent": "للإيجار",
+    "share": "مشاركة",
+    "favorite": "المفضلة",
+    "imageAlt": "صورة"
+  },
+  "propertyMap": {
+    "mapUnavailable": "الخريطة غير متوفرة",
+    "noCoordinates": "إحداثيات GPS غير متوفرة",
+    "location": "الموقع"
   }
 }
