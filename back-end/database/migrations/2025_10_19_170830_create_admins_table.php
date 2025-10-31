@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('email')->unique();
+            $table->string('role')->nullable()->default('sous_administrateur');
             $table->string('mot_de_passe');
             $table->string('telephone', 20)->nullable();
             $table->string('photo')->nullable();

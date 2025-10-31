@@ -37,4 +37,38 @@ class AdminController extends Controller
             'status' => 200,
         ], 201); 
     }
+     public function destroy($id)
+    {
+        try {
+            $admin = Admin::findOrFail($id);
+            $admin->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Admin supprimé avec succès'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Admin non trouvé',
+                'error' => $e->getMessage()
+            ], 404);
+        }
+    }
+    public function StoreAdmin(Request $request){
+       $validation =  $request->validate([
+            'nom' => 'required|string',
+            'prenom' => 'required|string',
+            'email' => 'required|email|unique:admins',
+            'mot_de_passe' => 'required|string|min:8',
+            'telephone' => 'required|string',
+            'role' => 'required|string',
+        ]);
+        $admin = Admin::create($validation) ; 
+        if($admin){
+            return response()->json(['message' => 'Admin created successfully'], 201);
+        }else{
+            return response()->json(['message' => 'Admin not created'], 400);
+        }
+    }
 }

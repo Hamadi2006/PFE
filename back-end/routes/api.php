@@ -12,6 +12,11 @@ Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.logi
 
 Route::get('/admin/getAdmins', [AdminController::class, 'getAdmins']);
 
+Route::delete('/admin/{id}', [AdminController::class, 'destroy']);
+
+Route::post('/admin/storeAdmin', [AdminController::class, 'StoreAdmin']);
+
+
 // Routes Immobilier (CRUD)
 Route::prefix('immobilier')->group(function () {
     

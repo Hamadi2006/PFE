@@ -308,5 +308,48 @@
       "date": "Date",
       "user": "User"
     }
+  },
+  "admins": {
+    "title": "Administrators",
+    "subtitle": "Manage administrator accounts",
+    "addButton": "Add Administrator",
+    "stats": {
+      "totalAdmins": "Total Admins",
+      "activeAdmins": "Active Admins",
+      "recentlyAdded": "Recently Added"
+    },
+    "list": {
+      "title": "List of Administrators"
+    },
+    "table": {
+      "admin": "Administrator",
+      "contact": "Contact",
+      "role": "Role",
+      "createdAt": "Created At",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "empty": {
+      "title": "No Administrators",
+      "subtitle": "Start by adding your first administrator"
+    },
+    "modal": {
+      "title": "Add Administrator",
+      "personalInfo": "Personal Information",
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "security": "Security",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "passwordHint": "Minimum 8 characters",
+      "role": "Role",
+      "cancel": "Cancel",
+      "submit": "Add Administrator",
+      "adding": "Adding..."
+    }
   }
 }
