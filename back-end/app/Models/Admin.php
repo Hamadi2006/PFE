@@ -13,6 +13,7 @@ class Admin extends Authenticatable
     protected $table = 'admins';
 
     protected $fillable = [
+        "photo",
         'nom',
         'prenom',
         'email',

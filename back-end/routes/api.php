@@ -16,6 +16,7 @@ Route::delete('/admin/{id}', [AdminController::class, 'destroy']);
 
 Route::post('/admin/storeAdmin', [AdminController::class, 'StoreAdmin']);
 
+Route::post("/admin/store", [AdminController::class, "StoreAdmin"]);
 
 // Routes Immobilier (CRUD)
 Route::prefix('immobilier')->group(function () {
