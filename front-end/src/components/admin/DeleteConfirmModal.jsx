@@ -1,17 +1,19 @@
 // modals/DeleteConfirmModal.jsx
 import { AlertCircle, X } from 'lucide-react';
 import axios from 'axios';
-import { useState } from 'react';
-import {useContext} from 'react';
+import { useState, useContext } from 'react';
 import { GlobaleContext } from "../../context/GlobaleContext";
+
 export default function DeleteConfirmModal({ admin, onClose }) {
   const [loading, setLoading] = useState(false);
-  const {alertSucc,
-        setAlertSucc,
-        alertFail,
-        setAlertFail,
-        alertMsg,
-        setAlertMsg} = useContext(GlobaleContext);
+  const {
+    alertSucc,
+    setAlertSucc,
+    alertFail,
+    setAlertFail,
+    alertMsg,
+    setAlertMsg
+  } = useContext(GlobaleContext);
 
   const handleConfirmDelete = async () => {
     setLoading(true);
@@ -26,13 +28,14 @@ export default function DeleteConfirmModal({ admin, onClose }) {
       }, 2000);
       window.location.reload();
     } catch (error) {
+      console.error('Erreur lors de la suppression:', error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-30 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 backdrop-blur-md bg-opacity-0 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
         {/* Header */}
         <div className="bg-red-50 border-b border-red-200 p-6 flex justify-between items-center">

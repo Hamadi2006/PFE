@@ -18,6 +18,8 @@ Route::post('/admin/storeAdmin', [AdminController::class, 'StoreAdmin']);
 
 Route::post("/admin/store", [AdminController::class, "StoreAdmin"]);
 
+Route::post("/admin/{id}", [AdminController::class, "update"]);
+
 // Routes Immobilier (CRUD)
 Route::prefix('immobilier')->group(function () {
     

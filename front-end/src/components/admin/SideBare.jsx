@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   Home,
   Building2,
@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/sakanComImage.png";
 import { GlobaleContext } from "../../context/GlobaleContext";
-import { useContext } from "react";
+
 function Sidebar({ activePage, setActivePage }) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -30,6 +30,7 @@ function Sidebar({ activePage, setActivePage }) {
     alertMsg,
     setAlertMsg,
   } = useContext(GlobaleContext);
+
   const menuItems = [
     { id: "overview", label: t("sidebar.overview"), icon: Home },
     { id: "properties", label: t("sidebar.properties"), icon: Building2 },
@@ -93,7 +94,7 @@ function Sidebar({ activePage, setActivePage }) {
       {/* Overlay for mobile */}
       {isOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-30 z-30 transition-opacity"
+          className="lg:hidden fixed inset-0 backdrop-blur-md bg-opacity-0 z-30 transition-opacity"
           onClick={() => setIsOpen(false)}
         />
       )}
