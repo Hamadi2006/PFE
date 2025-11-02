@@ -103,7 +103,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/immobilier" element={<Immobilier />} />
-                <Route path="/immobilier/:id" element={<InfoPage />} />
+                <Route path="/immobilier/:id/information" element={<InfoPage />} />
               </Routes>
               <Footer />
             </>
@@ -112,12 +112,12 @@ function App() {
 
         {/* Backoffice */}
         <Route
-          path="/backoffise/admin/adminPage/authentification"
+          path="/ad-login"
           element={<AdminLogin AuthAdmin={AuthAdmin} />}
         />
 
         <Route
-          path="/backoffise/admin/adminPage/dashboard"
+          path="/ad-dashboard"
           element={
             <RequireAuth>
               <Dash />

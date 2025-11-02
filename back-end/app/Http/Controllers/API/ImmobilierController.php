@@ -202,87 +202,95 @@ class ImmobilierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $immobilier = Immobilier::find($id);
+    $immobilier = Immobilier::find($id);
 
-        if (!$immobilier) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Immobilier non trouvé'
-            ], 404);
-        }
-
-        // Validation rules (same as store)
-        $validator = Validator::make($request->all(), [
-            'titre' => 'sometimes|required|string|min:5|max:200',
-            'type' => 'sometimes|required|in:appartement,maison,villa,studio,terrain,bureau,commerce',
-            'transaction' => 'sometimes|required|in:vente,location',
-            'prix' => 'sometimes|required|numeric|min:0',
-            'surface' => 'sometimes|required|numeric|min:0',
-            'ville' => 'sometimes|required|string|min:2|max:100',
-            'description' => 'nullable|string|max:2000',
-            'adresse' => 'nullable|string|max:255',
-            'latitude' => 'nullable|numeric|between:-90,90',
-            'longitude' => 'nullable|numeric|between:-180,180',
-            'chambres' => 'nullable|integer|min:0|max:50',
-            'salles_de_bain' => 'nullable|integer|min:0|max:20',
-            'annee_construction' => 'nullable|integer|min:1800|max:' . (date('Y') + 5),
-            'etage' => 'nullable|integer|min:-5|max:200',
-            'nombre_etages' => 'nullable|integer|min:1|max:200',
-            'statut' => 'nullable|in:disponible,reserve,vendu,loue',
-            'piscine' => 'nullable|boolean',
-            'jardin' => 'nullable|boolean',
-            'parking' => 'nullable|boolean',
-            'ascenseur' => 'nullable|boolean',
-            'climatisation' => 'nullable|boolean',
-            'en_vedette' => 'nullable|boolean',
-            'nom_contact' => 'nullable|string|max:100',
-            'telephone_contact' => 'nullable|string|max:20',
-            'email_contact' => 'nullable|email|max:100',
-            'image_principale' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
-            'images.*' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
-            
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Erreur de validation',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        try {
-            $immobilier->update($request->except(['image_principale', 'images']));
-
-            // Handle image updates if needed
-            if ($request->hasFile('image_principale')) {
-                // Delete old image
-                if ($immobilier->image_principale) {
-                    Storage::disk('public')->delete($immobilier->image_principale);
-                }
-                
-                // Upload new image
-                $imagePrincipale = $request->file('image_principale');
-                $imageName = 'immobilier_' . Str::random(20) . '.' . $imagePrincipale->getClientOriginalExtension();
-                $imagePath = $imagePrincipale->storeAs('immobilier/principales', $imageName, 'public');
-                $immobilier->image_principale = $imagePath;
-                $immobilier->save();
-            }
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Immobilier mis à jour avec succès',
-                'data' => $immobilier
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Une erreur est survenue lors de la mise à jour',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+    if (!$immobilier) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Immobilier non trouvé'
+        ], 404);
     }
+
+    // Validation rules (same as store)
+    $validator = Validator::make($request->all(), [
+        'titre' => 'sometimes|required|string|min:5|max:200',
+        'type' => 'sometimes|required|in:appartement,maison,villa,studio,terrain,bureau,commerce',
+        'transaction' => 'sometimes|required|in:vente,location',
+        'prix' => 'sometimes|required|numeric|min:0',
+        'surface' => 'sometimes|required|numeric|min:0',
+        'ville' => 'sometimes|required|string|min:2|max:100',
+        'description' => 'nullable|string|max:2000',
+        'adresse' => 'nullable|string|max:255',
+        'latitude' => 'nullable|numeric|between:-90,90',
+        'longitude' => 'nullable|numeric|between:-180,180',
+        'chambres' => 'nullable|integer|min:0|max:50',
+        'salles_de_bain' => 'nullable|integer|min:0|max:20',
+        'annee_construction' => 'nullable|integer|min:1800|max:' . (date('Y') + 5),
+        'etage' => 'nullable|integer|min:-5|max:200',
+        'nombre_etages' => 'nullable|integer|min:1|max:200',
+        'statut' => 'nullable|in:disponible,reserve,vendu,loue',
+        'piscine' => 'nullable|boolean',
+        'jardin' => 'nullable|boolean',
+        'parking' => 'nullable|boolean',
+        'ascenseur' => 'nullable|boolean',
+        'climatisation' => 'nullable|boolean',
+        'en_vedette' => 'nullable|boolean',
+        'nom_contact' => 'nullable|string|max:100',
+        'telephone_contact' => 'nullable|string|max:20',
+        'email_contact' => 'nullable|email|max:100',
+        'image_principale' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+        'images.*' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Erreur de validation',
+            'errors' => $validator->errors()
+        ], 422);
+    }
+
+    try {
+        // Préparer les données à mettre à jour (exclure les fichiers)
+        $dataToUpdate = $request->except(['image_principale', 'images']);
+        
+        // Mettre à jour les coordonnées si elles sont fournies
+        if ($request->has('latitude') && $request->has('longitude')) {
+            $dataToUpdate['latitude'] = $request->input('latitude');
+            $dataToUpdate['longitude'] = $request->input('longitude');
+        }
+        
+        $immobilier->update($dataToUpdate);
+
+        // Handle image updates if needed
+        if ($request->hasFile('image_principale')) {
+            // Delete old image
+            if ($immobilier->image_principale) {
+                Storage::disk('public')->delete($immobilier->image_principale);
+            }
+            
+            // Upload new image
+            $imagePrincipale = $request->file('image_principale');
+            $imageName = 'immobilier_' . Str::random(20) . '.' . $imagePrincipale->getClientOriginalExtension();
+            $imagePath = $imagePrincipale->storeAs('immobilier/principales', $imageName, 'public');
+            $immobilier->image_principale = $imagePath;
+            $immobilier->save();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Immobilier mis à jour avec succès',
+            'data' => $immobilier
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Une erreur est survenue lors de la mise à jour',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
 
     /**
      * Delete a property

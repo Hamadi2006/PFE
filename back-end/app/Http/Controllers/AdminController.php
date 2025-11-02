@@ -141,7 +141,7 @@ class AdminController extends Controller
                 'prenom' => 'sometimes|required|string|max:255',
                 'email' => 'sometimes|required|email|unique:admins,email,' . $id,
                 'telephone' => 'sometimes|nullable|string|max:20',
-                'role' => 'sometimes|required|string|in:admin,super_admin,sous_administrateur,moderateur',
+                'role' => 'sometimes|required|string|in:Admin,Sous_administrateur',
                 'actif' => 'sometimes|boolean',
                 'photo' => 'sometimes|nullable|image|mimes:jpeg,jpg,png,gif|max:5120', // 5MB max
                 'mot_de_passe' => 'sometimes|nullable|string|min:8',
@@ -168,10 +168,13 @@ class AdminController extends Controller
                 // Ne pas mettre à jour le mot de passe s'il n'est pas fourni
                 unset($validation['mot_de_passe']);
             }
-
+            
             // Convertir 'actif' en boolean si présent
             if (isset($validation['actif'])) {
                 $validation['actif'] = (bool) $validation['actif'];
+            }
+            if ($request->filled('role')) {
+                $validation['role'] = $request->input('role');
             }
 
             // Mettre à jour l'admin

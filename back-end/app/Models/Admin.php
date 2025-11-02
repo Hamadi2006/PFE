@@ -21,7 +21,10 @@ class Admin extends Authenticatable
         'telephone',
         'photo',
         'actif',
-        'derniere_connexion'
+        'derniere_connexion',
+        'role',
+        'latitude',
+        'longitude',
     ];
 
     protected $hidden = [

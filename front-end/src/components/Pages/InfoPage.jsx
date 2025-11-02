@@ -87,6 +87,8 @@ const InfoPage = () => {
               <PropertyMap
                 ville={propertyData.ville}
                 adresse={propertyData.adresse}
+                latitude={propertyData.latitude}
+                longitude={propertyData.longitude}
               />
               <ContactCard
                 prix={propertyData.prix}

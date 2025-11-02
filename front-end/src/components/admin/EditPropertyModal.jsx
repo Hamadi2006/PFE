@@ -195,19 +195,63 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
             </div>
           </div>
 
-          {/* Adresse */}
+          {/* Adresse et Localisation */}
           <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              <MapPin className="w-4 h-4 inline mr-1" />
-              Adresse complète
+            <label className="block text-sm font-medium text-slate-700 mb-3 flex items-center gap-2">
+              <MapPin className="w-4 h-4" />
+              Localisation
             </label>
-            <input
-              type="text"
-              name="adresse"
-              value={formData.adresse}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-            />
+            
+            <div className="space-y-3">
+              {/* Adresse */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Adresse complète
+                </label>
+                <input
+                  type="text"
+                  name="adresse"
+                  value={formData.adresse}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              {/* Coordonnées GPS */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Latitude
+                  </label>
+                  <input
+                    type="number"
+                    name="latitude"
+                    value={formData.latitude}
+                    onChange={handleInputChange}
+                    step="0.000001"
+                    placeholder="Ex: 33.9716"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                  />
+                  <p className="text-xs text-slate-500 mt-1">Entre -90 et 90</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Longitude
+                  </label>
+                  <input
+                    type="number"
+                    name="longitude"
+                    value={formData.longitude}
+                    onChange={handleInputChange}
+                    step="0.000001"
+                    placeholder="Ex: -6.8699"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                  />
+                  <p className="text-xs text-slate-500 mt-1">Entre -180 et 180</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Description */}

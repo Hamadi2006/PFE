@@ -60,14 +60,14 @@ export default function UpdateAdminModal({ admin, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    console.log('Form Data:', formData);
     try {
       const data = new FormData();
       data.append('nom', formData.nom);
       data.append('prenom', formData.prenom);
       data.append('email', formData.email);
       data.append('telephone', formData.telephone);
-      data.append('role', formData.role);
+      data.append('role', formData.role); // ✅ AJOUTÉ - Role est maintenant envoyé
       data.append('actif', formData.actif ? 1 : 0);
       
       if (formData.password && formData.password.trim() !== '') {
@@ -338,10 +338,8 @@ export default function UpdateAdminModal({ admin, onClose }) {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 >
-                  <option value="admin">{t('updateAdmin.roles.admin')}</option>
-                  <option value="super_admin">{t('updateAdmin.roles.superAdmin')}</option>
-                  <option value="sous_administrateur">{t('updateAdmin.roles.subAdmin')}</option>
-                  <option value="moderateur">{t('updateAdmin.roles.moderator')}</option>
+                  <option value="Admin">{t('updateAdmin.roles.admin')}</option>
+                  <option value="Sous_administrateur">{t('updateAdmin.roles.subAdmin')}</option>
                 </select>
               </div>
 
