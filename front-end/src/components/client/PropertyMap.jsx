@@ -64,8 +64,8 @@ const PropertyMap = ({ ville: city, adresse: address, latitude, longitude }) => 
         <Marker position={[lat, lng]} icon={customMarker}>
           <Popup>
             <div className="text-sm">
-              <p className="font-semibold">{city}</p>
-              <p className="text-xs">{address}</p>
+              <p className="font-semibold">{city?.toUpperCase()}</p>
+              <p className="text-xs">{address?.toUpperCase()}</p>
             </div>
           </Popup>
         </Marker>

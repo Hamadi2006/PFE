@@ -33,7 +33,7 @@ const EstimationForm = () => {
     <section className="py-20 bg-white">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
-          <span className="inline-block px-4 py-2 bg-cyan-600 bg-opacity-10 text-cyan-600 rounded-full text-sm font-semibold mb-4">
+          <span className="inline-block px-4 py-2 bg-cyan-600 bg-opacity-10 text-white-600 rounded-full text-sm font-semibold mb-4">
             {t("header.subtitle")}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
