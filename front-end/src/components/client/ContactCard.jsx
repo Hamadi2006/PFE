@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MessageCircle } from "lucide-react";
-
-const ContactCard = ({ prix = 0, telephone_contact = '', email_contact = '', nom_contact = '' }) => {
+import axios from "axios" ; 
+const ContactCard = ({ prix = 0, telephone_contact = '', email_contact = '', nom_contact = '',immobilier }) => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    message: ''
+    message: '',
+    immobilier_id: immobilier.id
   });
 
   const handleSubmit = (e) => {

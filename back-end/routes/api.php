@@ -5,7 +5,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Api\ImmobilierController; 
+use App\Http\Controllers\Api\ImmobilierController;
+use App\Http\Controllers\DemandesController;
 
 // Route de login admin
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
@@ -37,6 +38,10 @@ Route::prefix('immobilier')->group(function () {
     
     // DELETE /api/immobilier/{id} - Supprimer une annonce
     Route::delete('/{id}', [ImmobilierController::class, 'destroy']);
-});
+
+
+}
+);
+Route::post('/demande', [DemandesController::class, 'store']);
 
 

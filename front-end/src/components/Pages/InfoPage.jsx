@@ -91,6 +91,7 @@ const InfoPage = () => {
                 longitude={propertyData.longitude}
               />
               <ContactCard
+              immobilier={propertyData}
                 prix={propertyData.prix}
                 telephone_contact={propertyData.telephone_contact}
                 email_contact={propertyData.email_contact}
