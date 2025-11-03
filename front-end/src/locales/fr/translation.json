@@ -55,7 +55,7 @@
     "title": "Prêt à Trouver Votre Bien Idéal ?",
     "subtitle": "Rejoignez des milliers de clients satisfaits et trouvez la propriété de vos rêves.",
     "browse": "Parcourir les Offres",
-    "estimate": "Ajouter votre propre immobilier"
+    "estimate": "Ajouter votre propre"
   },
 
   "footer": {
@@ -449,5 +449,150 @@
     "updating": "Mise à jour...",
     "successMessage": "Administrateur mis à jour avec succès !",
     "errorMessage": "Erreur lors de la mise à jour de l'administrateur."
+  },
+  "main_services": {
+    "sale": {
+      "title": "Vente",
+      "description": "Vendez votre bien immobilier rapidement et au meilleur prix grâce à notre réseau d'acheteurs qualifiés.",
+      "button": "En Savoir Plus"
+    },
+    "rent": {
+      "title": "Location",
+      "description": "Trouvez le locataire idéal pour votre propriété avec notre service de gestion locative complète.",
+      "button": "En Savoir Plus"
+    },
+    "estimate": {
+      "title": "Estimation",
+      "description": "Obtenez une estimation gratuite et précise de votre bien par nos experts certifiés.",
+      "button": "Estimer Mon Bien"
+    },
+    "advice": {
+      "title": "Conseil",
+      "description": "Bénéficiez de l'accompagnement personnalisé de nos conseillers immobiliers experts.",
+      "button": "Nous Contacter"
+    }
+  },
+  "detailed_service": {
+    "manage_button": "Gérer Ma Location",
+    "sell_button": "Vendre Mon Bien"
+  },
+  "service_section": {
+    "sale": {
+      "subtitle": "Service de Vente",
+      "title": "Vendez votre bien immobilier facilement",
+      "description": "Nous vous accompagnons à chaque étape, de l’évaluation à la signature.",
+      "features": [
+        { "title": "Évaluation Gratuite", "description": "Analyse complète du marché local." },
+        { "title": "Visibilité Maximale", "description": "Diffusion sur plus de 30 plateformes partenaires." },
+        { "title": "Accompagnement Complet", "description": "De la mise en ligne à la vente finale." }
+      ]
+    },
+    "rental": {
+      "subtitle": "Service de Location",
+      "title": "Gérez vos locations sans effort",
+      "description": "Nous trouvons, sélectionnons et gérons vos locataires en toute sécurité.",
+      "features": [
+        { "title": "Sélection rigoureuse", "description": "Vérification des dossiers locataires." },
+        { "title": "Gestion des paiements", "description": "Encaissement et suivi automatisé des loyers." },
+        { "title": "Assistance complète", "description": "Service client dédié 7j/7." }
+      ]
+    }
+  },
+  "vente_subtitle": "VENTE IMMOBILIÈRE",
+  "vente_title": "Vendez Votre Bien en Toute Confiance",
+  "vente_description": "Notre équipe d'experts vous accompagne à chaque étape de la vente de votre propriété pour obtenir le meilleur prix dans les meilleurs délais.",
+  "vente_feature1_title": "Évaluation Professionnelle",
+  "vente_feature1_description": "Estimation précise basée sur le marché actuel.",
+  "vente_feature2_title": "Marketing Ciblé",
+  "vente_feature2_description": "Diffusion sur tous les canaux pertinents.",
+  "vente_feature3_title": "Visites Organisées",
+  "vente_feature3_description": "Gestion complète des visites et des négociations.",
+  "vente_feature4_title": "Accompagnement Juridique",
+  "vente_feature4_description": "Assistance complète jusqu'à la signature.",
+
+  "location_subtitle": "GESTION LOCATIVE",
+  "location_title": "Gestion Locative Sans Souci",
+  "location_description": "Confiez-nous la gestion de votre bien locatif et profitez de revenus réguliers sans les tracas administratifs.",
+  "location_feature1_title": "Sélection des Locataires",
+  "location_feature1_description": "Vérification complète des dossiers et de la solvabilité.",
+  "location_feature2_title": "Rédaction des Baux",
+  "location_feature2_description": "Contrats conformes à la législation marocaine.",
+  "location_feature3_title": "Gestion des Loyers",
+  "location_feature3_description": "Encaissement et suivi des paiements.",
+  "location_feature4_title": "Entretien et Réparations",
+  "location_feature4_description": "Coordination des interventions nécessaires.",
+  "header": {
+    "subtitle": "ESTIMATION GRATUITE",
+    "title": "Estimez Votre Bien en 3 Étapes",
+    "desc": "Obtenez une estimation précise et gratuite de votre propriété en quelques minutes"
+  },
+  "steps": {
+    "fillForm": { "title": "Remplissez le Formulaire", "desc": "Indiquez les caractéristiques de votre bien" },
+    "analysis": { "title": "Analyse du Marché", "desc": "Nos experts analysent les données" },
+    "receive": { "title": "Recevez l'Estimation", "desc": "Rapport détaillé sous 24h" }
+  },
+  "form": {
+    "title": "Demander une Estimation Gratuite",
+    "propertyType": "Type de Bien",
+    "city": "Ville",
+    "surface": "Surface (m²)",
+    "bedrooms": "Chambres",
+    "bathrooms": "Salles de bain",
+    "fullName": "Nom Complet",
+    "phone": "Téléphone",
+    "email": "Email",
+    "placeholder": { "name": "Votre nom" },
+    "submit": "Obtenir Mon Estimation Gratuite"
+  },"faq": {
+    "title": "Questions Fréquentes",
+    "subtitle": "Tout ce que vous devez savoir sur nos services",
+    "questions": [
+      {
+        "q": "Combien de temps faut-il pour vendre un bien ?",
+        "a": "En moyenne, nos biens se vendent en 45 à 60 jours. Ce délai varie selon le type de bien, sa localisation et le prix demandé."
+      },
+      {
+        "q": "L'estimation est-elle vraiment gratuite ?",
+        "a": "Oui, l'estimation est totalement gratuite et sans engagement. Nos experts vous envoient un rapport détaillé sous 24 à 48h."
+      },
+      {
+        "q": "Quels sont les frais annexes lors d'une vente ?",
+        "a": "Les frais incluent généralement nos honoraires (3% + TVA), les frais de notaire (environ 5%) et les diagnostics éventuels."
+      },
+      {
+        "q": "Puis-je changer d'agence si je ne suis pas satisfait ?",
+        "a": "Oui, nos mandats ne sont pas exclusifs sauf demande contraire. Vous pouvez résilier à tout moment avec un préavis de 15 jours."
+      },
+      {
+        "q": "Comment se passe la gestion locative ?",
+        "a": "Nous gérons tout : recherche de locataires, rédaction du bail, encaissement des loyers et suivi des réparations."
+      }
+    ]
+  },
+  "whyChooseUs": {
+    "title": "Pourquoi Choisir SakanCom ?",
+    "subtitle": "15 ans d'expertise au service de vos projets immobiliers",
+    "reasons": [
+      {
+        "icon": "Award",
+        "title": "Expertise Reconnue",
+        "desc": "Plus de 15 ans d'expérience dans l'immobilier marocain"
+      },
+      {
+        "icon": "Users",
+        "title": "Équipe Dédiée",
+        "desc": "Conseillers experts disponibles 7j/7"
+      },
+      {
+        "icon": "ShieldCheck",
+        "title": "Transparence Totale",
+        "desc": "Tarifs clairs, sans frais cachés"
+      },
+      {
+        "icon": "Zap",
+        "title": "Réactivité",
+        "desc": "Réponse sous 24h garantie"
+      }
+    ]
   }
 }

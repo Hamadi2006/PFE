@@ -256,8 +256,8 @@ class ImmobilierController extends Controller
         
         // Mettre à jour les coordonnées si elles sont fournies
         if ($request->has('latitude') && $request->has('longitude')) {
-            $dataToUpdate['latitude'] = $request->input('latitude');
-            $dataToUpdate['longitude'] = $request->input('longitude');
+            $dataToUpdate['latitude'] = $request->latitude;
+            $dataToUpdate['longitude'] = $request->longitude;
         }
         
         $immobilier->update($dataToUpdate);

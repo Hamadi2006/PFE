@@ -397,5 +397,168 @@
     "updating": "Updating...",
     "successMessage": "Administrator updated successfully!",
     "errorMessage": "Error updating administrator."
+  },
+  "services_hero": {
+    "title": "Our Real Estate Services",
+    "subtitle": "Complete and custom solutions for all your real estate needs"
+  },
+  "main_services": {
+    "sale": {
+      "title": "Sale",
+      "description": "Sell your property quickly and at the best price through our network of qualified buyers.",
+      "button": "Learn More"
+    },
+    "rent": {
+      "title": "Rent",
+      "description": "Find the ideal tenant for your property with our complete rental management service.",
+      "button": "Learn More"
+    },
+    "estimate": {
+      "title": "Valuation",
+      "description": "Get a free and accurate property valuation from our certified experts.",
+      "button": "Estimate My Property"
+    },
+    "advice": {
+      "title": "Consulting",
+      "description": "Benefit from personalized support from our expert real estate advisors.",
+      "button": "Contact Us"
+    }
+  },
+  "detailed_service": {
+    "manage_button": "Manage My Rental",
+    "sell_button": "Sell My Property"
+  },
+  "service_section": {
+    "sale": {
+      "subtitle": "Sales Service",
+      "title": "Easily Sell Your Property",
+      "description": "We guide you through every step, from evaluation to signing.",
+      "features": [
+        { "title": "Free Valuation", "description": "Comprehensive local market analysis." },
+        { "title": "Maximum Visibility", "description": "Listed on over 30 partner platforms." },
+        { "title": "Complete Support", "description": "From listing to closing the sale." }
+      ]
+    },
+    "rental": {
+      "subtitle": "Rental Service",
+      "title": "Manage Your Rentals Effortlessly",
+      "description": "We find, screen, and manage your tenants securely.",
+      "features": [
+        { "title": "Strict Tenant Screening", "description": "Complete verification of rental applications." },
+        { "title": "Payment Management", "description": "Automated rent collection and tracking." },
+        { "title": "Full Assistance", "description": "Dedicated support team 7 days a week." }
+      ]
+    }
+  },
+  "vente_subtitle": "PROPERTY SALE",
+  "vente_title": "Sell Your Property with Confidence",
+  "vente_description": "Our team of experts assists you through every stage of the sale to achieve the best price in the shortest time.",
+  "vente_feature1_title": "Professional Evaluation",
+  "vente_feature1_description": "Accurate valuation based on the current market.",
+  "vente_feature2_title": "Targeted Marketing",
+  "vente_feature2_description": "Promotion across all relevant channels.",
+  "vente_feature3_title": "Organized Visits",
+  "vente_feature3_description": "Complete management of visits and negotiations.",
+  "vente_feature4_title": "Legal Support",
+  "vente_feature4_description": "Full assistance up to the final signature.",
+
+  "location_subtitle": "RENTAL MANAGEMENT",
+  "location_title": "Hassle-Free Rental Management",
+  "location_description": "Let us manage your rental property and enjoy regular income without administrative stress.",
+  "location_feature1_title": "Tenant Selection",
+  "location_feature1_description": "Complete verification of tenant applications and solvency.",
+  "location_feature2_title": "Lease Drafting",
+  "location_feature2_description": "Contracts compliant with Moroccan regulations.",
+  "location_feature3_title": "Rent Management",
+  "location_feature3_description": "Collection and tracking of payments.",
+  "location_feature4_title": "Maintenance and Repairs",
+  "location_feature4_description": "Coordination of all necessary interventions.",
+  "estimation": {
+    "title": "Estimate Your Property in 3 Steps",
+    "subtitle": "FREE ESTIMATE",
+    "description": "Get an accurate and free property estimate in just a few minutes",
+    "steps": [
+      { "title": "Fill Out the Form", "desc": "Provide your property details" },
+      { "title": "Market Analysis", "desc": "Our experts review the data" },
+      { "title": "Receive Your Estimate", "desc": "Detailed report within 24 hours" }
+    ],
+    "formTitle": "Request a Free Estimate",
+    "submit": "Get My Free Estimate"
+  },
+  "header": {
+    "subtitle": "FREE ESTIMATE",
+    "title": "Estimate Your Property in 3 Steps",
+    "desc": "Get a free and accurate property valuation in minutes"
+  },
+  "steps": {
+    "fillForm": { "title": "Fill Out the Form", "desc": "Provide your property details" },
+    "analysis": { "title": "Market Analysis", "desc": "Our experts analyze your data" },
+    "receive": { "title": "Receive Your Estimate", "desc": "Detailed report within 24h" }
+  },
+  "form": {
+    "title": "Request a Free Estimate",
+    "propertyType": "Property Type",
+    "city": "City",
+    "surface": "Surface (m²)",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "fullName": "Full Name",
+    "phone": "Phone",
+    "email": "Email",
+    "placeholder": { "name": "Your name" },
+    "submit": "Get My Free Estimate"
+  },
+    "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about our services",
+    "questions": [
+      {
+        "q": "How long does it take to sell a property?",
+        "a": "On average, our properties sell within 45 to 60 days depending on the type, location, and price."
+      },
+      {
+        "q": "Is the property valuation really free?",
+        "a": "Yes, the valuation is 100% free and without obligation. Our experts provide a detailed report within 24–48 hours."
+      },
+      {
+        "q": "What are the additional fees when selling?",
+        "a": "Fees usually include our commission (3% + VAT), notary fees (around 5%), and possible diagnostics."
+      },
+      {
+        "q": "Can I switch agencies if I’m not satisfied?",
+        "a": "Yes, our contracts are non-exclusive unless you request otherwise. You can terminate with 15 days’ notice."
+      },
+      {
+        "q": "How does rental management work?",
+        "a": "We handle everything: tenant search, lease drafting, rent collection, and maintenance management."
+      }
+    ]
+  },
+  "whyChooseUs": {
+    "title": "Why Choose SakanCom?",
+    "subtitle": "15 years of expertise supporting your real estate projects",
+    "reasons": [
+      {
+        "icon": "Award",
+        "title": "Recognized Expertise",
+        "desc": "Over 15 years of experience in the Moroccan real estate market"
+      },
+      {
+        "icon": "Users",
+        "title": "Dedicated Team",
+        "desc": "Expert advisors available 7 days a week"
+      },
+      {
+        "icon": "ShieldCheck",
+        "title": "Full Transparency",
+        "desc": "Clear pricing with no hidden fees"
+      },
+      {
+        "icon": "Zap",
+        "title": "Responsiveness",
+        "desc": "Guaranteed response within 24 hours"
+      }
+    ]
   }
 }
+

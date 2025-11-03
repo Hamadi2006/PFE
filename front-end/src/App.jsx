@@ -14,6 +14,7 @@ import { UserContext } from "./context/UserContext";
 import RequireAuth from "./midleware/Auth";
 import FailAlert from "./components/client/FailAlert";
 import InfoPage from "./components/Pages/InfoPage";
+import ServicePage from "./components/Pages/ServicePage";
 
 function App() {
   const navigate = useNavigate();
@@ -104,6 +105,9 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/immobilier" element={<Immobilier />} />
                 <Route path="/immobilier/:id/information" element={<InfoPage />} />
+                <Route path="*" element={<div>404 Not Found</div>} />
+                <Route path="/services" element={<ServicePage />} />
+
               </Routes>
               <Footer />
             </>

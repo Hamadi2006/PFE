@@ -47,9 +47,9 @@ function Header() {
             <Link to="/immobilier" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
               {t('real_estate')}
             </Link>
-            <a href="#services" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
+            <Link to="/services"href="#services" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
               {t('services')}
-            </a>
+            </Link>
             <a href="#contact" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
               {t('contact')}
             </a>

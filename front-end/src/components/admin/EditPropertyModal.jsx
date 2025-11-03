@@ -91,7 +91,24 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdate(formData, imagePrincipale);
+    
+    // Préparer les données à envoyer
+    const dataToSend = { ...formData };
+    
+    // Convertir latitude et longitude en nombres ou les supprimer si vides
+    if (dataToSend.latitude === "" || dataToSend.latitude === null) {
+      dataToSend.latitude = null;
+    } else {
+      dataToSend.latitude = parseFloat(dataToSend.latitude);
+    }
+    
+    if (dataToSend.longitude === "" || dataToSend.longitude === null) {
+      dataToSend.longitude = null;
+    } else {
+      dataToSend.longitude = parseFloat(dataToSend.longitude);
+    }
+    
+    onUpdate(dataToSend, imagePrincipale);
   };
 
   if (!isOpen || !property) return null;
@@ -219,21 +236,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
 
               {/* Coordonnées GPS */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
-                    Latitude
-                  </label>
-                  <input
-                    type="number"
-                    name="latitude"
-                    value={formData.latitude}
-                    onChange={handleInputChange}
-                    step="0.000001"
-                    placeholder="Ex: 33.9716"
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                  />
-                  <p className="text-xs text-slate-500 mt-1">Entre -90 et 90</p>
-                </div>
+                
 
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">
@@ -249,6 +252,21 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
                     className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                   />
                   <p className="text-xs text-slate-500 mt-1">Entre -180 et 180</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Latitude
+                  </label>
+                  <input
+                    type="number"
+                    name="latitude"
+                    value={formData.latitude}
+                    onChange={handleInputChange}
+                    step="0.000001"
+                    placeholder="Ex: 33.9716"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                  />
+                  <p className="text-xs text-slate-500 mt-1">Entre -90 et 90</p>
                 </div>
               </div>
             </div>
