@@ -11,8 +11,9 @@ export default function Immobilier({ immobilier }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-  const { setAlertSucc, setAlertFail, setAlertMsg } = useContext(GlobaleContext);
+  const admin = JSON.parse(localStorage.getItem("user"));
+  const { setAlertSucc, setAlertFail, setAlertMsg ,    lastActivitys,
+    setLastActivitys,} = useContext(GlobaleContext);
 
   const handleView = (e, property) => {
     e.stopPropagation();
@@ -74,6 +75,7 @@ export default function Immobilier({ immobilier }) {
       );
 
       if (response.data.success) {
+        setLastActivitys([...lastActivitys, {date : new Date(), action : "Modifier une propriete : " + selectedProperty.titre,par : admin.nom_complet}]);
         setAlertMsg("Propriété mise à jour avec succès");
         setAlertSucc(true);
         setIsEditModalOpen(false);
@@ -89,13 +91,14 @@ export default function Immobilier({ immobilier }) {
       setAlertFail(true);
     }
   };
-
+  const admine = JSON.parse(localStorage.getItem("user"));
   const confirmDelete = () => {
     if (!selectedProperty) return;
 
     axios
       .delete(`http://localhost:8000/api/immobilier/${selectedProperty.id}`)
       .then((res) => {
+        setLastActivitys([...lastActivitys, {date : new Date(), action : "Supprimer une propriete ",par : admine.nom_complet}]);
         console.log("Propriété supprimée avec succès", res);
         setAlertMsg("Propriété supprimée avec succès");
         setAlertSucc(true);

@@ -593,6 +593,37 @@
   "delete": "Delete",
   "confirm_delete": "Are you sure you want to delete this request?",
   "delete_success": "Request deleted successfully!",
-  "delete_error": "Error while deleting the request."
+  "delete_error": "Error while deleting the request.",
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your information and preferences",
+    "email": "Email address",
+    "phone": "Phone",
+    "role": "Role",
+    "last_login": "Last login",
+    "language": "Application language"
+  },
+  "settingsL": {
+    "title": "Settings",
+    "subtitle": "Manage your information and preferences",
+    "profile_title": "Administrator Profile",
+    "name": "Last name",
+    "firstname": "First name",
+    "email": "Email address",
+    "phone": "Phone",
+    "role": "Role",
+    "activeSince": "Active",
+    "lastConnection": "Last login",
+    "created_at": "Created at",
+    "language": "Application language",
+    "languageTitle": "Select language",
+    "fr": "French",
+    "en": "English",
+    "ar": "Arabic",
+    "update_success": "Profile updated successfully!",
+    "update_error": "Error updating profile.",
+    "logout": "Logout",
+    "dashboard": "Dashboard"
+  }
 }
 

@@ -37,7 +37,6 @@ function Sidebar({ activePage, setActivePage }) {
     { id: "admins", label: t("sidebar.admins"), icon: Users },
     { id: "requests", label: t("sidebar.requests"), icon: Mail },
     { id: "settings", label: t("sidebar.settings"), icon: Settings },
-    { id: "help", label: t("sidebar.help"), icon: HelpCircle },
     { id: "logout", label: t("sidebar.logout"), icon: LogOut },
   ];
 
@@ -132,44 +131,7 @@ function Sidebar({ activePage, setActivePage }) {
             </div>
 
             {/* Language Selector Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
-                className="w-full flex items-center justify-between gap-2 px-3 py-2 bg-slate-50 rounded-lg border border-slate-200 hover:border-blue-400 transition-colors"
-              >
-                <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 text-blue-600" />
-                  <span className="text-sm font-medium text-slate-700">
-                    {currentLanguage.flag} {currentLanguage.name}
-                  </span>
-                </div>
-                <ChevronDown
-                  size={16}
-                  className={`text-slate-500 transition-transform ${
-                    languageDropdownOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
-              {languageDropdownOpen && (
-                <div className="absolute left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-slate-200 py-2 z-50">
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => handleLanguageChange(lang.code)}
-                      className={`w-full px-4 py-2 text-left hover:bg-blue-50 flex items-center gap-3 transition-colors ${
-                        i18n.language === lang.code
-                          ? "bg-blue-50 text-blue-600"
-                          : "text-slate-700"
-                      }`}
-                    >
-                      <span className="text-xl">{lang.flag}</span>
-                      <span className="font-medium text-sm">{lang.name}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            
           </div>
 
           {/* Navigation */}

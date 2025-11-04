@@ -15,8 +15,10 @@ function RequestsPage() {
     setAlertFail,
     alertMsg,
     setAlertMsg,
+        lastActivitys,
+    setLastActivitys,
   } = useContext(GlobaleContext);
-
+  const admin = JSON.parse(localStorage.getItem('user'));
   const { demandes } = useContext(DemandesContext); 
   const [selectedDemande, setSelectedDemande] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,6 +47,7 @@ function RequestsPage() {
       setAlertSucc(true);
       setAlertMsg(t('delete_success'));
       setTimeout(() => setAlertSucc(false), 3000);
+      setLastActivitys([...lastActivitys, { date: new Date(), action: "Supprimer une demande",par : admin.nom_complet}]);
     } catch (error) {
       console.error(error);
       setAlertFail(true);
@@ -81,7 +84,6 @@ function RequestsPage() {
                         src={`http://localhost:8000/storage/${demande.image_principale}`} 
                         alt={demande.titre}
                         className="w-full h-full object-cover"
-                        onError={(e) => e.target.src = 'https://via.placeholder.com/300x300?text=Image+non+disponible'}
                       />
                     </div>
                   </div>

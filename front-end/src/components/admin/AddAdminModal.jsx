@@ -1,9 +1,9 @@
 // modals/AddAdminModal.jsx
-import { useState, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
-import { X, UserPlus, Users, Shield, Upload, Camera } from 'lucide-react';
-import axios from 'axios';
-import { GlobaleContext } from "../../context/GlobaleContext"
+import { useState, useContext } from "react";
+import { useTranslation } from "react-i18next";
+import { X, UserPlus, Users, Shield, Upload, Camera } from "lucide-react";
+import axios from "axios";
+import { GlobaleContext } from "../../context/GlobaleContext";
 
 export default function AddAdminModal({ onClose }) {
   const { t } = useTranslation();
@@ -14,32 +14,34 @@ export default function AddAdminModal({ onClose }) {
     setAlertFail,
     alertMsg,
     setAlertMsg,
+    lastActivitys,
+    setLastActivitys,
   } = useContext(GlobaleContext);
 
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [formData, setFormData] = useState({
-    nom: '',
-    prenom: '',
-    email: '',
-    mot_de_passe: '',
-    mot_de_passe_confirmation: '',
-    telephone: '',
-    role: 'admin'
+    nom: "",
+    prenom: "",
+    email: "",
+    mot_de_passe: "",
+    mot_de_passe_confirmation: "",
+    telephone: "",
+    role: "admin",
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       // Validate file type
-      if (!file.type.startsWith('image/')) {
-        setAlertMsg('Le fichier n\'est pas une image');
+      if (!file.type.startsWith("image/")) {
+        setAlertMsg("Le fichier n'est pas une image");
         setAlertFail(true);
         setTimeout(() => {
           setAlertFail(false);
@@ -49,7 +51,7 @@ export default function AddAdminModal({ onClose }) {
 
       // Validate file size (5MB max)
       if (file.size > 5 * 1024 * 1024) {
-        setAlertMsg('La taille du fichier dépasse 5MB');
+        setAlertMsg("La taille du fichier dépasse 5MB");
         setAlertFail(true);
         setTimeout(() => {
           setAlertFail(false);
@@ -73,7 +75,7 @@ export default function AddAdminModal({ onClose }) {
     e.preventDefault();
 
     if (!image) {
-      setAlertMsg('Veuillez sélectionner une image');
+      setAlertMsg("Veuillez sélectionner une image");
       setAlertFail(true);
       setTimeout(() => {
         setAlertFail(false);
@@ -82,43 +84,52 @@ export default function AddAdminModal({ onClose }) {
     }
 
     if (formData.mot_de_passe !== formData.mot_de_passe_confirmation) {
-      setAlertMsg('Les mots de passe ne correspondent pas');
+      setAlertMsg("Les mots de passe ne correspondent pas");
       setAlertFail(true);
       setTimeout(() => {
         setAlertFail(false);
       }, 3000);
       return;
     }
-
+    const admin = JSON.parse(localStorage.getItem('user'));
     setLoading(true);
 
     try {
       const data = new FormData();
-      data.append('nom', formData.nom);
-      data.append('prenom', formData.prenom);
-      data.append('email', formData.email);
-      data.append('mot_de_passe', formData.mot_de_passe);
-      data.append('mot_de_passe_confirmation', formData.mot_de_passe_confirmation);
-      data.append('telephone', formData.telephone);
-      data.append('role', formData.role);
-      data.append('photo', image);
+      data.append("nom", formData.nom);
+      data.append("prenom", formData.prenom);
+      data.append("email", formData.email);
+      data.append("mot_de_passe", formData.mot_de_passe);
+      data.append(
+        "mot_de_passe_confirmation",
+        formData.mot_de_passe_confirmation
+      );
+      data.append("telephone", formData.telephone);
+      data.append("role", formData.role);
+      data.append("photo", image);
 
-      const response = await axios.post('http://localhost:8000/api/admin/store', data, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-
-      setAlertMsg('Administrateur ajouté avec succès !');
+      const response = await axios.post(
+        "http://localhost:8000/api/admin/store",
+        data,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      setLastActivitys([...lastActivitys, { date: new Date(), action: "Ajouter l'administrateur : " + formData.nom + " " + formData.prenom ,par : admin.nom_complet}]);
+      setAlertMsg("Administrateur ajouté avec succès !");
       setAlertSucc(true);
-      
+
       setTimeout(() => {
         setAlertSucc(false);
         onClose();
       }, 2000);
     } catch (error) {
-      const message = error.response?.data?.message || 'Erreur lors de l\'ajout de l\'administrateur';
+      const message =
+        error.response?.data?.message ||
+        "Erreur lors de l'ajout de l'administrateur";
       setAlertMsg(message);
       setAlertFail(true);
-      
+
       setTimeout(() => {
         setAlertFail(false);
       }, 3000);
@@ -129,10 +140,10 @@ export default function AddAdminModal({ onClose }) {
 
   return (
     <div className="fixed inset-0 backdrop-blur-md bg-gradient-to-br from-blue-500/20 via-gray-500/20 to-gray-500/20 flex items-center justify-center z-50 p-4">
-      <div 
+      <div
         className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
         style={{
-          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)'
+          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
         }}
       >
         {/* Header */}
@@ -142,7 +153,7 @@ export default function AddAdminModal({ onClose }) {
               <UserPlus className="w-5 h-5" />
             </div>
             <h3 className="text-2xl font-bold text-gray-900">
-              {t('admins.modal.title')}
+              {t("admins.modal.title")}
             </h3>
           </div>
           <button
@@ -166,15 +177,17 @@ export default function AddAdminModal({ onClose }) {
               {/* Image Preview */}
               <div className="w-32 h-32 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-dashed border-blue-300 flex items-center justify-center overflow-hidden backdrop-blur-sm">
                 {imagePreview ? (
-                  <img 
-                    src={imagePreview} 
-                    alt="Preview" 
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
                     className="w-full h-full object-cover"
                   />
                 ) : (
                   <div className="flex flex-col items-center gap-2">
                     <Upload className="w-8 h-8 text-blue-400" />
-                    <span className="text-xs text-blue-600 font-medium">Ajouter photo</span>
+                    <span className="text-xs text-blue-600 font-medium">
+                      Ajouter photo
+                    </span>
                   </div>
                 )}
               </div>
@@ -214,7 +227,7 @@ export default function AddAdminModal({ onClose }) {
           <div className="mb-8">
             <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <Users className="w-5 h-5 text-blue-600" />
-              {t('admins.modal.personalInfo')}
+              {t("admins.modal.personalInfo")}
             </h4>
 
             <div className="space-y-4">
@@ -250,7 +263,7 @@ export default function AddAdminModal({ onClose }) {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('admins.modal.email')} *
+                  {t("admins.modal.email")} *
                 </label>
                 <input
                   type="email"
@@ -265,7 +278,7 @@ export default function AddAdminModal({ onClose }) {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('admins.modal.phone')}
+                  {t("admins.modal.phone")}
                 </label>
                 <input
                   type="tel"
@@ -284,13 +297,13 @@ export default function AddAdminModal({ onClose }) {
           <div className="mb-8">
             <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5 text-blue-600" />
-              {t('admins.modal.security')}
+              {t("admins.modal.security")}
             </h4>
 
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('admins.modal.password')} *
+                  {t("admins.modal.password")} *
                 </label>
                 <input
                   type="password"
@@ -303,13 +316,13 @@ export default function AddAdminModal({ onClose }) {
                   placeholder="Minimum 8 caractères"
                 />
                 <p className="text-xs text-gray-500 mt-1">
-                  {t('admins.modal.passwordHint')}
+                  {t("admins.modal.passwordHint")}
                 </p>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('admins.modal.confirmPassword')} *
+                  {t("admins.modal.confirmPassword")} *
                 </label>
                 <input
                   type="password"
@@ -325,7 +338,7 @@ export default function AddAdminModal({ onClose }) {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('admins.modal.role')}
+                  {t("admins.modal.role")}
                 </label>
                 <select
                   name="role"
@@ -348,7 +361,7 @@ export default function AddAdminModal({ onClose }) {
               className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-white/80 backdrop-blur-sm transition-colors font-medium"
               disabled={loading}
             >
-              {t('admins.modal.cancel')}
+              {t("admins.modal.cancel")}
             </button>
             <button
               type="submit"
@@ -358,10 +371,10 @@ export default function AddAdminModal({ onClose }) {
               {loading ? (
                 <>
                   <span className="inline-block animate-spin">⏳</span>
-                  {t('admins.modal.adding')}
+                  {t("admins.modal.adding")}
                 </>
               ) : (
-                t('admins.modal.submit')
+                t("admins.modal.submit")
               )}
             </button>
           </div>

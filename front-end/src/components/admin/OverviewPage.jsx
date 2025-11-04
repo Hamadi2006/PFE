@@ -3,19 +3,24 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { UserContext } from '../../context/UserContext';
 import { ImmobilierContext } from '../../context/ImmobilierContext';
+import { DemandesContext } from '../../context/DemandeContext';
+import { GlobaleContext } from '../../context/GlobaleContext';
 
 function OverviewPage() {
   const { t } = useTranslation();
   const { immobilier } = useContext(ImmobilierContext);
   const { admins } = useContext(UserContext);
+  const { demandes } = useContext(DemandesContext);
+  const  lastActivitys  = localStorage.getItem('lastActivitys') ? JSON.parse(localStorage.getItem('lastActivitys')) : [];
 
-  // Demandes pas encore créées 
-  const demandes = 10;
+
+
+  // Calculer les statistiques des demandes
+  const totalDemandes = demandes?.length || 0;
 
   // Calculer les statistiques réelles
   const totalProprietes = immobilier?.length || 0;
   const totalAdmins = admins?.length || 0;
-  const demandesOuvertes = demandes;
 
   // Calculer les tendances
   const calculateTrend = (current, previous) => {
@@ -56,10 +61,10 @@ function OverviewPage() {
     },
     { 
       label: t('overview.stats.openRequests'), 
-      value: demandesOuvertes.toString(), 
+      value: totalDemandes.toString(), 
       icon: Mail, 
       color: 'bg-orange-50 text-orange-600', 
-      trend: '-5' 
+      trend: `${totalDemandes}` 
     },
   ];
 
@@ -88,29 +93,45 @@ function OverviewPage() {
     },
   ];
 
-  // Générer des activités récentes
+  // Générer des activités récentes depuis lastActivitys
   const generateRecentActivities = () => {
-    if (!immobilier || immobilier.length === 0) {
+    if (!lastActivitys || lastActivitys.length === 0) {
       return [
         { 
-          activity: t('overview.activities.noActivity'),
+          activity: t('overview.activities.noActivity') || 'Aucune activité récente',
           date: new Date().toISOString().split('T')[0],
-          user: t('overview.activities.system'),
+          user: t('overview.activities.system') || 'Système',
           type: 'update'
         }
       ];
     }
 
-    const recentProperties = [...immobilier]
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-      .slice(0, 5);
+    // Mapper les activités depuis lastActivitys
+    return lastActivitys
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 5)
+      .map(activity => {
+        // Déterminer le type d'activité basé sur l'action
+        let type = 'update';
+        if (activity.action.toLowerCase().includes('ajouter') || activity.action.toLowerCase().includes('nouvelle')) {
+          type = 'new';
+        } else if (activity.action.toLowerCase().includes('supprimer')) {
+          type = 'delete';
+        } else if (activity.action.toLowerCase().includes('modifier')) {
+          type = 'update';
+        } else if (activity.action.toLowerCase().includes('demande')) {
+          type = 'request';
+        } else if (activity.action.toLowerCase().includes('utilisateur') || activity.action.toLowerCase().includes('admin')) {
+          type = 'user';
+        }
 
-    return recentProperties.map(prop => ({
-      activity: `${t('overview.activities.newProperty')}: ${prop.titre} ${t('overview.activities.in')} ${prop.ville}`,
-      date: new Date(prop.created_at).toISOString().split('T')[0],
-      user: prop.nom_contact || 'Admin',
-      type: 'new'
-    }));
+        return {
+          activity: activity.action,
+          date: new Date(activity.date).toISOString().split('T')[0],
+          user: activity.user || 'Admin',
+          type: type
+        };
+      });
   };
 
   const activities = generateRecentActivities();
@@ -120,6 +141,7 @@ function OverviewPage() {
       case 'new': return <Building2 className="w-4 h-4" />;
       case 'user': return <Users className="w-4 h-4" />;
       case 'request': return <Mail className="w-4 h-4" />;
+      case 'delete': return <Activity className="w-4 h-4" />;
       case 'update': return <Activity className="w-4 h-4" />;
       default: return <Clock className="w-4 h-4" />;
     }
@@ -130,6 +152,7 @@ function OverviewPage() {
       case 'new': return 'bg-green-100 text-green-700';
       case 'user': return 'bg-purple-100 text-purple-700';
       case 'request': return 'bg-orange-100 text-orange-700';
+      case 'delete': return 'bg-red-100 text-red-700';
       case 'update': return 'bg-blue-100 text-blue-700';
       default: return 'bg-gray-100 text-gray-700';
     }
@@ -229,7 +252,6 @@ function OverviewPage() {
                 <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">{t('overview.table.type')}</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">{t('overview.table.activity')}</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">{t('overview.table.date')}</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">{t('overview.table.user')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
@@ -246,14 +268,7 @@ function OverviewPage() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-slate-600">{activity.date}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-xs font-bold">
-                        {activity.user.charAt(0).toUpperCase()}
-                      </div>
-                      <span className="text-sm font-medium text-slate-700">{activity.user}</span>
-                    </div>
-                  </td>
+                  
                 </tr>
               ))}
             </tbody>

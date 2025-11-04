@@ -56,6 +56,8 @@ const {
     setAlertFail,
     alertMsg,
     setAlertMsg,
+    lastActivitys,
+    setLastActivitys,
   } = useContext(GlobaleContext);
   const {
     formData,
@@ -69,6 +71,7 @@ const {
     resetForm,
     validateAllFields,
   } = usePropertyForm(INITIAL_FORM_DATA);
+  const admin = JSON.parse(localStorage.getItem("user"));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,6 +120,7 @@ const {
   );
 
   if (response.status === 201) {
+    setLastActivitys([...lastActivitys, { date: new Date(), action: "Ajouter un immobilier : " + formData.titre, par: admin.nom_complet }]);
     setAlertMsg("Immobilier ajouté avec succès");
     setAlertSucc(true);
     setTimeout(() => setAlertSucc(false), 2000);

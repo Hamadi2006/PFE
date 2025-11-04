@@ -12,7 +12,9 @@ export default function DeleteConfirmModal({ admin, onClose }) {
     alertFail,
     setAlertFail,
     alertMsg,
-    setAlertMsg
+    setAlertMsg,
+    lastActivitys,
+    setLastActivitys,
   } = useContext(GlobaleContext);
 
   const handleConfirmDelete = async () => {
@@ -20,6 +22,7 @@ export default function DeleteConfirmModal({ admin, onClose }) {
 
     try {
       await axios.delete(`http://127.0.0.1:8000/api/admin/${admin.id}`);
+      setLastActivitys([...lastActivitys, { date: new Date(), action: `Supprimer l'administrateur : ${admin.nom_complet}`, par: admin.nom_complet}]);
       setAlertMsg('Administrateur supprimé avec succès !');
       setAlertSucc(true);
       setTimeout(() => {
@@ -55,7 +58,7 @@ export default function DeleteConfirmModal({ admin, onClose }) {
         {/* Content */}
         <div className="p-6">
           <p className="text-gray-600 mb-2">
-            Êtes-vous sûr de vouloir supprimer <span className="font-semibold">{admin?.name}</span> ?
+            Êtes-vous sûr de vouloir supprimer <span className="font-semibold">{admin?.nom_complet}</span> ?
           </p>
           <p className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
             ⚠️ Cette action est irréversible. L'administrateur et toutes ses données seront supprimés définitivement.
