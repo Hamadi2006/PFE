@@ -594,5 +594,27 @@
         "desc": "Réponse sous 24h garantie"
       }
     ]
+  },
+    "contactCardI": {
+    "fullName": "Nom complet",
+    "email": "Email",
+    "phone": "Téléphone",
+    "message": "Message",
+    "sendRequest": "Envoyer la demande",
+    "call": "Appeler",
+    "whatsapp": "WhatsApp",
+    "contactedBy": "Contacté par",
+    "realEstateAgent": "Agent immobilier",
+    "negotiablePrice": "Prix négociable",
+    "errors": {
+      "fullNameRequired": "Le nom complet est requis",
+      "fullNameMinLength": "Le nom doit contenir au moins 3 caractères",
+      "emailRequired": "L'email est requis",
+      "emailInvalid": "Veuillez entrer un email valide",
+      "phoneRequired": "Le téléphone est requis",
+      "phoneInvalid": "Veuillez entrer un numéro de téléphone valide",
+      "messageRequired": "Le message est requis",
+      "messageMinLength": "Le message doit contenir au moins 10 caractères"
+    }
   }
 }

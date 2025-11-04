@@ -559,6 +559,28 @@
         "desc": "Guaranteed response within 24 hours"
       }
     ]
+  },
+  "contactCardI": {
+    "fullName": "Full Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Nachricht",
+    "sendRequest": "Anfrage senden",
+    "call": "Anrufen",
+    "whatsapp": "WhatsApp",
+    "contactedBy": "Kontaktiert von",
+    "realEstateAgent": "Immobilienmakler",
+    "negotiablePrice": "Verhandelbarer Preis",
+    "errors": {
+      "fullNameRequired": "Vollständiger Name ist erforderlich",
+      "fullNameMinLength": "Der Name muss mindestens 3 Zeichen enthalten",
+      "emailRequired": "E-Mail ist erforderlich",
+      "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+      "phoneRequired": "Telefonnummer ist erforderlich",
+      "phoneInvalid": "Bitte geben Sie eine gültige Telefonnummer ein",
+      "messageRequired": "Nachricht ist erforderlich",
+      "messageMinLength": "Die Nachricht muss mindestens 10 Zeichen enthalten"
+    }
   }
 }
 

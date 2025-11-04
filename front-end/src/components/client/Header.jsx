@@ -14,7 +14,6 @@ function Header() {
     { code: 'FR', name: 'Français', flag: '🇫🇷' },
     { code: 'EN', name: 'English', flag: '🇬🇧' },
     { code: 'AR', name: 'العربية', flag: '🇲🇦' },
-    { code: 'ES', name: 'Español', flag: '🇪🇸' }
   ];
 
   const handleLanguageChange = (langCode) => {

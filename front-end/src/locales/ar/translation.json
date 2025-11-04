@@ -592,5 +592,27 @@
         "desc": "الرد مضمون خلال 24 ساعة"
       }
     ]
+  },
+   "contactCardI": {
+    "fullName": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "message": "الرسالة",
+    "sendRequest": "إرسال الطلب",
+    "call": "الاتصال",
+    "whatsapp": "واتساب",
+    "contactedBy": "تواصل من خلال",
+    "realEstateAgent": "وكيل عقاري",
+    "negotiablePrice": "السعر قابل للتفاوض",
+    "errors": {
+      "fullNameRequired": "الاسم الكامل مطلوب",
+      "fullNameMinLength": "يجب أن يحتوي الاسم على 3 أحرف على الأقل",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+      "phoneRequired": "رقم الهاتف مطلوب",
+      "phoneInvalid": "يرجى إدخال رقم هاتف صحيح",
+      "messageRequired": "الرسالة مطلوبة",
+      "messageMinLength": "يجب أن تحتوي الرسالة على 10 أحرف على الأقل"
+    }
   }
 }

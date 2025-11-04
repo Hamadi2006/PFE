@@ -50,7 +50,7 @@ const PropertyMap = ({ ville: city, adresse: address, latitude, longitude }) => 
   }
 
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <MapContainer 
         center={[lat, lng]} 
         zoom={15} 
@@ -72,7 +72,7 @@ const PropertyMap = ({ ville: city, adresse: address, latitude, longitude }) => 
       </MapContainer>
       
       {/* Info overlay */}
-      <div className="absolute bottom-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 max-w-xs z-[500]">
+      <div className="absolute bottom-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 max-w-xs z-20 pointer-events-auto">
         <div className="flex items-start">
           <MapPin className="w-5 h-5 text-cyan-600 mt-0.5 mr-2 flex-shrink-0" />
           <div>
