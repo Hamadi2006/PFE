@@ -7,11 +7,12 @@ import { FilterProvider } from "./context/FilterContext";
 import { GlobaleProvider } from  "./context/GlobaleContext";
 import { UserProvider } from './context/UserContext.jsx';
 import {ImmobilierProvider} from "./context/ImmobilierContext";
-
+import { DemandesProvider } from './context/DemandeContext';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Router>
-      <ImmobilierProvider>
+        <DemandesProvider  >
+            <ImmobilierProvider>
   <UserProvider>
       <GlobaleProvider >
       <FilterProvider>
@@ -20,6 +21,8 @@ createRoot(document.getElementById('root')).render(
       </GlobaleProvider >
       </UserProvider>
       </ImmobilierProvider>
+
+        </DemandesProvider>
       
     </Router>
   </StrictMode>,

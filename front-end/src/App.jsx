@@ -16,6 +16,7 @@ import FailAlert from "./components/client/FailAlert";
 import InfoPage from "./components/Pages/InfoPage";
 import ServicePage from "./components/Pages/ServicePage";
 
+
 function App() {
   const navigate = useNavigate();
   const {
@@ -27,7 +28,6 @@ function App() {
     setAlertMsg,
   } = useContext(GlobaleContext);
   const { user, setUser, token, setToken, admins } = useContext(UserContext);
-
   // Fonction d’authentification admin
   function AuthAdmin(objet) {
     if (!objet) {
@@ -50,7 +50,6 @@ function App() {
         }
       )
       .then((response) => {
-        console.log("Response from server:", response.data);
 
         if (response.status === 201) {
           setUser(response.data.user);
@@ -76,7 +75,6 @@ function App() {
       });
   }
 
-  console.log(admins)
 
   return (
     <>

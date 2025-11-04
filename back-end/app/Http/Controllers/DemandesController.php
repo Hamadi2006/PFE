@@ -31,4 +31,16 @@ class DemandesController extends Controller
             ], 500);
         }
     }
+public function getDemandes()
+{
+    $demandes = Demande::join('immobilier', 'demandes.immobilier_id', '=', 'immobilier.id')
+        ->select('demandes.*', 'immobilier.titre', 'immobilier.ville', 'immobilier.prix','immobilier.images','immobilier.image_principale')
+        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $demandes
+    ], 200);
+}
+
 }
