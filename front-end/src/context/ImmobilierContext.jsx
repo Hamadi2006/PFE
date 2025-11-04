@@ -15,7 +15,7 @@ export const ImmobilierProvider = ({ children }) => {
     };
 
     fetchData(); 
-    const interval = setInterval(fetchData, 100000); 
+    const interval = setInterval(fetchData, 1000); 
 
     return () => clearInterval(interval); 
   }, []);

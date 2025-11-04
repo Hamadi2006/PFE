@@ -616,5 +616,17 @@
       "messageRequired": "Le message est requis",
       "messageMinLength": "Le message doit contenir au moins 10 caractères"
     }
-  }
+  },
+   "requests": "Demandes",
+  "manage_requests": "Gérez les demandes des clients ({{count}})",
+  "no_requests": "Aucune demande",
+  "no_requests_desc": "Il n'y a pas encore de demandes de clients",
+  "client_request": "Demande du client",
+  "client": "Client",
+  "emailR": "Email",
+  "phoneR": "Téléphone",
+  "delete": "Supprimer",
+  "confirm_delete": "Voulez-vous vraiment supprimer cette demande ?",
+  "delete_success": "Demande supprimée avec succès !",
+  "delete_error": "Erreur lors de la suppression de la demande."
 }

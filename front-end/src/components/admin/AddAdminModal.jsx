@@ -113,7 +113,6 @@ export default function AddAdminModal({ onClose }) {
       setTimeout(() => {
         setAlertSucc(false);
         onClose();
-        window.location.reload();
       }, 2000);
     } catch (error) {
       const message = error.response?.data?.message || 'Erreur lors de l\'ajout de l\'administrateur';
@@ -129,12 +128,17 @@ export default function AddAdminModal({ onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-30 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 backdrop-blur-md bg-gradient-to-br from-blue-500/20 via-gray-500/20 to-gray-500/20 flex items-center justify-center z-50 p-4">
+      <div 
+        className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        style={{
+          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)'
+        }}
+      >
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex justify-between items-center">
+        <div className="sticky top-0 bg-white/80 backdrop-blur-lg border-b border-white/30 p-6 flex justify-between items-center rounded-t-2xl">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center shadow-lg">
               <UserPlus className="w-5 h-5" />
             </div>
             <h3 className="text-2xl font-bold text-gray-900">
@@ -143,7 +147,7 @@ export default function AddAdminModal({ onClose }) {
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-gray-600 transition-colors hover:bg-white/50 rounded-lg p-2"
           >
             <X className="w-6 h-6" />
           </button>
@@ -160,7 +164,7 @@ export default function AddAdminModal({ onClose }) {
 
             <div className="flex flex-col items-center gap-4">
               {/* Image Preview */}
-              <div className="w-32 h-32 rounded-lg bg-blue-50 border-2 border-dashed border-blue-300 flex items-center justify-center overflow-hidden">
+              <div className="w-32 h-32 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-dashed border-blue-300 flex items-center justify-center overflow-hidden backdrop-blur-sm">
                 {imagePreview ? (
                   <img 
                     src={imagePreview} 
@@ -184,7 +188,7 @@ export default function AddAdminModal({ onClose }) {
                     onChange={handleImageChange}
                     className="hidden"
                   />
-                  <span className="inline-block w-full px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg font-medium cursor-pointer text-center transition-colors border border-blue-200">
+                  <span className="inline-block w-full px-4 py-2 bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 text-blue-600 rounded-lg font-medium cursor-pointer text-center transition-all border border-blue-200 backdrop-blur-sm">
                     Sélectionner une image
                   </span>
                 </label>
@@ -198,7 +202,7 @@ export default function AddAdminModal({ onClose }) {
                 <button
                   type="button"
                   onClick={removeImage}
-                  className="px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg font-medium transition-colors border border-red-200"
+                  className="px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50/80 backdrop-blur-sm rounded-lg font-medium transition-colors border border-red-200"
                 >
                   Supprimer l'image
                 </button>
@@ -223,7 +227,7 @@ export default function AddAdminModal({ onClose }) {
                   name="nom"
                   value={formData.nom}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
                   required
                   placeholder="Entrez le nom"
                 />
@@ -238,7 +242,7 @@ export default function AddAdminModal({ onClose }) {
                   name="prenom"
                   value={formData.prenom}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
                   required
                   placeholder="Entrez le prénom"
                 />
@@ -253,7 +257,7 @@ export default function AddAdminModal({ onClose }) {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
                   required
                   placeholder="exemple@email.com"
                 />
@@ -268,7 +272,7 @@ export default function AddAdminModal({ onClose }) {
                   name="telephone"
                   value={formData.telephone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
                   required
                   placeholder="+212 6XX XXX XXX"
                 />
@@ -293,7 +297,7 @@ export default function AddAdminModal({ onClose }) {
                   name="mot_de_passe"
                   value={formData.mot_de_passe}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
                   required
                   minLength="8"
                   placeholder="Minimum 8 caractères"
@@ -312,7 +316,7 @@ export default function AddAdminModal({ onClose }) {
                   name="mot_de_passe_confirmation"
                   value={formData.mot_de_passe_confirmation}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
                   required
                   minLength="8"
                   placeholder="Confirmer le mot de passe"
@@ -327,7 +331,7 @@ export default function AddAdminModal({ onClose }) {
                   name="role"
                   value={formData.role}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
                 >
                   <option value="admin">Admin</option>
                   <option value="super_admin">Super Admin</option>
@@ -337,18 +341,18 @@ export default function AddAdminModal({ onClose }) {
           </div>
 
           {/* Buttons */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+          <div className="flex justify-end gap-3 pt-4 border-t border-white/30">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-white/80 backdrop-blur-sm transition-colors font-medium"
               disabled={loading}
             >
               {t('admins.modal.cancel')}
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg"
               disabled={loading}
             >
               {loading ? (

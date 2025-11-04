@@ -26,7 +26,6 @@ export default function DeleteConfirmModal({ admin, onClose }) {
         setAlertSucc(false);
         onClose();
       }, 2000);
-      window.location.reload();
     } catch (error) {
       console.error('Erreur lors de la suppression:', error);
     } finally {

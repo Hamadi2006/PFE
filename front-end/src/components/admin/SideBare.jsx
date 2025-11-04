@@ -56,7 +56,7 @@ function Sidebar({ activePage, setActivePage }) {
       setAlertSucc(true);
       setAlertMsg("Déconnexion réussie !");
       // Navigate to login page
-      navigate("/backoffise/admin/adminPage/authentification");
+      navigate("/ad-login");
 
       return;
     }

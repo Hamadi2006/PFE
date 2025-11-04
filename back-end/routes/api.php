@@ -45,3 +45,7 @@ Route::prefix('immobilier')->group(function () {
 Route::post('/demande', [DemandesController::class, 'store']);
 
 Route::get('/demande', [DemandesController::class, 'getDemandes']);
+
+Route::delete('/demande/{id}', [DemandesController::class, 'deleteDemande']);
+
+

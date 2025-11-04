@@ -27,7 +27,7 @@ export const UserProvider = ({ children }) => {
     };
 
     fetchData(); // first call
-    const interval = setInterval(fetchData, 60000); // every 1 minute
+    const interval = setInterval(fetchData, 10000); // every 1 minute
 
     return () => clearInterval(interval);
   }, []);

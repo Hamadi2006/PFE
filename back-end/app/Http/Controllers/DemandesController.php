@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class DemandesController extends Controller
 {
-    public function store(Request $request){
-       $validation =  $request->validate([
+    public function store(Request $request)
+    {
+        $validation =  $request->validate([
             'immobilier_id' => 'required',
             'nom_complet' => 'required|max:255',
             'email' => 'required|email|max:255',
@@ -18,7 +19,7 @@ class DemandesController extends Controller
         ]);
         $demande = Demande::create($validation);
 
-        if($demande) {
+        if ($demande) {
             return response()->json([
                 'success' => true,
                 'message' => 'Demande envoyée avec succès',
@@ -31,16 +32,31 @@ class DemandesController extends Controller
             ], 500);
         }
     }
-public function getDemandes()
-{
-    $demandes = Demande::join('immobilier', 'demandes.immobilier_id', '=', 'immobilier.id')
-        ->select('demandes.*', 'immobilier.titre', 'immobilier.ville', 'immobilier.prix','immobilier.images','immobilier.image_principale')
-        ->get();
+    public function getDemandes()
+    {
+        $demandes = Demande::join('immobilier', 'demandes.immobilier_id', '=', 'immobilier.id')
+            ->select('demandes.*', 'immobilier.titre', 'immobilier.ville', 'immobilier.prix', 'immobilier.images', 'immobilier.image_principale')
+            ->get();
 
-    return response()->json([
-        'success' => true,
-        'data' => $demandes
-    ], 200);
-}
-
+        return response()->json([
+            'success' => true,
+            'data' => $demandes
+        ], 200);
+    }
+    public function deleteDemande($id)
+    {
+        try {
+            $demande = Demande::findOrFail($id);
+            $demande->delete();
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors de la suppression de la demande'
+            ], 500);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Demande supprimée avec succès'
+        ], 200);
+        }
 }

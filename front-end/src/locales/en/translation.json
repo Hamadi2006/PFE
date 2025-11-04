@@ -382,7 +382,7 @@
     "roles": {
       "admin": "Admin",
       "superAdmin": "Super Admin",
-      "subAdmin": "Sub Administrator",
+      "subAdmin": "Sub Admin",
       "moderator": "Moderator"
     },
     "account": "Account",
@@ -581,6 +581,18 @@
       "messageRequired": "Nachricht ist erforderlich",
       "messageMinLength": "Die Nachricht muss mindestens 10 Zeichen enthalten"
     }
-  }
+  },
+  "requests": "Requests",
+  "manage_requests": "Manage client requests ({{count}})",
+  "no_requests": "No requests",
+  "no_requests_desc": "There are no client requests yet",
+  "client_request": "Client request",
+  "client": "Client",
+  "emailR": "Email",
+  "phoneR": "Phone",
+  "delete": "Delete",
+  "confirm_delete": "Are you sure you want to delete this request?",
+  "delete_success": "Request deleted successfully!",
+  "delete_error": "Error while deleting the request."
 }
 

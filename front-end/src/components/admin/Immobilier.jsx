@@ -78,7 +78,6 @@ export default function Immobilier({ immobilier }) {
         setAlertSucc(true);
         setIsEditModalOpen(false);
         setTimeout(() => {
-          document.location.reload();
         }, 1500);
       }
     } catch (error) {
@@ -100,7 +99,6 @@ export default function Immobilier({ immobilier }) {
         console.log("Propriété supprimée avec succès", res);
         setAlertMsg("Propriété supprimée avec succès");
         setAlertSucc(true);
-        document.location.reload();
       })
       .catch((err) => {
         console.error("Erreur lors de la suppression de la propriété", err);

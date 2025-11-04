@@ -58,7 +58,7 @@ function App() {
           localStorage.setItem("user", JSON.stringify(response.data.user));
           setAlertSucc(true);
           setAlertMsg("Authentification réussie !");
-          navigate("/backoffise/admin/adminPage/dashboard");
+          navigate("/ad-dashboard");
         } else {
           console.warn("Authentication failed with status:", response.status);
           setAlertFail(true);

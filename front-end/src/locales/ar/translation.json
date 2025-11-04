@@ -614,5 +614,17 @@
       "messageRequired": "الرسالة مطلوبة",
       "messageMinLength": "يجب أن تحتوي الرسالة على 10 أحرف على الأقل"
     }
-  }
+  },
+  "requests": "الطلبات",
+  "manage_requests": "إدارة طلبات العملاء ({{count}})",
+  "no_requests": "لا توجد طلبات",
+  "no_requests_desc": "لا توجد طلبات من العملاء بعد",
+  "client_request": "طلب العميل",
+  "client": "العميل",
+  "emailR": "البريد الإلكتروني",
+  "phoneR": "رقم الهاتف",
+  "delete": "حذف",
+  "confirm_delete": "هل أنت متأكد أنك تريد حذف هذا الطلب؟",
+  "delete_success": "تم حذف الطلب بنجاح!",
+  "delete_error": "حدث خطأ أثناء حذف الطلب."
 }

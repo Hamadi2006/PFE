@@ -18,14 +18,14 @@ useEffect(() => {
     };
 
     fetchData(); 
-    const interval = setInterval(fetchData, 100000); 
+    const interval = setInterval(fetchData, 10000); 
 
     return () => clearInterval(interval); 
   }, []);
 
     
     return (
-        <DemandesContext.Provider value={{ demandes }}>
+        <DemandesContext.Provider value={{ demandes, setdemandes}}>
             {children}
         </DemandesContext.Provider>
     );

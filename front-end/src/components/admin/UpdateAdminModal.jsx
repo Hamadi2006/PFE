@@ -96,7 +96,6 @@ export default function UpdateAdminModal({ admin, onClose }) {
           setAlertSucc(false);
           onClose();
         }, 2000);
-        window.location.reload();
       }
     } catch (error) {
       console.error('Erreur:', error);
