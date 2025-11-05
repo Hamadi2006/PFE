@@ -5,7 +5,6 @@ export  const DemandesContext = createContext();
 
 export const DemandesProvider = ({ children }) => {
     const  [demandes,setdemandes] = useState([]);
-    console.log(demandes);
 //http://127.0.0.1:8000/api/demande
 
 

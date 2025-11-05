@@ -7,6 +7,7 @@ import RequestsPage from './RequestsPage';
 import SettingsPage from './SettingsPage';
 import HelpPage from './HelpPage';
 import Sidebar from './SideBare';
+import CompaniesPage from './CompaniesPage';
 // Sidebar Component
 
 
@@ -29,6 +30,8 @@ function MainContent({ activePage }) {
       return <SettingsPage />;
     case 'help':
       return <HelpPage />;
+      case 'companies':
+        return <CompaniesPage />;
     default:
       return <OverviewPage />;
   }

@@ -37,7 +37,9 @@ function Sidebar({ activePage, setActivePage }) {
     { id: "admins", label: t("sidebar.admins"), icon: Users },
     { id: "requests", label: t("sidebar.requests"), icon: Mail },
     { id: "settings", label: t("sidebar.settings"), icon: Settings },
+        { id: "companies", label: t("sidebar.companies"), icon: Building2 },
     { id: "logout", label: t("sidebar.logout"), icon: LogOut },
+        
   ];
 
   const languages = [
@@ -130,7 +132,6 @@ function Sidebar({ activePage, setActivePage }) {
               </button>
             </div>
 
-            {/* Language Selector Dropdown */}
             
           </div>
 
