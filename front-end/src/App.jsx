@@ -16,6 +16,8 @@ import FailAlert from "./components/client/FailAlert";
 import InfoPage from "./components/Pages/InfoPage";
 import ServicePage from "./components/Pages/ServicePage";
 import PartnerLogin from "./components/companies/PartnerLogin";
+import PartnerDashboard from "./components/companies/Dashboard";
+import CompanieAuth from "./midleware/CompanieAuth";
 
 
 function App() {
@@ -130,6 +132,10 @@ function App() {
       <Route
         path="/partner-login"
         element={<PartnerLogin   />}
+      />
+      <Route
+        path="/partner-dashboard"
+        element={<CompanieAuth><PartnerDashboard /></CompanieAuth>}
       />
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>

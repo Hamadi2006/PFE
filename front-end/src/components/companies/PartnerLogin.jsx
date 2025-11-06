@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Mail, Lock, Eye, EyeOff, LogIn, Building2 } from "lucide-react";
 import Logo from "../../assets/sakanComImage.png";
-
+import axios from "axios";
+import {GlobaleContext} from "../../context/GlobaleContext";
+import { useNavigate } from "react-router-dom";
 export default function PartnerLogin() {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -11,17 +14,38 @@ export default function PartnerLogin() {
   });
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newErrors = {};
-    if (!data.email) newErrors.email = "L'email est requis";
-    if (!data.password) newErrors.password = "Le mot de passe est requis";
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-    console.log(data);
-  };
+  const {setAlertSucc,setAlertFail,setAlertMsg} = useContext(GlobaleContext);
+
+ const handleSubmit = (e) => {
+  e.preventDefault();
+  const newErrors = {};
+  if (!data.email) newErrors.email = "L'email est requis";
+  if (!data.password) newErrors.password = "Le mot de passe est requis";
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    return;
+  }
+  
+  axios.post("http://localhost:8000/api/company/auth", {
+    email: data.email,
+    password: data.password
+  })
+  .then((response) => {
+    localStorage.setItem("tokenCompanie", response.data.token);
+    localStorage.setItem("companie", JSON.stringify(response.data.data));
+    console.log("companie",response.data.data); 
+    console.log("token",response.data.token);   
+    setAlertSucc(true);
+    setAlertMsg("Connexion réussie");
+    navigate("/partner-dashboard");
+  })
+  .catch((error) => {
+    setAlertFail(true);
+    const errorMsg = error.response?.data?.message || "Connexion échouée";
+    setAlertMsg(errorMsg);
+    console.error("Login error:", error);
+  });
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-blue-100 p-6">

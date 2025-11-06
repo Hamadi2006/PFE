@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Api\ImmobilierController;
 use App\Http\Controllers\DemandesController;
+use App\Http\Controllers\CompaniesController;
 
 // Route de login admin
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
@@ -42,10 +43,20 @@ Route::prefix('immobilier')->group(function () {
 
 }
 );
+// Routes of demandes (CRD)
 Route::post('/demande', [DemandesController::class, 'store']);
 
 Route::get('/demande', [DemandesController::class, 'getDemandes']);
 
 Route::delete('/demande/{id}', [DemandesController::class, 'deleteDemande']);
 
+// Routes of companies (CRUD)
+Route::post('/company/store', [CompaniesController::class, 'storeCompany']);
 
+Route::get('/company', [CompaniesController::class, 'getCompanies']);
+
+Route::post('/company/auth', [CompaniesController::class, 'authCompany']);
+
+Route::delete('/company/{id}', [CompaniesController::class, 'deleteCompany']);
+
+// i'm need to add update route !!! 

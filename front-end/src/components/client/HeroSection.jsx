@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useMemo } from "react";
 import { Search, MapPin, Home } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -10,11 +10,11 @@ function HeroSection() {
   const { immobilier } = useContext(ImmobilierContext);
 
   // Filtrer les biens selon le titre ou la ville
-  const filteredImmobilier = immobilier.filter(
+  const filteredImmobilier = useMemo(() => immobilier.filter(
     (item) =>
       item.titre.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.ville.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  ), [immobilier, searchQuery]);
 
   return (
     <section id="accueil" className="container mx-auto px-6 py-16 md:py-24">

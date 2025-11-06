@@ -9,10 +9,23 @@ export const UserProvider = ({ children }) => {
   const [admins, setAdmins] = useState([]);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const storedToken = localStorage.getItem("token");
-    if (storedUser) setUser(JSON.parse(storedUser));
-    if (storedToken) setToken(storedToken);
+    // ✅ Safe parsing with proper checks
+    try {
+      const storedUser = localStorage.getItem("user");
+      const storedToken = localStorage.getItem("token");
+      
+      // Only parse if value exists and is not the string "undefined" or "null"
+      if (storedUser && storedUser !== "undefined" && storedUser !== "null") {
+        setUser(JSON.parse(storedUser));
+      }
+      
+      if (storedToken && storedToken !== "undefined" && storedToken !== "null") {
+        setToken(storedToken);
+      }
+    } catch (error) {
+      // If JSON parsing fails, just log and continue without crashing
+      console.error("Error parsing localStorage data:", error);
+    }
   }, []);
 
   useEffect(() => {
@@ -27,7 +40,7 @@ export const UserProvider = ({ children }) => {
     };
 
     fetchData(); // first call
-    const interval = setInterval(fetchData, 10000); // every 1 minute
+    const interval = setInterval(fetchData, 10000); // every 10 seconds
 
     return () => clearInterval(interval);
   }, []);
