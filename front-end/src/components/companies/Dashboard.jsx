@@ -94,12 +94,7 @@ function PartnerDashboard() {
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
-        {/* Header */}
-        <Header
-          activeTab={activeTab}
-          companyProfile={companyProfile}
-          language={language}
-        />
+
 
         {/* Dashboard View */}
         {activeTab === 'dashboard' && (

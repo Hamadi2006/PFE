@@ -1,59 +1,17 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Edit2, Save, X, Globe } from 'lucide-react';
 
-const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage }) => {
+const SettingsView = ({ companyProfile, setCompanyProfile }) => {
+  const { t, i18n } = useTranslation();
   const [editingProfile, setEditingProfile] = useState(false);
   const [tempProfile, setTempProfile] = useState(companyProfile);
 
-  const translations = {
-    en: {
-      companyProfile: 'Agency Profile',
-      companyName: 'Agency Name',
-      email: 'Email Address',
-      phone: 'Phone Number',
-      address: 'Office Address',
-      language: 'Language',
-      website: 'Website',
-      specialty: 'Specialty',
-      license: 'License Number',
-      description: 'Description',
-      edit: 'Edit',
-      save: 'Save',
-      cancel: 'Cancel'
-    },
-    fr: {
-      companyProfile: 'Profil agence',
-      companyName: 'Nom agence',
-      email: 'Email',
-      phone: 'Téléphone',
-      address: 'Adresse',
-      language: 'Langue',
-      website: 'Site web',
-      specialty: 'Spécialité',
-      license: 'Numéro de licence',
-      description: 'Description',
-      edit: 'Modifier',
-      save: 'Enregistrer',
-      cancel: 'Annuler'
-    },
-    ar: {
-      companyProfile: 'ملف الوكالة',
-      companyName: 'اسم الوكالة',
-      email: 'البريد الإلكتروني',
-      phone: 'رقم الهاتف',
-      address: 'العنوان',
-      language: 'اللغة',
-      website: 'الموقع الإلكتروني',
-      specialty: 'التخصص',
-      license: 'رقم الترخيص',
-      description: 'الوصف',
-      edit: 'تعديل',
-      save: 'حفظ',
-      cancel: 'إلغاء'
-    }
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
   };
 
-  const t = translations[language];
+  const currentLanguage = i18n.language;
 
   return (
     <div className="p-8">
@@ -61,7 +19,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
         {/* Agency Profile */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-800">{t.companyProfile}</h2>
+            <h2 className="text-2xl font-bold text-gray-800">{t('settingsC.companyProfile')}</h2>
             {!editingProfile ? (
               <button
                 onClick={() => {
@@ -71,7 +29,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
                 className="flex items-center space-x-2 bg-green-600 text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition-all"
               >
                 <Edit2 className="w-4 h-4" />
-                <span>{t.edit}</span>
+                <span>{t('settingsC.edit')}</span>
               </button>
             ) : (
               <div className="flex space-x-3">
@@ -83,7 +41,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
                   className="flex items-center space-x-2 bg-green-600 text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition-all"
                 >
                   <Save className="w-4 h-4" />
-                  <span>{t.save}</span>
+                  <span>{t('settingsC.save')}</span>
                 </button>
                 <button
                   onClick={() => {
@@ -93,7 +51,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
                   className="flex items-center space-x-2 bg-gray-100 text-gray-700 px-5 py-2.5 rounded-xl hover:bg-gray-200 transition-all"
                 >
                   <X className="w-4 h-4" />
-                  <span>{t.cancel}</span>
+                  <span>{t('settingsC.cancel')}</span>
                 </button>
               </div>
             )}
@@ -102,7 +60,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                {t.companyName}
+                {t('settingsC.companyName')}
               </label>
               <input
                 type="text"
@@ -115,7 +73,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                {t.email}
+                {t('settingsC.email')}
               </label>
               <input
                 type="email"
@@ -128,7 +86,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                {t.phone}
+                {t('settingsC.phone')}
               </label>
               <input
                 type="tel"
@@ -141,7 +99,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                {t.website}
+                {t('settingsC.website')}
               </label>
               <input
                 type="text"
@@ -154,7 +112,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                {t.specialty}
+                {t('settingsC.specialty')}
               </label>
               <input
                 type="text"
@@ -167,7 +125,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                {t.license}
+                {t('settingsC.license')}
               </label>
               <input
                 type="text"
@@ -180,7 +138,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
 
             <div className="md:col-span-2">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                {t.address}
+                {t('settingsC.address')}
               </label>
               <input
                 type="text"
@@ -193,7 +151,7 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
 
             <div className="md:col-span-2">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                {t.description}
+                {t('settingsC.description')}
               </label>
               <textarea
                 value={editingProfile ? tempProfile.description : companyProfile.description}
@@ -210,46 +168,46 @@ const SettingsView = ({ companyProfile, setCompanyProfile, language, setLanguage
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
             <Globe className="w-6 h-6 mr-3 text-blue-600" />
-            {t.language}
+            {t('settingsC.language')}
           </h2>
           <div className="grid grid-cols-3 gap-4">
             <button
-              onClick={() => setLanguage('en')}
+              onClick={() => changeLanguage('EN')}
               className={`p-6 rounded-xl border-2 transition-all ${
-                language === 'en' 
+                currentLanguage === 'EN' 
                   ? 'border-blue-600 bg-blue-50' 
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
               <div className="text-4xl mb-3">🇬🇧</div>
-              <div className={`font-bold ${language === 'en' ? 'text-blue-600' : 'text-gray-800'}`}>
-                English
+              <div className={`font-bold ${currentLanguage === 'EN' ? 'text-blue-600' : 'text-gray-800'}`}>
+                {t('settingsC.english')}
               </div>
             </button>
             <button
-              onClick={() => setLanguage('fr')}
+              onClick={() => changeLanguage('FR')}
               className={`p-6 rounded-xl border-2 transition-all ${
-                language === 'fr' 
+                currentLanguage === 'FR' 
                   ? 'border-blue-600 bg-blue-50' 
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
               <div className="text-4xl mb-3">🇫🇷</div>
-              <div className={`font-bold ${language === 'fr' ? 'text-blue-600' : 'text-gray-800'}`}>
-                Français
+              <div className={`font-bold ${currentLanguage === 'FR' ? 'text-blue-600' : 'text-gray-800'}`}>
+                {t('settingsC.french')}
               </div>
             </button>
             <button
-              onClick={() => setLanguage('ar')}
+              onClick={() => changeLanguage('AR')}
               className={`p-6 rounded-xl border-2 transition-all ${
-                language === 'ar' 
+                currentLanguage === 'AR' 
                   ? 'border-blue-600 bg-blue-50' 
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
               <div className="text-4xl mb-3">🇲🇦</div>
-              <div className={`font-bold ${language === 'ar' ? 'text-blue-600' : 'text-gray-800'}`}>
-                العربية
+              <div className={`font-bold ${currentLanguage === 'AR' ? 'text-blue-600' : 'text-gray-800'}`}>
+                {t('settingsC.arabic')}
               </div>
             </button>
           </div>

@@ -625,6 +625,31 @@
     "update_error": "Error updating profile.",
     "logout": "Logout",
     "dashboard": "Dashboard"
+  },
+  "sidebarC": {
+    "dashboard": "Tableau de bord",
+    "announcements": "Propriétés",
+    "requests": "Requêtes",
+    "settings": "Paramètres",
+    "logout": "Déconnexion"
+  },
+  "settingsC": {
+    "companyProfile": "Agency Profile",
+    "companyName": "Agency Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "address": "Office Address",
+    "language": "Language",
+    "website": "Website",
+    "specialty": "Specialty",
+    "license": "License Number",
+    "description": "Description",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "english": "English",
+    "french": "French",
+    "arabic": "Arabic"
   }
 }
 

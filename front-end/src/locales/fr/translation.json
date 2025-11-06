@@ -673,5 +673,30 @@
     "update_error": "Erreur lors de la mise à jour du profil.",
     "logout": "Déconnexion",
     "dashboard": "Tableau de bord"
+  },
+    "sidebarC": {
+    "dashboard": "Tableau de bord",
+    "announcements": "Propriétés",
+    "requests": "Requêtes",
+    "settings": "Paramètres",
+    "logout": "Déconnexion"
+  },
+    "settingsC": {
+    "companyProfile": "Profil agence",
+    "companyName": "Nom agence",
+    "email": "Email",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "language": "Langue",
+    "website": "Site web",
+    "specialty": "Spécialité",
+    "license": "Numéro de licence",
+    "description": "Description",
+    "edit": "Modifier",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "english": "Anglais",
+    "french": "Français",
+    "arabic": "Arabe"
   }
 }

@@ -658,5 +658,30 @@
     "update_error": "حدث خطأ أثناء تحديث الملف الشخصي.",
     "logout": "تسجيل الخروج",
     "dashboard": "لوحة التحكم"
+  },
+  "sidebarC": {
+    "dashboard": "لوحة التحكم",
+    "announcements": "العقارات",
+    "requests": "الطلبات",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
+  },
+    "settingsC": {
+    "companyProfile": "ملف الوكالة",
+    "companyName": "اسم الوكالة",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "address": "العنوان",
+    "language": "اللغة",
+    "website": "الموقع الإلكتروني",
+    "specialty": "التخصص",
+    "license": "رقم الترخيص",
+    "description": "الوصف",
+    "edit": "تعديل",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "english": "الإنجليزية",
+    "french": "الفرنسية",
+    "arabic": "العربية"
   }
 }
