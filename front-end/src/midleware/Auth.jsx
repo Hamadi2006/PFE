@@ -10,9 +10,6 @@ export default function RequireAuth({ children }) {
     setAlertFail(true);
     setAlertMsg("Veuillez vous connecter");
     navigate("/ad-login",{replace:true});
-  }else{
-    setAlertSucc(true);
-    setAlertMsg("Vous êtes Connecté");
-    return children;
   }
+  return children;
 }

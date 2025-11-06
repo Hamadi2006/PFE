@@ -9,10 +9,7 @@ export default function CompanieAuth({children}) {
         setAlertFail(true);
         setAlertMsg("Veuillez vous connecter");
         navigate("/partner-login",{replace:true});
-    }else if(tokenCompanie){
-        setAlertSucc(true);
-        setAlertMsg("Vous êtes Connecté");
-        return children;
     }
+    return children;
 }
     

@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Mail, Lock, Eye, EyeOff, LogIn, Building2 } from "lucide-react";
-import Logo from "../../assets/sakanComImage.png";
+import Logo from "../../assets/sakanComImage.png"
 import axios from "axios";
-import {GlobaleContext} from "../../context/GlobaleContext";
+import { GlobaleContext } from "../../context/GlobaleContext";
 import { useNavigate } from "react-router-dom";
+
 export default function PartnerLogin() {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -13,39 +14,40 @@ export default function PartnerLogin() {
     rememberMe: false,
   });
   const [errors, setErrors] = useState({});
+  const { setAlertSucc, setAlertFail, setAlertMsg } = useContext(GlobaleContext);
 
-  const {setAlertSucc,setAlertFail,setAlertMsg} = useContext(GlobaleContext);
-
- const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
   e.preventDefault();
   const newErrors = {};
   if (!data.email) newErrors.email = "L'email est requis";
   if (!data.password) newErrors.password = "Le mot de passe est requis";
-  if (Object.keys(newErrors).length > 0) {
+  if (Object.keys(newErrors).length) {
     setErrors(newErrors);
     return;
   }
-  
-  axios.post("http://localhost:8000/api/company/auth", {
-    email: data.email,
-    password: data.password
-  })
-  .then((response) => {
-    localStorage.setItem("tokenCompanie", response.data.token);
-    localStorage.setItem("companie", JSON.stringify(response.data.data));
-    console.log("companie",response.data.data); 
-    console.log("token",response.data.token);   
+
+  try {
+    const response = await axios.post("http://localhost:8000/api/company/auth", {
+      email: data.email,
+      password: data.password,
+    });
+
+    const companyData = response.data.data;
+    const token = response.data.token;
+
+    // stocker token et données
+    if (data.rememberMe) localStorage.setItem("tokenCompanie", token);
+    localStorage.setItem("companie", JSON.stringify(companyData));
+
     setAlertSucc(true);
     setAlertMsg("Connexion réussie");
     navigate("/partner-dashboard");
-  })
-  .catch((error) => {
+  } catch (error) {
     setAlertFail(true);
-    const errorMsg = error.response?.data?.message || "Connexion échouée";
-    setAlertMsg(errorMsg);
-    console.error("Login error:", error);
-  });
+    setAlertMsg(error.response?.data?.message || "Connexion échouée");
+  }
 };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-blue-100 p-6">
@@ -79,6 +81,7 @@ export default function PartnerLogin() {
               <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
               <input
                 type="email"
+                required
                 value={data.email}
                 onChange={(e) => setData({ ...data, email: e.target.value })}
                 placeholder="contact@votresociete.com"
@@ -101,6 +104,7 @@ export default function PartnerLogin() {
               <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
               <input
                 type={data.showPassword ? "text" : "password"}
+                required
                 value={data.password}
                 onChange={(e) => setData({ ...data, password: e.target.value })}
                 placeholder="••••••••"
@@ -110,7 +114,10 @@ export default function PartnerLogin() {
               />
               <button
                 type="button"
-                onClick={() => setData({ ...data, showPassword: !data.showPassword })}
+                aria-label="Afficher ou masquer le mot de passe"
+                onClick={() =>
+                  setData({ ...data, showPassword: !data.showPassword })
+                }
                 className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
               >
                 {data.showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -127,7 +134,9 @@ export default function PartnerLogin() {
               <input
                 type="checkbox"
                 checked={data.rememberMe}
-                onChange={(e) => setData({ ...data, rememberMe: e.target.checked })}
+                onChange={(e) =>
+                  setData({ ...data, rememberMe: e.target.checked })
+                }
                 className="w-4 h-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
               />
               Se souvenir de moi
