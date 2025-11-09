@@ -619,7 +619,7 @@
     }
   },
    "requests": "Demandes",
-  "manage_requests": "Gérez les demandes des clients ({{count}})",
+  "manage_requests": "Gérez les demandes des clients ()",
   "no_requests": "Aucune demande",
   "no_requests_desc": "Il n'y a pas encore de demandes de clients",
   "client_request": "Demande du client",
@@ -707,5 +707,93 @@
     "viewAllProperties": "Voir toutes les propriétés",
     "updateAgencyProfile": "Mettre à jour le profil",
     "newViews": "nouvelles vues"
+  },
+  "companies": {
+    "title": "Sociétés Partenaires",
+    "total": " société au total",
+    "total_plural": " sociétés au total",
+    "newCompany": "Nouvelle Société",
+    "search": {
+      "placeholder": "Rechercher une société par nom, email ou ville...",
+      "results": " résultat",
+      "results_plural": " résultats"
+    }
+  },
+  "companiesTable": {
+    "empty": {
+      "title": "Aucune société",
+      "description": "Aucune société trouvée dans la base de données."
+    },
+    "header": {
+      "title": "Sociétés partenaires",
+      "count": " société trouvée",
+      "count_plural": " sociétés trouvées",
+      "status": "Système actif"
+    },
+    "columns": {
+      "company": "Société",
+      "contact": "Contact",
+      "location": "Localisation",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "notProvided": "Non renseigné",
+    "notSpecified": "Non spécifiée",
+    "contact": "Contact",
+    "active": "Actif",
+    "actions": {
+      "view": "Voir détails",
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    },
+    "footer": {
+      "lastUpdate": "Dernière mise à jour",
+      "items": "élément",
+      "items_plural": "éléments"
+    }
+  },
+  "companyInfo": {
+    "email": "Email",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "website": "Site Web",
+    "city": "Ville",
+    "createdAt": "Créé le"
+  },
+  "deleteCompany": {
+    "title": "Supprimer société",
+    "confirm": "Supprimer",
+    "warning": "Cette action est irréversible. Toutes les données seront perdues.",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "deleting": "Suppression...",
+    "success": "Société supprimée avec succès"
+  },
+   "updateCompany": {
+    "title": "Modifier la société",
+    "changeLogo": "Changer le logo",
+    "imageTypes": "PNG, JPG, GIF (max 5MB)",
+    "imageError": {
+      "invalid": "Veuillez sélectionner une image valide",
+      "size": "L'image ne doit pas dépasser 5MB"
+    },
+    "companyInfo": {
+      "title": "Informations société",
+      "name": "Nom de la société",
+      "email": "Email",
+      "phone": "Téléphone"
+    },
+    "locationInfo": {
+      "title": "Localisation",
+      "address": "Adresse",
+      "city": "Ville",
+      "website": "Site web"
+    },
+    "cancel": "Annuler",
+    "save": "Sauvegarder",
+    "saving": "Sauvegarde...",
+    "success": "Société mise à jour avec succès",
+    "error": "Erreur lors de la mise à jour de la société",
+    "dataError": "Erreur lors de la préparation des données"
   }
 }

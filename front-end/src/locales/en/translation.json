@@ -584,7 +584,7 @@
     }
   },
   "requests": "Requests",
-  "manage_requests": "Manage client requests ({{count}})",
+  "manage_requests": "Manage client requests ()",
   "no_requests": "No requests",
   "no_requests_desc": "There are no client requests yet",
   "client_request": "Client request",
@@ -659,6 +659,94 @@
     "viewAllProperties": "View All Properties",
     "updateAgencyProfile": "Update Agency Profile",
     "newViews": "new views"
+  },
+   "companies": {
+    "title": "Partner Companies",
+    "total": " company total",
+    "total_plural": " companies total",
+    "newCompany": "New Company",
+    "search": {
+      "placeholder": "Search company by name, email or city...",
+      "results": " result",
+      "results_plural": " results"
+    }
+  },
+  "companiesTable": {
+    "empty": {
+      "title": "No companies",
+      "description": "No companies found in the database."
+    },
+    "header": {
+      "title": "Partner companies",
+      "count": " company found",
+      "count_plural": " companies found",
+      "status": "System active"
+    },
+    "columns": {
+      "company": "Company",
+      "contact": "Contact",
+      "location": "Location",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "notProvided": "Not provided",
+    "notSpecified": "Not specified",
+    "contact": "Contact",
+    "active": "Active",
+    "actions": {
+      "view": "View details",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "footer": {
+      "lastUpdate": "Last update",
+      "items": "item",
+      "items_plural": "items"
+    }
+  },
+  "companyInfo": {
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "website": "Website",
+    "city": "City",
+    "createdAt": "Created on"
+  },
+  "deleteCompany": {
+    "title": "Delete company",
+    "confirm": "Delete",
+    "warning": "This action is irreversible. All data will be lost.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "success": "Company deleted successfully"
+  },
+    "updateCompany": {
+    "title": "Edit Company",
+    "changeLogo": "Change logo",
+    "imageTypes": "PNG, JPG, GIF (max 5MB)",
+    "imageError": {
+      "invalid": "Please select a valid image",
+      "size": "Image must not exceed 5MB"
+    },
+    "companyInfo": {
+      "title": "Company Information",
+      "name": "Company name",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "locationInfo": {
+      "title": "Location",
+      "address": "Address",
+      "city": "City",
+      "website": "Website"
+    },
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving...",
+    "success": "Company updated successfully",
+    "error": "Error updating company",
+    "dataError": "Error preparing data"
   }
 }
 

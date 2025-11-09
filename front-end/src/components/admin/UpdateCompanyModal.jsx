@@ -3,7 +3,10 @@ import { X, Building2, Upload, MapPin, Phone, Mail, Globe, Save, Edit } from "lu
 import axios from "axios";
 import { useContext } from "react";
 import { GlobaleContext } from "../../context/GlobaleContext";
+import { useTranslation } from "react-i18next";
+
 export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate }) {
+    const { t } = useTranslation();
     const {
         alertSucc,
         setAlertSucc,
@@ -51,12 +54,12 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
         if (!file) return;
 
         if (!file.type.startsWith("image/")) {
-            alert("Veuillez sélectionner une image valide");
+            alert(t("updateCompany.imageError.invalid"));
             return;
         }
 
         if (file.size > 5 * 1024 * 1024) {
-            alert("L'image ne doit pas dépasser 5MB");
+            alert(t("updateCompany.imageError.size"));
             return;
         }
 
@@ -64,7 +67,7 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
         const reader = new FileReader();
         reader.onloadend = () => setImagePreview(reader.result);
         reader.readAsDataURL(file);
-    }, []);
+    }, [t]);
 
     const removeImage = useCallback(() => {
         setImage(null);
@@ -91,27 +94,25 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
                 .then(response => {
                     console.log("Données récupérées:", response.data);
                     setAlertSucc(true);
-                    setAlertMsg("Société mise à jour avec succès");
+                    setAlertMsg(t("updateCompany.success"));
                     setTimeout(() => setAlertSucc(false), 3000);
                     onClose();
                 })
                 .catch(error => {
                     console.error("Erreur:", error);
                     setAlertFail(true);
-                    setAlertMsg("Erreur lors de la mise à jour de la société");
+                    setAlertMsg(t("updateCompany.error"));
                     setTimeout(() => setAlertFail(false), 3000);
                     onClose();
                 })
 
-
-
         } catch (error) {
             console.error("Erreur:", error);
-            alert("Erreur lors de la préparation des données");
+            alert(t("updateCompany.dataError"));
         } finally {
             setLoading(false);
         }
-    }, [formData, image, company, onUpdate, onClose]);
+    }, [formData, image, company, onUpdate, onClose, t, setAlertSucc, setAlertFail, setAlertMsg]);
 
     if (!isOpen) return null;
 
@@ -132,7 +133,7 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
                         </div>
                         <div>
                             <h3 className="text-xl font-semibold text-gray-900">
-                                Modifier la société
+                                {t("updateCompany.title")}
                             </h3>
                             <p className="text-sm text-gray-500">
                                 {company?.nom}
@@ -163,7 +164,7 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
                                 <button
                                     type="button"
                                     onClick={removeImage}
-                                    className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1"
+                                    className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
                                 >
                                     <X className="w-3 h-3" />
                                 </button>
@@ -172,30 +173,30 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
 
                         <label className="block mt-3">
                             <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
-                            <span className="text-sm text-blue-600 hover:text-blue-700 cursor-pointer font-medium">
-                                Changer le logo
+                            <span className="text-sm text-blue-600 hover:text-blue-700 cursor-pointer font-medium transition-colors">
+                                {t("updateCompany.changeLogo")}
                             </span>
                         </label>
-                        <p className="text-xs text-gray-500 mt-1">PNG, JPG, GIF (max 5MB)</p>
+                        <p className="text-xs text-gray-500 mt-1">{t("updateCompany.imageTypes")}</p>
                     </div>
 
                     {/* Company Info */}
                     <div className="space-y-4">
                         <h4 className="font-medium text-gray-900 flex items-center gap-2">
                             <Building2 className="w-4 h-4 text-blue-500" />
-                            Informations société
+                            {t("updateCompany.companyInfo.title")}
                         </h4>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Nom de la société *
+                                {t("updateCompany.companyInfo.name")} *
                             </label>
                             <input
                                 type="text"
                                 name="nom"
                                 value={formData.nom}
                                 onChange={handleInputChange}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                                 required
                             />
                         </div>
@@ -203,14 +204,14 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                                 <Mail className="w-4 h-4 text-gray-400" />
-                                Email *
+                                {t("updateCompany.companyInfo.email")} *
                             </label>
                             <input
                                 type="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleInputChange}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                                 required
                             />
                         </div>
@@ -218,14 +219,14 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                                 <Phone className="w-4 h-4 text-gray-400" />
-                                Téléphone
+                                {t("updateCompany.companyInfo.phone")}
                             </label>
                             <input
                                 type="tel"
                                 name="telephone"
                                 value={formData.telephone}
                                 onChange={handleInputChange}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                             />
                         </div>
                     </div>
@@ -234,46 +235,46 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
                     <div className="space-y-4">
                         <h4 className="font-medium text-gray-900 flex items-center gap-2">
                             <MapPin className="w-4 h-4 text-blue-500" />
-                            Localisation
+                            {t("updateCompany.locationInfo.title")}
                         </h4>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Adresse
+                                {t("updateCompany.locationInfo.address")}
                             </label>
                             <input
                                 type="text"
                                 name="adresse"
                                 value={formData.adresse}
                                 onChange={handleInputChange}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                             />
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Ville
+                                {t("updateCompany.locationInfo.city")}
                             </label>
                             <input
                                 type="text"
                                 name="ville"
                                 value={formData.ville}
                                 onChange={handleInputChange}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                             />
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                                 <Globe className="w-4 h-4 text-gray-400" />
-                                Site web
+                                {t("updateCompany.locationInfo.website")}
                             </label>
                             <input
                                 type="url"
                                 name="site_web"
                                 value={formData.site_web}
                                 onChange={handleInputChange}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                                 placeholder="https://example.com"
                             />
                         </div>
@@ -284,25 +285,25 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
                         <button
                             type="button"
                             onClick={onClose}
-                            className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium"
+                            className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium transition-colors"
                             disabled={loading}
                         >
-                            Annuler
+                            {t("updateCompany.cancel")}
                         </button>
                         <button
                             type="submit"
-                            className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors"
                             disabled={loading}
                         >
                             {loading ? (
                                 <>
                                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                    Récupération...
+                                    {t("updateCompany.saving")}
                                 </>
                             ) : (
                                 <>
                                     <Save className="w-4 h-4" />
-                                    Sauvegarder
+                                    {t("updateCompany.save")}
                                 </>
                             )}
                         </button>

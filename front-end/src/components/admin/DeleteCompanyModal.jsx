@@ -3,7 +3,10 @@ import { X, AlertTriangle, Trash2 } from "lucide-react";
 import axios from "axios";
 import { useContext } from "react";
 import { GlobaleContext } from "../../context/GlobaleContext";
+import { useTranslation } from "react-i18next";
+
 export default function DeleteCompanyModal({ company, isOpen, onClose, onConfirm }) {
+  const { t } = useTranslation();
   const [loading, setLoading] = React.useState(false);
     const {
         alertSucc,
@@ -18,7 +21,7 @@ export default function DeleteCompanyModal({ company, isOpen, onClose, onConfirm
     try {
       await axios.delete(`http://localhost:8000/api/company/${company.id}`);
       setAlertSucc(true);
-      setAlertMsg("Société supprimée avec succès");
+      setAlertMsg(t("deleteCompany.success"));
       setTimeout(() => setAlertSucc(false), 3000);
       onClose();
     } finally {
@@ -38,7 +41,7 @@ export default function DeleteCompanyModal({ company, isOpen, onClose, onConfirm
               <AlertTriangle className="w-4 h-4" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900">
-              Supprimer société
+              {t("deleteCompany.title")}
             </h3>
           </div>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
@@ -49,14 +52,14 @@ export default function DeleteCompanyModal({ company, isOpen, onClose, onConfirm
         {/* Content */}
         <div className="p-6 space-y-4">
           <p className="text-gray-600 text-center">
-            Supprimer <span className="font-semibold text-gray-900">{company?.nom}</span> ?
+            {t("deleteCompany.confirm")} <span className="font-semibold text-gray-900">{company?.nom}</span> ?
           </p>
           
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-500 mt-0.5" />
               <p className="text-sm text-red-600">
-                Cette action est irréversible. Toutes les données seront perdues.
+                {t("deleteCompany.warning")}
               </p>
             </div>
           </div>
@@ -69,7 +72,7 @@ export default function DeleteCompanyModal({ company, isOpen, onClose, onConfirm
             className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
             disabled={loading}
           >
-            Annuler
+            {t("deleteCompany.cancel")}
           </button>
           <button
             onClick={handleConfirm}
@@ -81,7 +84,7 @@ export default function DeleteCompanyModal({ company, isOpen, onClose, onConfirm
             ) : (
               <Trash2 className="w-4 h-4" />
             )}
-            {loading ? "Suppression..." : "Supprimer"}
+            {loading ? t("deleteCompany.deleting") : t("deleteCompany.delete")}
           </button>
         </div>
       </div>

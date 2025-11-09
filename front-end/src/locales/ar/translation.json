@@ -617,7 +617,7 @@
     }
   },
   "requests": "الطلبات",
-  "manage_requests": "إدارة طلبات العملاء ({{count}})",
+  "manage_requests": "إدارة طلبات العملاء ",
   "no_requests": "لا توجد طلبات",
   "no_requests_desc": "لا توجد طلبات من العملاء بعد",
   "client_request": "طلب العميل",
@@ -692,5 +692,93 @@
     "viewAllProperties": "عرض جميع العقارات",
     "updateAgencyProfile": "تحديث ملف الوكالة",
     "newViews": "مشاهدات جديدة"
+  },
+  "companies": {
+    "title": "الشركاء",
+    "total": " شركة في المجموع",
+    "total_plural": " شركات في المجموع",
+    "newCompany": "شركة جديدة",
+    "search": {
+      "placeholder": "ابحث عن شركة بالاسم، البريد الإلكتروني أو المدينة...",
+      "results": " نتيجة",
+      "results_plural": " نتائج"
+    }
+  },
+  "companiesTable": {
+    "empty": {
+      "title": "لا توجد شركات",
+      "description": "لم يتم العثور على أي شركات في قاعدة البيانات."
+    },
+    "header": {
+      "title": "الشركات الشريكة",
+      "count": " شركة موجودة",
+      "count_plural": " شركات موجودة",
+      "status": "النظام نشط"
+    },
+    "columns": {
+      "company": "الشركة",
+      "contact": "الاتصال",
+      "location": "الموقع",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    "notProvided": "غير مقدم",
+    "notSpecified": "غير محدد",
+    "contact": "الاتصال",
+    "active": "نشط",
+    "actions": {
+      "view": "عرض التفاصيل",
+      "edit": "تعديل",
+      "delete": "حذف"
+    },
+    "footer": {
+      "lastUpdate": "آخر تحديث",
+      "items": "عنصر",
+      "items_plural": "عناصر"
+    }
+  },
+  "companyInfo": {
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "address": "العنوان",
+    "website": "الموقع الإلكتروني",
+    "city": "المدينة",
+    "createdAt": "تم الإنشاء في"
+  },
+  "deleteCompany": {
+    "title": "حذف الشركة",
+    "confirm": "حذف",
+    "warning": "هذا الإجراء لا يمكن التراجع عنه. سيتم فقدان جميع البيانات.",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "deleting": "جاري الحذف...",
+    "success": "تم حذف الشركة بنجاح"
+  },
+   "updateCompany": {
+    "title": "تعديل الشركة",
+    "changeLogo": "تغيير الشعار",
+    "imageTypes": "PNG, JPG, GIF (الحد الأقصى 5MB)",
+    "imageError": {
+      "invalid": "يرجى اختيار صورة صالحة",
+      "size": "يجب ألا تتجاوز الصورة 5 ميجابايت"
+    },
+    "companyInfo": {
+      "title": "معلومات الشركة",
+      "name": "اسم الشركة",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف"
+    },
+    "locationInfo": {
+      "title": "الموقع",
+      "address": "العنوان",
+      "city": "المدينة",
+      "website": "الموقع الإلكتروني"
+    },
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "saving": "جاري الحفظ...",
+    "success": "تم تحديث الشركة بنجاح",
+    "error": "خطأ في تحديث الشركة",
+    "dataError": "خطأ في تحضير البيانات"
   }
 }

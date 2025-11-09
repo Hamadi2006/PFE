@@ -40,7 +40,7 @@ export default function SettingsPage() {
         {/* Profil Admin */}
         <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
           <img
-            src={`http://127.0.0.1:8000/storage/${admin.logo}`}
+            src={`http://127.0.0.1:8000/storage/${admin.photo}`}
             alt={admin.nom}
             className="w-32 h-32 rounded-full object-cover border-4 border-blue-500 shadow-md"
           />

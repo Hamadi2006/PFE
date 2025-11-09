@@ -3,12 +3,14 @@ import { Plus, Building2, Search } from "lucide-react";
 import AddCompanyModal from "./AddCompanyModal";
 import CompaniesTable from "./CompaniesTable";
 import CompanyInfoModal from "./CompanyInfoModal";
-import UpdateCompanyModal from "./UpdateCompanyModal"; // ✅ import manquant
+import UpdateCompanyModal from "./UpdateCompanyModal";
 import axios from "axios";
 import { CompanyContext } from "../../context/ComapanieContext";
 import DeleteCompanyModal from "./DeleteCompanyModal";
+import { useTranslation } from "react-i18next";
 
 export default function CompaniesPage() {
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const { companies = [] } = useContext(CompanyContext);
   const [infoCompanyModal, setInfoCompanyModal] = useState(false);
@@ -50,11 +52,10 @@ export default function CompaniesPage() {
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Sociétés Partenaires
+                {t("companies.title")}
               </h1>
               <p className="text-gray-600">
-                {companies.length} société{companies.length > 1 ? "s" : ""} au
-                total
+                {companies.length} {t("companies.total")} 
               </p>
             </div>
 
@@ -63,7 +64,7 @@ export default function CompaniesPage() {
               className="flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors shadow-lg"
             >
               <Plus className="w-5 h-5" />
-              Nouvelle Société
+              {t("companies.newCompany")}
             </button>
           </div>
 
@@ -75,7 +76,7 @@ export default function CompaniesPage() {
                   <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <input
                     type="text"
-                    placeholder="Rechercher une société par nom, email ou ville..."
+                    placeholder={t("companies.search.placeholder")}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
@@ -84,8 +85,7 @@ export default function CompaniesPage() {
               </div>
 
               <div className="text-sm text-gray-600 bg-blue-50 px-4 py-2 rounded-lg">
-                {filteredCompanies.length} résultat
-                {filteredCompanies.length > 1 ? "s" : ""}
+                 {t("companies.search.results", { count: filteredCompanies.length })}
               </div>
             </div>
           </div>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { X, Building2, Mail, Phone, MapPin, Globe, CheckCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const CompanyInfoModal = ({ company, isOpen, onClose }) => {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -81,7 +83,7 @@ const CompanyInfoModal = ({ company, isOpen, onClose }) => {
           <div className="flex items-start space-x-2 p-3 bg-white/70 rounded-lg border border-white/40 hover:bg-white/80 transition-colors">
             <Mail className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
             <div className="min-w-0 flex-1">
-              <p className="text-xs text-gray-600 mb-1">Email</p>
+              <p className="text-xs text-gray-600 mb-1">{t("companyInfo.email")}</p>
               <p className="text-sm text-gray-800 font-medium truncate">{company.email}</p>
             </div>
           </div>
@@ -90,7 +92,7 @@ const CompanyInfoModal = ({ company, isOpen, onClose }) => {
           <div className="flex items-start space-x-2 p-3 bg-white/70 rounded-lg border border-white/40 hover:bg-white/80 transition-colors">
             <Phone className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
             <div className="min-w-0 flex-1">
-              <p className="text-xs text-gray-600 mb-1">Téléphone</p>
+              <p className="text-xs text-gray-600 mb-1">{t("companyInfo.phone")}</p>
               <p className="text-sm text-gray-800 font-medium">{company.telephone}</p>
             </div>
           </div>
@@ -99,7 +101,7 @@ const CompanyInfoModal = ({ company, isOpen, onClose }) => {
           <div className="flex items-start space-x-2 p-3 bg-white/70 rounded-lg border border-white/40 hover:bg-white/80 transition-colors">
             <MapPin className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
             <div className="min-w-0 flex-1">
-              <p className="text-xs text-gray-600 mb-1">Adresse</p>
+              <p className="text-xs text-gray-600 mb-1">{t("companyInfo.address")}</p>
               <p className="text-sm text-gray-800 font-medium line-clamp-2">{company.adresse}</p>
             </div>
           </div>
@@ -109,7 +111,7 @@ const CompanyInfoModal = ({ company, isOpen, onClose }) => {
             <div className="flex items-start space-x-2 p-3 bg-white/70 rounded-lg border border-white/40 hover:bg-white/80 transition-colors">
               <Globe className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
               <div className="min-w-0 flex-1">
-                <p className="text-xs text-gray-600 mb-1">Site Web</p>
+                <p className="text-xs text-gray-600 mb-1">{t("companyInfo.website")}</p>
                 <a 
                   href={company.site_web} 
                   target="_blank" 
@@ -127,7 +129,7 @@ const CompanyInfoModal = ({ company, isOpen, onClose }) => {
             <div className="flex items-start space-x-2 p-3 bg-white/70 rounded-lg border border-white/40 hover:bg-white/80 transition-colors">
               <MapPin className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
               <div className="min-w-0 flex-1">
-                <p className="text-xs text-gray-600 mb-1">Ville</p>
+                <p className="text-xs text-gray-600 mb-1">{t("companyInfo.city")}</p>
                 <p className="text-sm text-gray-800 font-medium">{company.ville}</p>
               </div>
             </div>
@@ -137,7 +139,7 @@ const CompanyInfoModal = ({ company, isOpen, onClose }) => {
         {/* Footer */}
         <div className="px-5 pb-4 border-t border-white/30 pt-3">
           <div className="text-center text-xs text-gray-500">
-            Créé le {new Date(company.created_at).toLocaleDateString('fr-FR')}
+            {t("companyInfo.createdAt")} {new Date(company.created_at).toLocaleDateString('fr-FR')}
           </div>
         </div>
       </div>

@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Eye, Edit, Trash2, Building2, MapPin, Phone, Mail } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function CompaniesTable({ companies, onShowCompany, onUpdateCompany, onDeleteCompany }) {
+  const { t } = useTranslation();
   const [hoveredRow, setHoveredRow] = useState(null);
 
   if (!companies.length) {
     return (
       <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-12 text-center shadow-sm">
         <Building2 size={56} className="text-gray-300 mx-auto mb-4" />
-        <h3 className="text-lg font-semibold text-gray-700 mb-2">Aucune société</h3>
-        <p className="text-gray-500 text-sm">Aucune société trouvée dans la base de données.</p>
+        <h3 className="text-lg font-semibold text-gray-700 mb-2">{t("companiesTable.empty.title")}</h3>
+        <p className="text-gray-500 text-sm">{t("companiesTable.empty.description")}</p>
       </div>
     );
   }
@@ -20,14 +22,14 @@ export default function CompaniesTable({ companies, onShowCompany, onUpdateCompa
       <div className="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">Sociétés partenaires</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{t("companiesTable.header.title")}</h2>
             <p className="text-sm text-gray-600 mt-1">
-              {companies.length} société{companies.length > 1 ? 's' : ''} trouvée{companies.length > 1 ? 's' : ''}
+              {companies.length} {t("companiesTable.header.count", { count: companies.length })}
             </p>
           </div>
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            Système actif
+            {t("companiesTable.header.status")}
           </div>
         </div>
       </div>
@@ -38,19 +40,19 @@ export default function CompaniesTable({ companies, onShowCompany, onUpdateCompa
           <thead>
             <tr className="border-b border-gray-100 bg-white/50">
               <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Société
+                {t("companiesTable.columns.company")}
               </th>
               <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Contact
+                {t("companiesTable.columns.contact")}
               </th>
               <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Localisation
+                {t("companiesTable.columns.location")}
               </th>
               <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Statut
+                {t("companiesTable.columns.status")}
               </th>
               <th className="px-6 py-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Actions
+                {t("companiesTable.columns.actions")}
               </th>
             </tr>
           </thead>
@@ -101,11 +103,11 @@ export default function CompaniesTable({ companies, onShowCompany, onUpdateCompa
                 <td className="px-6 py-4">
                   <div className="space-y-1">
                     <div className="text-sm text-gray-900 font-medium">
-                      {company.telephone || 'Non renseigné'}
+                      {company.telephone || t("companiesTable.notProvided")}
                     </div>
                     <div className="text-xs text-gray-500 flex items-center gap-1">
                       <Phone className="w-3 h-3" />
-                      Contact
+                      {t("companiesTable.contact")}
                     </div>
                   </div>
                 </td>
@@ -115,7 +117,7 @@ export default function CompaniesTable({ companies, onShowCompany, onUpdateCompa
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-gray-400 flex-shrink-0" />
                     <span className="text-sm text-gray-700">
-                      {company.ville || 'Non spécifiée'}
+                      {company.ville || t("companiesTable.notSpecified")}
                     </span>
                   </div>
                 </td>
@@ -124,7 +126,7 @@ export default function CompaniesTable({ companies, onShowCompany, onUpdateCompa
                 <td className="px-6 py-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    Actif
+                    {t("companiesTable.active")}
                   </div>
                 </td>
 
@@ -137,7 +139,7 @@ export default function CompaniesTable({ companies, onShowCompany, onUpdateCompa
                         onShowCompany(company);
                       }}
                       className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
-                      aria-label="Voir détails"
+                      aria-label={t("companiesTable.actions.view")}
                     >
                       <Eye size={16} />
                     </button>
@@ -147,7 +149,7 @@ export default function CompaniesTable({ companies, onShowCompany, onUpdateCompa
                         onUpdateCompany(company);
                       }}
                       className="p-2 text-gray-400 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg transition-all duration-200"
-                      aria-label="Modifier"
+                      aria-label={t("companiesTable.actions.edit")}
                     >
                       <Edit size={16} />
                     </button>
@@ -157,7 +159,7 @@ export default function CompaniesTable({ companies, onShowCompany, onUpdateCompa
                         onDeleteCompany(company);
                       }}
                       className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200"
-                      aria-label="Supprimer"
+                      aria-label={t("companiesTable.actions.delete")}
                     >
                       <Trash2 size={16} />
                     </button>
@@ -172,8 +174,8 @@ export default function CompaniesTable({ companies, onShowCompany, onUpdateCompa
       {/* Footer */}
       <div className="px-6 py-3 border-t border-gray-100 bg-white/50">
         <div className="flex items-center justify-between text-xs text-gray-500">
-          <span>Dernière mise à jour: {new Date().toLocaleDateString('fr-FR')}</span>
-          <span>{companies.length} élément{companies.length > 1 ? 's' : ''}</span>
+          <span>{t("companiesTable.footer.lastUpdate")}: {new Date().toLocaleDateString('fr-FR')}</span>
+          <span>{companies.length} {t("companiesTable.footer.items", { count: companies.length })}</span>
         </div>
       </div>
     </div>

@@ -36,10 +36,11 @@ function Sidebar({ activePage, setActivePage }) {
     { id: "properties", label: t("sidebar.properties"), icon: Building2 },
     { id: "admins", label: t("sidebar.admins"), icon: Users },
     { id: "requests", label: t("sidebar.requests"), icon: Mail },
+    { id: "companies", label: t("sidebar.companies"), icon: Building2 },
+
     { id: "settings", label: t("sidebar.settings"), icon: Settings },
-        { id: "companies", label: t("sidebar.companies"), icon: Building2 },
     { id: "logout", label: t("sidebar.logout"), icon: LogOut },
-        
+
   ];
 
   const languages = [
@@ -132,7 +133,7 @@ function Sidebar({ activePage, setActivePage }) {
               </button>
             </div>
 
-            
+
           </div>
 
           {/* Navigation */}
@@ -146,13 +147,12 @@ function Sidebar({ activePage, setActivePage }) {
                 <button
                   key={item.id}
                   onClick={() => handleMenuClick(item.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                    isActive && !isLogout
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive && !isLogout
                       ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/30"
                       : isLogout
-                      ? "text-red-600 hover:bg-red-50"
-                      : "text-slate-600 hover:bg-slate-100"
-                  }`}
+                        ? "text-red-600 hover:bg-red-50"
+                        : "text-slate-600 hover:bg-slate-100"
+                    }`}
                 >
                   <Icon className="w-5 h-5" />
                   <span className="font-medium">{item.label}</span>
