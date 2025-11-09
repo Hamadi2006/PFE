@@ -34,7 +34,7 @@ Route::prefix('immobilier')->group(function () {
     // GET /api/immobilier/{id} - Afficher une annonce
     Route::get('/{id}', [ImmobilierController::class, 'show']);
     
-    // PUT /api/immobilier/{id} - Mettre à jour une annonce
+    // PUT /api/immobilier/{id} - Mettre à jour une annonce  
     Route::put('/{id}', [ImmobilierController::class, 'update']);
     
     // DELETE /api/immobilier/{id} - Supprimer une annonce
@@ -59,4 +59,5 @@ Route::post('/company/auth', [CompaniesController::class, 'authCompany']);
 
 Route::delete('/company/{id}', [CompaniesController::class, 'deleteCompany']);
 
-// i'm need to add update route !!! 
+Route::post('/company/{id}', [CompaniesController::class, 'updateCompanie']);
+

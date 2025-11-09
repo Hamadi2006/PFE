@@ -12,59 +12,10 @@ function PartnerDashboard() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [language, setLanguage] = useState('en');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [companyProfile, setCompanyProfile] = useState({
-    name: 'Premium Real Estate',
-    email: 'contact@premiumrealestate.ma',
-    phone: '+212 537-123-456',
-    address: 'Avenue Mohamed VI, Rabat',
-    description: 'Leading real estate agency specializing in luxury properties and commercial spaces across Morocco.',
-    website: 'www.premiumrealestate.ma',
-    specialty: 'Luxury Properties',
-    license: 'RC 12345'
-  });
-
-  const [announcements, setAnnouncements] = useState([
-    {
-      id: 1,
-      title: 'Luxury Villa in Agdal',
-      description: 'Beautiful modern villa with garden, swimming pool, and panoramic views. Perfect for families.',
-      location: 'Agdal, Rabat',
-      type: 'Villa',
-      price: '2,500,000 MAD',
-      surface: '320 m²',
-      bedrooms: 4,
-      bathrooms: 3,
-      createdAt: '2025-11-01',
-      status: 'active',
-      views: 156
-    },
-    {
-      id: 2,
-      title: 'Apartment in City Center',
-      description: 'Modern apartment in the heart of Casablanca, close to all amenities and transportation.',
-      location: 'Centre Ville, Casablanca',
-      type: 'Apartment',
-      price: '850,000 MAD',
-      surface: '85 m²',
-      bedrooms: 2,
-      bathrooms: 1,
-      createdAt: '2025-10-28',
-      status: 'active',
-      views: 89
-    },
-    {
-      id: 3,
-      title: 'Commercial Space',
-      description: 'Prime commercial space ideal for retail business or office in busy commercial area.',
-      location: 'Hay Riad, Rabat',
-      type: 'Commercial',
-      price: '1,200,000 MAD',
-      surface: '150 m²',
-      createdAt: '2025-10-25',
-      status: 'closed',
-      views: 203
-    }
-  ]);
+  const companyProfile = JSON.parse(localStorage.getItem("companie"));
+  console.log(companyProfile);
+   
+  const announcements = [];
 
   const logout = () => {
     localStorage.removeItem("tokenCompanie");
@@ -110,7 +61,6 @@ function PartnerDashboard() {
         {activeTab === 'announcements' && (
           <AnnouncementsView
             announcements={announcements}
-            setAnnouncements={setAnnouncements}
             language={language}
           />
         )}
@@ -119,7 +69,6 @@ function PartnerDashboard() {
         {activeTab === 'settings' && (
           <SettingsView
             companyProfile={companyProfile}
-            setCompanyProfile={setCompanyProfile}
             language={language}
             setLanguage={setLanguage}
           />

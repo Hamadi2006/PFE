@@ -91,19 +91,81 @@ class CompaniesController extends Controller
         }
     }
     
-    public function deleteCompany($id){
-        $company = Companie::find($id);
-        if($company){
-            $company->delete();
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Company deleted successfully',
-            ]);
-        }else{
+    public function deleteCompany($id)
+{
+    $company = Companie::find($id);
+
+    if (!$company) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Company not found',
+        ], 404);
+    }
+
+    // Supprimer le logo si présent
+    if ($company->logo) {
+        Storage::disk('public')->delete($company->logo);
+    }
+
+    $company->delete();
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Company deleted successfully',
+    ]);
+}
+
+    public function updateCompanie(Request $request, $id)
+{
+    // Récupérer la société
+    $company = Companie::find($id);
+    if (!$company) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Société non trouvée',
+        ], 404);
+    }
+
+    // Validation
+    $request->validate([
+        'nom' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'telephone' => 'nullable|string|max:20',
+        'adresse' => 'nullable|string|max:255',
+        'ville' => 'nullable|string|max:255',
+        'site_web' => 'nullable|url|max:255',
+        'logo' => 'nullable|image|max:10240', // max 5MB
+    ]);
+
+    // Mettre à jour les champs
+    $company->nom = $request->nom;
+    $company->email = $request->email;
+    $company->telephone = $request->telephone;
+    $company->adresse = $request->adresse;
+    $company->ville = $request->ville;
+    $company->site_web = $request->site_web;
+
+    // Upload du logo dans storage/logos si fourni
+    if ($request->hasFile('logo')) {
+        try {
+            $path = $request->file('logo')->store('logos', 'public');
+            $company->logo = $path; // stocke le chemin relatif pour la DB
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Company not deleted',
-            ]);
+                'message' => 'Logo non uploadé',
+            ], 500);
         }
     }
+
+    $company->save();
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Société mise à jour avec succès',
+        'data' => $company
+    ]);
+}
+
+
 }

@@ -671,17 +671,26 @@
     "companyName": "اسم الوكالة",
     "email": "البريد الإلكتروني",
     "phone": "رقم الهاتف",
-    "address": "العنوان",
+    "address": "عنوان المكتب",
     "language": "اللغة",
     "website": "الموقع الإلكتروني",
     "specialty": "التخصص",
     "license": "رقم الترخيص",
     "description": "الوصف",
-    "edit": "تعديل",
-    "save": "حفظ",
-    "cancel": "إلغاء",
     "english": "الإنجليزية",
     "french": "الفرنسية",
     "arabic": "العربية"
+  },
+  "dashView": {
+    "activeProperties": "العقارات النشطة",
+    "totalViews": "إجمالي المشاهدات",
+    "closedProperties": "العقارات المغلقة",
+    "overview": "نظرة عامة",
+    "recentActivity": "النشاط الأخير",
+    "quickActions": "إجراءات سريعة",
+    "addNewProperty": "إضافة عقار جديد",
+    "viewAllProperties": "عرض جميع العقارات",
+    "updateAgencyProfile": "تحديث ملف الوكالة",
+    "newViews": "مشاهدات جديدة"
   }
 }

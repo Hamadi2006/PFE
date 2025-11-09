@@ -1,44 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Plus, Building2, Settings, TrendingUp, Eye, FileText, Calendar, ChevronRight, Home } from 'lucide-react';
 
-const DashboardView = ({ announcements, stats, setActiveTab, language }) => {
-  const translations = {
-    en: {
-      activeProperties: 'Active Properties',
-      totalViews: 'Total Views',
-      closedProperties: 'Closed Properties',
-      overview: 'Overview',
-      recentActivity: 'Recent Activity',
-      quickActions: 'Quick Actions',
-      addNewProperty: 'Add New Property',
-      viewAllProperties: 'View All Properties',
-      updateAgencyProfile: 'Update Agency Profile'
-    },
-    fr: {
-      activeProperties: 'Propriétés actives',
-      totalViews: 'Total vues',
-      closedProperties: 'Propriétés fermées',
-      overview: 'Aperçu',
-      recentActivity: 'Activité récente',
-      quickActions: 'Actions rapides',
-      addNewProperty: 'Ajouter une propriété',
-      viewAllProperties: 'Voir toutes les propriétés',
-      updateAgencyProfile: 'Mettre à jour le profil'
-    },
-    ar: {
-      activeProperties: 'العقارات النشطة',
-      totalViews: 'إجمالي المشاهدات',
-      closedProperties: 'العقارات المغلقة',
-      overview: 'نظرة عامة',
-      recentActivity: 'النشاط الأخير',
-      quickActions: 'إجراءات سريعة',
-      addNewProperty: 'إضافة عقار جديد',
-      viewAllProperties: 'عرض جميع العقارات',
-      updateAgencyProfile: 'تحديث ملف الوكالة'
-    }
-  };
-
-  const t = translations[language];
+const DashboardView = ({ announcements, stats, setActiveTab }) => {
+  const { t } = useTranslation();
 
   return (
     <div className="p-8">
@@ -52,7 +17,7 @@ const DashboardView = ({ announcements, stats, setActiveTab, language }) => {
             <TrendingUp className="w-6 h-6 opacity-60" />
           </div>
           <h3 className="text-3xl font-bold mb-1">{stats.activeProperties}</h3>
-          <p className="text-green-100">{t.activeProperties}</p>
+          <p className="text-green-100">{t('dashView.activeProperties')}</p>
         </div>
 
         <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white shadow-lg">
@@ -63,7 +28,7 @@ const DashboardView = ({ announcements, stats, setActiveTab, language }) => {
             <TrendingUp className="w-6 h-6 opacity-60" />
           </div>
           <h3 className="text-3xl font-bold mb-1">{stats.totalViews}</h3>
-          <p className="text-blue-100">{t.totalViews}</p>
+          <p className="text-blue-100">{t('dashView.totalViews')}</p>
         </div>
 
         <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-white shadow-lg">
@@ -74,14 +39,14 @@ const DashboardView = ({ announcements, stats, setActiveTab, language }) => {
             <Calendar className="w-6 h-6 opacity-60" />
           </div>
           <h3 className="text-3xl font-bold mb-1">{stats.closedProperties}</h3>
-          <p className="text-purple-100">{t.closedProperties}</p>
+          <p className="text-purple-100">{t('dashView.closedProperties')}</p>
         </div>
       </div>
 
       {/* Quick Actions & Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">{t.quickActions}</h3>
+          <h3 className="text-lg font-bold text-gray-800 mb-4">{t('dashView.quickActions')}</h3>
           <div className="space-y-3">
             <button
               onClick={() => setActiveTab('announcements')}
@@ -91,7 +56,7 @@ const DashboardView = ({ announcements, stats, setActiveTab, language }) => {
                 <div className="p-2 bg-green-600 rounded-lg">
                   <Plus className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-medium text-gray-800">{t.addNewProperty}</span>
+                <span className="font-medium text-gray-800">{t('dashView.addNewProperty')}</span>
               </div>
               <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-green-600" />
             </button>
@@ -103,7 +68,7 @@ const DashboardView = ({ announcements, stats, setActiveTab, language }) => {
                 <div className="p-2 bg-blue-600 rounded-lg">
                   <Building2 className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-medium text-gray-800">{t.viewAllProperties}</span>
+                <span className="font-medium text-gray-800">{t('dashView.viewAllProperties')}</span>
               </div>
               <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600" />
             </button>
@@ -115,7 +80,7 @@ const DashboardView = ({ announcements, stats, setActiveTab, language }) => {
                 <div className="p-2 bg-gray-600 rounded-lg">
                   <Settings className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-medium text-gray-800">{t.updateAgencyProfile}</span>
+                <span className="font-medium text-gray-800">{t('dashView.updateAgencyProfile')}</span>
               </div>
               <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
             </button>
@@ -123,7 +88,7 @@ const DashboardView = ({ announcements, stats, setActiveTab, language }) => {
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">{t.recentActivity}</h3>
+          <h3 className="text-lg font-bold text-gray-800 mb-4">{t('dashView.recentActivity')}</h3>
           <div className="space-y-4">
             {announcements.slice(0, 3).map((ann) => (
               <div key={ann.id} className="flex items-start space-x-3 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
@@ -132,7 +97,7 @@ const DashboardView = ({ announcements, stats, setActiveTab, language }) => {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-800">{ann.title}</p>
-                  <p className="text-xs text-gray-500 mt-1">{ann.views} new views</p>
+                  <p className="text-xs text-gray-500 mt-1">{ann.views} {t('dashView.newViews')}</p>
                   <p className="text-xs text-gray-400 mt-1">{ann.createdAt}</p>
                 </div>
               </div>

@@ -34,7 +34,7 @@ function AdminsPage() {
     setShowDeleteModal(true);
   };
 
-  if (user.role !== 'Admin') {
+  if (user?.role !== 'Admin') {
     return <AccessDenied />;
   }
 

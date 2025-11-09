@@ -1,5 +1,5 @@
 // modals/AddAdminModal.jsx
-import { useState, useContext } from "react";
+import { useState, useContext, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { X, UserPlus, Users, Shield, Upload, Camera } from "lucide-react";
 import axios from "axios";
@@ -7,374 +7,266 @@ import { GlobaleContext } from "../../context/GlobaleContext";
 
 export default function AddAdminModal({ onClose }) {
   const { t } = useTranslation();
-  const {
-    alertSucc,
-    setAlertSucc,
-    alertFail,
-    setAlertFail,
-    alertMsg,
-    setAlertMsg,
-    lastActivitys,
-    setLastActivitys,
-  } = useContext(GlobaleContext);
+  const { setAlertMsg, setAlertFail, setAlertSucc, setLastActivitys } = useContext(GlobaleContext);
 
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [formData, setFormData] = useState({
-    nom: "",
-    prenom: "",
-    email: "",
-    mot_de_passe: "",
-    mot_de_passe_confirmation: "",
-    telephone: "",
-    role: "admin",
+    nom: "", prenom: "", email: "", telephone: "",
+    mot_de_passe: "", mot_de_passe_confirmation: "", role: "admin"
   });
 
-  const handleInputChange = (e) => {
+  // Fonction d'alerte optimisée
+  const showAlert = useCallback((message, type = "error") => {
+    setAlertMsg(message);
+    const setAlert = type === "success" ? setAlertSucc : setAlertFail;
+    setAlert(true);
+    setTimeout(() => setAlert(false), type === "success" ? 2000 : 3000);
+  }, [setAlertMsg, setAlertSucc, setAlertFail]);
+
+  const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+    setFormData(prev => ({ ...prev, [name]: value }));
+  }, []);
 
-  const handleImageChange = (e) => {
+  const handleImageChange = useCallback((e) => {
     const file = e.target.files[0];
-    if (file) {
-      // Validate file type
-      if (!file.type.startsWith("image/")) {
-        setAlertMsg("Le fichier n'est pas une image");
-        setAlertFail(true);
-        setTimeout(() => {
-          setAlertFail(false);
-        }, 3000);
-        return;
-      }
+    if (!file) return;
 
-      // Validate file size (5MB max)
-      if (file.size > 5 * 1024 * 1024) {
-        setAlertMsg("La taille du fichier dépasse 5MB");
-        setAlertFail(true);
-        setTimeout(() => {
-          setAlertFail(false);
-        }, 3000);
-        return;
-      }
-
-      setImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result);
-      reader.readAsDataURL(file);
+    if (!file.type.startsWith("image/")) {
+      showAlert("Le fichier n'est pas une image");
+      return;
     }
-  };
 
-  const removeImage = () => {
+    if (file.size > 5 * 1024 * 1024) {
+      showAlert("La taille du fichier dépasse 5MB");
+      return;
+    }
+
+    setImage(file);
+    const reader = new FileReader();
+    reader.onloadend = () => setImagePreview(reader.result);
+    reader.readAsDataURL(file);
+  }, [showAlert]);
+
+  const removeImage = useCallback(() => {
     setImage(null);
     setImagePreview(null);
-  };
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     if (!image) {
-      setAlertMsg("Veuillez sélectionner une image");
-      setAlertFail(true);
-      setTimeout(() => {
-        setAlertFail(false);
-      }, 3000);
+      showAlert("Veuillez sélectionner une image");
       return;
     }
 
     if (formData.mot_de_passe !== formData.mot_de_passe_confirmation) {
-      setAlertMsg("Les mots de passe ne correspondent pas");
-      setAlertFail(true);
-      setTimeout(() => {
-        setAlertFail(false);
-      }, 3000);
+      showAlert("Les mots de passe ne correspondent pas");
       return;
     }
-    const admin = JSON.parse(localStorage.getItem('user'));
+
     setLoading(true);
+    const admin = JSON.parse(localStorage.getItem('user'));
 
     try {
       const data = new FormData();
-      data.append("nom", formData.nom);
-      data.append("prenom", formData.prenom);
-      data.append("email", formData.email);
-      data.append("mot_de_passe", formData.mot_de_passe);
-      data.append(
-        "mot_de_passe_confirmation",
-        formData.mot_de_passe_confirmation
-      );
-      data.append("telephone", formData.telephone);
-      data.append("role", formData.role);
+      Object.entries(formData).forEach(([key, value]) => {
+        data.append(key, value);
+      });
       data.append("photo", image);
 
-      const response = await axios.post(
-        "http://localhost:8000/api/admin/store",
-        data,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-      setLastActivitys([...lastActivitys, { date: new Date(), action: "Ajouter l'administrateur : " + formData.nom + " " + formData.prenom ,par : admin.nom_complet}]);
-      setAlertMsg("Administrateur ajouté avec succès !");
-      setAlertSucc(true);
+      await axios.post("http://localhost:8000/api/admin/store", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-      setTimeout(() => {
-        setAlertSucc(false);
-        onClose();
-      }, 2000);
+      setLastActivitys(prev => [...prev, {
+        date: new Date(),
+        action: `Ajout admin: ${formData.nom} ${formData.prenom}`,
+        par: admin.nom_complet
+      }]);
+
+      showAlert("Administrateur ajouté avec succès !", "success");
+      setTimeout(onClose, 2000);
     } catch (error) {
-      const message =
-        error.response?.data?.message ||
-        "Erreur lors de l'ajout de l'administrateur";
-      setAlertMsg(message);
-      setAlertFail(true);
-
-      setTimeout(() => {
-        setAlertFail(false);
-      }, 3000);
+      showAlert(error.response?.data?.message || "Erreur lors de l'ajout");
     } finally {
       setLoading(false);
     }
-  };
+  }, [formData, image, onClose, setLastActivitys, showAlert]);
 
   return (
-    <div className="fixed inset-0 backdrop-blur-md bg-gradient-to-br from-blue-500/20 via-gray-500/20 to-gray-500/20 flex items-center justify-center z-50 p-4">
-      <div
-        className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-        style={{
-          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-        }}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/30">
+      <div 
+        className="bg-white rounded-2xl shadow-xl w-full max-w-md mx-auto border border-gray-200 max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white/80 backdrop-blur-lg border-b border-white/30 p-6 flex justify-between items-center rounded-t-2xl">
+        <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center shadow-lg">
-              <UserPlus className="w-5 h-5" />
+            <div className="w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center">
+              <UserPlus className="w-4 h-4" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900">
+            <h3 className="text-xl font-semibold text-gray-900">
               {t("admins.modal.title")}
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors hover:bg-white/50 rounded-lg p-2"
+            className="text-gray-400 hover:text-gray-600 p-1 rounded"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6">
-          {/* Profile Image Section */}
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Camera className="w-5 h-5 text-blue-600" />
-              Photo de profil
-            </h4>
-
-            <div className="flex flex-col items-center gap-4">
-              {/* Image Preview */}
-              <div className="w-32 h-32 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-dashed border-blue-300 flex items-center justify-center overflow-hidden backdrop-blur-sm">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Image Upload */}
+          <div className="text-center">
+            <div className="relative inline-block">
+              <div className="w-20 h-20 rounded-full bg-gray-100 border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
                 {imagePreview ? (
-                  <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
                 ) : (
-                  <div className="flex flex-col items-center gap-2">
-                    <Upload className="w-8 h-8 text-blue-400" />
-                    <span className="text-xs text-blue-600 font-medium">
-                      Ajouter photo
-                    </span>
-                  </div>
+                  <Camera className="w-6 h-6 text-gray-400" />
                 )}
               </div>
-
-              {/* File Input */}
-              <div className="w-full">
-                <label className="block">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="hidden"
-                  />
-                  <span className="inline-block w-full px-4 py-2 bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 text-blue-600 rounded-lg font-medium cursor-pointer text-center transition-all border border-blue-200 backdrop-blur-sm">
-                    Sélectionner une image
-                  </span>
-                </label>
-                <p className="text-xs text-gray-500 mt-2 text-center">
-                  PNG, JPG ou GIF (Max 5MB)
-                </p>
-              </div>
-
-              {/* Remove Image Button */}
               {imagePreview && (
                 <button
                   type="button"
                   onClick={removeImage}
-                  className="px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50/80 backdrop-blur-sm rounded-lg font-medium transition-colors border border-red-200"
+                  className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1"
                 >
-                  Supprimer l'image
+                  <X className="w-3 h-3" />
                 </button>
               )}
             </div>
+            
+            <label className="block mt-3">
+              <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+              <span className="text-sm text-blue-600 hover:text-blue-700 cursor-pointer font-medium">
+                Choisir une photo
+              </span>
+            </label>
+            <p className="text-xs text-gray-500 mt-1">PNG, JPG, GIF (max 5MB)</p>
           </div>
 
-          {/* Personal Info Section */}
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Users className="w-5 h-5 text-blue-600" />
-              {t("admins.modal.personalInfo")}
+          {/* Personal Info */}
+          <div className="space-y-4">
+            <h4 className="font-medium text-gray-900 flex items-center gap-2">
+              <Users className="w-4 h-4 text-blue-500" />
+              Informations personnelles
             </h4>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Nom *
-                </label>
-                <input
-                  type="text"
-                  name="nom"
-                  value={formData.nom}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
-                  required
-                  placeholder="Entrez le nom"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Prénom *
-                </label>
-                <input
-                  type="text"
-                  name="prenom"
-                  value={formData.prenom}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
-                  required
-                  placeholder="Entrez le prénom"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t("admins.modal.email")} *
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
-                  required
-                  placeholder="exemple@email.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t("admins.modal.phone")}
-                </label>
-                <input
-                  type="tel"
-                  name="telephone"
-                  value={formData.telephone}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
-                  required
-                  placeholder="+212 6XX XXX XXX"
-                />
-              </div>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                type="text"
+                name="nom"
+                value={formData.nom}
+                onChange={handleInputChange}
+                placeholder="Nom *"
+                className="col-span-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              />
+              <input
+                type="text"
+                name="prenom"
+                value={formData.prenom}
+                onChange={handleInputChange}
+                placeholder="Prénom *"
+                className="col-span-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              />
             </div>
+            
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="Email *"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+            
+            <input
+              type="tel"
+              name="telephone"
+              value={formData.telephone}
+              onChange={handleInputChange}
+              placeholder="Téléphone *"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
           </div>
 
-          {/* Security Section */}
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Shield className="w-5 h-5 text-blue-600" />
-              {t("admins.modal.security")}
+          {/* Security */}
+          <div className="space-y-4">
+            <h4 className="font-medium text-gray-900 flex items-center gap-2">
+              <Shield className="w-4 h-4 text-blue-500" />
+              Sécurité
             </h4>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t("admins.modal.password")} *
-                </label>
-                <input
-                  type="password"
-                  name="mot_de_passe"
-                  value={formData.mot_de_passe}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
-                  required
-                  minLength="8"
-                  placeholder="Minimum 8 caractères"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  {t("admins.modal.passwordHint")}
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t("admins.modal.confirmPassword")} *
-                </label>
-                <input
-                  type="password"
-                  name="mot_de_passe_confirmation"
-                  value={formData.mot_de_passe_confirmation}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
-                  required
-                  minLength="8"
-                  placeholder="Confirmer le mot de passe"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t("admins.modal.role")}
-                </label>
-                <select
-                  name="role"
-                  value={formData.role}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white/50 backdrop-blur-sm"
-                >
-                  <option value="admin">Admin</option>
-                  <option value="super_admin">Super Admin</option>
-                </select>
-              </div>
-            </div>
+            
+            <input
+              type="password"
+              name="mot_de_passe"
+              value={formData.mot_de_passe}
+              onChange={handleInputChange}
+              placeholder="Mot de passe *"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+              minLength="8"
+            />
+            
+            <input
+              type="password"
+              name="mot_de_passe_confirmation"
+              value={formData.mot_de_passe_confirmation}
+              onChange={handleInputChange}
+              placeholder="Confirmer le mot de passe *"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+              minLength="8"
+            />
+            
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="admin">Admin</option>
+              <option value="super_admin">Super Admin</option>
+            </select>
           </div>
 
           {/* Buttons */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-white/30">
+          <div className="flex gap-3 pt-4 border-t border-gray-100">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-white/80 backdrop-blur-sm transition-colors font-medium"
+              className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium"
               disabled={loading}
             >
-              {t("admins.modal.cancel")}
+              Annuler
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg"
+              className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               disabled={loading}
             >
               {loading ? (
                 <>
-                  <span className="inline-block animate-spin">⏳</span>
-                  {t("admins.modal.adding")}
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Ajout...
                 </>
               ) : (
-                t("admins.modal.submit")
+                <>
+                  <UserPlus className="w-4 h-4" />
+                  Ajouter
+                </>
               )}
             </button>
           </div>

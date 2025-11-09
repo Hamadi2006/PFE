@@ -1,85 +1,112 @@
 // modals/DeleteConfirmModal.jsx
-import { AlertCircle, X } from 'lucide-react';
+import { AlertCircle, X, Trash2 } from 'lucide-react';
 import axios from 'axios';
-import { useState, useContext } from 'react';
+import { useState, useContext, useCallback } from 'react';
 import { GlobaleContext } from "../../context/GlobaleContext";
 
 export default function DeleteConfirmModal({ admin, onClose }) {
   const [loading, setLoading] = useState(false);
-  const {
-    alertSucc,
-    setAlertSucc,
-    alertFail,
-    setAlertFail,
-    alertMsg,
-    setAlertMsg,
-    lastActivitys,
-    setLastActivitys,
-  } = useContext(GlobaleContext);
+  const { setAlertMsg, setAlertSucc, setLastActivitys } = useContext(GlobaleContext);
 
-  const handleConfirmDelete = async () => {
+  const handleConfirmDelete = useCallback(async () => {
     setLoading(true);
 
     try {
       await axios.delete(`http://127.0.0.1:8000/api/admin/${admin.id}`);
-      setLastActivitys([...lastActivitys, { date: new Date(), action: `Supprimer l'administrateur : ${admin.nom_complet}`, par: admin.nom_complet}]);
+      
+      const currentAdmin = JSON.parse(localStorage.getItem('user'));
+      setLastActivitys(prev => [...prev, { 
+        date: new Date(), 
+        action: `Supprimer admin: ${admin.nom_complet}`,
+        par: currentAdmin?.nom_complet || 'Système'
+      }]);
+      
       setAlertMsg('Administrateur supprimé avec succès !');
       setAlertSucc(true);
+      
       setTimeout(() => {
         setAlertSucc(false);
         onClose();
       }, 2000);
     } catch (error) {
-      console.error('Erreur lors de la suppression:', error);
+      console.error('Erreur suppression:', error);
+      setAlertMsg('Erreur lors de la suppression');
+      setAlertSucc(false);
     } finally {
       setLoading(false);
     }
-  };
+  }, [admin, onClose, setAlertMsg, setAlertSucc, setLastActivitys]);
 
   return (
-    <div className="fixed inset-0 backdrop-blur-md bg-opacity-0 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/30">
+      <div 
+        className="bg-white rounded-2xl shadow-xl w-full max-w-sm mx-auto border border-gray-200"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
-        <div className="bg-red-50 border-b border-red-200 p-6 flex justify-between items-center">
+        <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-red-100 text-red-600 flex items-center justify-center">
-              <AlertCircle className="w-5 h-5" />
+            <div className="w-8 h-8 bg-red-500 text-white rounded-lg flex items-center justify-center">
+              <AlertCircle className="w-4 h-4" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900">Confirmer la suppression</h3>
+            <h3 className="text-xl font-semibold text-gray-900">
+              Confirmer suppression
+            </h3>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-gray-600 p-1 rounded"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          <p className="text-gray-600 mb-2">
-            Êtes-vous sûr de vouloir supprimer <span className="font-semibold">{admin?.nom_complet}</span> ?
+        <div className="p-6 space-y-4">
+          <p className="text-gray-600 text-center">
+            Supprimer <span className="font-semibold text-gray-900">{admin?.nom_complet}</span> ?
           </p>
-          <p className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
-            ⚠️ Cette action est irréversible. L'administrateur et toutes ses données seront supprimés définitivement.
-          </p>
+          
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-red-800">
+                  Action irréversible
+                </p>
+                <p className="text-xs text-red-600 mt-1">
+                  L'administrateur et toutes ses données seront définitivement supprimés.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Buttons */}
-        <div className="flex justify-end gap-3 p-6 border-t border-gray-200">
+        <div className="flex gap-3 p-6 border-t border-gray-100">
           <button
             onClick={onClose}
-            className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium"
             disabled={loading}
           >
             Annuler
           </button>
           <button
             onClick={handleConfirmDelete}
-            className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             disabled={loading}
           >
-            {loading ? 'Suppression...' : 'Supprimer'}
+            {loading ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Suppression...
+              </>
+            ) : (
+              <>
+                <Trash2 className="w-4 h-4" />
+                Supprimer
+              </>
+            )}
           </button>
         </div>
       </div>

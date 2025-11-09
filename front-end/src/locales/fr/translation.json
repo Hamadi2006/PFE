@@ -682,21 +682,30 @@
     "logout": "Déconnexion"
   },
     "settingsC": {
-    "companyProfile": "Profil agence",
-    "companyName": "Nom agence",
-    "email": "Email",
-    "phone": "Téléphone",
-    "address": "Adresse",
+    "companyProfile": "Profil Agence",
+    "companyName": "Nom de l'Agence",
+    "email": "Adresse Email",
+    "phone": "Numéro de Téléphone",
+    "address": "Adresse du Bureau",
     "language": "Langue",
-    "website": "Site web",
+    "website": "Site Web",
     "specialty": "Spécialité",
-    "license": "Numéro de licence",
+    "license": "Numéro de Licence",
     "description": "Description",
-    "edit": "Modifier",
-    "save": "Enregistrer",
-    "cancel": "Annuler",
     "english": "Anglais",
     "french": "Français",
     "arabic": "Arabe"
+  },
+    "dashView": {
+    "activeProperties": "Propriétés actives",
+    "totalViews": "Total vues",
+    "closedProperties": "Propriétés fermées",
+    "overview": "Aperçu",
+    "recentActivity": "Activité récente",
+    "quickActions": "Actions rapides",
+    "addNewProperty": "Ajouter une propriété",
+    "viewAllProperties": "Voir toutes les propriétés",
+    "updateAgencyProfile": "Mettre à jour le profil",
+    "newViews": "nouvelles vues"
   }
 }

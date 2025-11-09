@@ -644,12 +644,21 @@
     "specialty": "Specialty",
     "license": "License Number",
     "description": "Description",
-    "edit": "Edit",
-    "save": "Save",
-    "cancel": "Cancel",
     "english": "English",
     "french": "French",
     "arabic": "Arabic"
+  },
+    "dashView": {
+    "activeProperties": "Active Properties",
+    "totalViews": "Total Views",
+    "closedProperties": "Closed Properties",
+    "overview": "Overview",
+    "recentActivity": "Recent Activity",
+    "quickActions": "Quick Actions",
+    "addNewProperty": "Add New Property",
+    "viewAllProperties": "View All Properties",
+    "updateAgencyProfile": "Update Agency Profile",
+    "newViews": "new views"
   }
 }
 
