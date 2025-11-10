@@ -11,7 +11,6 @@ export default function PartnerLogin() {
     email: "",
     password: "",
     showPassword: false,
-    rememberMe: false,
   });
   const [errors, setErrors] = useState({});
   const { setAlertSucc, setAlertFail, setAlertMsg } = useContext(GlobaleContext);
@@ -36,7 +35,7 @@ export default function PartnerLogin() {
     const token = response.data.token;
 
     // stocker token et données
-    if (data.rememberMe) localStorage.setItem("tokenCompanie", token);
+    localStorage.setItem("tokenCompanie", token);
     localStorage.setItem("companie", JSON.stringify(companyData));
 
     setAlertSucc(true);
@@ -128,27 +127,7 @@ export default function PartnerLogin() {
             )}
           </div>
 
-          {/* Options */}
-          <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 text-sm text-gray-600">
-              <input
-                type="checkbox"
-                checked={data.rememberMe}
-                onChange={(e) =>
-                  setData({ ...data, rememberMe: e.target.checked })
-                }
-                className="w-4 h-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              />
-              Se souvenir de moi
-            </label>
-            <button
-              type="button"
-              className="text-sm text-indigo-700 hover:text-indigo-900 font-medium"
-            >
-              Mot de passe oublié ?
-            </button>
-          </div>
-
+        
           {/* Bouton connexion */}
           <button
             type="submit"
