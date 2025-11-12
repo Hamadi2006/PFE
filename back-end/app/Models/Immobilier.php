@@ -43,6 +43,7 @@ class Immobilier extends Model
         'nom_contact',
         'image_principale',
         'images',
+        'societe_id',
     ];
 
     protected $casts = [

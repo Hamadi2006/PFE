@@ -9,7 +9,6 @@ const Sidebar = ({
   setSidebarCollapsed,
   companyProfile,
   stats,
-  language,
   logout
 }) => {
   const { t } = useTranslation();

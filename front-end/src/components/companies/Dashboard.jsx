@@ -13,7 +13,6 @@ function PartnerDashboard() {
   const [language, setLanguage] = useState('en');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const companyProfile = JSON.parse(localStorage.getItem("companie"));
-  console.log("companyProfile",companyProfile);
    
   const announcements = [];
 

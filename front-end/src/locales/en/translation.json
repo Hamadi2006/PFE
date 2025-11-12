@@ -747,6 +747,66 @@
     "success": "Company updated successfully",
     "error": "Error updating company",
     "dataError": "Error preparing data"
+  },
+  "immobilierModal": {
+    "addTitle": "New Property",
+    "editTitle": "Edit Property",
+    "uploadImage": "Change image",
+    "titre": "Title",
+    "titrePlaceholder": "Property title",
+    "type": "Type",
+    "selectType": "Select type",
+    "types": {
+      "appartement": "Apartment",
+      "maison": "House",
+      "villa": "Villa",
+      "studio": "Studio",
+      "terrain": "Land",
+      "bureau": "Office",
+      "commerce": "Commercial"
+    },
+    "transaction": "Transaction",
+    "selectTransaction": "Select transaction",
+    "transactions": {
+      "vente": "Sale",
+      "location": "Rental"
+    },
+    "ville": "City",
+    "villePlaceholder": "City name",
+    "prix": "Price",
+    "surface": "Surface area",
+    "chambres": "Bedrooms",
+    "salles_de_bain": "Bathrooms",
+    "etage": "Floor",
+    "nombre_etages": "Number of floors",
+    "annee_construction": "Construction year",
+    "adresse": "Address",
+    "adressePlaceholder": "Full address",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "amenities": "Amenities",
+    "piscine": "Swimming pool",
+    "jardin": "Garden",
+    "parking": "Parking",
+    "ascenseur": "Elevator",
+    "climatisation": "Air conditioning",
+    "en_vedette": "Featured",
+    "statut": "Status",
+    "statuts": {
+      "disponible": "Available",
+      "reserve": "Reserved",
+      "vendu": "Sold",
+      "loue": "Rented"
+    },
+    "nom_contact": "Contact name",
+    "nom_contactPlaceholder": "Contact name",
+    "telephone_contact": "Contact phone",
+    "email_contact": "Contact email",
+    "description": "Description",
+    "descriptionPlaceholder": "Property description...",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel"
   }
 }
 

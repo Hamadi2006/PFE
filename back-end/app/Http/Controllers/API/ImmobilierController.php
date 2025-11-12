@@ -19,6 +19,7 @@ class ImmobilierController extends Controller
     {
         // Validation rules
         $validator = Validator::make($request->all(), [
+            'societe_id' => 'required|exists:societes,id',
             // Required fields
             'titre' => 'required|string|min:5|max:200',
             'type' => 'required|in:appartement,maison,villa,studio,terrain,bureau,commerce',
@@ -62,6 +63,7 @@ class ImmobilierController extends Controller
             'titre.required' => 'Le titre est requis',
             'titre.min' => 'Le titre doit contenir au moins 5 caractères',
             'titre.max' => 'Le titre ne peut pas dépasser 200 caractères',
+            'societe_id.required' => 'Le societe_id est requis',
             'type.required' => 'Le type de bien est requis',
             'type.in' => 'Le type de bien sélectionné n\'est pas valide',
             'transaction.required' => 'Le type de transaction est requis',
@@ -117,6 +119,7 @@ class ImmobilierController extends Controller
                 'telephone_contact' => $request->telephone_contact,
                 'email_contact' => $request->email_contact,
                 'nom_contact' => $request->nom_contact,
+                'societe_id' => $request->societe_id,
             ];
 
             // Handle main image upload

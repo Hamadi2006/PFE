@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Plus, Search, Edit2, Trash2, MapPin, DollarSign, Ruler, Bed, Bath, Eye } from 'lucide-react';
 import PropertyModal from './PropertyModal';
-
+import axios from 'axios';
+import { GlobaleContext } from '../../context/GlobaleContext';
 const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -15,7 +16,9 @@ const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
     surface: '',
     bedrooms: '',
     bathrooms: '',
-    status: 'active'
+    status: 'active',
+    societe_id: '',
+    images: []
   });
 
   const translations = {
@@ -53,25 +56,23 @@ const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
       bathrooms: 'الحمامات'
     }
   };
-
+  console.log(currentAnnouncement)
   const t = translations[language];
-
+  const {
+    alertSucc,
+    setAlertSucc,
+    alertFail,
+    setAlertFail,
+    alertMsg,
+    setAlertMsg,
+  } = useContext(GlobaleContext);
   const openModal = (mode, announcement = null) => {
-    setModalMode(mode);
-    if (mode === 'edit' && announcement) {
-      setCurrentAnnouncement(announcement);
-    } else {
-      setCurrentAnnouncement({
-        title: '',
-        description: '',
-        location: '',
-        type: 'Apartment',
-        price: '',
-        surface: '',
-        bedrooms: '',
-        bathrooms: '',
-        status: 'active'
-      });
+    if (mode === 'add') {
+      const companie = JSON.parse(localStorage.getItem('companie'));
+      setCurrentAnnouncement(prev => ({
+        ...prev,
+        societe_id: companie ? companie.id : ''
+      }));
     }
     setShowModal(true);
   };
@@ -80,22 +81,56 @@ const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
     setShowModal(false);
   };
 
-  const handleSaveAnnouncement = () => {
-    if (modalMode === 'add') {
-      const newAnnouncement = {
-        ...currentAnnouncement,
-        id: Date.now(),
-        createdAt: new Date().toISOString().split('T')[0],
-        views: 0
-      };
-      setAnnouncements([newAnnouncement, ...announcements]);
-    } else {
-      setAnnouncements(announcements.map(ann => 
-        ann.id === currentAnnouncement.id ? currentAnnouncement : ann
-      ));
+  const handleSaveAnnouncement = async () => {
+    try {
+      const formData = new FormData();
+
+      for (const key in currentAnnouncement) {
+        let value = currentAnnouncement[key];
+
+        // Convertir les booléens en '1' ou '0' pour Laravel
+        if (typeof value === 'boolean') {
+          value = value ? 1 : 0;
+        }
+
+        if (key === 'image_principale' && value instanceof File) {
+          formData.append('image_principale', value);
+        } else if (key === 'images' && Array.isArray(value)) {
+          value.forEach(file => {
+            if (file instanceof File) {
+              formData.append('images[]', file);
+            }
+          });
+        } else {
+          formData.append(key, value ?? '');
+        }
+      }
+
+      const response = await axios.post(
+        'http://localhost:8000/api/immobilier',
+        formData,
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+
+          },
+        }
+      );
+
+      console.log(response.data);
+      setAlertSucc(true);
+      setAlertMsg('Property saved successfully');
+      setTimeout(() => setAlertSucc(false), 3000);
+      closeModal();
+    } catch (error) {
+      console.error(error);
+      setAlertFail(true);
+      setAlertMsg(error.response?.data?.message || 'Erreur lors de l’enregistrement');
+      setTimeout(() => setAlertFail(false), 3000);
     }
-    closeModal();
   };
+
 
   const handleDeleteAnnouncement = (id) => {
     if (window.confirm('Are you sure you want to delete this property?')) {
@@ -142,20 +177,19 @@ const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
               <div className="flex-1">
                 <div className="flex items-center space-x-3 mb-3">
                   <h3 className="text-xl font-bold text-gray-800">{announcement.title}</h3>
-                  <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                    announcement.status === 'active' 
-                      ? 'bg-green-100 text-green-700' 
+                  <span className={`px-3 py-1 text-xs font-semibold rounded-full ${announcement.status === 'active'
+                      ? 'bg-green-100 text-green-700'
                       : 'bg-gray-100 text-gray-700'
-                  }`}>
+                    }`}>
                     {announcement.status === 'active' ? t.active : t.closed}
                   </span>
                   <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full">
                     {announcement.type}
                   </span>
                 </div>
-                
+
                 <p className="text-gray-600 mb-4 line-clamp-2">{announcement.description}</p>
-                
+
                 <div className="flex items-center space-x-6 text-sm text-gray-500">
                   <div className="flex items-center space-x-2">
                     <MapPin className="w-4 h-4" />
