@@ -40,6 +40,8 @@ Route::prefix('immobilier')->group(function () {
     // DELETE /api/immobilier/{id} - Supprimer une annonce
     Route::delete('/{id}', [ImmobilierController::class, 'destroy']);
 
+    // GET /api/immobilier/Bysociete/{societe_id} - Liste toutes les annonces d'une societe
+    Route::get('/Bysociete/{societe_id}', [ImmobilierController::class, 'getImobilierBySociete']);
 
 }
 );

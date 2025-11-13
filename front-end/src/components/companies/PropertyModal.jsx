@@ -13,18 +13,21 @@ const PropertyModal = ({
   setCurrentAnnouncement,
   handleSaveAnnouncement
 }) => {
+  // --- HOOKS ---
   const companie = JSON.parse(localStorage.getItem('companie'));
   const companie_id = companie.id;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
+
+  // --- CALLBACKS ---
   const handleInputChange = useCallback((field, value) => {
-  setCurrentAnnouncement(prev => ({
-    ...prev,
-    [field]: value,
-    societe_id: companie_id
-  }));
-}, [setCurrentAnnouncement, companie_id]);
+    setCurrentAnnouncement(prev => ({
+      ...prev,
+      [field]: value,
+      societe_id: companie_id
+    }));
+  }, [setCurrentAnnouncement, companie_id]);
 
   const handleCheckboxChange = useCallback((field) => {
     setCurrentAnnouncement(prev => ({
@@ -36,14 +39,11 @@ const PropertyModal = ({
   const handleImageChange = useCallback((e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     if (!file.type.startsWith('image/')) {
       alert('Veuillez sélectionner une image valide');
       return;
     }
-
     setCurrentAnnouncement(prev => ({ ...prev, image_principale: file }));
-
     const reader = new FileReader();
     reader.onloadend = () => setImagePreview(reader.result);
     reader.readAsDataURL(file);
@@ -65,7 +65,6 @@ const PropertyModal = ({
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       await handleSaveAnnouncement();
     } catch (error) {
@@ -75,6 +74,7 @@ const PropertyModal = ({
     }
   }, [handleSaveAnnouncement, closeModal]);
 
+  // --- RENDER ---
   if (!showModal) return null;
 
   return (

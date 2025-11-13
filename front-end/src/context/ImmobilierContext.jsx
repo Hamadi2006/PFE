@@ -5,7 +5,9 @@ export const ImmobilierContext = createContext();
 
 export const ImmobilierProvider = ({ children }) => {
   const [immobilier, setImmobilier] = useState([]);
-
+  const [immobilieBySociete, setImmobilieBySociete] = useState([]);
+  const companie = JSON.parse(localStorage.getItem("companie"));
+  const societe_id = companie.id;
   useEffect(() => {
     const fetchData = () => {
       axios
@@ -20,8 +22,22 @@ export const ImmobilierProvider = ({ children }) => {
     return () => clearInterval(interval); 
   }, []);
 
+  useEffect(() => {
+    const fetchData = () => {
+      axios
+        .get("http://localhost:8000/api/immobilier/Bysociete/" + societe_id)
+        .then((res) => setImmobilieBySociete(res.data.data))
+        .catch((err) => console.log(err));
+    };
+
+    fetchData(); 
+    const interval = setInterval(fetchData, 6000); 
+
+    return () => clearInterval(interval); 
+  }, []);
+
   return (
-    <ImmobilierContext.Provider value={{ immobilier, setImmobilier }}>
+    <ImmobilierContext.Provider value={{ immobilier, setImmobilier, immobilieBySociete, setImmobilieBySociete }}>
       {children}
     </ImmobilierContext.Provider>
   );

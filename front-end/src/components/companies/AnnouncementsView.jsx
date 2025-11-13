@@ -1,24 +1,45 @@
 import React, { useState, useContext } from 'react';
-import { Plus, Search, Edit2, Trash2, MapPin, DollarSign, Ruler, Bed, Bath, Eye } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, MapPin, DollarSign, Ruler, Bed, Bath, Star } from 'lucide-react';
 import PropertyModal from './PropertyModal';
 import axios from 'axios';
 import { GlobaleContext } from '../../context/GlobaleContext';
+import { ImmobilierContext } from '../../context/ImmobilierContext';
+import PropertyCard from './PropertyCard.jsx';
+
 const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState('add');
+  const { immobilieBySociete } = useContext(ImmobilierContext);
   const [currentAnnouncement, setCurrentAnnouncement] = useState({
-    title: '',
+    titre: '',
     description: '',
-    location: '',
-    type: 'Apartment',
-    price: '',
+    adresse: '',
+    type: 'maison',
+    transaction: 'vente',
+    prix: '',
     surface: '',
-    bedrooms: '',
-    bathrooms: '',
-    status: 'active',
+    chambres: '',
+    salles_de_bain: '',
+    statut: 'disponible',
     societe_id: '',
-    images: []
+    image_principale: null,
+    images: [],
+    piscine: false,
+    jardin: false,
+    parking: false,
+    ascenseur: false,
+    climatisation: false,
+    ville: '',
+    latitude: '',
+    longitude: '',
+    annee_construction: '',
+    etage: '',
+    nombre_etages: '',
+    telephone_contact: '',
+    email_contact: '',
+    nom_contact: '',
+    en_vedette: false
   });
 
   const translations = {
@@ -27,36 +48,45 @@ const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
       addAnnouncement: 'New Property',
       editAnnouncement: 'Edit Property',
       search: 'Search properties...',
-      active: 'Active',
-      closed: 'Closed',
-      views: 'Views',
+      active: 'Available',
+      closed: 'Unavailable',
       bedrooms: 'Bedrooms',
-      bathrooms: 'Bathrooms'
+      bathrooms: 'Bathrooms',
+      price: 'Price',
+      surface: 'Surface',
+      location: 'Location',
+      featured: 'Featured'
     },
     fr: {
       announcements: 'Propriétés',
       addAnnouncement: 'Nouvelle propriété',
       editAnnouncement: 'Modifier la propriété',
       search: 'Rechercher propriétés...',
-      active: 'Actif',
-      closed: 'Fermé',
-      views: 'Vues',
+      active: 'Disponible',
+      closed: 'Indisponible',
       bedrooms: 'Chambres',
-      bathrooms: 'Salles de bain'
+      bathrooms: 'Salles de bain',
+      price: 'Prix',
+      surface: 'Surface',
+      location: 'Localisation',
+      featured: 'En vedette'
     },
     ar: {
       announcements: 'العقارات',
       addAnnouncement: 'عقار جديد',
       editAnnouncement: 'تعديل العقار',
       search: 'البحث في العقارات...',
-      active: 'نشط',
-      closed: 'مغلق',
-      views: 'المشاهدات',
+      active: 'متاح',
+      closed: 'غير متاح',
       bedrooms: 'الغرف',
-      bathrooms: 'الحمامات'
+      bathrooms: 'الحمامات',
+      price: 'السعر',
+      surface: 'المساحة',
+      location: 'الموقع',
+      featured: 'مميز'
     }
   };
-  console.log(currentAnnouncement)
+
   const t = translations[language];
   const {
     alertSucc,
@@ -66,6 +96,50 @@ const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
     alertMsg,
     setAlertMsg,
   } = useContext(GlobaleContext);
+
+  // Fonction pour mapper les données API
+  const mapApiToAnnouncement = (apiData) => ({
+    id: apiData.id,
+    titre: apiData.titre,
+    description: apiData.description,
+    adresse: apiData.adresse,
+    ville: apiData.ville,
+    type: apiData.type,
+    transaction: apiData.transaction,
+    prix: apiData.prix,
+    surface: apiData.surface,
+    chambres: apiData.chambres,
+    salles_de_bain: apiData.salles_de_bain,
+    statut: apiData.statut,
+    societe_id: apiData.societe_id,
+    image_principale: apiData.image_principale,
+    image_principale_url: apiData.image_principale_url,
+    images_urls: apiData.images_urls || [],
+    piscine: apiData.piscine,
+    jardin: apiData.jardin,
+    parking: apiData.parking,
+    ascenseur: apiData.ascenseur,
+    climatisation: apiData.climatisation,
+    latitude: apiData.latitude,
+    longitude: apiData.longitude,
+    annee_construction: apiData.annee_construction,
+    etage: apiData.etage,
+    nombre_etages: apiData.nombre_etages,
+    telephone_contact: apiData.telephone_contact,
+    email_contact: apiData.email_contact,
+    nom_contact: apiData.nom_contact,
+    en_vedette: apiData.en_vedette,
+    created_at: apiData.created_at,
+    updated_at: apiData.updated_at
+  });
+
+  // Utiliser immobilieBySociete et mapper les données
+  const mappedAnnouncements = immobilieBySociete && immobilieBySociete.length > 0
+    ? immobilieBySociete.map(item => mapApiToAnnouncement(item))
+    : [];
+
+  console.log('Données mappées:', mappedAnnouncements);
+
   const openModal = (mode, announcement = null) => {
     if (mode === 'add') {
       const companie = JSON.parse(localStorage.getItem('companie'));
@@ -73,7 +147,10 @@ const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
         ...prev,
         societe_id: companie ? companie.id : ''
       }));
+    } else if (mode === 'edit' && announcement) {
+      setCurrentAnnouncement(announcement);
     }
+    setModalMode(mode);
     setShowModal(true);
   };
 
@@ -88,7 +165,6 @@ const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
       for (const key in currentAnnouncement) {
         let value = currentAnnouncement[key];
 
-        // Convertir les booléens en '1' ou '0' pour Laravel
         if (typeof value === 'boolean') {
           value = value ? 1 : 0;
         }
@@ -101,22 +177,27 @@ const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
               formData.append('images[]', file);
             }
           });
-        } else {
+        } else if (key !== 'id' && key !== 'created_at' && key !== 'updated_at' && 
+                   key !== 'image_principale_url' && key !== 'images_urls') {
           formData.append(key, value ?? '');
         }
       }
 
-      const response = await axios.post(
-        'http://localhost:8000/api/immobilier',
-        formData,
-        {
-          headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      const url = currentAnnouncement.id
+        ? `http://localhost:8000/api/immobilier/${currentAnnouncement.id}`
+        : 'http://localhost:8000/api/immobilier';
 
-          },
-        }
-      );
+      const method = currentAnnouncement.id ? 'POST' : 'POST';
+
+      const response = await axios({
+        method,
+        url,
+        data: formData,
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+      });
 
       console.log(response.data);
       setAlertSucc(true);
@@ -126,22 +207,36 @@ const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
     } catch (error) {
       console.error(error);
       setAlertFail(true);
-      setAlertMsg(error.response?.data?.message || 'Erreur lors de l’enregistrement');
+      setAlertMsg(error.response?.data?.message || 'Error saving property');
       setTimeout(() => setAlertFail(false), 3000);
     }
   };
 
-
-  const handleDeleteAnnouncement = (id) => {
+  const handleDeleteAnnouncement = async (id) => {
     if (window.confirm('Are you sure you want to delete this property?')) {
-      setAnnouncements(announcements.filter(ann => ann.id !== id));
+      try {
+        await axios.delete(`http://localhost:8000/api/immobilier/${id}`, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          },
+        });
+        setAlertSucc(true);
+        setAlertMsg('Property deleted successfully');
+        setTimeout(() => setAlertSucc(false), 3000);
+      } catch (error) {
+        console.error(error);
+        setAlertFail(true);
+        setAlertMsg('Error deleting property');
+        setTimeout(() => setAlertFail(false), 3000);
+      }
     }
   };
 
-  const filteredAnnouncements = announcements.filter(ann =>
-    ann.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    ann.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    ann.type.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredAnnouncements = mappedAnnouncements.filter(ann =>
+    ann.titre?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    ann.adresse?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    ann.ville?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    ann.type?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -169,77 +264,13 @@ const AnnouncementsView = ({ announcements, setAnnouncements, language }) => {
         </div>
       </div>
 
-      {/* Property Listings */}
       <div className="space-y-4">
-        {filteredAnnouncements.map((announcement) => (
-          <div key={announcement.id} className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center space-x-3 mb-3">
-                  <h3 className="text-xl font-bold text-gray-800">{announcement.title}</h3>
-                  <span className={`px-3 py-1 text-xs font-semibold rounded-full ${announcement.status === 'active'
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-gray-100 text-gray-700'
-                    }`}>
-                    {announcement.status === 'active' ? t.active : t.closed}
-                  </span>
-                  <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full">
-                    {announcement.type}
-                  </span>
-                </div>
-
-                <p className="text-gray-600 mb-4 line-clamp-2">{announcement.description}</p>
-
-                <div className="flex items-center space-x-6 text-sm text-gray-500">
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="w-4 h-4" />
-                    <span>{announcement.location}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <DollarSign className="w-4 h-4" />
-                    <span>{announcement.price}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Ruler className="w-4 h-4" />
-                    <span>{announcement.surface}</span>
-                  </div>
-                  {announcement.bedrooms && (
-                    <div className="flex items-center space-x-2">
-                      <Bed className="w-4 h-4" />
-                      <span>{announcement.bedrooms} {t.bedrooms}</span>
-                    </div>
-                  )}
-                  {announcement.bathrooms && (
-                    <div className="flex items-center space-x-2">
-                      <Bath className="w-4 h-4" />
-                      <span>{announcement.bathrooms} {t.bathrooms}</span>
-                    </div>
-                  )}
-                  <div className="flex items-center space-x-2">
-                    <Eye className="w-4 h-4" />
-                    <span>{announcement.views} {t.views}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex space-x-2 ml-6">
-                <button
-                  onClick={() => openModal('edit', announcement)}
-                  className="p-3 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-all"
-                >
-                  <Edit2 className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => handleDeleteAnnouncement(announcement.id)}
-                  className="p-3 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-all"
-                >
-                  <Trash2 className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+<PropertyCard 
+  filteredAnnouncements={filteredAnnouncements}
+  t={t}
+  openModal={openModal}
+  handleDeleteAnnouncement={handleDeleteAnnouncement}
+/>      </div>
 
       {/* Property Modal */}
       <PropertyModal

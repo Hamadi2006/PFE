@@ -53,15 +53,15 @@ const SettingsView = ({ companyProfile, onEditProfile }) => {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Paramètres</h1>
-            <p className="text-gray-600 mt-1">Gérez le profil de votre entreprise</p>
+            <h1 className="text-2xl font-bold text-gray-900">{t('settingsC.title')}</h1>
+            <p className="text-gray-600 mt-1">{t('settingsC.subtitle')}</p>
           </div>
           <button
             onClick={onEditProfile}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             <Edit3 className="w-4 h-4" />
-            Modifier le profil
+            {t('settingsC.editProfile', 'Modifier le profil')}
           </button>
         </div>
 
@@ -83,9 +83,9 @@ const SettingsView = ({ companyProfile, onEditProfile }) => {
                   />
                   <div>
                     <h2 className="text-xl font-semibold text-gray-900">
-                      Profil de l'entreprise
+                      {t('settingsC.companyProfile')}
                     </h2>
-                    <p className="text-gray-600">Informations générales</p>
+                    <p className="text-gray-600">{t('settingsC.generalInfo', 'Informations générales')}</p>
                   </div>
                 </div>
               </div>
@@ -94,45 +94,45 @@ const SettingsView = ({ companyProfile, onEditProfile }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <InfoCard 
                     icon={Building2} 
-                    label="Nom de l'entreprise" 
+                    label={t('settingsC.companyName', "Nom de l'entreprise")} 
                     value={companyProfile.nom}
                   />
                   <InfoCard 
                     icon={Mail} 
-                    label="Email" 
+                    label={t('settingsC.email', 'Email')} 
                     value={companyProfile.email}
                     isLink
                   />
                   <InfoCard 
                     icon={Phone} 
-                    label="Téléphone" 
+                    label={t('settingsC.phone', 'Téléphone')} 
                     value={companyProfile.telephone}
                   />
                   <InfoCard 
                     icon={ExternalLink} 
-                    label="Site web" 
+                    label={t('settingsC.website', 'Site web')} 
                     value={companyProfile.site_web}
                     isLink
                   />
                   <InfoCard 
                     icon={Briefcase} 
-                    label="Spécialité" 
+                    label={t('settingsC.specialty', 'Spécialité')} 
                     value={companyProfile.statut}
                   />
                   <InfoCard 
                     icon={FileText} 
-                    label="Ville" 
+                    label={t('settingsC.city', 'Ville')} 
                     value={companyProfile.ville}
                   />
                   <InfoCard 
                     icon={MapPin} 
-                    label="Adresse" 
+                    label={t('settingsC.address', 'Adresse')} 
                     value={companyProfile.adresse}
                     isFullWidth
                   />
                   <InfoCard 
                     icon={FileText} 
-                    label="Description" 
+                    label={t('settingsC.description', 'Description')} 
                     value={companyProfile.description}
                     isFullWidth
                   />
@@ -148,7 +148,7 @@ const SettingsView = ({ companyProfile, onEditProfile }) => {
               <div className="flex items-center gap-3 mb-6">
                 <Globe className="w-5 h-5 text-gray-700" />
                 <h2 className="text-lg font-semibold text-gray-900">
-                  Langue
+                  {t('settingsC.language', 'Langue')}
                 </h2>
               </div>
 
@@ -167,7 +167,7 @@ const SettingsView = ({ companyProfile, onEditProfile }) => {
                       <div className={`font-medium ${
                         currentLanguage === 'FR' ? 'text-blue-600' : 'text-gray-900'
                       }`}>
-                        Français
+                        {t('settingsC.french', 'Français')}
                       </div>
                     </div>
                   </div>
@@ -187,7 +187,7 @@ const SettingsView = ({ companyProfile, onEditProfile }) => {
                       <div className={`font-medium ${
                         currentLanguage === 'EN' ? 'text-blue-600' : 'text-gray-900'
                       }`}>
-                        English
+                        {t('settingsC.english', 'English')}
                       </div>
                     </div>
                   </div>
@@ -207,7 +207,7 @@ const SettingsView = ({ companyProfile, onEditProfile }) => {
                       <div className={`font-medium ${
                         currentLanguage === 'AR' ? 'text-blue-600' : 'text-gray-900'
                       }`}>
-                        العربية
+                        {t('settingsC.arabic', 'العربية')}
                       </div>
                     </div>
                   </div>

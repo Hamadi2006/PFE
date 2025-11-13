@@ -338,4 +338,14 @@ class ImmobilierController extends Controller
             ], 500);
         }
     }
+
+    //get imobilier by societe
+    public function getImobilierBySociete($societe_id)
+    {
+        $immobilier = Immobilier::where('societe_id', $societe_id)->get();
+        return response()->json([
+            'success' => true,
+            'data' => $immobilier
+        ], 200);
+    }
 }
