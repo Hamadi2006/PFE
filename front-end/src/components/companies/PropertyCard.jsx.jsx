@@ -1,7 +1,7 @@
 import React from 'react';
 import { Edit2, Trash2, MapPin, DollarSign, Ruler, Bed, Bath, Star, Waves, Car, TreePine, Building, Snowflake } from 'lucide-react';
 
-function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnouncement, openUpdatePopUp, setOpenUpdatePopUp, handleDeleteAnnouncement }) {
+function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnouncement, openUpdatePopUp, setOpenUpdatePopUp, handleDeleteAnnouncement, openDeletePopUp, setOpenDeletePopUp, setSelectedAnnouncementDelete }) {
   const formatPrice = (price) => {
     if (!price) return '';
     return new Intl.NumberFormat('fr-FR').format(parseFloat(price));
@@ -167,7 +167,10 @@ function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnounce
                     <Edit2 className="w-5 h-5" />
                   </button>
                   <button
-                    onClick={() => handleDeleteAnnouncement(announcement.id)}
+                    onClick={() => {
+                      setOpenDeletePopUp(true);
+                      setSelectedAnnouncementDelete(announcement);
+                    }}
                     className="p-3 bg-red-50 text-red-600 rounded-2xl hover:bg-red-100 hover:scale-110 transition-all shadow-sm"
                     title="Delete"
                   >

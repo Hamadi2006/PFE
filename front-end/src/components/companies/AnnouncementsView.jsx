@@ -6,12 +6,15 @@ import { ImmobilierContext } from '../../context/ImmobilierContext';
 import PropertyCard from './PropertyCard.jsx';
 import AddImmobilier from './AddImmobilier.jsx';
 import UpdateImmobilier from './UpdateImmobilier.jsx';
+import DeleteConfirmModal from './DeleteConfirmModal.jsx';
 const AnnouncementsView = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [openAddPopUp, setOpenAddPopUp] = useState(false);
   const [openUpdatePopUp, setOpenUpdatePopUp] = useState(false);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
   const { immobilieBySociete } = useContext(ImmobilierContext);
+  const [openDeletePopUp, setOpenDeletePopUp] = useState(false);
+  const [selectedAnnouncementDelete, setSelectedAnnouncementDelete] = useState(null);
   const {
     setAlertSucc,
     setAlertFail,
@@ -79,7 +82,7 @@ const AnnouncementsView = () => {
       }
     }
   };
-
+  console.log(selectedAnnouncementDelete)
   // Filtrer les annonces
   const filteredAnnouncements = mappedAnnouncements.filter(ann =>
     ann.titre?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -95,6 +98,9 @@ const AnnouncementsView = () => {
     )}
     {openUpdatePopUp && (
       <UpdateImmobilier isOpen={openUpdatePopUp} onClose={() => setOpenUpdatePopUp(false)} selectedAnnouncement={selectedAnnouncement} />
+    )}
+    {openDeletePopUp && (
+      <DeleteConfirmModal isOpen={openDeletePopUp} onClose={() => setOpenDeletePopUp(false)} selectedAnnouncement={selectedAnnouncementDelete}  announcement={selectedAnnouncementDelete} />
     )}
     <div className="p-8">
       {/* Search & Filter Bar */}
@@ -128,6 +134,8 @@ const AnnouncementsView = () => {
           openUpdatePopUp={openUpdatePopUp}
           setOpenUpdatePopUp={setOpenUpdatePopUp}
           setSelectedAnnouncement={setSelectedAnnouncement} 
+          setOpenDeletePopUp={setOpenDeletePopUp}
+          setSelectedAnnouncementDelete={setSelectedAnnouncementDelete}
         />
       </div>
     </div>
