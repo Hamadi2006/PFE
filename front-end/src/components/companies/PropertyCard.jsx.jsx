@@ -1,7 +1,7 @@
 import React from 'react';
 import { Edit2, Trash2, MapPin, DollarSign, Ruler, Bed, Bath, Star, Waves, Car, TreePine, Building, Snowflake } from 'lucide-react';
 
-function PropertyCard({ filteredAnnouncements, t, openModal, handleDeleteAnnouncement }) {
+function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnouncement, openUpdatePopUp, setOpenUpdatePopUp, handleDeleteAnnouncement }) {
   const formatPrice = (price) => {
     if (!price) return '';
     return new Intl.NumberFormat('fr-FR').format(parseFloat(price));
@@ -157,7 +157,10 @@ function PropertyCard({ filteredAnnouncements, t, openModal, handleDeleteAnnounc
                 {/* Actions */}
                 <div className="flex space-x-2 ml-4">
                   <button
-                    onClick={() => openModal('edit', announcement)}
+                    onClick={() => {
+                      setOpenUpdatePopUp(true);
+                      setSelectedAnnouncement(announcement);
+                    }}
                     className="p-3 bg-blue-50 text-blue-600 rounded-2xl hover:bg-blue-100 hover:scale-110 transition-all shadow-sm"
                     title="Edit"
                   >

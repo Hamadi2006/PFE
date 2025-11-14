@@ -5,16 +5,18 @@ import { GlobaleContext } from '../../context/GlobaleContext';
 import { ImmobilierContext } from '../../context/ImmobilierContext';
 import PropertyCard from './PropertyCard.jsx';
 import AddImmobilier from './AddImmobilier.jsx';
+import UpdateImmobilier from './UpdateImmobilier.jsx';
 const AnnouncementsView = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [openAddPopUp, setOpenAddPopUp] = useState(false);
+  const [openUpdatePopUp, setOpenUpdatePopUp] = useState(false);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
   const { immobilieBySociete } = useContext(ImmobilierContext);
   const {
     setAlertSucc,
     setAlertFail,
     setAlertMsg,
   } = useContext(GlobaleContext);
-
   // Fonction pour mapper les données API
   const mapApiToAnnouncement = (apiData) => ({
     id: apiData.id,
@@ -32,7 +34,7 @@ const AnnouncementsView = () => {
     societe_id: apiData.societe_id,
     image_principale: apiData.image_principale,
     image_principale_url: apiData.image_principale_url,
-    images_urls: apiData.images_urls || [],
+    images: apiData.images || [],
     piscine: apiData.piscine,
     jardin: apiData.jardin,
     parking: apiData.parking,
@@ -91,6 +93,9 @@ const AnnouncementsView = () => {
     {openAddPopUp && (
       <AddImmobilier isOpen={openAddPopUp} onClose={() => setOpenAddPopUp(false)} />
     )}
+    {openUpdatePopUp && (
+      <UpdateImmobilier isOpen={openUpdatePopUp} onClose={() => setOpenUpdatePopUp(false)} selectedAnnouncement={selectedAnnouncement} />
+    )}
     <div className="p-8">
       {/* Search & Filter Bar */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">
@@ -120,6 +125,9 @@ const AnnouncementsView = () => {
         <PropertyCard 
           filteredAnnouncements={filteredAnnouncements}
           handleDeleteAnnouncement={handleDeleteAnnouncement}
+          openUpdatePopUp={openUpdatePopUp}
+          setOpenUpdatePopUp={setOpenUpdatePopUp}
+          setSelectedAnnouncement={setSelectedAnnouncement} 
         />
       </div>
     </div>

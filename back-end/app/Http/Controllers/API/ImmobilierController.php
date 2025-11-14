@@ -203,8 +203,8 @@ class ImmobilierController extends Controller
     /**
      * Update a property
      */
-    public function update(Request $request, $id)
-    {
+public function update(Request $request, $id)
+{
     $immobilier = Immobilier::find($id);
 
     if (!$immobilier) {
@@ -214,7 +214,7 @@ class ImmobilierController extends Controller
         ], 404);
     }
 
-    // Validation rules (same as store)
+    // Validation rules
     $validator = Validator::make($request->all(), [
         'titre' => 'sometimes|required|string|min:5|max:200',
         'type' => 'sometimes|required|in:appartement,maison,villa,studio,terrain,bureau,commerce',
@@ -243,6 +243,7 @@ class ImmobilierController extends Controller
         'email_contact' => 'nullable|email|max:100',
         'image_principale' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
         'images.*' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+        'deleted_images' => 'nullable|string', // JSON string of image paths to delete
     ]);
 
     if ($validator->fails()) {
@@ -255,7 +256,7 @@ class ImmobilierController extends Controller
 
     try {
         // Préparer les données à mettre à jour (exclure les fichiers)
-        $dataToUpdate = $request->except(['image_principale', 'images']);
+        $dataToUpdate = $request->except(['image_principale', 'images', 'deleted_images', '_method']);
         
         // Mettre à jour les coordonnées si elles sont fournies
         if ($request->has('latitude') && $request->has('longitude')) {
@@ -265,20 +266,83 @@ class ImmobilierController extends Controller
         
         $immobilier->update($dataToUpdate);
 
-        // Handle image updates if needed
+        // Handle main image update
         if ($request->hasFile('image_principale')) {
-            // Delete old image
+            // Delete old main image
             if ($immobilier->image_principale) {
                 Storage::disk('public')->delete($immobilier->image_principale);
             }
             
-            // Upload new image
+            // Upload new main image
             $imagePrincipale = $request->file('image_principale');
             $imageName = 'immobilier_' . Str::random(20) . '.' . $imagePrincipale->getClientOriginalExtension();
             $imagePath = $imagePrincipale->storeAs('immobilier/principales', $imageName, 'public');
             $immobilier->image_principale = $imagePath;
-            $immobilier->save();
         }
+
+        // Handle deleted images from gallery
+        if ($request->has('deleted_images')) {
+            $deletedImages = json_decode($request->deleted_images, true);
+            
+            if (is_array($deletedImages) && count($deletedImages) > 0) {
+                // Get current images array
+                $currentImages = json_decode($immobilier->images, true) ?? [];
+                
+                // Remove deleted images from storage
+                foreach ($deletedImages as $deletedPath) {
+                    Storage::disk('public')->delete($deletedPath);
+                    
+                    // Remove from current images array
+                    $currentImages = array_filter($currentImages, function($path) use ($deletedPath) {
+                        return $path !== $deletedPath;
+                    });
+                }
+                
+                // Update images field with remaining images
+                $immobilier->images = json_encode(array_values($currentImages));
+            }
+        }
+
+        // Handle new additional images
+        if ($request->hasFile('images')) {
+            // Get current images array
+            $currentImages = json_decode($immobilier->images, true) ?? [];
+            
+            $newImagesPaths = [];
+            
+            foreach ($request->file('images') as $index => $image) {
+                $imageName = 'immobilier_' . $immobilier->id . '_' . time() . '_' . $index . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+                $imagePath = $image->storeAs('immobilier/galerie', $imageName, 'public');
+                $newImagesPaths[] = $imagePath;
+            }
+            
+            // Merge current images with new images
+            $allImages = array_merge($currentImages, $newImagesPaths);
+            
+            // Limit to maximum 10 images
+            if (count($allImages) > 10) {
+                $allImages = array_slice($allImages, 0, 10);
+            }
+            
+            $immobilier->images = json_encode(array_values($allImages));
+        }
+
+        // Save all changes
+        $immobilier->save();
+
+        // Refresh the model to get updated data
+        $immobilier = $immobilier->fresh();
+
+        // Add image URLs to response
+        $immobilier->image_principale_url = $immobilier->image_principale 
+            ? asset('storage/' . $immobilier->image_principale) 
+            : null;
+
+        // Parse images and create URLs
+        $imagesArray = json_decode($immobilier->images, true) ?? [];
+        $immobilier->images_urls = array_map(function($path) {
+            return asset('storage/' . $path);
+        }, $imagesArray);
 
         return response()->json([
             'success' => true,
