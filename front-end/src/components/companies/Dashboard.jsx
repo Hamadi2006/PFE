@@ -6,6 +6,7 @@ import AnnouncementsView from './AnnouncementsView';
 import SettingsView from './SettingsView';
 import Sidebar from './Sidebar';
 import Header from './Header';
+import RequestsView from './RequestsView';
 
 function PartnerDashboard() {
   const navigate = useNavigate();
@@ -13,9 +14,7 @@ function PartnerDashboard() {
   const [language, setLanguage] = useState('en');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const companyProfile = JSON.parse(localStorage.getItem("companie"));
-   
   const announcements = [];
-
   const logout = () => {
     localStorage.removeItem("tokenCompanie");
     localStorage.removeItem("companie");
@@ -27,7 +26,9 @@ function PartnerDashboard() {
     totalViews: announcements.reduce((sum, a) => sum + a.views, 0),
     closedProperties: announcements.filter(a => a.status === 'closed').length
   };
-
+  function getPopUpState(bool){
+    setAddPopUpState(bool);
+  }
   return (
     <div className={`flex h-screen bg-gray-50 ${language === 'ar' ? 'rtl' : 'ltr'}`}>
       {/* Sidebar */}
@@ -61,8 +62,16 @@ function PartnerDashboard() {
           <AnnouncementsView
             announcements={announcements}
             language={language}
+            getPopUpState={getPopUpState}
           />
         )}
+        {
+          activeTab === "requests" && (
+            <RequestsView
+              language={language}
+            />
+          )
+        }
 
         {/* Settings View */}
         {activeTab === 'settings' && (

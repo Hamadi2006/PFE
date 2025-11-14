@@ -52,6 +52,8 @@ Route::get('/demande', [DemandesController::class, 'getDemandes']);
 
 Route::delete('/demande/{id}', [DemandesController::class, 'deleteDemande']);
 
+Route::get('/demande/Bysociete/{societe_id}', [DemandesController::class, 'getDemandeByCompanie']);
+
 // Routes of companies (CRUD)
 Route::post('/company/store', [CompaniesController::class, 'storeCompany']);
 

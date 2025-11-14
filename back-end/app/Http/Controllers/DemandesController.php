@@ -43,6 +43,14 @@ class DemandesController extends Controller
             'data' => $demandes
         ], 200);
     }
+    public function getDemandeByCompanie($id)
+    {
+        $demandes = Demande::where('societe_id', $id)->get();
+        return response()->json([
+            'success' => true,
+            'data' => $demandes
+        ], 200);
+    }
     public function deleteDemande($id)
     {
         try {

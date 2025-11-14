@@ -7,7 +7,7 @@ import PropertyCard from './PropertyCard.jsx';
 import AddImmobilier from './AddImmobilier.jsx';
 import UpdateImmobilier from './UpdateImmobilier.jsx';
 import DeleteConfirmModal from './DeleteConfirmModal.jsx';
-const AnnouncementsView = () => {
+const AnnouncementsView = ({getPopUpState}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [openAddPopUp, setOpenAddPopUp] = useState(false);
   const [openUpdatePopUp, setOpenUpdatePopUp] = useState(false);
@@ -82,7 +82,6 @@ const AnnouncementsView = () => {
       }
     }
   };
-  console.log(selectedAnnouncementDelete)
   // Filtrer les annonces
   const filteredAnnouncements = mappedAnnouncements.filter(ann =>
     ann.titre?.toLowerCase().includes(searchQuery.toLowerCase()) ||
