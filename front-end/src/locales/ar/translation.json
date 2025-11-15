@@ -699,164 +699,234 @@
     "french": "الفرنسية",
     "arabic": "العربية"
   },
-  "dashView": {
-    "activeProperties": "العقارات النشطة",
-    "totalViews": "إجمالي المشاهدات",
-    "closedProperties": "العقارات المغلقة",
-    "overview": "نظرة عامة",
-    "recentActivity": "النشاط الأخير",
-    "quickActions": "إجراءات سريعة",
-    "addNewProperty": "إضافة عقار جديد",
-    "viewAllProperties": "عرض جميع العقارات",
-    "updateAgencyProfile": "تحديث ملف الوكالة",
-    "newViews": "مشاهدات جديدة"
-  },
-  "companies": {
-    "title": "الشركاء",
-    "total": " شركة في المجموع",
-    "total_plural": " شركات في المجموع",
-    "newCompany": "شركة جديدة",
-    "search": {
-      "placeholder": "ابحث عن شركة بالاسم، البريد الإلكتروني أو المدينة...",
-      "results": " نتيجة",
-      "results_plural": " نتائج"
-    }
-  },
-  "companiesTable": {
-    "empty": {
-      "title": "لا توجد شركات",
-      "description": "لم يتم العثور على أي شركات في قاعدة البيانات."
+ "realEstate": {
+    "modal": {
+      "titleNewProperty": "عقار جديد",
+      "subtitleFillInfo": "قم بتعبئة معلومات العقار"
     },
-    "header": {
-      "title": "الشركات الشريكة",
-      "count": " شركة موجودة",
-      "count_plural": " شركات موجودة",
-      "status": "النظام نشط"
-    },
-    "columns": {
-      "company": "الشركة",
-      "contact": "الاتصال",
+    "steps": {
+      "mainInformation": "المعلومات الأساسية",
+      "characteristics": "الخصائص",
       "location": "الموقع",
+      "contactAndImages": "الاتصال والصور"
+    },
+    "sections": {
+      "composition": "التكوين",
+      "amenities": "المرافق"
+    },
+    "fields": {
+      "propertyTitle": "عنوان الإعلان",
+      "propertyType": "نوع العقار",
+      "description": "الوصف",
+      "transactionType": "نوع المعاملة",
+      "priceMad": "السعر (درهم)",
+      "surfaceM2": "المساحة (م²)",
+      "bedrooms": "غرف النوم",
+      "bathrooms": "الحمامات",
+      "floor": "الطابق",
+      "totalFloors": "عدد الطوابق",
+      "constructionYear": "سنة البناء",
       "status": "الحالة",
-      "actions": "الإجراءات"
+      "city": "المدينة",
+      "fullAddress": "العنوان الكامل",
+      "latitude": "خط العرض",
+      "longitude": "خط الطول",
+      "contactName": "اسم جهة الاتصال",
+      "phone": "الهاتف",
+      "email": "البريد الإلكتروني",
+      "mainImage": "الصورة الرئيسية",
+      "imageGallery": "معرض الصور"
     },
-    "notProvided": "غير مقدم",
-    "notSpecified": "غير محدد",
-    "contact": "الاتصال",
-    "active": "نشط",
-    "actions": {
-      "view": "عرض التفاصيل",
-      "edit": "تعديل",
-      "delete": "حذف"
+    "propertyTypes": {
+      "apartment": "شقة",
+      "house": "منزل",
+      "villa": "فيلا",
+      "office": "مكتب"
     },
-    "footer": {
-      "lastUpdate": "آخر تحديث",
-      "items": "عنصر",
-      "items_plural": "عناصر"
+    "transactionTypes": {
+      "sale": "بيع",
+      "rent": "إيجار"
+    },
+    "amenities": {
+      "pool": "مسبح",
+      "garden": "حديقة",
+      "parking": "موقف سيارات",
+      "elevator": "مصعد",
+      "airConditioning": "تكييف",
+      "featured": "مميز"
+    },
+    "statusOptions": {
+      "available": "متاح",
+      "sold": "مباع",
+      "rented": "مؤجر"
+    },
+    "placeholders": {
+      "propertyTitleExample": "مثال: شقة جميلة في وسط المدينة",
+      "describeProperty": "صف العقار بالتفصيل...",
+      "cityExample": "مثال: الرباط",
+      "addressExample": "مثال: حي المسيرة، الرباط",
+      "latitudeExample": "مثال: 34.020882",
+      "longitudeExample": "مثال: -6.841650",
+      "contactNameExample": "مثال: حمادي أيوب",
+      "phoneExample": "مثال: 0636201010",
+      "emailExample": "مثال: contact@entreprise.com"
+    },
+    "labels": {
+      "imagesCount": "صورة"
+    },
+    "buttons": {
+      "previous": "السابق",
+      "next": "التالي",
+      "addProperty": "إضافة العقار"
+    },
+    "alerts": {
+      "successAdd": "تمت إضافة العقار بنجاح",
+      "errorAdd": "خطأ في إضافة العقار"
     }
   },
-  "companyInfo": {
-    "email": "البريد الإلكتروني",
-    "phone": "الهاتف",
-    "address": "العنوان",
-    "website": "الموقع الإلكتروني",
-    "city": "المدينة",
-    "createdAt": "تم الإنشاء في"
-  },
-  "deleteCompany": {
-    "title": "حذف الشركة",
-    "confirm": "حذف",
-    "warning": "هذا الإجراء لا يمكن التراجع عنه. سيتم فقدان جميع البيانات.",
-    "cancel": "إلغاء",
-    "delete": "حذف",
-    "deleting": "جاري الحذف...",
-    "success": "تم حذف الشركة بنجاح"
-  },
-   "updateCompany": {
-    "title": "تعديل الشركة",
-    "changeLogo": "تغيير الشعار",
-    "imageTypes": "PNG, JPG, GIF (الحد الأقصى 5MB)",
-    "imageError": {
-      "invalid": "يرجى اختيار صورة صالحة",
-      "size": "يجب ألا تتجاوز الصورة 5 ميجابايت"
+    "realEstate": {
+    "modal": {
+      "titleNewProperty": "عقار جديد",
+      "subtitleFillInfo": "قم بتعبئة معلومات العقار"
     },
-    "companyInfo": {
-      "title": "معلومات الشركة",
-      "name": "اسم الشركة",
-      "email": "البريد الإلكتروني",
-      "phone": "الهاتف"
+    "update": {
+      "titleEditProperty": "تعديل العقار",
+      "subtitleUpdateInfo": "تحديث معلومات العقار",
+      "successMessage": "تم التحديث بنجاح!",
+      "mainImageAlt": "الصورة الرئيسية",
+      "clickToModify": "انقر للتعديل",
+      "dragDropOrClick": "اسحب وأفلت أو انقر للإضافة",
+      "imageFormats": "PNG, JPG, WEBP حتى 5 ميجابايت",
+      "addImages": "إضافة صور",
+      "addAdditionalImages": "إضافة صور إضافية",
+      "maxImagesMultiple": "حد أقصى 10 صور • اختيار متعدد",
+      "currentImages": "الصور الحالية",
+      "imageAlt": "صورة",
+      "newImages": "صور جديدة",
+      "newImageAlt": "صورة جديدة",
+      "newBadge": "جديد"
     },
-    "locationInfo": {
-      "title": "الموقع",
-      "address": "العنوان",
+    "steps": {
+      "mainInformation": "المعلومات الأساسية",
+      "characteristics": "الخصائص",
+      "location": "الموقع",
+      "contactAndImages": "الاتصال والصور"
+    },
+    "sections": {
+      "mainInformation": "المعلومات الأساسية",
+      "characteristics": "الخصائص",
+      "composition": "التكوين",
+      "amenities": "المرافق",
+      "location": "الموقع",
+      "contact": "الاتصال",
+      "images": "الصور"
+    },
+    "fields": {
+      "propertyTitle": "عنوان الإعلان",
+      "propertyType": "نوع العقار",
+      "description": "الوصف",
+      "transactionType": "نوع المعاملة",
+      "priceMad": "السعر (درهم)",
+      "surfaceM2": "المساحة (م²)",
+      "bedrooms": "غرف النوم",
+      "bathrooms": "الحمامات",
+      "floor": "الطابق",
+      "totalFloors": "عدد الطوابق",
+      "constructionYear": "سنة البناء",
+      "status": "الحالة",
       "city": "المدينة",
-      "website": "الموقع الإلكتروني"
+      "fullAddress": "العنوان الكامل",
+      "latitude": "خط العرض",
+      "longitude": "خط الطول",
+      "contactName": "اسم جهة الاتصال",
+      "phone": "الهاتف",
+      "email": "البريد الإلكتروني",
+      "mainImage": "الصورة الرئيسية",
+      "imageGallery": "معرض الصور"
     },
-    "cancel": "إلغاء",
-    "save": "حفظ",
-    "saving": "جاري الحفظ...",
-    "success": "تم تحديث الشركة بنجاح",
-    "error": "خطأ في تحديث الشركة",
-    "dataError": "خطأ في تحضير البيانات"
-  },
-  "immobilierModal": {
-    "addTitle": "عقار جديد",
-    "editTitle": "تعديل العقار",
-    "uploadImage": "تغيير الصورة",
-    "titre": "العنوان",
-    "titrePlaceholder": "عنوان العقار",
-    "type": "النوع",
-    "selectType": "اختر النوع",
-    "types": {
-      "appartement": "شقة",
-      "maison": "منزل",
+    "propertyTypes": {
+      "apartment": "شقة",
+      "house": "منزل",
       "villa": "فيلا",
-      "studio": "استوديو",
-      "terrain": "أرض",
-      "bureau": "مكتب",
-      "commerce": "تجاري"
+      "office": "مكتب",
+      "studio": "ستوديو",
+      "land": "أرض",
+      "commercial": "تجاري"
     },
-    "transaction": "المعاملة",
-    "selectTransaction": "اختر المعاملة",
-    "transactions": {
-      "vente": "بيع",
-      "location": "إيجار"
+    "transactionTypes": {
+      "sale": "بيع",
+      "rent": "إيجار"
     },
-    "ville": "المدينة",
-    "villePlaceholder": "اسم المدينة",
-    "prix": "السعر",
+    "amenities": {
+      "pool": "مسبح",
+      "garden": "حديقة",
+      "parking": "موقف سيارات",
+      "elevator": "مصعد",
+      "airConditioning": "تكييف",
+      "featured": "مميز"
+    },
+    "statusOptions": {
+      "available": "متاح",
+      "sold": "مباع",
+      "rented": "مؤجر",
+      "reserved": "محجوز"
+    },
+    "placeholders": {
+      "propertyTitleExample": "مثال: شقة جميلة في وسط المدينة",
+      "describeProperty": "صف العقار بالتفصيل...",
+      "cityExample": "مثال: الرباط",
+      "addressExample": "مثال: حي المسيرة، الرباط",
+      "latitudeExample": "مثال: 34.020882",
+      "longitudeExample": "مثال: -6.841650",
+      "contactNameExample": "مثال: حمادي أيوب",
+      "phoneExample": "مثال: 0636201010",
+      "emailExample": "مثال: contact@entreprise.com"
+    },
+    "labels": {
+      "imagesCount": "صورة"
+    },
+    "buttons": {
+      "previous": "السابق",
+      "next": "التالي",
+      "addProperty": "إضافة العقار",
+      "cancel": "إلغاء",
+      "update": "تحديث",
+      "updating": "جاري التحديث..."
+    },
+    "alerts": {
+      "successAdd": "تمت إضافة العقار بنجاح",
+      "errorAdd": "خطأ في إضافة العقار",
+      "successUpdate": "تم تحديث العقار بنجاح",
+      "errorUpdate": "حدث خطأ أثناء التحديث"
+    }
+  },
+  "propertyCard": {
+    "featured": "مميز",
+    "available": "متاح",
+    "unavailable": "غير متاح",
+    "currency": "درهم",
     "surface": "المساحة",
-    "chambres": "الغرف",
-    "salles_de_bain": "الحمامات",
-    "etage": "الطابق",
-    "nombre_etages": "عدد الطوابق",
-    "annee_construction": "سنة البناء",
-    "adresse": "العنوان",
-    "adressePlaceholder": "العنوان الكامل",
-    "latitude": "خط العرض",
-    "longitude": "خط الطول",
-    "amenities": "المرافق",
-    "piscine": "مسبح",
-    "jardin": "حديقة",
-    "parking": "موقف سيارات",
-    "ascenseur": "مصعد",
-    "climatisation": "تكييف",
-    "en_vedette": "مميز",
-    "statut": "الحالة",
-    "statuts": {
-      "disponible": "متاح",
-      "reserve": "محجوز",
-      "vendu": "مباع",
-      "loue": "مؤجر"
+    "bedrooms": "غرف النوم",
+    "bathrooms": "حمامات",
+    "floor": "الطابق",
+    "amenities": {
+      "piscine": "مسبح",
+      "parking": "موقف سيارات",
+      "jardin": "حديقة",
+      "ascenseur": "مصعد",
+      "climatisation": "تكييف"
     },
-    "nom_contact": "اسم المسؤول",
-    "nom_contactPlaceholder": "اسم المسؤول",
-    "telephone_contact": "هاتف المسؤول",
-    "email_contact": "بريد المسؤول",
-    "description": "الوصف",
-    "descriptionPlaceholder": "وصف العقار...",
-    "save": "حفظ",
-    "saving": "جاري الحفظ...",
-    "cancel": "إلغاء"
+    "edit": "تعديل",
+    "delete": "حذف",
+    "contact": "جهة الاتصال",
+    "noProperties": "لم يتم العثور على عقارات",
+    "adjustSearch": "حاول تعديل معايير البحث"
+  },
+   "announcementsView": {
+    "searchPlaceholder": "البحث عن عقارات...",
+    "newProperty": "عقار جديد",
+    "confirmDelete": "هل أنت متأكد من حذف هذا العقار؟",
+    "deleteSuccess": "تم حذف العقار بنجاح",
+    "deleteError": "خطأ أثناء حذف العقار"
   }
 }

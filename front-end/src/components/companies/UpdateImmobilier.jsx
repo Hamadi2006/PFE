@@ -1,8 +1,14 @@
+// ========================================
+// UpdateImmobilier.jsx - Composant complet traduit
+// ========================================
+
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { GlobaleContext } from '../../context/GlobaleContext';
+import { useTranslation } from 'react-i18next';
 
 function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
+  const { t } = useTranslation();
   const { setAlertSucc, setAlertFail, setAlertMsg } = useContext(GlobaleContext);
   
   const [mainImage, setMainImage] = useState(null);
@@ -43,12 +49,10 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
     email_contact: ''
   });
 
-  // Initialize data when selectedAnnouncement changes
   useEffect(() => {
     if (selectedAnnouncement) {
       const propertyData = selectedAnnouncement;
       
-      // Set form data
       setFormData({
         titre: propertyData.titre || '',
         type: propertyData.type || 'appartement',
@@ -77,17 +81,13 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
         email_contact: propertyData.email_contact || ''
       });
 
-      // Set main image
       setMainImage(propertyData.image_principale_url || null);
       setMainImageFile(null);
 
-      // Parse and set additional images
       let imagesArray = [];
       if (propertyData.images) {
         try {
-          // Parse the JSON string to get the array of paths
           const imagePaths = JSON.parse(propertyData.images);
-          // Convert paths to full URLs
           imagesArray = imagePaths.map(path => 
             `http://localhost:8000/storage/${path}`
           );
@@ -97,7 +97,6 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
       }
       setAdditionalImages(imagesArray);
       
-      // Reset new images
       setNewImages([]);
       setNewImageFiles([]);
       setDeletedImages([]);
@@ -147,7 +146,6 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
   
   const removeExistingImage = (index) => {
     const imageUrl = additionalImages[index];
-    // Extract the path from the URL for deletion tracking
     const imagePath = imageUrl.replace('http://localhost:8000/storage/', '');
     setDeletedImages(prev => [...prev, imagePath]);
     
@@ -171,7 +169,6 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
     try {
       const submitData = new FormData();
       
-      // Add all form fields
       Object.keys(formData).forEach(key => {
         if (formData[key] !== null && formData[key] !== '') {
           if (typeof formData[key] === 'boolean') {
@@ -182,22 +179,18 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
         }
       });
       
-      // Add main image if changed
       if (mainImageFile) {
         submitData.append('image_principale', mainImageFile);
       }
       
-      // Add new additional images
       newImageFiles.forEach((file, index) => {
         submitData.append(`images[${index}]`, file);
       });
       
-      // Add deleted images paths
       if (deletedImages.length > 0) {
         submitData.append('deleted_images', JSON.stringify(deletedImages));
       }
       
-      // Laravel PUT method workaround
       submitData.append('_method', 'PUT');
       
       const response = await axios.post(
@@ -213,26 +206,25 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
       if (response.data.success) {
         setSuccess(true);
         setAlertSucc(true);
-        setAlertMsg('Propriété mise à jour avec succès');
+        setAlertMsg(t('realEstate.alerts.successUpdate'));
         setTimeout(() => {
           setAlertSucc(false);
           onClose();
-          // Optionally reload the data or trigger a refresh
-          window.location.reload(); // Or use a better state management approach
+          window.location.reload();
         }, 1500);
       }
       
     } catch (err) {
       setAlertFail(true);
-      setAlertMsg('Une erreur est survenue lors de la mise à jour');
+      setAlertMsg(t('realEstate.alerts.errorUpdate'));
       setTimeout(() => setAlertFail(false), 3000);
       setError(
         err.response?.data?.message || 
-        'Une erreur est survenue lors de la mise à jour'
+        t('realEstate.alerts.errorUpdate')
       );
       
       if (err.response?.data?.errors) {
-        console.error('Erreurs de validation:', err.response.data.errors);
+        console.error('Validation errors:', err.response.data.errors);
       }
     } finally {
       setLoading(false);
@@ -249,8 +241,12 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
         <div className='bg-white border-b border-gray-200 px-6 py-4'>
           <div className='flex justify-between items-center'>
             <div>
-              <h2 className='text-xl font-semibold text-gray-900'>Modifier la propriété</h2>
-              <p className='text-sm text-gray-600'>Mettre à jour les informations de la propriété</p>
+              <h2 className='text-xl font-semibold text-gray-900'>
+                {t('realEstate.update.titleEditProperty')}
+              </h2>
+              <p className='text-sm text-gray-600'>
+                {t('realEstate.update.subtitleUpdateInfo')}
+              </p>
             </div>
             <button 
               onClick={onClose}
@@ -267,7 +263,9 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
         {/* Messages */}
         {success && (
           <div className='mx-6 mt-4 p-4 bg-green-50 border border-green-200 rounded-lg'>
-            <p className='text-green-800 text-sm font-medium'>✓ Mise à jour effectuée avec succès!</p>
+            <p className='text-green-800 text-sm font-medium'>
+              ✓ {t('realEstate.update.successMessage')}
+            </p>
           </div>
         )}
         
@@ -281,14 +279,16 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
         <form onSubmit={handleSubmit} className='flex-1 overflow-y-auto p-6 bg-gray-50'>
           <div className='space-y-6'>
             
-            {/* Section 1: Informations principales */}
+            {/* Section 1: Main Information */}
             <div className='bg-white rounded-lg border border-gray-200 p-6'>
-              <h3 className='text-lg font-semibold text-gray-900 mb-4'>Informations principales</h3>
+              <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                {t('realEstate.sections.mainInformation')}
+              </h3>
               
               <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                 <div>
                   <label className='block text-sm font-medium text-gray-700 mb-2'>
-                    Titre de l'annonce *
+                    {t('realEstate.fields.propertyTitle')} *
                   </label>
                   <input
                     type="text"
@@ -301,26 +301,30 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                 </div>
 
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Type de bien</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.fields.propertyType')}
+                  </label>
                   <select
                     name="type"
                     value={formData.type}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
                   >
-                    <option value="appartement">Appartement</option>
-                    <option value="maison">Maison</option>
-                    <option value="villa">Villa</option>
-                    <option value="studio">Studio</option>
-                    <option value="terrain">Terrain</option>
-                    <option value="bureau">Bureau</option>
-                    <option value="commerce">Commerce</option>
+                    <option value="appartement">{t('realEstate.propertyTypes.apartment')}</option>
+                    <option value="maison">{t('realEstate.propertyTypes.house')}</option>
+                    <option value="villa">{t('realEstate.propertyTypes.villa')}</option>
+                    <option value="studio">{t('realEstate.propertyTypes.studio')}</option>
+                    <option value="terrain">{t('realEstate.propertyTypes.land')}</option>
+                    <option value="bureau">{t('realEstate.propertyTypes.office')}</option>
+                    <option value="commerce">{t('realEstate.propertyTypes.commercial')}</option>
                   </select>
                 </div>
               </div>
 
               <div className='mt-4'>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>Description</label>
+                <label className='block text-sm font-medium text-gray-700 mb-2'>
+                  {t('realEstate.fields.description')}
+                </label>
                 <textarea
                   name="description"
                   value={formData.description}
@@ -332,20 +336,24 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
 
               <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mt-4'>
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Transaction</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.fields.transactionType')}
+                  </label>
                   <select
                     name="transaction"
                     value={formData.transaction}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
                   >
-                    <option value="vente">Vente</option>
-                    <option value="location">Location</option>
+                    <option value="vente">{t('realEstate.transactionTypes.sale')}</option>
+                    <option value="location">{t('realEstate.transactionTypes.rent')}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Prix (MAD)</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.fields.priceMad')}
+                  </label>
                   <input
                     type="number"
                     name="prix"
@@ -357,7 +365,9 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                 </div>
 
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Surface (m²)</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.fields.surfaceM2')}
+                  </label>
                   <input
                     type="number"
                     name="surface"
@@ -370,17 +380,23 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
               </div>
             </div>
 
-            {/* Section 2: Caractéristiques */}
+            {/* Section 2: Characteristics */}
             <div className='bg-white rounded-lg border border-gray-200 p-6'>
-              <h3 className='text-lg font-semibold text-gray-900 mb-4'>Caractéristiques</h3>
+              <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                {t('realEstate.sections.characteristics')}
+              </h3>
               
               <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                 <div className='space-y-4'>
-                  <h4 className='font-medium text-gray-900'>Composition</h4>
+                  <h4 className='font-medium text-gray-900'>
+                    {t('realEstate.sections.composition')}
+                  </h4>
                   
                   <div className='grid grid-cols-2 gap-4'>
                     <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>Chambres</label>
+                      <label className='block text-sm font-medium text-gray-700 mb-2'>
+                        {t('realEstate.fields.bedrooms')}
+                      </label>
                       <input
                         type="number"
                         name="chambres"
@@ -391,7 +407,9 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                     </div>
 
                     <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>Salles de bain</label>
+                      <label className='block text-sm font-medium text-gray-700 mb-2'>
+                        {t('realEstate.fields.bathrooms')}
+                      </label>
                       <input
                         type="number"
                         name="salles_de_bain"
@@ -404,7 +422,9 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
 
                   <div className='grid grid-cols-2 gap-4'>
                     <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>Étage</label>
+                      <label className='block text-sm font-medium text-gray-700 mb-2'>
+                        {t('realEstate.fields.floor')}
+                      </label>
                       <input
                         type="number"
                         name="etage"
@@ -415,7 +435,9 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                     </div>
 
                     <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>Nombre d'étages</label>
+                      <label className='block text-sm font-medium text-gray-700 mb-2'>
+                        {t('realEstate.fields.totalFloors')}
+                      </label>
                       <input
                         type="number"
                         name="nombre_etages"
@@ -427,7 +449,9 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                   </div>
 
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Année de construction</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.constructionYear')}
+                    </label>
                     <input
                       type="number"
                       name="annee_construction"
@@ -441,16 +465,18 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                 </div>
 
                 <div className='space-y-4'>
-                  <h4 className='font-medium text-gray-900'>Équipements</h4>
+                  <h4 className='font-medium text-gray-900'>
+                    {t('realEstate.sections.amenities')}
+                  </h4>
                   
                   <div className='grid grid-cols-1 gap-3'>
                     {[
-                      { name: 'piscine', label: 'Piscine' },
-                      { name: 'jardin', label: 'Jardin' },
-                      { name: 'parking', label: 'Parking' },
-                      { name: 'ascenseur', label: 'Ascenseur' },
-                      { name: 'climatisation', label: 'Climatisation' },
-                      { name: 'en_vedette', label: 'Mettre en vedette' }
+                      { name: 'piscine', label: t('realEstate.amenities.pool') },
+                      { name: 'jardin', label: t('realEstate.amenities.garden') },
+                      { name: 'parking', label: t('realEstate.amenities.parking') },
+                      { name: 'ascenseur', label: t('realEstate.amenities.elevator') },
+                      { name: 'climatisation', label: t('realEstate.amenities.airConditioning') },
+                      { name: 'en_vedette', label: t('realEstate.amenities.featured') }
                     ].map((equipement) => (
                       <label key={equipement.name} className="flex items-center space-x-3 cursor-pointer p-2 hover:bg-gray-50 rounded-lg">
                         <input
@@ -466,30 +492,36 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                   </div>
 
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Statut</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.status')}
+                    </label>
                     <select
                       name="statut"
                       value={formData.statut}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
                     >
-                      <option value="disponible">Disponible</option>
-                      <option value="vendu">Vendu</option>
-                      <option value="loue">Loué</option>
-                      <option value="reserve">Réservé</option>
+                      <option value="disponible">{t('realEstate.statusOptions.available')}</option>
+                      <option value="vendu">{t('realEstate.statusOptions.sold')}</option>
+                      <option value="loue">{t('realEstate.statusOptions.rented')}</option>
+                      <option value="reserve">{t('realEstate.statusOptions.reserved')}</option>
                     </select>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Section 3: Localisation */}
+            {/* Section 3: Location */}
             <div className='bg-white rounded-lg border border-gray-200 p-6'>
-              <h3 className='text-lg font-semibold text-gray-900 mb-4'>Localisation</h3>
+              <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                {t('realEstate.sections.location')}
+              </h3>
               
               <div className='grid grid-cols-1 gap-6'>
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Ville *</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.fields.city')} *
+                  </label>
                   <input
                     type="text"
                     name="ville"
@@ -501,7 +533,9 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                 </div>
 
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Adresse complète</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.fields.fullAddress')}
+                  </label>
                   <input
                     type="text"
                     name="adresse"
@@ -513,7 +547,9 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Latitude</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.latitude')}
+                    </label>
                     <input
                       type="text"
                       name="latitude"
@@ -524,7 +560,9 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                   </div>
 
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Longitude</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.longitude')}
+                    </label>
                     <input
                       type="text"
                       name="longitude"
@@ -539,11 +577,15 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
 
             {/* Section 4: Contact */}
             <div className='bg-white rounded-lg border border-gray-200 p-6'>
-              <h3 className='text-lg font-semibold text-gray-900 mb-4'>Contact</h3>
+              <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                {t('realEstate.sections.contact')}
+              </h3>
               
               <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Nom du contact</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.fields.contactName')}
+                  </label>
                   <input
                     type="text"
                     name="nom_contact"
@@ -554,7 +596,9 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                 </div>
 
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Téléphone</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.fields.phone')}
+                  </label>
                   <input
                     type="tel"
                     name="telephone_contact"
@@ -565,7 +609,9 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                 </div>
 
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Email</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.fields.email')}
+                  </label>
                   <input
                     type="email"
                     name="email_contact"
@@ -579,11 +625,15 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
 
             {/* Section 5: Images */}
             <div className='bg-white rounded-lg border border-gray-200 p-6'>
-              <h3 className='text-lg font-semibold text-gray-900 mb-4'>Images</h3>
+              <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                {t('realEstate.sections.images')}
+              </h3>
               
               <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Image principale</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.fields.mainImage')}
+                  </label>
                   <input 
                     type="file" 
                     accept="image/*" 
@@ -599,25 +649,33 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                       <div className="space-y-2">
                         <img 
                           src={mainImage} 
-                          alt="Image principale" 
+                          alt={t('realEstate.update.mainImageAlt')}
                           className="w-full h-32 object-cover rounded-lg"
                         />
-                        <p className="text-xs text-blue-600 font-medium">Cliquez pour modifier</p>
+                        <p className="text-xs text-blue-600 font-medium">
+                          {t('realEstate.update.clickToModify')}
+                        </p>
                       </div>
                     ) : (
                       <>
                         <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                           <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        <p className="mt-2 text-sm text-gray-600">Glissez-déposez ou cliquez pour ajouter</p>
-                        <p className="text-xs text-gray-500">PNG, JPG, WEBP jusqu'à 5MB</p>
+                        <p className="mt-2 text-sm text-gray-600">
+                          {t('realEstate.update.dragDropOrClick')}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {t('realEstate.update.imageFormats')}
+                        </p>
                       </>
                     )}
                   </label>
                 </div>
 
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Ajouter des images</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.update.addImages')}
+                  </label>
                   <input 
                     type="file" 
                     accept="image/*" 
@@ -633,8 +691,12 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                     <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                       <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    <p className="mt-2 text-sm text-gray-600">Ajouter des images supplémentaires</p>
-                    <p className="text-xs text-gray-500">Maximum 10 images • Sélection multiple</p>
+                    <p className="mt-2 text-sm text-gray-600">
+                      {t('realEstate.update.addAdditionalImages')}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {t('realEstate.update.maxImagesMultiple')}
+                    </p>
                   </label>
                 </div>
               </div>
@@ -643,14 +705,14 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
               {additionalImages.length > 0 && (
                 <div className='mt-6'>
                   <label className='block text-sm font-medium text-gray-700 mb-3'>
-                    Images actuelles ({additionalImages.length})
+                    {t('realEstate.update.currentImages')} ({additionalImages.length})
                   </label>
                   <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
                     {additionalImages.map((url, index) => (
                       <div key={`existing-${index}`} className='relative group'>
                         <img 
                           src={url} 
-                          alt={`Image ${index + 1}`}
+                          alt={`${t('realEstate.update.imageAlt')} ${index + 1}`}
                           className='w-full h-24 object-cover rounded-lg border-2 border-gray-200'
                         />
                         <button 
@@ -672,18 +734,18 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
               {newImages.length > 0 && (
                 <div className='mt-6'>
                   <label className='block text-sm font-medium text-gray-700 mb-3'>
-                    Nouvelles images ({newImages.length})
+                    {t('realEstate.update.newImages')} ({newImages.length})
                   </label>
                   <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
                     {newImages.map((url, index) => (
                       <div key={`new-${index}`} className='relative group'>
                         <img 
                           src={url} 
-                          alt={`Nouvelle image ${index + 1}`}
+                          alt={`${t('realEstate.update.newImageAlt')} ${index + 1}`}
                           className='w-full h-24 object-cover rounded-lg border-2 border-blue-300'
                         />
                         <div className='absolute top-1 left-1 bg-blue-500 text-white text-xs px-2 py-1 rounded'>
-                          Nouveau
+                          {t('realEstate.update.newBadge')}
                         </div>
                         <button 
                           type="button"
@@ -709,7 +771,7 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                 disabled={loading}
                 className="px-6 py-3 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Annuler
+                {t('realEstate.buttons.cancel')}
               </button>
               <button
                 type="submit"
@@ -722,10 +784,10 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span>Mise à jour...</span>
+                    <span>{t('realEstate.buttons.updating')}</span>
                   </>
                 ) : (
-                  <span>Mettre à jour</span>
+                  <span>{t('realEstate.buttons.update')}</span>
                 )}
               </button>
             </div>

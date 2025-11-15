@@ -8,6 +8,7 @@ class Demande extends Model
 {
     protected $table = 'demandes';
     protected $fillable = [
+        'societe_id',
         'nom_complet',
         'email',
         'telephone',

@@ -11,6 +11,7 @@ class DemandesController extends Controller
     public function store(Request $request)
     {
         $validation =  $request->validate([
+            'societe_id' => 'required',
             'immobilier_id' => 'required',
             'nom_complet' => 'required|max:255',
             'email' => 'required|email|max:255',

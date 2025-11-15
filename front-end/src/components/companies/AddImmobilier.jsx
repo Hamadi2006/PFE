@@ -1,11 +1,14 @@
-import { Import } from 'lucide-react';
 import React, { useContext, useState, useCallback } from 'react';
 import axios from 'axios';
 import { GlobaleContext } from '../../context/GlobaleContext';
+import { useTranslation } from 'react-i18next';
+
 function AddImmobilier({ isOpen, onClose }) {
+  const { t } = useTranslation();
+  
   const companie = JSON.parse(localStorage.getItem('companie'));
   const societe_id = companie.id;
-  const {setAlertSucc,setAlertFail,setAlertMsg} = useContext(GlobaleContext);
+  const { setAlertSucc, setAlertFail, setAlertMsg } = useContext(GlobaleContext);
   
   const [data, setData] = useState({
     societe_id: societe_id,
@@ -62,25 +65,20 @@ function AddImmobilier({ isOpen, onClose }) {
     if (e) e.preventDefault();
     
     try {
-      // Créer un FormData pour envoyer les fichiers
       const formData = new FormData();
       
-      // Ajouter tous les champs non-fichiers
       Object.keys(data).forEach(key => {
         if (key === 'image_principale') {
-          // Ajouter l'image principale si elle existe
           if (data.image_principale) {
             formData.append('image_principale', data.image_principale);
           }
         } else if (key === 'images') {
-          // Ajouter toutes les images de la galerie
           if (data.images && data.images.length > 0) {
             data.images.forEach((image) => {
               formData.append('images[]', image);
             });
           }
         } else {
-          // Convertir les booléens en 0/1 pour Laravel
           if (typeof data[key] === 'boolean') {
             formData.append(key, data[key] ? 1 : 0);
           } else {
@@ -89,13 +87,7 @@ function AddImmobilier({ isOpen, onClose }) {
         }
       });
 
-      // Log pour debug (optionnel)
-      console.log('Données à envoyer:');
-      for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
-
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:8000/api/immobilier",
         formData,
         {
@@ -106,21 +98,16 @@ function AddImmobilier({ isOpen, onClose }) {
         }
       );
 
-      console.log('Réponse:', response.data);
-
       setAlertSucc(true);
-      setAlertMsg('Propriété ajoutée avec succès');
+      setAlertMsg(t('realEstate.alerts.successAdd'));
       setTimeout(() => setAlertSucc(false), 3000);
       onClose();
       
     } catch (error) {
-      console.error('Erreur:', error);
-      if (error.response) {
-        console.error('Erreurs de validation:', error.response.data);
-        setAlertFail(true);
-        setAlertMsg('Erreur: ' + JSON.stringify(error.response.data.errors || error.response.data.message));
-        setTimeout(() => setAlertFail(false), 3000);
-      }
+      console.error('Error:', error);
+      setAlertFail(true);
+      setAlertMsg(t('realEstate.alerts.errorAdd'));
+      setTimeout(() => setAlertFail(false), 3000);
     }
   };
 
@@ -130,22 +117,26 @@ function AddImmobilier({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const steps = [
-    { number: 1, title: 'Informations principales' },
-    { number: 2, title: 'Caractéristiques' },
-    { number: 3, title: 'Localisation' },
-    { number: 4, title: 'Contact & Images' }
+    { number: 1, title: t('realEstate.steps.mainInformation') },
+    { number: 2, title: t('realEstate.steps.characteristics') },
+    { number: 3, title: t('realEstate.steps.location') },
+    { number: 4, title: t('realEstate.steps.contactAndImages') }
   ];
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50'>
       <div className='bg-white rounded-xl shadow-2xl w-full max-w-4xl mx-auto max-h-[90vh] overflow-hidden flex flex-col'>
         
-        {/* Header professionnel */}
+        {/* Header */}
         <div className='bg-white border-b border-gray-200 px-6 py-4'>
           <div className='flex justify-between items-center'>
             <div>
-              <h2 className='text-xl font-semibold text-gray-900'>Nouvelle propriété</h2>
-              <p className='text-sm text-gray-600'>Remplissez les informations de la propriété</p>
+              <h2 className='text-xl font-semibold text-gray-900'>
+                {t('realEstate.modal.titleNewProperty')}
+              </h2>
+              <p className='text-sm text-gray-600'>
+                {t('realEstate.modal.subtitleFillInfo')}
+              </p>
             </div>
             <button 
               onClick={onClose}
@@ -189,13 +180,13 @@ function AddImmobilier({ isOpen, onClose }) {
         <div className='flex-1 overflow-y-auto p-6 bg-gray-50'>
           <div className='space-y-6'>
             
-            {/* Step 1: Informations principales */}
+            {/* Step 1: Main Information */}
             {currentStep === 1 && (
               <div className='space-y-6'>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                   <div>
                     <label className='block text-sm font-medium text-gray-700 mb-2'>
-                      Titre de l'annonce *
+                      {t('realEstate.fields.propertyTitle')} *
                     </label>
                     <input
                       type="text"
@@ -203,55 +194,63 @@ function AddImmobilier({ isOpen, onClose }) {
                       value={data.titre}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
-                      placeholder="Ex: Bel appartement centre-ville"
+                      placeholder={t('realEstate.placeholders.propertyTitleExample')}
                       required
                     />
                   </div>
 
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Type de bien</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.propertyType')}
+                    </label>
                     <select
                       name="type"
                       value={data.type}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
                     >
-                      <option value="appartement">Appartement</option>
-                      <option value="maison">Maison</option>
-                      <option value="villa">Villa</option>
-                      <option value="bureau">Bureau</option>
+                      <option value="appartement">{t('realEstate.propertyTypes.apartment')}</option>
+                      <option value="maison">{t('realEstate.propertyTypes.house')}</option>
+                      <option value="villa">{t('realEstate.propertyTypes.villa')}</option>
+                      <option value="bureau">{t('realEstate.propertyTypes.office')}</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label className='block text-sm font-medium text-gray-700 mb-2'>Description</label>
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    {t('realEstate.fields.description')}
+                  </label>
                   <textarea
                     name="description"
                     value={data.description}
                     onChange={handleInputChange}
                     rows="4"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
-                    placeholder="Décrivez la propriété en détail..."
+                    placeholder={t('realEstate.placeholders.describeProperty')}
                   />
                 </div>
 
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Transaction</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.transactionType')}
+                    </label>
                     <select
                       name="transaction"
                       value={data.transaction}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
                     >
-                      <option value="vente">Vente</option>
-                      <option value="location">Location</option>
+                      <option value="vente">{t('realEstate.transactionTypes.sale')}</option>
+                      <option value="location">{t('realEstate.transactionTypes.rent')}</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Prix (MAD)</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.priceMad')}
+                    </label>
                     <input
                       type="number"
                       name="prix"
@@ -264,7 +263,9 @@ function AddImmobilier({ isOpen, onClose }) {
                   </div>
 
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Surface (m²)</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.surfaceM2')}
+                    </label>
                     <input
                       type="number"
                       name="surface"
@@ -279,16 +280,20 @@ function AddImmobilier({ isOpen, onClose }) {
               </div>
             )}
 
-            {/* Step 2: Caractéristiques */}
+            {/* Step 2: Characteristics */}
             {currentStep === 2 && (
               <div className='space-y-6'>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                   <div className='space-y-4'>
-                    <h4 className='font-medium text-gray-900'>Composition</h4>
+                    <h4 className='font-medium text-gray-900'>
+                      {t('realEstate.sections.composition')}
+                    </h4>
                     
                     <div className='grid grid-cols-2 gap-4'>
                       <div>
-                        <label className='block text-sm font-medium text-gray-700 mb-2'>Chambres</label>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>
+                          {t('realEstate.fields.bedrooms')}
+                        </label>
                         <input
                           type="number"
                           name="chambres"
@@ -299,7 +304,9 @@ function AddImmobilier({ isOpen, onClose }) {
                       </div>
 
                       <div>
-                        <label className='block text-sm font-medium text-gray-700 mb-2'>Salles de bain</label>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>
+                          {t('realEstate.fields.bathrooms')}
+                        </label>
                         <input
                           type="number"
                           name="salles_de_bain"
@@ -312,7 +319,9 @@ function AddImmobilier({ isOpen, onClose }) {
 
                     <div className='grid grid-cols-2 gap-4'>
                       <div>
-                        <label className='block text-sm font-medium text-gray-700 mb-2'>Étage</label>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>
+                          {t('realEstate.fields.floor')}
+                        </label>
                         <input
                           type="number"
                           name="etage"
@@ -323,7 +332,9 @@ function AddImmobilier({ isOpen, onClose }) {
                       </div>
 
                       <div>
-                        <label className='block text-sm font-medium text-gray-700 mb-2'>Nombre d'étages</label>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>
+                          {t('realEstate.fields.totalFloors')}
+                        </label>
                         <input
                           type="number"
                           name="nombre_etages"
@@ -335,7 +346,9 @@ function AddImmobilier({ isOpen, onClose }) {
                     </div>
 
                     <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>Année de construction</label>
+                      <label className='block text-sm font-medium text-gray-700 mb-2'>
+                        {t('realEstate.fields.constructionYear')}
+                      </label>
                       <input
                         type="number"
                         name="annee_construction"
@@ -349,16 +362,18 @@ function AddImmobilier({ isOpen, onClose }) {
                   </div>
 
                   <div className='space-y-4'>
-                    <h4 className='font-medium text-gray-900'>Équipements</h4>
+                    <h4 className='font-medium text-gray-900'>
+                      {t('realEstate.sections.amenities')}
+                    </h4>
                     
                     <div className='grid grid-cols-1 gap-3'>
                       {[
-                        { name: 'piscine', label: 'Piscine' },
-                        { name: 'jardin', label: 'Jardin' },
-                        { name: 'parking', label: 'Parking' },
-                        { name: 'ascenseur', label: 'Ascenseur' },
-                        { name: 'climatisation', label: 'Climatisation' },
-                        { name: 'en_vedette', label: 'Mettre en vedette' }
+                        { name: 'piscine', label: t('realEstate.amenities.pool') },
+                        { name: 'jardin', label: t('realEstate.amenities.garden') },
+                        { name: 'parking', label: t('realEstate.amenities.parking') },
+                        { name: 'ascenseur', label: t('realEstate.amenities.elevator') },
+                        { name: 'climatisation', label: t('realEstate.amenities.airConditioning') },
+                        { name: 'en_vedette', label: t('realEstate.amenities.featured') }
                       ].map((equipement) => (
                         <label key={equipement.name} className="flex items-center space-x-3 cursor-pointer p-2 hover:bg-gray-100 rounded-lg">
                           <input
@@ -374,16 +389,18 @@ function AddImmobilier({ isOpen, onClose }) {
                     </div>
 
                     <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>Statut</label>
+                      <label className='block text-sm font-medium text-gray-700 mb-2'>
+                        {t('realEstate.fields.status')}
+                      </label>
                       <select
                         name="statut"
                         value={data.statut}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
                       >
-                        <option value="disponible">Disponible</option>
-                        <option value="vendu">Vendu</option>
-                        <option value="loue">Loué</option>
+                        <option value="disponible">{t('realEstate.statusOptions.available')}</option>
+                        <option value="vendu">{t('realEstate.statusOptions.sold')}</option>
+                        <option value="loue">{t('realEstate.statusOptions.rented')}</option>
                       </select>
                     </div>
                   </div>
@@ -391,57 +408,65 @@ function AddImmobilier({ isOpen, onClose }) {
               </div>
             )}
 
-            {/* Step 3: Localisation */}
+            {/* Step 3: Location */}
             {currentStep === 3 && (
               <div className='space-y-6'>
                 <div className='grid grid-cols-1 gap-6'>
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Ville *</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.city')} *
+                    </label>
                     <input
                       type="text"
                       name="ville"
                       value={data.ville}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
-                      placeholder="Ex: Rabat"
+                      placeholder={t('realEstate.placeholders.cityExample')}
                       required
                     />
                   </div>
 
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Adresse complète</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.fullAddress')}
+                    </label>
                     <input
                       type="text"
                       name="adresse"
                       value={data.adresse}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
-                      placeholder="Ex: Hay Al Massira, Rabat"
+                      placeholder={t('realEstate.placeholders.addressExample')}
                     />
                   </div>
 
                   <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                     <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>Latitude</label>
+                      <label className='block text-sm font-medium text-gray-700 mb-2'>
+                        {t('realEstate.fields.latitude')}
+                      </label>
                       <input
                         type="text"
                         name="latitude"
                         value={data.latitude}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
-                        placeholder="Ex: 34.020882"
+                        placeholder={t('realEstate.placeholders.latitudeExample')}
                       />
                     </div>
 
                     <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>Longitude</label>
+                      <label className='block text-sm font-medium text-gray-700 mb-2'>
+                        {t('realEstate.fields.longitude')}
+                      </label>
                       <input
                         type="text"
                         name="longitude"
                         value={data.longitude}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
-                        placeholder="Ex: -6.841650"
+                        placeholder={t('realEstate.placeholders.longitudeExample')}
                       />
                     </div>
                   </div>
@@ -454,38 +479,44 @@ function AddImmobilier({ isOpen, onClose }) {
               <div className='space-y-6'>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Nom du contact</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.contactName')}
+                    </label>
                     <input
                       type="text"
                       name="nom_contact"
                       value={data.nom_contact}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
-                      placeholder="Ex: Hamadi Ayoube"
+                      placeholder={t('realEstate.placeholders.contactNameExample')}
                     />
                   </div>
 
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Téléphone</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.phone')}
+                    </label>
                     <input
                       type="tel"
                       name="telephone_contact"
                       value={data.telephone_contact}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
-                      placeholder="Ex: 0636201010"
+                      placeholder={t('realEstate.placeholders.phoneExample')}
                     />
                   </div>
 
                   <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Email</label>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                      {t('realEstate.fields.email')}
+                    </label>
                     <input
                       type="email"
                       name="email_contact"
                       value={data.email_contact}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
-                      placeholder="Ex: contact@entreprise.com"
+                      placeholder={t('realEstate.placeholders.emailExample')}
                     />
                   </div>
                 </div>
@@ -493,9 +524,11 @@ function AddImmobilier({ isOpen, onClose }) {
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                   <div>
                     <label className='block text-sm font-medium text-gray-700 mb-2'>
-                      Image principale
+                      {t('realEstate.fields.mainImage')}
                       {data.image_principale && (
-                        <span className="ml-2 text-xs text-green-600">✓ {data.image_principale.name}</span>
+                        <span className="ml-2 text-xs text-green-600">
+                          ✓ {data.image_principale.name}
+                        </span>
                       )}
                     </label>
                     <input
@@ -509,9 +542,11 @@ function AddImmobilier({ isOpen, onClose }) {
 
                   <div>
                     <label className='block text-sm font-medium text-gray-700 mb-2'>
-                      Galerie d'images
+                      {t('realEstate.fields.imageGallery')}
                       {data.images.length > 0 && (
-                        <span className="ml-2 text-xs text-green-600">✓ {data.images.length} image(s)</span>
+                        <span className="ml-2 text-xs text-green-600">
+                          ✓ {data.images.length} {t('realEstate.labels.imagesCount')}
+                        </span>
                       )}
                     </label>
                     <input
@@ -539,7 +574,7 @@ function AddImmobilier({ isOpen, onClose }) {
                     : 'text-gray-700 hover:bg-gray-100 border border-gray-300'
                 }`}
               >
-                Précédent
+                {t('realEstate.buttons.previous')}
               </button>
 
               {currentStep < steps.length ? (
@@ -548,7 +583,7 @@ function AddImmobilier({ isOpen, onClose }) {
                   onClick={nextStep}
                   className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium"
                 >
-                  Suivant
+                  {t('realEstate.buttons.next')}
                 </button>
               ) : (
                 <button
@@ -556,7 +591,7 @@ function AddImmobilier({ isOpen, onClose }) {
                   onClick={handleSubmit}
                   className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 font-medium"
                 >
-                  Ajouter la propriété
+                  {t('realEstate.buttons.addProperty')}
                 </button>
               )}
             </div>

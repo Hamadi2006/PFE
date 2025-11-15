@@ -811,6 +811,237 @@
     "save": "Save",
     "saving": "Saving...",
     "cancel": "Cancel"
+  },
+  "realEstate": {
+    "modal": {
+      "titleNewProperty": "New Property",
+      "subtitleFillInfo": "Fill in the property information"
+    },
+    "steps": {
+      "mainInformation": "Main Information",
+      "characteristics": "Characteristics",
+      "location": "Location",
+      "contactAndImages": "Contact & Images"
+    },
+    "sections": {
+      "composition": "Composition",
+      "amenities": "Amenities"
+    },
+    "fields": {
+      "propertyTitle": "Property Title",
+      "propertyType": "Property Type",
+      "description": "Description",
+      "transactionType": "Transaction",
+      "priceMad": "Price (MAD)",
+      "surfaceM2": "Surface (m²)",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "floor": "Floor",
+      "totalFloors": "Total Floors",
+      "constructionYear": "Construction Year",
+      "status": "Status",
+      "city": "City",
+      "fullAddress": "Full Address",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "contactName": "Contact Name",
+      "phone": "Phone",
+      "email": "Email",
+      "mainImage": "Main Image",
+      "imageGallery": "Image Gallery"
+    },
+    "propertyTypes": {
+      "apartment": "Apartment",
+      "house": "House",
+      "villa": "Villa",
+      "office": "Office"
+    },
+    "transactionTypes": {
+      "sale": "Sale",
+      "rent": "Rent"
+    },
+    "amenities": {
+      "pool": "Pool",
+      "garden": "Garden",
+      "parking": "Parking",
+      "elevator": "Elevator",
+      "airConditioning": "Air Conditioning",
+      "featured": "Featured"
+    },
+    "statusOptions": {
+      "available": "Available",
+      "sold": "Sold",
+      "rented": "Rented"
+    },
+    "placeholders": {
+      "propertyTitleExample": "E.g: Beautiful downtown apartment",
+      "describeProperty": "Describe the property in detail...",
+      "cityExample": "E.g: Rabat",
+      "addressExample": "E.g: Hay Al Massira, Rabat",
+      "latitudeExample": "E.g: 34.020882",
+      "longitudeExample": "E.g: -6.841650",
+      "contactNameExample": "E.g: Hamadi Ayoube",
+      "phoneExample": "E.g: 0636201010",
+      "emailExample": "E.g: contact@company.com"
+    },
+    "labels": {
+      "imagesCount": "image(s)"
+    },
+    "buttons": {
+      "previous": "Previous",
+      "next": "Next",
+      "addProperty": "Add Property"
+    },
+    "alerts": {
+      "successAdd": "Property added successfully",
+      "errorAdd": "Error adding property"
+    }
+  },
+  "realEstate": {
+    "modal": {
+      "titleNewProperty": "New Property",
+      "subtitleFillInfo": "Fill in the property information"
+    },
+    "update": {
+      "titleEditProperty": "Edit Property",
+      "subtitleUpdateInfo": "Update property information",
+      "successMessage": "Update completed successfully!",
+      "mainImageAlt": "Main image",
+      "clickToModify": "Click to modify",
+      "dragDropOrClick": "Drag and drop or click to add",
+      "imageFormats": "PNG, JPG, WEBP up to 5MB",
+      "addImages": "Add images",
+      "addAdditionalImages": "Add additional images",
+      "maxImagesMultiple": "Maximum 10 images • Multiple selection",
+      "currentImages": "Current images",
+      "imageAlt": "Image",
+      "newImages": "New images",
+      "newImageAlt": "New image",
+      "newBadge": "New"
+    },
+    "steps": {
+      "mainInformation": "Main Information",
+      "characteristics": "Characteristics",
+      "location": "Location",
+      "contactAndImages": "Contact & Images"
+    },
+    "sections": {
+      "mainInformation": "Main Information",
+      "characteristics": "Characteristics",
+      "composition": "Composition",
+      "amenities": "Amenities",
+      "location": "Location",
+      "contact": "Contact",
+      "images": "Images"
+    },
+    "fields": {
+      "propertyTitle": "Property Title",
+      "propertyType": "Property Type",
+      "description": "Description",
+      "transactionType": "Transaction",
+      "priceMad": "Price (MAD)",
+      "surfaceM2": "Surface (m²)",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "floor": "Floor",
+      "totalFloors": "Total Floors",
+      "constructionYear": "Construction Year",
+      "status": "Status",
+      "city": "City",
+      "fullAddress": "Full Address",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "contactName": "Contact Name",
+      "phone": "Phone",
+      "email": "Email",
+      "mainImage": "Main Image",
+      "imageGallery": "Image Gallery"
+    },
+    "propertyTypes": {
+      "apartment": "Apartment",
+      "house": "House",
+      "villa": "Villa",
+      "office": "Office",
+      "studio": "Studio",
+      "land": "Land",
+      "commercial": "Commercial"
+    },
+    "transactionTypes": {
+      "sale": "Sale",
+      "rent": "Rent"
+    },
+    "amenities": {
+      "pool": "Pool",
+      "garden": "Garden",
+      "parking": "Parking",
+      "elevator": "Elevator",
+      "airConditioning": "Air Conditioning",
+      "featured": "Featured"
+    },
+    "statusOptions": {
+      "available": "Available",
+      "sold": "Sold",
+      "rented": "Rented",
+      "reserved": "Reserved"
+    },
+    "placeholders": {
+      "propertyTitleExample": "E.g: Beautiful downtown apartment",
+      "describeProperty": "Describe the property in detail...",
+      "cityExample": "E.g: Rabat",
+      "addressExample": "E.g: Hay Al Massira, Rabat",
+      "latitudeExample": "E.g: 34.020882",
+      "longitudeExample": "E.g: -6.841650",
+      "contactNameExample": "E.g: Hamadi Ayoube",
+      "phoneExample": "E.g: 0636201010",
+      "emailExample": "E.g: contact@company.com"
+    },
+    "labels": {
+      "imagesCount": "image(s)"
+    },
+    "buttons": {
+      "previous": "Previous",
+      "next": "Next",
+      "addProperty": "Add Property",
+      "cancel": "Cancel",
+      "update": "Update",
+      "updating": "Updating..."
+    },
+    "alerts": {
+      "successAdd": "Property added successfully",
+      "errorAdd": "Error adding property",
+      "successUpdate": "Property updated successfully",
+      "errorUpdate": "An error occurred during the update"
+    }
+  },
+  
+  "propertyCard": {
+    "featured": "Featured",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "currency": "MAD",
+    "surface": "Surface",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "floor": "Floor",
+    "amenities": {
+      "piscine": "Pool",
+      "parking": "Parking",
+      "jardin": "Garden",
+      "ascenseur": "Elevator",
+      "climatisation": "Air Conditioning"
+    },
+    "edit": "Edit",
+    "delete": "Delete",
+    "contact": "Contact",
+    "noProperties": "No properties found",
+    "adjustSearch": "Try adjusting your search criteria"
+  },
+    "announcementsView": {
+    "searchPlaceholder": "Search properties...",
+    "newProperty": "New property",
+    "confirmDelete": "Are you sure you want to delete this property?",
+    "deleteSuccess": "Property deleted successfully",
+    "deleteError": "Error deleting property"
   }
 }
 

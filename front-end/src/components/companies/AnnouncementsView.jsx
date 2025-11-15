@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Plus, Search } from 'lucide-react';
 import axios from 'axios';
 import { GlobaleContext } from '../../context/GlobaleContext';
@@ -7,7 +8,9 @@ import PropertyCard from './PropertyCard.jsx';
 import AddImmobilier from './AddImmobilier.jsx';
 import UpdateImmobilier from './UpdateImmobilier.jsx';
 import DeleteConfirmModal from './DeleteConfirmModal.jsx';
+
 const AnnouncementsView = ({getPopUpState}) => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [openAddPopUp, setOpenAddPopUp] = useState(false);
   const [openUpdatePopUp, setOpenUpdatePopUp] = useState(false);
@@ -20,6 +23,7 @@ const AnnouncementsView = ({getPopUpState}) => {
     setAlertFail,
     setAlertMsg,
   } = useContext(GlobaleContext);
+
   // Fonction pour mapper les données API
   const mapApiToAnnouncement = (apiData) => ({
     id: apiData.id,
@@ -63,7 +67,7 @@ const AnnouncementsView = ({getPopUpState}) => {
 
   // Fonction pour supprimer une propriété
   const handleDeleteAnnouncement = async (id) => {
-    if (window.confirm('Êtes-vous sûr de vouloir supprimer cette propriété ?')) {
+    if (window.confirm(t('announcementsView.confirmDelete'))) {
       try {
         await axios.delete(`http://localhost:8000/api/immobilier/${id}`, {
           headers: {
@@ -72,16 +76,17 @@ const AnnouncementsView = ({getPopUpState}) => {
         });
         
         setAlertSucc(true);
-        setAlertMsg('Propriété supprimée avec succès');
+        setAlertMsg(t('announcementsView.deleteSuccess'));
         setTimeout(() => setAlertSucc(false), 3000);
       } catch (error) {
         console.error(error);
         setAlertFail(true);
-        setAlertMsg('Erreur lors de la suppression de la propriété');
+        setAlertMsg(t('announcementsView.deleteError'));
         setTimeout(() => setAlertFail(false), 3000);
       }
     }
   };
+
   // Filtrer les annonces
   const filteredAnnouncements = mappedAnnouncements.filter(ann =>
     ann.titre?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -109,7 +114,7 @@ const AnnouncementsView = ({getPopUpState}) => {
             <Search className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Rechercher propriétés..."
+              placeholder={t('announcementsView.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3 bg-gray-50 border-0 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
@@ -120,7 +125,7 @@ const AnnouncementsView = ({getPopUpState}) => {
             className="flex items-center space-x-2 bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 transition-all shadow-lg shadow-green-500/30"
           >
             <Plus className="w-5 h-5" />
-            <span className="font-medium">Nouvelle propriété</span>
+            <span className="font-medium">{t('announcementsView.newProperty')}</span>
           </button>
         </div>
       </div>

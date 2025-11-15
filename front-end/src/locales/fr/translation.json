@@ -694,8 +694,6 @@
         "specialty": "Spécialité",
         "city": "Ville",
         "address": "Adresse",
-    "specialty": "Spécialité",
-    "city": "Ville",
     "quickActions": "Actions rapides",
     "addNewProperty": "Ajouter une propriété",
     "viewAllProperties": "Voir toutes les propriétés",
@@ -849,5 +847,235 @@
     "save": "Enregistrer",
     "saving": "Enregistrement...",
     "cancel": "Annuler"
+  },
+   "realEstate": {
+    "modal": {
+      "titleNewProperty": "Nouvelle propriété",
+      "subtitleFillInfo": "Remplissez les informations de la propriété"
+    },
+    "steps": {
+      "mainInformation": "Informations principales",
+      "characteristics": "Caractéristiques",
+      "location": "Localisation",
+      "contactAndImages": "Contact & Images"
+    },
+    "sections": {
+      "composition": "Composition",
+      "amenities": "Équipements"
+    },
+    "fields": {
+      "propertyTitle": "Titre de l'annonce",
+      "propertyType": "Type de bien",
+      "description": "Description",
+      "transactionType": "Transaction",
+      "priceMad": "Prix (MAD)",
+      "surfaceM2": "Surface (m²)",
+      "bedrooms": "Chambres",
+      "bathrooms": "Salles de bain",
+      "floor": "Étage",
+      "totalFloors": "Nombre d'étages",
+      "constructionYear": "Année de construction",
+      "status": "Statut",
+      "city": "Ville",
+      "fullAddress": "Adresse complète",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "contactName": "Nom du contact",
+      "phone": "Téléphone",
+      "email": "Email",
+      "mainImage": "Image principale",
+      "imageGallery": "Galerie d'images"
+    },
+    "propertyTypes": {
+      "apartment": "Appartement",
+      "house": "Maison",
+      "villa": "Villa",
+      "office": "Bureau"
+    },
+    "transactionTypes": {
+      "sale": "Vente",
+      "rent": "Location"
+    },
+    "amenities": {
+      "pool": "Piscine",
+      "garden": "Jardin",
+      "parking": "Parking",
+      "elevator": "Ascenseur",
+      "airConditioning": "Climatisation",
+      "featured": "Mettre en vedette"
+    },
+    "statusOptions": {
+      "available": "Disponible",
+      "sold": "Vendu",
+      "rented": "Loué"
+    },
+    "placeholders": {
+      "propertyTitleExample": "Ex: Bel appartement centre-ville",
+      "describeProperty": "Décrivez la propriété en détail...",
+      "cityExample": "Ex: Rabat",
+      "addressExample": "Ex: Hay Al Massira, Rabat",
+      "latitudeExample": "Ex: 34.020882",
+      "longitudeExample": "Ex: -6.841650",
+      "contactNameExample": "Ex: Hamadi Ayoube",
+      "phoneExample": "Ex: 0636201010",
+      "emailExample": "Ex: contact@entreprise.com"
+    },
+    "labels": {
+      "imagesCount": "image(s)"
+    },
+    "buttons": {
+      "previous": "Précédent",
+      "next": "Suivant",
+      "addProperty": "Ajouter la propriété"
+    },
+    "alerts": {
+      "successAdd": "Propriété ajoutée avec succès",
+      "errorAdd": "Erreur lors de l'ajout de la propriété"
+    }
+  },
+   "realEstate": {
+    "modal": {
+      "titleNewProperty": "Nouvelle propriété",
+      "subtitleFillInfo": "Remplissez les informations de la propriété"
+    },
+    "update": {
+      "titleEditProperty": "Modifier la propriété",
+      "subtitleUpdateInfo": "Mettre à jour les informations de la propriété",
+      "successMessage": "Mise à jour effectuée avec succès!",
+      "mainImageAlt": "Image principale",
+      "clickToModify": "Cliquez pour modifier",
+      "dragDropOrClick": "Glissez-déposez ou cliquez pour ajouter",
+      "imageFormats": "PNG, JPG, WEBP jusqu'à 5MB",
+      "addImages": "Ajouter des images",
+      "addAdditionalImages": "Ajouter des images supplémentaires",
+      "maxImagesMultiple": "Maximum 10 images • Sélection multiple",
+      "currentImages": "Images actuelles",
+      "imageAlt": "Image",
+      "newImages": "Nouvelles images",
+      "newImageAlt": "Nouvelle image",
+      "newBadge": "Nouveau"
+    },
+    "steps": {
+      "mainInformation": "Informations principales",
+      "characteristics": "Caractéristiques",
+      "location": "Localisation",
+      "contactAndImages": "Contact & Images"
+    },
+    "sections": {
+      "mainInformation": "Informations principales",
+      "characteristics": "Caractéristiques",
+      "composition": "Composition",
+      "amenities": "Équipements",
+      "location": "Localisation",
+      "contact": "Contact",
+      "images": "Images"
+    },
+    "fields": {
+      "propertyTitle": "Titre de l'annonce",
+      "propertyType": "Type de bien",
+      "description": "Description",
+      "transactionType": "Transaction",
+      "priceMad": "Prix (MAD)",
+      "surfaceM2": "Surface (m²)",
+      "bedrooms": "Chambres",
+      "bathrooms": "Salles de bain",
+      "floor": "Étage",
+      "totalFloors": "Nombre d'étages",
+      "constructionYear": "Année de construction",
+      "status": "Statut",
+      "city": "Ville",
+      "fullAddress": "Adresse complète",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "contactName": "Nom du contact",
+      "phone": "Téléphone",
+      "email": "Email",
+      "mainImage": "Image principale",
+      "imageGallery": "Galerie d'images"
+    },
+    "propertyTypes": {
+      "apartment": "Appartement",
+      "house": "Maison",
+      "villa": "Villa",
+      "office": "Bureau",
+      "studio": "Studio",
+      "land": "Terrain",
+      "commercial": "Commerce"
+    },
+    "transactionTypes": {
+      "sale": "Vente",
+      "rent": "Location"
+    },
+    "amenities": {
+      "pool": "Piscine",
+      "garden": "Jardin",
+      "parking": "Parking",
+      "elevator": "Ascenseur",
+      "airConditioning": "Climatisation",
+      "featured": "Mettre en vedette"
+    },
+    "statusOptions": {
+      "available": "Disponible",
+      "sold": "Vendu",
+      "rented": "Loué",
+      "reserved": "Réservé"
+    },
+    "placeholders": {
+      "propertyTitleExample": "Ex: Bel appartement centre-ville",
+      "describeProperty": "Décrivez la propriété en détail...",
+      "cityExample": "Ex: Rabat",
+      "addressExample": "Ex: Hay Al Massira, Rabat",
+      "latitudeExample": "Ex: 34.020882",
+      "longitudeExample": "Ex: -6.841650",
+      "contactNameExample": "Ex: Hamadi Ayoube",
+      "phoneExample": "Ex: 0636201010",
+      "emailExample": "Ex: contact@entreprise.com"
+    },
+    "labels": {
+      "imagesCount": "image(s)"
+    },
+    "buttons": {
+      "previous": "Précédent",
+      "next": "Suivant",
+      "addProperty": "Ajouter la propriété",
+      "cancel": "Annuler",
+      "update": "Mettre à jour",
+      "updating": "Mise à jour..."
+    },
+    "alerts": {
+      "successAdd": "Propriété ajoutée avec succès",
+      "errorAdd": "Erreur lors de l'ajout de la propriété",
+      "successUpdate": "Propriété mise à jour avec succès",
+      "errorUpdate": "Une erreur est survenue lors de la mise à jour"
+    }
+  },
+  "propertyCard": {
+    "featured": "En vedette",
+    "available": "Disponible",
+    "unavailable": "Indisponible",
+    "currency": "MAD",
+    "surface": "Surface",
+    "bedrooms": "Chambres",
+    "bathrooms": "SDB",
+    "floor": "Étage",
+    "amenities": {
+      "piscine": "Piscine",
+      "parking": "Parking",
+      "jardin": "Jardin",
+      "ascenseur": "Ascenseur",
+      "climatisation": "Climatisation"
+    },
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "contact": "Contact",
+    "noProperties": "Aucune propriété trouvée",
+    "adjustSearch": "Essayez d'ajuster vos critères de recherche"
+  },
+   "announcementsView": {
+    "searchPlaceholder": "Rechercher propriétés...",
+    "newProperty": "Nouvelle propriété",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette propriété ?",
+    "deleteSuccess": "Propriété supprimée avec succès",
+    "deleteError": "Erreur lors de la suppression de la propriété"
   }
 }

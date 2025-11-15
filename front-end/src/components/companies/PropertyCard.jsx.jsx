@@ -1,7 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Edit2, Trash2, MapPin, DollarSign, Ruler, Bed, Bath, Star, Waves, Car, TreePine, Building, Snowflake } from 'lucide-react';
 
-function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnouncement, openUpdatePopUp, setOpenUpdatePopUp, handleDeleteAnnouncement, openDeletePopUp, setOpenDeletePopUp, setSelectedAnnouncementDelete }) {
+function PropertyCard({ filteredAnnouncements, openModal, setSelectedAnnouncement, openUpdatePopUp, setOpenUpdatePopUp, handleDeleteAnnouncement, openDeletePopUp, setOpenDeletePopUp, setSelectedAnnouncementDelete }) {
+  const { t } = useTranslation();
+
   const formatPrice = (price) => {
     if (!price) return '';
     return new Intl.NumberFormat('fr-FR').format(parseFloat(price));
@@ -16,17 +19,6 @@ function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnounce
       climatisation: <Snowflake className="w-4 h-4" />
     };
     return icons[amenity];
-  };
-
-  const getAmenityLabel = (amenity) => {
-    const labels = {
-      piscine: 'Piscine',
-      parking: 'Parking',
-      jardin: 'Jardin',
-      ascenseur: 'Ascenseur',
-      climatisation: 'Climatisation'
-    };
-    return labels[amenity];
   };
 
   return (
@@ -53,7 +45,7 @@ function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnounce
                 {announcement.en_vedette && (
                   <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-3 py-2 rounded-2xl text-xs font-bold flex items-center space-x-1 shadow-lg">
                     <Star className="w-3 h-3 fill-current" />
-                    <span>Featured</span>
+                    <span>{t('propertyCard.featured')}</span>
                   </div>
                 )}
                 <div className={`px-3 py-2 rounded-2xl text-xs font-semibold backdrop-blur-sm ${
@@ -61,7 +53,7 @@ function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnounce
                     ? 'bg-green-500/90 text-white' 
                     : 'bg-gray-600/90 text-white'
                 }`}>
-                  {announcement.statut === 'disponible' ? 'Available' : 'Unavailable'}
+                  {announcement.statut === 'disponible' ? t('propertyCard.available') : t('propertyCard.unavailable')}
                 </div>
               </div>
 
@@ -88,7 +80,7 @@ function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnounce
                 </div>
                 <div className="text-right">
                   <div className="text-3xl font-bold text-green-600">
-                    {formatPrice(announcement.prix)} MAD
+                    {formatPrice(announcement.prix)} {t('propertyCard.currency')}
                   </div>
                   <div className="text-sm text-gray-500 capitalize">
                     {announcement.transaction}
@@ -106,27 +98,27 @@ function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnounce
                 <div className="text-center">
                   <Ruler className="w-5 h-5 text-blue-500 mx-auto mb-1" />
                   <div className="text-sm font-semibold text-gray-900">{announcement.surface}m²</div>
-                  <div className="text-xs text-gray-500">Surface</div>
+                  <div className="text-xs text-gray-500">{t('propertyCard.surface')}</div>
                 </div>
                 {announcement.chambres && (
                   <div className="text-center">
                     <Bed className="w-5 h-5 text-purple-500 mx-auto mb-1" />
                     <div className="text-sm font-semibold text-gray-900">{announcement.chambres}</div>
-                    <div className="text-xs text-gray-500">Chambres</div>
+                    <div className="text-xs text-gray-500">{t('propertyCard.bedrooms')}</div>
                   </div>
                 )}
                 {announcement.salles_de_bain && (
                   <div className="text-center">
                     <Bath className="w-5 h-5 text-cyan-500 mx-auto mb-1" />
                     <div className="text-sm font-semibold text-gray-900">{announcement.salles_de_bain}</div>
-                    <div className="text-xs text-gray-500">SDB</div>
+                    <div className="text-xs text-gray-500">{t('propertyCard.bathrooms')}</div>
                   </div>
                 )}
                 {announcement.etage && (
                   <div className="text-center">
                     <Building className="w-5 h-5 text-orange-500 mx-auto mb-1" />
                     <div className="text-sm font-semibold text-gray-900">{announcement.etage}</div>
-                    <div className="text-xs text-gray-500">Étage</div>
+                    <div className="text-xs text-gray-500">{t('propertyCard.floor')}</div>
                   </div>
                 )}
               </div>
@@ -148,7 +140,7 @@ function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnounce
                         className="flex items-center space-x-1 px-3 py-2 bg-white border border-gray-200 rounded-2xl text-xs text-gray-700 hover:border-gray-300 transition-colors"
                       >
                         {getAmenityIcon(amenity)}
-                        <span>{getAmenityLabel(amenity)}</span>
+                        <span>{t(`propertyCard.amenities.${amenity}`)}</span>
                       </div>
                     )
                   )}
@@ -162,7 +154,7 @@ function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnounce
                       setSelectedAnnouncement(announcement);
                     }}
                     className="p-3 bg-blue-50 text-blue-600 rounded-2xl hover:bg-blue-100 hover:scale-110 transition-all shadow-sm"
-                    title="Edit"
+                    title={t('propertyCard.edit')}
                   >
                     <Edit2 className="w-5 h-5" />
                   </button>
@@ -172,7 +164,7 @@ function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnounce
                       setSelectedAnnouncementDelete(announcement);
                     }}
                     className="p-3 bg-red-50 text-red-600 rounded-2xl hover:bg-red-100 hover:scale-110 transition-all shadow-sm"
-                    title="Delete"
+                    title={t('propertyCard.delete')}
                   >
                     <Trash2 className="w-5 h-5" />
                   </button>
@@ -181,7 +173,7 @@ function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnounce
 
               {/* Contact Info */}
               <div className="mt-3 text-xs text-gray-500">
-                <span className="font-medium text-gray-700">Contact: </span>
+                <span className="font-medium text-gray-700">{t('propertyCard.contact')}: </span>
                 {announcement.nom_contact} • {announcement.telephone_contact}
               </div>
             </div>
@@ -194,8 +186,8 @@ function PropertyCard({ filteredAnnouncements, t, openModal, setSelectedAnnounce
           <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl flex items-center justify-center">
             <Building className="w-10 h-10 text-gray-400" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-600 mb-2">No properties found</h3>
-          <p className="text-gray-500 text-sm">Try adjusting your search criteria</p>
+          <h3 className="text-lg font-semibold text-gray-600 mb-2">{t('propertyCard.noProperties')}</h3>
+          <p className="text-gray-500 text-sm">{t('propertyCard.adjustSearch')}</p>
         </div>
       )}
     </div>

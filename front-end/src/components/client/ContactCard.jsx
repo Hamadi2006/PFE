@@ -41,8 +41,9 @@ const ContactCard = ({
 }) => {
   const { t } = useTranslation();
   const { setAlertSucc, setAlertFail, setAlertMsg } = useContext(GlobaleContext);
-
+  const companie = JSON.parse(localStorage.getItem("companie"));
   const [formData, setFormData] = useState({
+    societe_id : companie.id,
     nom_complet: "",
     email: "",
     telephone: "",
@@ -128,6 +129,7 @@ const ContactCard = ({
       setAlertSucc(true);
       setTimeout(() => setAlertSucc(false), 3000);
       setFormData({
+        societe_id : companie.id,
         nom_complet: "",
         email: "",
         telephone: "",
