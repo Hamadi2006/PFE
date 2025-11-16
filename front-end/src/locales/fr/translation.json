@@ -220,7 +220,8 @@
       "images_note": "Vous pouvez sélectionner plusieurs images",
       "nom_contact": "Nom contact",
       "telephone_contact": "Téléphone",
-      "email_contact": "Email"
+      "email_contact": "Email",
+      "company":  "la Company"
     },
     "types": {
       "appartement": "Appartement",
@@ -1077,5 +1078,87 @@
     "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette propriété ?",
     "deleteSuccess": "Propriété supprimée avec succès",
     "deleteError": "Erreur lors de la suppression de la propriété"
+  },
+    "AdminUpdateProperty": {
+    "title": "Modifier la propriété",
+    "invalidImage": "Veuillez sélectionner une image valide",
+    "imageTooLarge": "L'image ne doit pas dépasser 5MB",
+    "dataError": "Erreur lors de la préparation des données",
+    "changeImage": "Changer l'image",
+    "imageFormat": "PNG, JPG, GIF (max 5MB)",
+    "generalInfo": "Informations générales",
+    "characteristics": "Caractéristiques",
+    "location": "Localisation",
+    "description": "Description",
+    "descriptionPlaceholder": "Décrivez la propriété...",
+    "amenities": "Équipements",
+    "contact": "Contact",
+    "fields": {
+      "title": "Titre",
+      "type": "Type",
+      "transaction": "Transaction",
+      "price": "Prix (DH)",
+      "surface": "Surface (m²)",
+      "bedrooms": "Chambres",
+      "bathrooms": "Salles de bain",
+      "yearBuilt": "Année construction",
+      "floor": "Étage",
+      "totalFloors": "Nombre d'étages",
+      "city": "Ville",
+      "address": "Adresse complète",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "contactName": "Nom",
+      "contactPhone": "Téléphone",
+      "contactEmail": "Email"
+    },
+    "propertyTypes": {
+      "appartement": "Appartement",
+      "maison": "Maison",
+      "villa": "Villa",
+      "studio": "Studio",
+      "terrain": "Terrain",
+      "bureau": "Bureau",
+      "commerce": "Commerce"
+    },
+    "transactionTypes": {
+      "vente": "Vente",
+      "location": "Location"
+    },
+    "amenitiesList": {
+      "pool": "Piscine",
+      "garden": "Jardin",
+      "parking": "Parking",
+      "elevator": "Ascenseur",
+      "airConditioning": "Climatisation",
+      "featured": "En vedette"
+    },
+    "buttons": {
+      "cancel": "Annuler",
+      "update": "Mettre à jour",
+      "updating": "Mise à jour..."
+    }
+  },
+  "requestsView": {
+    "loading": "Chargement des demandes...",
+    "title": "Demandes Immobilières",
+    "subtitle": "Gérez les demandes de vos clients",
+    "labels": {
+      "singular": "demande",
+      "plural": "demandes"
+    },
+    "searchPlaceholder": "Rechercher une demande...",
+    "noImage": "Aucune image",
+    "clientMessage": "Message du client",
+    "requestedOn": "Demandé le",
+    "ref": "REF",
+    "noResults": {
+      "title": "Aucune demande trouvée",
+      "subtitle": "Essayez de modifier vos critères de recherche"
+    },
+    "pagination": {
+      "prev": "Précédent",
+      "next": "Suivant"
+    }
   }
 }

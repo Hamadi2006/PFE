@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { X, Upload, MapPin, Home, Ruler, Bath, Bed, Calendar, Layers, Star, Save, Edit } from "lucide-react";
 import { GlobaleContext } from "../../context/GlobaleContext";
 
 export default function EditPropertyModal({ property, isOpen, onClose, onUpdate }) {
+  const { t } = useTranslation();
   const {
     alertSucc,
     setAlertSucc,
@@ -95,12 +97,12 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      alert("Veuillez sélectionner une image valide");
+      alert(t('AdminUpdateProperty.invalidImage'));
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      alert("L'image ne doit pas dépasser 5MB");
+      alert(t('AdminUpdateProperty.imageTooLarge'));
       return;
     }
 
@@ -108,7 +110,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
     const reader = new FileReader();
     reader.onloadend = () => setImagePreview(reader.result);
     reader.readAsDataURL(file);
-  }, []);
+  }, [t]);
 
   const removeImage = useCallback(() => {
     setImagePrincipale(null);
@@ -124,10 +126,8 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
     setLoading(true);
 
     try {
-      // Préparer les données à envoyer
       const dataToSend = { ...formData };
       
-      // Convertir latitude et longitude en nombres ou les supprimer si vides
       if (dataToSend.latitude === "" || dataToSend.latitude === null) {
         dataToSend.latitude = null;
       } else {
@@ -144,12 +144,12 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
     } catch (error) {
       console.error("Erreur:", error);
       setAlertFail(true);
-      setAlertMsg("Erreur lors de la préparation des données");
+      setAlertMsg(t('AdminUpdateProperty.dataError'));
       setTimeout(() => setAlertFail(false), 3000);
     } finally {
       setLoading(false);
     }
-  }, [formData, imagePrincipale, onUpdate, setAlertFail, setAlertMsg]);
+  }, [formData, imagePrincipale, onUpdate, setAlertFail, setAlertMsg, t]);
 
   if (!isOpen || !property) return null;
 
@@ -170,7 +170,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
             </div>
             <div>
               <h3 className="text-xl font-semibold text-gray-900">
-                Modifier la propriété
+                {t('AdminUpdateProperty.title')}
               </h3>
               <p className="text-sm text-gray-500">
                 {property?.titre}
@@ -216,23 +216,23 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
                 className="hidden" 
               />
               <span className="text-sm text-blue-600 hover:text-blue-700 cursor-pointer font-medium">
-                Changer l'image
+                {t('AdminUpdateProperty.changeImage')}
               </span>
             </label>
-            <p className="text-xs text-gray-500 mt-1">PNG, JPG, GIF (max 5MB)</p>
+            <p className="text-xs text-gray-500 mt-1">{t('AdminUpdateProperty.imageFormat')}</p>
           </div>
 
           {/* Informations de base */}
           <div className="space-y-4">
             <h4 className="font-medium text-gray-900 flex items-center gap-2">
               <Home className="w-4 h-4 text-blue-500" />
-              Informations générales
+              {t('AdminUpdateProperty.generalInfo')}
             </h4>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Titre *
+                  {t('AdminUpdateProperty.fields.title')} *
                 </label>
                 <input
                   type="text"
@@ -246,7 +246,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Type *
+                  {t('AdminUpdateProperty.fields.type')} *
                 </label>
                 <select
                   name="type"
@@ -255,14 +255,14 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   {["appartement", "maison", "villa", "studio", "terrain", "bureau", "commerce"].map((opt) => (
-                    <option key={opt} value={opt}>{opt}</option>
+                    <option key={opt} value={opt}>{t(`AdminUpdateProperty.propertyTypes.${opt}`)}</option>
                   ))}
                 </select>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Transaction *
+                  {t('AdminUpdateProperty.fields.transaction')} *
                 </label>
                 <select
                   name="transaction"
@@ -270,15 +270,15 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  <option value="vente">Vente</option>
-                  <option value="location">Location</option>
+                  <option value="vente">{t('AdminUpdateProperty.transactionTypes.vente')}</option>
+                  <option value="location">{t('AdminUpdateProperty.transactionTypes.location')}</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                   <Ruler className="w-4 h-4 text-gray-400" />
-                  Prix (DH) *
+                  {t('AdminUpdateProperty.fields.price')} *
                 </label>
                 <input
                   type="number"
@@ -296,13 +296,13 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
           <div className="space-y-4">
             <h4 className="font-medium text-gray-900 flex items-center gap-2">
               <Ruler className="w-4 h-4 text-blue-500" />
-              Caractéristiques
+              {t('AdminUpdateProperty.characteristics')}
             </h4>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Surface (m²)
+                  {t('AdminUpdateProperty.fields.surface')}
                 </label>
                 <input
                   type="number"
@@ -316,7 +316,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                   <Bed className="w-4 h-4 text-gray-400" />
-                  Chambres
+                  {t('AdminUpdateProperty.fields.bedrooms')}
                 </label>
                 <input
                   type="number"
@@ -330,7 +330,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                   <Bath className="w-4 h-4 text-gray-400" />
-                  Salles de bain
+                  {t('AdminUpdateProperty.fields.bathrooms')}
                 </label>
                 <input
                   type="number"
@@ -344,7 +344,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-gray-400" />
-                  Année construction
+                  {t('AdminUpdateProperty.fields.yearBuilt')}
                 </label>
                 <input
                   type="number"
@@ -360,7 +360,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                   <Layers className="w-4 h-4 text-gray-400" />
-                  Étage
+                  {t('AdminUpdateProperty.fields.floor')}
                 </label>
                 <input
                   type="number"
@@ -373,7 +373,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Nombre d'étages
+                  {t('AdminUpdateProperty.fields.totalFloors')}
                 </label>
                 <input
                   type="number"
@@ -390,13 +390,13 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
           <div className="space-y-4">
             <h4 className="font-medium text-gray-900 flex items-center gap-2">
               <MapPin className="w-4 h-4 text-blue-500" />
-              Localisation
+              {t('AdminUpdateProperty.location')}
             </h4>
 
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Ville *
+                  {t('AdminUpdateProperty.fields.city')} *
                 </label>
                 <input
                   type="text"
@@ -410,7 +410,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Adresse complète
+                  {t('AdminUpdateProperty.fields.address')}
                 </label>
                 <input
                   type="text"
@@ -424,7 +424,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Latitude
+                    {t('AdminUpdateProperty.fields.latitude')}
                   </label>
                   <input
                     type="number"
@@ -439,7 +439,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Longitude
+                    {t('AdminUpdateProperty.fields.longitude')}
                   </label>
                   <input
                     type="number"
@@ -458,7 +458,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
           {/* Description */}
           <div className="space-y-4">
             <h4 className="font-medium text-gray-900">
-              Description
+              {t('AdminUpdateProperty.description')}
             </h4>
             <textarea
               name="description"
@@ -466,7 +466,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
               onChange={handleInputChange}
               rows="4"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Décrivez la propriété..."
+              placeholder={t('AdminUpdateProperty.descriptionPlaceholder')}
             />
           </div>
 
@@ -474,17 +474,17 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
           <div className="space-y-4">
             <h4 className="font-medium text-gray-900 flex items-center gap-2">
               <Star className="w-4 h-4 text-blue-500" />
-              Équipements
+              {t('AdminUpdateProperty.amenities')}
             </h4>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {[
-                { name: "piscine", label: "Piscine" },
-                { name: "jardin", label: "Jardin" },
-                { name: "parking", label: "Parking" },
-                { name: "ascenseur", label: "Ascenseur" },
-                { name: "climatisation", label: "Climatisation" },
-                { name: "en_vedette", label: "En vedette" },
+                { name: "piscine", label: t('AdminUpdateProperty.amenitiesList.pool') },
+                { name: "jardin", label: t('AdminUpdateProperty.amenitiesList.garden') },
+                { name: "parking", label: t('AdminUpdateProperty.amenitiesList.parking') },
+                { name: "ascenseur", label: t('AdminUpdateProperty.amenitiesList.elevator') },
+                { name: "climatisation", label: t('AdminUpdateProperty.amenitiesList.airConditioning') },
+                { name: "en_vedette", label: t('AdminUpdateProperty.amenitiesList.featured') },
               ].map(({ name, label }) => (
                 <label key={name} className="flex items-center gap-2 text-sm text-gray-700">
                   <input
@@ -503,13 +503,13 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
           {/* Contact */}
           <div className="space-y-4">
             <h4 className="font-medium text-gray-900">
-              Contact
+              {t('AdminUpdateProperty.contact')}
             </h4>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Nom
+                  {t('AdminUpdateProperty.fields.contactName')}
                 </label>
                 <input
                   type="text"
@@ -522,7 +522,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Téléphone
+                  {t('AdminUpdateProperty.fields.contactPhone')}
                 </label>
                 <input
                   type="tel"
@@ -535,7 +535,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
+                  {t('AdminUpdateProperty.fields.contactEmail')}
                 </label>
                 <input
                   type="email"
@@ -556,7 +556,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
               className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium"
               disabled={loading}
             >
-              Annuler
+              {t('AdminUpdateProperty.buttons.cancel')}
             </button>
             <button
               type="submit"
@@ -566,12 +566,12 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
               {loading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Mise à jour...
+                  {t('AdminUpdateProperty.buttons.updating')}
                 </>
               ) : (
                 <>
                   <Save className="w-4 h-4" />
-                  Mettre à jour
+                  {t('AdminUpdateProperty.buttons.update')}
                 </>
               )}
             </button>

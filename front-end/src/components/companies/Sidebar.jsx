@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { LayoutDashboard, Building2, Settings, LogOut, Menu, Home, Mail } from 'lucide-react';
-
+import {ImmobilierContext} from "../../context/ImmobilierContext";
+import { DemandesContext } from '../../context/DemandeContext';
 const Sidebar = ({
   activeTab,
   setActiveTab,
@@ -12,7 +13,8 @@ const Sidebar = ({
   logout
 }) => {
   const { t } = useTranslation();
-
+  const {immobilier,immobilieBySociete} = React.useContext(ImmobilierContext);
+  const {DemandeBySociete} = React.useContext(DemandesContext);
   return (
     <aside className={`${sidebarCollapsed ? 'w-20' : 'w-72'} bg-white border-r border-gray-200 flex flex-col transition-all duration-300 shadow-sm`}>
       
@@ -64,7 +66,7 @@ const Sidebar = ({
             <div className="flex items-center justify-between flex-1">
               <span className="font-medium">{t('sidebarC.announcements')}</span>
               <span className="bg-blue-100 text-blue-600 text-xs font-bold px-2 py-1 rounded-full">
-                {stats.activeProperties ? stats.activeProperties : 0}
+                {immobilieBySociete.length}
               </span>
             </div>
           )}
@@ -82,7 +84,7 @@ const Sidebar = ({
             <div className="flex items-center justify-between flex-1">
               <span className="font-medium">{t('sidebarC.requests')}</span>
               <span className="bg-blue-100 text-blue-600 text-xs font-bold px-2 py-1 rounded-full">
-                {stats.activeRequests ? stats.activeRequests : 0}
+                {DemandeBySociete.length}
               </span>
             </div>
           )}

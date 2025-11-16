@@ -46,7 +46,11 @@ class DemandesController extends Controller
     }
     public function getDemandeByCompanie($id)
     {
-        $demandes = Demande::where('societe_id', $id)->get();
+        $demandes = Demande::join('immobilier', 'demandes.immobilier_id', '=', 'immobilier.id')
+            ->select('demandes.*', 'immobilier.titre', 'immobilier.ville', 'immobilier.prix', 'immobilier.images', 'immobilier.image_principale')
+            ->where('demandes.societe_id', $id)
+            ->get();
+
         return response()->json([
             'success' => true,
             'data' => $demandes
@@ -68,4 +72,5 @@ class DemandesController extends Controller
             'message' => 'Demande supprimée avec succès'
         ], 200);
         }
+
 }

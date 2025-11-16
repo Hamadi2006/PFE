@@ -204,7 +204,8 @@
       "images_note": "يمكنك اختيار صور متعددة",
       "nom_contact": "اسم جهة الاتصال",
       "telephone_contact": "الهاتف",
-      "email_contact": "البريد الإلكتروني"
+      "email_contact": "البريد الإلكتروني",
+      "company": "الشركة"
     },
     "types": {
       "appartement": "شقة",
@@ -928,5 +929,87 @@
     "confirmDelete": "هل أنت متأكد من حذف هذا العقار؟",
     "deleteSuccess": "تم حذف العقار بنجاح",
     "deleteError": "خطأ أثناء حذف العقار"
+  },
+  "AdminUpdateProperty": {
+    "title": "تعديل العقار",
+    "invalidImage": "يرجى اختيار صورة صالحة",
+    "imageTooLarge": "يجب ألا يتجاوز حجم الصورة 5 ميجابايت",
+    "dataError": "خطأ في إعداد البيانات",
+    "changeImage": "تغيير الصورة",
+    "imageFormat": "PNG, JPG, GIF (الحد الأقصى 5 ميجابايت)",
+    "generalInfo": "معلومات عامة",
+    "characteristics": "الخصائص",
+    "location": "الموقع",
+    "description": "الوصف",
+    "descriptionPlaceholder": "قم بوصف العقار...",
+    "amenities": "المرافق",
+    "contact": "جهة الاتصال",
+    "fields": {
+      "title": "العنوان",
+      "type": "النوع",
+      "transaction": "نوع الصفقة",
+      "price": "السعر (درهم)",
+      "surface": "المساحة (م²)",
+      "bedrooms": "غرف النوم",
+      "bathrooms": "الحمامات",
+      "yearBuilt": "سنة البناء",
+      "floor": "الطابق",
+      "totalFloors": "عدد الطوابق",
+      "city": "المدينة",
+      "address": "العنوان الكامل",
+      "latitude": "خط العرض",
+      "longitude": "خط الطول",
+      "contactName": "الاسم",
+      "contactPhone": "الهاتف",
+      "contactEmail": "البريد الإلكتروني"
+    },
+    "propertyTypes": {
+      "appartement": "شقة",
+      "maison": "منزل",
+      "villa": "فيلا",
+      "studio": "ستوديو",
+      "terrain": "أرض",
+      "bureau": "مكتب",
+      "commerce": "محل تجاري"
+    },
+    "transactionTypes": {
+      "vente": "بيع",
+      "location": "إيجار"
+    },
+    "amenitiesList": {
+      "pool": "مسبح",
+      "garden": "حديقة",
+      "parking": "موقف سيارات",
+      "elevator": "مصعد",
+      "airConditioning": "تكييف",
+      "featured": "مميز"
+    },
+    "buttons": {
+      "cancel": "إلغاء",
+      "update": "تحديث",
+      "updating": "جاري التحديث..."
+    }
+  },
+    "requestsView": {
+    "loading": "جاري تحميل الطلبات...",
+    "title": "الطلبات العقارية",
+    "subtitle": "قم بإدارة طلبات عملائك",
+    "labels": {
+      "singular": "طلب",
+      "plural": "طلبات"
+    },
+    "searchPlaceholder": "ابحث عن طلب...",
+    "noImage": "لا توجد صورة",
+    "clientMessage": "رسالة العميل",
+    "requestedOn": "طُلب في",
+    "ref": "رقم المرجع",
+    "noResults": {
+      "title": "لا توجد طلبات",
+      "subtitle": "جرّب تغيير معايير البحث"
+    },
+    "pagination": {
+      "prev": "السابق",
+      "next": "التالي"
+    }
   }
 }

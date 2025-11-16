@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Building2, Plus, X } from "lucide-react";
 import { GlobaleContext } from "../../context/GlobaleContext";
 import { usePropertyForm } from "../hooks/usePropertyForm";
+import { CompanyContext } from "../../context/ComapanieContext";
 import {
   BasicInfoSection,
   LocationSection,
@@ -14,8 +15,10 @@ import {
 } from "../PropertyForm";
 import { ImmobilierContext } from "../../context/ImmobilierContext";
 import ImmobilierAdmin from "./Immobilier";
+import { CompanieSelect } from "./CompanieSelect";
 
 const INITIAL_FORM_DATA = {
+  societe_id : "",
   titre: "",
   description: "",
   type: "appartement",
@@ -163,8 +166,16 @@ const {
     handleFileChange,
   };
 
-  console.log(immobilier);
+const getSocieteId = (id) => {
+  handleInputChange({
+    target: {
+      name: "societe_id",
+      value: id,
+    },
+  });
+};
 
+  const { companies } = useContext(CompanyContext);
   return (
     <div className="relative">
       {/* Fond avec glassmorphism */}
@@ -239,7 +250,7 @@ const {
                 handlers={handlers}
                 t={t}
               />
-
+              <CompanieSelect companies={companies} handlers={handlers} getSocieteId={getSocieteId} />
               <LocationSection
                 formData={formData}
                 errors={errors}

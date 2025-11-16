@@ -191,7 +191,8 @@
       "images_note": "You can select multiple images",
       "nom_contact": "Contact Name",
       "telephone_contact": "Phone",
-      "email_contact": "Email"
+      "email_contact": "Email",
+      "company": "Company"
     },
     "types": { "appartement": "Apartment", "maison": "House", "villa": "Villa", "studio": "Studio", "terrain": "Land", "bureau": "Office", "commerce": "Commercial" },
     "transactions": { "vente": "Sale", "location": "Rent" },
@@ -1042,6 +1043,89 @@
     "confirmDelete": "Are you sure you want to delete this property?",
     "deleteSuccess": "Property deleted successfully",
     "deleteError": "Error deleting property"
+  },
+  "AdminUpdateProperty": {
+    "title": "Edit Property",
+    "invalidImage": "Please select a valid image",
+    "imageTooLarge": "Image must not exceed 5MB",
+    "dataError": "Error preparing data",
+    "changeImage": "Change image",
+    "imageFormat": "PNG, JPG, GIF (max 5MB)",
+    "generalInfo": "General Information",
+    "characteristics": "Characteristics",
+    "location": "Location",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe the property...",
+    "amenities": "Amenities",
+    "contact": "Contact",
+    "fields": {
+      "title": "Title",
+      "type": "Type",
+      "transaction": "Transaction",
+      "price": "Price (MAD)",
+      "surface": "Surface (m²)",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "yearBuilt": "Year Built",
+      "floor": "Floor",
+      "totalFloors": "Total Floors",
+      "city": "City",
+      "address": "Full Address",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "contactName": "Name",
+      "contactPhone": "Phone",
+      "contactEmail": "Email"
+    },
+    "propertyTypes": {
+      "appartement": "Apartment",
+      "maison": "House",
+      "villa": "Villa",
+      "studio": "Studio",
+      "terrain": "Land",
+      "bureau": "Office",
+      "commerce": "Commercial"
+    },
+    "transactionTypes": {
+      "vente": "Sale",
+      "location": "Rent"
+    },
+    "amenitiesList": {
+      "pool": "Pool",
+      "garden": "Garden",
+      "parking": "Parking",
+      "elevator": "Elevator",
+      "airConditioning": "Air Conditioning",
+      "featured": "Featured"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "update": "Update",
+      "updating": "Updating..."
+    }
+  },
+   "requestsView": {
+    "loading": "Loading requests...",
+    "title": "Real Estate Requests",
+    "subtitle": "Manage your clients' requests",
+    "labels": {
+      "singular": "request",
+      "plural": "requests"
+    },
+    "searchPlaceholder": "Search for a request...",
+    "noImage": "No image",
+    "clientMessage": "Client message",
+    "requestedOn": "Requested on",
+    "ref": "REF",
+    "noResults": {
+      "title": "No requests found",
+      "subtitle": "Try adjusting your search criteria"
+    },
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next"
+    }
   }
+
 }
 
