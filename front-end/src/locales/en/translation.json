@@ -1104,7 +1104,7 @@
       "updating": "Updating..."
     }
   },
-   "requestsView": {
+    "requestsView": {
     "loading": "Loading requests...",
     "title": "Real Estate Requests",
     "subtitle": "Manage your clients' requests",
@@ -1124,6 +1124,25 @@
     "pagination": {
       "prev": "Previous",
       "next": "Next"
+    },
+    "filters": {
+      "title": "Filters",
+      "reset": "Reset",
+      "dateFrom": "Date from",
+      "dateTo": "Date to",
+      "minPrice": "Min price (MAD)",
+      "maxPrice": "Max price (MAD)",
+      "city": "City",
+      "cityPlaceholder": "Enter a city...",
+      "sortBy": "Sort by",
+      "sortOptions": {
+        "dateDesc": "Date (newest)",
+        "dateAsc": "Date (oldest)",
+        "priceDesc": "Price (high to low)",
+        "priceAsc": "Price (low to high)",
+        "nameAsc": "Name (A-Z)",
+        "nameDesc": "Name (Z-A)"
+      }
     }
   }
 

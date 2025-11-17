@@ -1139,7 +1139,7 @@
       "updating": "Mise à jour..."
     }
   },
-  "requestsView": {
+"requestsView": {
     "loading": "Chargement des demandes...",
     "title": "Demandes Immobilières",
     "subtitle": "Gérez les demandes de vos clients",
@@ -1159,6 +1159,25 @@
     "pagination": {
       "prev": "Précédent",
       "next": "Suivant"
+    },
+    "filters": {
+      "title": "Filtres",
+      "reset": "Réinitialiser",
+      "dateFrom": "Date de début",
+      "dateTo": "Date de fin",
+      "minPrice": "Prix minimum (MAD)",
+      "maxPrice": "Prix maximum (MAD)",
+      "city": "Ville",
+      "cityPlaceholder": "Entrez une ville...",
+      "sortBy": "Trier par",
+      "sortOptions": {
+        "dateDesc": "Date (plus récent)",
+        "dateAsc": "Date (plus ancien)",
+        "priceDesc": "Prix (décroissant)",
+        "priceAsc": "Prix (croissant)",
+        "nameAsc": "Nom (A-Z)",
+        "nameDesc": "Nom (Z-A)"
+      }
     }
   }
 }

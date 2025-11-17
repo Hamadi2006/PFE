@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Api\ImmobilierController;
 use App\Http\Controllers\DemandesController;
 use App\Http\Controllers\CompaniesController;
+use App\Http\Controllers\MailController;
 
 // Route de login admin
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
@@ -21,6 +22,8 @@ Route::post('/admin/storeAdmin', [AdminController::class, 'StoreAdmin']);
 Route::post("/admin/store", [AdminController::class, "StoreAdmin"]);
 
 Route::post("/admin/{id}", [AdminController::class, "update"]);
+
+Route::get("/admin/mail", [MailController::class, "sendMail"]);
 
 // Routes Immobilier (CRUD)
 Route::prefix('immobilier')->group(function () {

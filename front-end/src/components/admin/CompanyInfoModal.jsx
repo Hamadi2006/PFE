@@ -3,6 +3,7 @@ import { X, Building2, Mail, Phone, MapPin, Globe, CheckCircle } from 'lucide-re
 import { useTranslation } from 'react-i18next';
 
 const CompanyInfoModal = ({ company, isOpen, onClose }) => {
+  
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
 
