@@ -901,28 +901,58 @@
       "errorUpdate": "حدث خطأ أثناء التحديث"
     }
   },
-  "propertyCard": {
-    "featured": "مميز",
-    "available": "متاح",
-    "unavailable": "غير متاح",
-    "currency": "درهم",
-    "surface": "المساحة",
-    "bedrooms": "غرف النوم",
-    "bathrooms": "حمامات",
-    "floor": "الطابق",
-    "amenities": {
-      "piscine": "مسبح",
-      "parking": "موقف سيارات",
-      "jardin": "حديقة",
-      "ascenseur": "مصعد",
-      "climatisation": "تكييف"
-    },
-    "edit": "تعديل",
-    "delete": "حذف",
-    "contact": "جهة الاتصال",
-    "noProperties": "لم يتم العثور على عقارات",
-    "adjustSearch": "حاول تعديل معايير البحث"
+ "propertyCard": {
+  "headers": {
+    "property": "العقار",
+    "typeTransaction": "النوع والمعاملة",
+    "location": "الموقع",
+    "features": "المميزات",
+    "priceContact": "السعر والاتصال",
+    "actions": "الإجراءات"
   },
+  "status": {
+    "disponible": "متاح",
+    "loué": "مؤجر",
+    "vendu": "مباع"
+  },
+  "types": {
+    "appartement": "شقة",
+    "villa": "فيلا",
+    "studio": "ستوديو",
+    "bureau": "مكتب",
+    "terrain": "أرض",
+    "local": "محل تجاري"
+  },
+  "transaction": {
+    "forSale": "للبيع",
+    "forRent": "للإيجار"
+  },
+  "currency": "درهم",
+  "perMonth": "/شهر",
+  "surface": "المساحة",
+  "bedrooms": "غرف النوم",
+  "bathrooms": "حمامات",
+  "floor": "الطابق",
+  "amenities": {
+    "piscine": "مسبح",
+    "parking": "موقف سيارات",
+    "jardin": "حديقة",
+    "ascenseur": "مصعد",
+    "climatisation": "تكييف"
+  },
+  "edit": "تعديل",
+  "delete": "حذف",
+  "contact": "جهة الاتصال",
+  "noProperties": "لم يتم العثور على عقارات",
+  "adjustSearch": "حاول تعديل معايير البحث لرؤية المزيد من النتائج",
+  "footer": {
+    "total": "المجموع",
+    "properties": "عقار(ات)",
+    "available": "متاح(ة)",
+    "rented": "مؤجر(ة)",
+    "sold": "مباع(ة)"
+  }
+},
    "announcementsView": {
     "searchPlaceholder": "البحث عن عقارات...",
     "newProperty": "عقار جديد",
@@ -1030,5 +1060,57 @@
         "nameDesc": "الاسم (ي-أ)"
       }
     }
+  },
+  "dashboard": {
+  "title": "لوحة التحكم العقارية",
+  "currency": "درهم",
+  "perMonth": "/شهر",
+  "header": {
+    "properties": "عقار",
+    "requests": "طلب",
+    "available": "متاح",
+    "yourAgency": "وكالتك",
+    "realEstateManagement": "إدارة عقارية"
+  },
+  "stats": {
+    "totalProperties": "إجمالي العقارات",
+    "forSale": "للبيع",
+    "forRent": "للإيجار",
+    "clientRequests": "طلبات العملاء",
+    "new": "جديد",
+    "newThisMonth": "جديدة هذا الشهر",
+    "available": "متاح",
+    "featured": "مميز"
+  },
+  "status": {
+    "disponible": "متاح",
+    "loué": "مؤجر",
+    "vendu": "مباع"
+  },
+  "transaction": {
+    "vente": "بيع",
+    "location": "إيجار"
+  },
+  "quickActions": {
+    "title": "إجراءات سريعة",
+    "newProperty": "عقار جديد",
+    "addProperty": "إضافة عقار",
+    "requests": "الطلبات",
+    "viewContacts": "عرض جهات الاتصال"
+  },
+  "recentProperties": {
+    "title": "العقارات الأخيرة",
+    "properties": "عقار",
+    "noProperties": "لا توجد عقارات"
+  },
+  "recentRequests": {
+    "title": "الطلبات الأخيرة",
+    "new": "جديد",
+    "noRequests": "لا توجد طلبات"
+  },
+  "topProperties": {
+    "title": "أفضل العقارات",
+    "noData": "لا توجد بيانات"
   }
+}
 }

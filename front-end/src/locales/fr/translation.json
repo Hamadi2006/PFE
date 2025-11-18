@@ -1051,27 +1051,57 @@
     }
   },
   "propertyCard": {
-    "featured": "En vedette",
-    "available": "Disponible",
-    "unavailable": "Indisponible",
-    "currency": "MAD",
-    "surface": "Surface",
-    "bedrooms": "Chambres",
-    "bathrooms": "SDB",
-    "floor": "Étage",
-    "amenities": {
-      "piscine": "Piscine",
-      "parking": "Parking",
-      "jardin": "Jardin",
-      "ascenseur": "Ascenseur",
-      "climatisation": "Climatisation"
-    },
-    "edit": "Modifier",
-    "delete": "Supprimer",
-    "contact": "Contact",
-    "noProperties": "Aucune propriété trouvée",
-    "adjustSearch": "Essayez d'ajuster vos critères de recherche"
+  "headers": {
+    "property": "Propriété",
+    "typeTransaction": "Type & Transaction",
+    "location": "Localisation",
+    "features": "Caractéristiques",
+    "priceContact": "Prix & Contact",
+    "actions": "Actions"
   },
+  "status": {
+    "disponible": "Disponible",
+    "loué": "Loué",
+    "vendu": "Vendu"
+  },
+  "types": {
+    "appartement": "Appartement",
+    "villa": "Villa",
+    "studio": "Studio",
+    "bureau": "Bureau",
+    "terrain": "Terrain",
+    "local": "Local"
+  },
+  "transaction": {
+    "forSale": "À Vendre",
+    "forRent": "À Louer"
+  },
+  "currency": "MAD",
+  "perMonth": "/mois",
+  "surface": "Surface",
+  "bedrooms": "Chambres",
+  "bathrooms": "SDB",
+  "floor": "Étage",
+  "amenities": {
+    "piscine": "Piscine",
+    "parking": "Parking",
+    "jardin": "Jardin",
+    "ascenseur": "Ascenseur",
+    "climatisation": "Climatisation"
+  },
+  "edit": "Modifier",
+  "delete": "Supprimer",
+  "contact": "Contact",
+  "noProperties": "Aucune propriété trouvée",
+  "adjustSearch": "Essayez d'ajuster vos filtres de recherche pour voir plus de résultats",
+  "footer": {
+    "total": "Total",
+    "properties": "propriété(s)",
+    "available": "Disponible(s)",
+    "rented": "Loué(s)",
+    "sold": "Vendu(s)"
+  }
+},
    "announcementsView": {
     "searchPlaceholder": "Rechercher propriétés...",
     "newProperty": "Nouvelle propriété",
@@ -1179,5 +1209,57 @@
         "nameDesc": "Nom (Z-A)"
       }
     }
+  },
+  "dashboard": {
+  "title": "Tableau de Bord Immobilier",
+  "currency": "MAD",
+  "perMonth": "/mois",
+  "header": {
+    "properties": "propriétés",
+    "requests": "demandes",
+    "available": "disponibles",
+    "yourAgency": "Votre Agence",
+    "realEstateManagement": "Gestion immobilière"
+  },
+  "stats": {
+    "totalProperties": "Propriétés totales",
+    "forSale": "vente",
+    "forRent": "location",
+    "clientRequests": "Demandes clients",
+    "new": "nouveau(x)",
+    "newThisMonth": "nouvelles ce mois",
+    "available": "Disponibles",
+    "featured": "en vedette"
+  },
+  "status": {
+    "disponible": "Disponible",
+    "loué": "Loué",
+    "vendu": "Vendu"
+  },
+  "transaction": {
+    "vente": "Vente",
+    "location": "Location"
+  },
+  "quickActions": {
+    "title": "Actions Rapides",
+    "newProperty": "Nouvelle Propriété",
+    "addProperty": "Ajouter un bien",
+    "requests": "Demandes",
+    "viewContacts": "Voir les contacts"
+  },
+  "recentProperties": {
+    "title": "Propriétés Récentes",
+    "properties": "biens",
+    "noProperties": "Aucune propriété"
+  },
+  "recentRequests": {
+    "title": "Demandes Récentes",
+    "new": "nouveau(x)",
+    "noRequests": "Aucune demande"
+  },
+  "topProperties": {
+    "title": "Top Propriétés",
+    "noData": "Aucune donnée"
   }
+}
 }

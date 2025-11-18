@@ -1,353 +1,390 @@
-import React from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
   Home, 
   Building2, 
   MapPin, 
   Eye, 
-  DollarSign,
   TrendingUp,
   Plus,
-  Calendar,
   Star,
-  Search,
-  Users,
-  Phone,
-  Mail,
+  MessageCircle,
+  User,
+  Clock,
+  Target,
+  Percent,
   ChevronRight
 } from 'lucide-react';
+import { DemandesContext } from '../../context/DemandeContext';
+import { ImmobilierContext } from '../../context/ImmobilierContext';
 
-const DashboardImmobilier = () => {
-  const { t } = useTranslation();
+const DashboardImmobilier = ({ setActiveTab }) => {
+  const { t, i18n } = useTranslation();
+  const { DemandeBySociete } = useContext(DemandesContext);
+  const { immobilieBySociete } = useContext(ImmobilierContext);
 
-  // Données statiques pour une agence immobilière
-  const immobilierData = {
-    stats: {
-      totalProperties: 47,
-      propertiesForSale: 28,
-      propertiesForRent: 19,
-      totalViews: 3247,
-      soldThisMonth: 8,
-      rentedThisMonth: 5
-    },
-    recentProperties: [
-      {
-        id: 1,
-        title: 'Villa Moderne - Casa Anfa',
-        type: 'Villa',
-        transaction: 'Vente',
-        price: '4,500,000 MAD',
-        status: 'Disponible',
-        views: 156,
-        date: '15 Nov 2024'
-      },
-      {
-        id: 2,
-        title: 'Appartement Rabat Agdal',
-        type: 'Appartement',
-        transaction: 'Location',
-        price: '9,500 MAD/mois',
-        status: 'Loué',
-        views: 89,
-        date: '14 Nov 2024'
-      },
-      {
-        id: 3,
-        title: 'Studio Centre Ville',
-        type: 'Studio',
-        transaction: 'Location',
-        price: '3,200 MAD/mois',
-        status: 'Disponible',
-        views: 203,
-        date: '13 Nov 2024'
+  // Calcul des statistiques réelles
+  const stats = useMemo(() => {
+    if (!immobilieBySociete || !DemandeBySociete) {
+      return {
+        totalProperties: 0,
+        propertiesForSale: 0,
+        propertiesForRent: 0,
+        availableProperties: 0,
+        featuredProperties: 0,
+        totalRequests: 0,
+        newRequests: 0
+      };
+    }
+
+    const totalProperties = immobilieBySociete.length;
+    const propertiesForSale = immobilieBySociete.filter(prop => prop.transaction === 'vente').length;
+    const propertiesForRent = immobilieBySociete.filter(prop => prop.transaction === 'location').length;
+    const availableProperties = immobilieBySociete.filter(prop => prop.statut === 'disponible').length;
+    const featuredProperties = immobilieBySociete.filter(prop => prop.en_vedette).length;
+    
+    const totalRequests = DemandeBySociete.length;
+    const thisMonth = new Date().getMonth();
+    const newRequests = DemandeBySociete.filter(request => 
+      new Date(request.created_at).getMonth() === thisMonth
+    ).length;
+
+    return {
+      totalProperties,
+      propertiesForSale,
+      propertiesForRent,
+      availableProperties,
+      featuredProperties,
+      totalRequests,
+      newRequests
+    };
+  }, [immobilieBySociete, DemandeBySociete]);
+
+  // Propriétés récentes (5 plus récentes)
+  const recentProperties = useMemo(() => {
+    if (!immobilieBySociete) return [];
+    
+    return immobilieBySociete
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .slice(0, 5)
+      .map(property => ({
+        id: property.id,
+        title: property.titre,
+        type: property.type,
+        transaction: property.transaction,
+        price: `${parseFloat(property.prix).toLocaleString(i18n.language === 'ar' ? 'ar-MA' : 'fr-FR')} ${t('dashboard.currency')}${property.transaction === 'location' ? t('dashboard.perMonth') : ''}`,
+        status: property.statut,
+        ville: property.ville,
+        date: new Date(property.created_at).toLocaleDateString(i18n.language === 'ar' ? 'ar-MA' : 'fr-FR')
+      }));
+  }, [immobilieBySociete, i18n.language, t]);
+
+  // Demandes récentes
+  const recentRequests = useMemo(() => {
+    if (!DemandeBySociete) return [];
+    
+    return DemandeBySociete
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .slice(0, 5)
+      .map(request => ({
+        id: request.id,
+        client: request.nom_complet,
+        property: request.titre,
+        phone: request.telephone,
+        date: new Date(request.created_at).toLocaleDateString(i18n.language === 'ar' ? 'ar-MA' : 'fr-FR'),
+        time: new Date(request.created_at).toLocaleTimeString(i18n.language === 'ar' ? 'ar-MA' : 'fr-FR', { hour: '2-digit', minute: '2-digit' }),
+        hasMessage: !!request.message
+      }));
+  }, [DemandeBySociete, i18n.language]);
+
+  // Propriétés populaires (par nombre de demandes)
+  const popularProperties = useMemo(() => {
+    if (!immobilieBySociete || !DemandeBySociete) return [];
+    
+    const propertyRequests = {};
+    DemandeBySociete.forEach(request => {
+      if (request.immobilier_id) {
+        propertyRequests[request.immobilier_id] = (propertyRequests[request.immobilier_id] || 0) + 1;
       }
-    ],
-    popularProperties: [
-      {
-        id: 1,
-        title: 'Villa Luxueuse Palmier',
-        location: 'Casablanca',
-        price: '6,200,000 MAD',
-        views: 324,
-        type: 'Vente',
-        featured: true
-      },
-      {
-        id: 2,
-        title: 'Appartement Standing',
-        location: 'Rabat',
-        price: '2,800,000 MAD',
-        views: 287,
-        type: 'Vente',
-        featured: true
-      },
-      {
-        id: 3,
-        title: 'Duplex Moderne',
-        location: 'Marrakech',
-        price: '12,000 MAD/mois',
-        views: 198,
-        type: 'Location',
-        featured: false
-      }
-    ]
+    });
+
+    return immobilieBySociete
+      .map(property => ({
+        ...property,
+        requestCount: propertyRequests[property.id] || 0
+      }))
+      .sort((a, b) => b.requestCount - a.requestCount)
+      .slice(0, 4)
+      .map(property => ({
+        id: property.id,
+        title: property.titre,
+        location: property.ville,
+        price: `${parseFloat(property.prix).toLocaleString(i18n.language === 'ar' ? 'ar-MA' : 'fr-FR')} ${t('dashboard.currency')}${property.transaction === 'location' ? t('dashboard.perMonth') : ''}`,
+        views: property.requestCount * 3,
+        type: property.transaction,
+        featured: property.en_vedette
+      }));
+  }, [immobilieBySociete, DemandeBySociete, i18n.language, t]);
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'disponible': return 'bg-green-100 text-green-700';
+      case 'loué': return 'bg-blue-100 text-blue-700';
+      case 'vendu': return 'bg-gray-100 text-gray-700';
+      default: return 'bg-gray-100 text-gray-700';
+    }
+  };
+
+  const getTransactionColor = (transaction) => {
+    return transaction === 'vente' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700';
+  };
+
+  const getTransactionIcon = (transaction) => {
+    return transaction === 'vente' ? 'text-green-600' : 'text-blue-600';
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex justify-between items-center">
+      <div className="mb-6">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Tableau de Bord Immobilier</h1>
-            <p className="text-gray-600 mt-2">Gestion de votre portefeuille immobilier</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+              {t('dashboard.title')}
+            </h1>
+            <p className="text-sm text-gray-600 mt-1">
+              {stats.totalProperties} {t('dashboard.header.properties')} • {stats.totalRequests} {t('dashboard.header.requests')} • {stats.availableProperties} {t('dashboard.header.available')}
+            </p>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             <div className="text-right">
-              <p className="font-semibold text-gray-900">Immobilière Prestige</p>
-              <p className="text-sm text-gray-500">47 propriétés gérées</p>
+              <p className="font-semibold text-gray-900 text-sm">{t('dashboard.header.yourAgency')}</p>
+              <p className="text-xs text-gray-500">{t('dashboard.header.realEstateManagement')}</p>
             </div>
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
-              IP
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+              AG
             </div>
           </div>
         </div>
       </div>
 
-      {/* Statistiques Immobilières */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      {/* Statistiques Principales */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         {/* Total Propriétés */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-blue-50 rounded-lg">
-              <Home className="w-6 h-6 text-blue-600" />
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-3">
+            <div className="p-2.5 bg-blue-50 rounded-lg">
+              <Home className="w-5 h-5 text-blue-600" />
             </div>
             <div className="text-right">
-              <TrendingUp className="w-5 h-5 text-green-500 inline mr-1" />
-              <span className="text-sm text-green-600">+5%</span>
+              <TrendingUp className="w-3.5 h-3.5 text-green-500 inline mr-1" />
+              <span className="text-xs text-green-600 font-medium">+{Math.floor(stats.totalProperties * 0.05)}</span>
             </div>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-1">{immobilierData.stats.totalProperties}</h3>
-          <p className="text-gray-600 font-medium">Propriétés totales</p>
-          <div className="mt-2 flex space-x-3 text-xs">
-            <span className="text-blue-600">{immobilierData.stats.propertiesForSale} à vendre</span>
-            <span className="text-green-600">{immobilierData.stats.propertiesForRent} à louer</span>
+          <h3 className="text-2xl font-bold text-gray-900 mb-0.5">{stats.totalProperties}</h3>
+          <p className="text-sm text-gray-600 font-medium mb-2">{t('dashboard.stats.totalProperties')}</p>
+          <div className="flex space-x-3 text-xs">
+            <span className="text-green-600 font-medium">{stats.propertiesForSale} {t('dashboard.stats.forSale')}</span>
+            <span className="text-blue-600 font-medium">{stats.propertiesForRent} {t('dashboard.stats.forRent')}</span>
           </div>
         </div>
 
-        {/* Vues Total */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-green-50 rounded-lg">
-              <Eye className="w-6 h-6 text-green-600" />
+        {/* Demandes Clients */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-3">
+            <div className="p-2.5 bg-green-50 rounded-lg">
+              <MessageCircle className="w-5 h-5 text-green-600" />
             </div>
             <div className="text-right">
-              <TrendingUp className="w-5 h-5 text-green-500 inline mr-1" />
-              <span className="text-sm text-green-600">+23%</span>
+              <Clock className="w-3.5 h-3.5 text-orange-500 inline mr-1" />
+              <span className="text-xs text-orange-600 font-medium">{stats.newRequests} {t('dashboard.stats.new')}</span>
             </div>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-1">{immobilierData.stats.totalViews}</h3>
-          <p className="text-gray-600 font-medium">Vues totales</p>
-          <div className="mt-2 text-xs text-gray-500">
-            Moyenne: 69 vues/propriété
+          <h3 className="text-2xl font-bold text-gray-900 mb-0.5">{stats.totalRequests}</h3>
+          <p className="text-sm text-gray-600 font-medium mb-2">{t('dashboard.stats.clientRequests')}</p>
+          <div className="text-xs text-gray-500">
+            {stats.newRequests} {t('dashboard.stats.newThisMonth')}
           </div>
         </div>
 
-        {/* Transactions ce mois */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-purple-50 rounded-lg">
-              <DollarSign className="w-6 h-6 text-purple-600" />
+        {/* Propriétés Disponibles */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-3">
+            <div className="p-2.5 bg-purple-50 rounded-lg">
+              <Target className="w-5 h-5 text-purple-600" />
             </div>
             <div className="text-right">
-              <Calendar className="w-5 h-5 text-purple-500 inline mr-1" />
-              <span className="text-sm text-purple-600">Ce mois</span>
+              <Percent className="w-3.5 h-3.5 text-purple-500 inline mr-1" />
+              <span className="text-xs text-purple-600 font-medium">
+                {stats.totalProperties > 0 ? Math.round((stats.availableProperties / stats.totalProperties) * 100) : 0}%
+              </span>
             </div>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-1">{immobilierData.stats.soldThisMonth + immobilierData.stats.rentedThisMonth}</h3>
-          <p className="text-gray-600 font-medium">Transactions</p>
-          <div className="mt-2 flex space-x-3 text-xs">
-            <span className="text-green-600">{immobilierData.stats.soldThisMonth} ventes</span>
-            <span className="text-blue-600">{immobilierData.stats.rentedThisMonth} locations</span>
+          <h3 className="text-2xl font-bold text-gray-900 mb-0.5">{stats.availableProperties}</h3>
+          <p className="text-sm text-gray-600 font-medium mb-2">{t('dashboard.stats.available')}</p>
+          <div className="text-xs text-gray-500">
+            {stats.featuredProperties} {t('dashboard.stats.featured')}
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Colonne de gauche */}
-        <div className="space-y-6">
-          {/* Actions Rapides Immobilières */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Gestion Immobilière</h2>
-            <div className="space-y-3">
-              <button className="w-full flex items-center justify-between p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-all duration-200 group border border-blue-100">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        {/* Colonne principale (2/3) */}
+        <div className="xl:col-span-2 space-y-6">
+          {/* Actions Rapides */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">{t('dashboard.quickActions.title')}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <button 
+                onClick={() => setActiveTab('announcements')} 
+                className="flex items-center justify-between p-3.5 bg-blue-50 hover:bg-blue-100 rounded-lg transition-all duration-200 group border border-blue-100"
+              >
                 <div className="flex items-center space-x-3">
                   <div className="p-2 bg-blue-600 rounded-lg">
-                    <Plus className="w-5 h-5 text-white" />
+                    <Plus className="w-4 h-4 text-white" />
                   </div>
                   <div className="text-left">
-                    <p className="font-semibold text-gray-900">Nouvelle Propriété</p>
-                    <p className="text-sm text-gray-600">Ajouter un bien immobilier</p>
+                    <p className="font-semibold text-gray-900 text-sm">{t('dashboard.quickActions.newProperty')}</p>
+                    <p className="text-xs text-gray-600">{t('dashboard.quickActions.addProperty')}</p>
                   </div>
                 </div>
-                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600" />
+                <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600" />
               </button>
 
-              <button className="w-full flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 rounded-lg transition-all duration-200 group border border-green-100">
+              <button 
+                onClick={() => setActiveTab('requests')} 
+                className="flex items-center justify-between p-3.5 bg-orange-50 hover:bg-orange-100 rounded-lg transition-all duration-200 group border border-orange-100"
+              >
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-green-600 rounded-lg">
-                    <Search className="w-5 h-5 text-white" />
+                  <div className="p-2 bg-orange-600 rounded-lg">
+                    <MessageCircle className="w-4 h-4 text-white" />
                   </div>
                   <div className="text-left">
-                    <p className="font-semibold text-gray-900">Voir Catalogue</p>
-                    <p className="text-sm text-gray-600">Parcourir toutes les propriétés</p>
+                    <p className="font-semibold text-gray-900 text-sm">{t('dashboard.quickActions.requests')}</p>
+                    <p className="text-xs text-gray-600">{t('dashboard.quickActions.viewContacts')}</p>
                   </div>
                 </div>
-                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-green-600" />
-              </button>
-
-              <button className="w-full flex items-center justify-between p-4 bg-purple-50 hover:bg-purple-100 rounded-lg transition-all duration-200 group border border-purple-100">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-purple-600 rounded-lg">
-                    <Users className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-semibold text-gray-900">Propriétés en Vedette</p>
-                    <p className="text-sm text-gray-600">Gérer les annonces prioritaires</p>
-                  </div>
-                </div>
-                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-purple-600" />
+                <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-orange-600" />
               </button>
             </div>
           </div>
 
-          {/* Propriétés Récentes */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Propriétés Récentes</h2>
-            <div className="space-y-4">
-              {immobilierData.recentProperties.map((property) => (
-                <div key={property.id} className="flex items-center justify-between p-3 border-b border-gray-100 last:border-0">
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-2 rounded-lg ${
-                      property.transaction === 'Vente' ? 'bg-green-100' : 'bg-blue-100'
-                    }`}>
-                      <Building2 className={`w-4 h-4 ${
-                        property.transaction === 'Vente' ? 'text-green-600' : 'text-blue-600'
-                      }`} />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-900 text-sm">{property.title}</p>
-                      <div className="flex items-center space-x-2 mt-1">
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          property.status === 'Disponible' 
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-gray-100 text-gray-800'
-                        }`}>
-                          {property.status}
-                        </span>
-                        <span className="text-xs text-gray-500">{property.views} vues</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Propriétés Récentes */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-bold text-gray-900">{t('dashboard.recentProperties.title')}</h2>
+                <span className="text-xs text-gray-500 font-medium">{recentProperties.length} {t('dashboard.recentProperties.properties')}</span>
+              </div>
+              <div className="space-y-3">
+                {recentProperties.length > 0 ? (
+                  recentProperties.map((property) => (
+                    <div key={property.id} className="flex items-center justify-between p-3 border border-gray-100 hover:border-gray-200 hover:bg-gray-50 rounded-lg transition-all">
+                      <div className="flex items-center space-x-2.5 flex-1 min-w-0">
+                        <div className={`p-1.5 rounded-lg ${getTransactionColor(property.transaction)}`}>
+                          <Building2 className={`w-3.5 h-3.5 ${getTransactionIcon(property.transaction)}`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-gray-900 text-xs truncate">{property.title}</p>
+                          <div className="flex items-center space-x-2 mt-0.5">
+                            <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${getStatusColor(property.status)}`}>
+                              {t(`dashboard.status.${property.status}`)}
+                            </span>
+                            <span className="text-xs text-gray-500">{property.ville}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right ml-2">
+                        <p className="font-bold text-gray-900 text-xs whitespace-nowrap">{property.price}</p>
+                        <p className="text-xs text-gray-400">{property.date}</p>
                       </div>
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold text-gray-900 text-sm">{property.price}</p>
-                    <p className="text-xs text-gray-500">{property.date}</p>
-                  </div>
-                </div>
-              ))}
+                  ))
+                ) : (
+                  <p className="text-center text-gray-500 text-sm py-6">{t('dashboard.recentProperties.noProperties')}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Demandes Récentes */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-bold text-gray-900">{t('dashboard.recentRequests.title')}</h2>
+                <span className="text-xs text-blue-600 font-semibold">{stats.newRequests} {t('dashboard.recentRequests.new')}</span>
+              </div>
+              <div className="space-y-3">
+                {recentRequests.length > 0 ? (
+                  recentRequests.map((request) => (
+                    <div key={request.id} className="p-3 border border-gray-100 hover:border-gray-200 hover:bg-gray-50 rounded-lg transition-all">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <div className="flex items-center space-x-2 flex-1 min-w-0">
+                          <div className="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <User className="w-3.5 h-3.5 text-blue-600" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-semibold text-gray-900 text-xs truncate">{request.client}</p>
+                            <p className="text-xs text-gray-500 truncate">{request.property}</p>
+                          </div>
+                        </div>
+                        {request.hasMessage && (
+                          <MessageCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                        )}
+                      </div>
+                      <div className="flex justify-between items-center text-xs text-gray-500 mt-1">
+                        <span className="truncate">{request.phone}</span>
+                        <span className="text-xs text-gray-400 whitespace-nowrap ml-2">{request.time}</span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-gray-500 text-sm py-6">{t('dashboard.recentRequests.noRequests')}</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Colonne de droite */}
+        {/* Colonne latérale (1/3) */}
         <div className="space-y-6">
           {/* Propriétés Populaires */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900">Propriétés Populaires</h2>
-              <Star className="w-5 h-5 text-yellow-500" />
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-gray-900">{t('dashboard.topProperties.title')}</h2>
+              <Star className="w-4 h-4 text-yellow-500" />
             </div>
-            <div className="space-y-4">
-              {immobilierData.popularProperties.map((property) => (
-                <div key={property.id} className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <div className="flex items-center space-x-2 mb-1">
-                        <h3 className="font-semibold text-gray-900">{property.title}</h3>
-                        {property.featured && (
-                          <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                        )}
+            <div className="space-y-3">
+              {popularProperties.length > 0 ? (
+                popularProperties.map((property) => (
+                  <div key={property.id} className="p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all">
+                    <div className="flex justify-between items-start mb-2">
+                      <div className="flex-1 min-w-0 pr-2">
+                        <div className="flex items-center space-x-1.5 mb-1">
+                          <h3 className="font-semibold text-gray-900 text-xs truncate">{property.title}</h3>
+                          {property.featured && (
+                            <Star className="w-3 h-3 text-yellow-500 fill-current flex-shrink-0" />
+                          )}
+                        </div>
+                        <div className="flex items-center space-x-1 text-xs text-gray-600">
+                          <MapPin className="w-3 h-3 flex-shrink-0" />
+                          <span className="truncate">{property.location}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-1 text-sm text-gray-600">
-                        <MapPin className="w-3 h-3" />
-                        <span>{property.location}</span>
+                      <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium flex-shrink-0 ${getTransactionColor(property.type)}`}>
+                        {t(`dashboard.transaction.${property.type}`)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center pt-2 border-t border-gray-100">
+                      <p className="font-bold text-gray-900 text-xs">{property.price}</p>
+                      <div className="flex items-center space-x-1 text-xs text-gray-500">
+                        <Eye className="w-3 h-3" />
+                        <span>{property.views}</span>
                       </div>
                     </div>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      property.type === 'Vente' 
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-blue-100 text-blue-800'
-                    }`}>
-                      {property.type}
-                    </span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <p className="font-bold text-gray-900">{property.price}</p>
-                    <div className="flex items-center space-x-1 text-sm text-gray-500">
-                      <Eye className="w-4 h-4" />
-                      <span>{property.views} vues</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Performance du Mois */}
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl shadow-lg p-6 text-white">
-            <h2 className="text-xl font-bold mb-6">Performance du Mois</h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="text-center p-4 bg-white bg-opacity-10 rounded-lg">
-                <DollarSign className="w-8 h-8 text-green-400 mx-auto mb-2" />
-                <p className="text-2xl font-bold">{immobilierData.stats.soldThisMonth}</p>
-                <p className="text-sm text-gray-300">Ventes réalisées</p>
-              </div>
-              <div className="text-center p-4 bg-white bg-opacity-10 rounded-lg">
-                <Home className="w-8 h-8 text-blue-400 mx-auto mb-2" />
-                <p className="text-2xl font-bold">{immobilierData.stats.rentedThisMonth}</p>
-                <p className="text-sm text-gray-300">Locations signées</p>
-              </div>
-              <div className="text-center p-4 bg-white bg-opacity-10 rounded-lg">
-                <TrendingUp className="w-8 h-8 text-yellow-400 mx-auto mb-2" />
-                <p className="text-2xl font-bold">28%</p>
-                <p className="text-sm text-gray-300">Taux de conversion</p>
-              </div>
-              <div className="text-center p-4 bg-white bg-opacity-10 rounded-lg">
-                <Eye className="w-8 h-8 text-purple-400 mx-auto mb-2" />
-                <p className="text-2xl font-bold">847</p>
-                <p className="text-sm text-gray-300">Vues ce mois</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Contact Support Immobilier */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="font-semibold text-gray-900 mb-4">Support Immobilier</h3>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2 text-blue-600">
-                  <Phone className="w-4 h-4" />
-                  <span>Support technique</span>
-                </div>
-                <span className="text-gray-900">+212 5XX-XXXXXX</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2 text-green-600">
-                  <Mail className="w-4 h-4" />
-                  <span>Email professionnel</span>
-                </div>
-                <span className="text-gray-900">contact@immoprestige.ma</span>
-              </div>
+                ))
+              ) : (
+                <p className="text-center text-gray-500 text-sm py-6">{t('dashboard.topProperties.noData')}</p>
+              )}
             </div>
           </div>
         </div>

@@ -1014,29 +1014,58 @@
       "errorUpdate": "An error occurred during the update"
     }
   },
-  
-  "propertyCard": {
-    "featured": "Featured",
-    "available": "Available",
-    "unavailable": "Unavailable",
-    "currency": "MAD",
-    "surface": "Surface",
-    "bedrooms": "Bedrooms",
-    "bathrooms": "Bathrooms",
-    "floor": "Floor",
-    "amenities": {
-      "piscine": "Pool",
-      "parking": "Parking",
-      "jardin": "Garden",
-      "ascenseur": "Elevator",
-      "climatisation": "Air Conditioning"
-    },
-    "edit": "Edit",
-    "delete": "Delete",
-    "contact": "Contact",
-    "noProperties": "No properties found",
-    "adjustSearch": "Try adjusting your search criteria"
+ "propertyCard": {
+  "headers": {
+    "property": "Property",
+    "typeTransaction": "Type & Transaction",
+    "location": "Location",
+    "features": "Features",
+    "priceContact": "Price & Contact",
+    "actions": "Actions"
   },
+  "status": {
+    "disponible": "Available",
+    "loué": "Rented",
+    "vendu": "Sold"
+  },
+  "types": {
+    "appartement": "Apartment",
+    "villa": "Villa",
+    "studio": "Studio",
+    "bureau": "Office",
+    "terrain": "Land",
+    "local": "Commercial Space"
+  },
+  "transaction": {
+    "forSale": "For Sale",
+    "forRent": "For Rent"
+  },
+  "currency": "MAD",
+  "perMonth": "/month",
+  "surface": "Surface",
+  "bedrooms": "Bedrooms",
+  "bathrooms": "Bathrooms",
+  "floor": "Floor",
+  "amenities": {
+    "piscine": "Pool",
+    "parking": "Parking",
+    "jardin": "Garden",
+    "ascenseur": "Elevator",
+    "climatisation": "Air Conditioning"
+  },
+  "edit": "Edit",
+  "delete": "Delete",
+  "contact": "Contact",
+  "noProperties": "No properties found",
+  "adjustSearch": "Try adjusting your search filters to see more results",
+  "footer": {
+    "total": "Total",
+    "properties": "property(ies)",
+    "available": "Available",
+    "rented": "Rented",
+    "sold": "Sold"
+  }
+},
     "announcementsView": {
     "searchPlaceholder": "Search properties...",
     "newProperty": "New property",
@@ -1144,7 +1173,59 @@
         "nameDesc": "Name (Z-A)"
       }
     }
+  },
+  "dashboard": {
+  "title": "Real Estate Dashboard",
+  "currency": "MAD",
+  "perMonth": "/month",
+  "header": {
+    "properties": "properties",
+    "requests": "requests",
+    "available": "available",
+    "yourAgency": "Your Agency",
+    "realEstateManagement": "Real Estate Management"
+  },
+  "stats": {
+    "totalProperties": "Total Properties",
+    "forSale": "for sale",
+    "forRent": "for rent",
+    "clientRequests": "Client Requests",
+    "new": "new",
+    "newThisMonth": "new this month",
+    "available": "Available",
+    "featured": "featured"
+  },
+  "status": {
+    "disponible": "Available",
+    "loué": "Rented",
+    "vendu": "Sold"
+  },
+  "transaction": {
+    "vente": "Sale",
+    "location": "Rental"
+  },
+  "quickActions": {
+    "title": "Quick Actions",
+    "newProperty": "New Property",
+    "addProperty": "Add property",
+    "requests": "Requests",
+    "viewContacts": "View contacts"
+  },
+  "recentProperties": {
+    "title": "Recent Properties",
+    "properties": "properties",
+    "noProperties": "No properties"
+  },
+  "recentRequests": {
+    "title": "Recent Requests",
+    "new": "new",
+    "noRequests": "No requests"
+  },
+  "topProperties": {
+    "title": "Top Properties",
+    "noData": "No data"
   }
+}
 
 }
 
