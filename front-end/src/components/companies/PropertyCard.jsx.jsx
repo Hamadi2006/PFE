@@ -16,7 +16,8 @@ import {
   Phone,
   Calendar,
   Home,
-  Eye
+  Eye,
+  MoreVertical
 } from 'lucide-react';
 
 function PropertyCard({ 
@@ -31,6 +32,7 @@ function PropertyCard({
   setSelectedAnnouncementDelete 
 }) {
   const { t } = useTranslation();
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(null);
 
   const formatPrice = (price) => {
     if (!price) return '';
@@ -64,10 +66,167 @@ function PropertyCard({
     }
   };
 
-  return (
+  // Mobile Card Component
+  const MobilePropertyCard = ({ announcement }) => (
+    <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-4">
+      {/* Header avec image et statut */}
+      <div className="flex gap-3">
+        <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+          {announcement.image_principale_url ? (
+            <img
+              src={announcement.image_principale_url}
+              alt={announcement.titre}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+              <Home className="w-6 h-6 text-gray-400" />
+            </div>
+          )}
+          
+          {announcement.en_vedette && (
+            <div className="absolute top-1 left-1 bg-gradient-to-r from-yellow-400 to-amber-500 rounded p-1">
+              <Star className="w-2 h-2 text-white fill-current" />
+            </div>
+          )}
+        </div>
+        
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between">
+            <h3 className="font-semibold text-gray-900 text-sm leading-tight">
+              {announcement.titre}
+            </h3>
+            <div className="relative">
+              <button
+                onClick={() => setMobileMenuOpen(mobileMenuOpen === announcement.id ? null : announcement.id)}
+                className="p-1 hover:bg-gray-100 rounded"
+              >
+                <MoreVertical className="w-4 h-4 text-gray-500" />
+              </button>
+              
+              {mobileMenuOpen === announcement.id && (
+                <div className="absolute right-0 top-6 bg-white border border-gray-200 rounded-lg shadow-lg z-10 w-32">
+                  <button
+                    onClick={() => {
+                      setOpenUpdatePopUp(true);
+                      setSelectedAnnouncement(announcement);
+                      setMobileMenuOpen(null);
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                  >
+                    <Edit2 className="w-3 h-3" />
+                    {t('propertyCard.edit')}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setOpenDeletePopUp(true);
+                      setSelectedAnnouncementDelete(announcement);
+                      setMobileMenuOpen(null);
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+                  >
+                    <Trash2 className="w-3 h-3" />
+                    {t('propertyCard.delete')}
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          <div className="flex flex-wrap gap-1 mt-2">
+            <span className={`text-xs px-2 py-1 rounded-full ${getTypeColor(announcement.type)}`}>
+              {t(`propertyCard.types.${announcement.type}`)}
+            </span>
+            <span className={`text-xs px-2 py-1 rounded-full ${getTransactionColor(announcement.transaction)}`}>
+              {announcement.transaction === 'vente' 
+                ? t('propertyCard.transaction.forSale')
+                : t('propertyCard.transaction.forRent')
+              }
+            </span>
+            <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(announcement.statut)}`}>
+              {t(`propertyCard.status.${announcement.statut}`)}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Localisation */}
+      <div className="flex items-center gap-2 text-sm">
+        <MapPin className="w-4 h-4 text-red-500 flex-shrink-0" />
+        <span className="font-medium text-gray-900">{announcement.ville}</span>
+        <span className="text-gray-500 text-xs truncate flex-1">{announcement.adresse}</span>
+      </div>
+
+      {/* Caractéristiques */}
+      <div className="flex flex-wrap gap-2">
+        <div className="flex items-center gap-1 px-2 py-1 bg-blue-50 rounded-lg">
+          <Ruler className="w-3 h-3 text-blue-600" />
+          <span className="text-xs font-semibold text-blue-700">{announcement.surface}m²</span>
+        </div>
+        
+        {announcement.chambres > 0 && (
+          <div className="flex items-center gap-1 px-2 py-1 bg-purple-50 rounded-lg">
+            <Bed className="w-3 h-3 text-purple-600" />
+            <span className="text-xs font-semibold text-purple-700">{announcement.chambres}</span>
+          </div>
+        )}
+        
+        {announcement.salles_de_bain > 0 && (
+          <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 rounded-lg">
+            <Bath className="w-3 h-3 text-cyan-600" />
+            <span className="text-xs font-semibold text-cyan-700">{announcement.salles_de_bain}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Prix */}
+      <div className="flex items-center justify-between">
+        <div className="text-lg font-bold text-gray-900">
+          {formatPrice(announcement.prix)} <span className="text-sm font-normal text-gray-500">{t('propertyCard.currency')}</span>
+          {announcement.transaction === 'location' && (
+            <span className="text-xs text-gray-500 ml-1">{t('propertyCard.perMonth')}</span>
+          )}
+        </div>
+        
+        {/* Contact info réduit sur mobile */}
+        <div className="text-right">
+          <div className="text-xs text-gray-600 font-medium">{announcement.nom_contact}</div>
+          <div className="text-xs text-gray-500">{announcement.telephone_contact}</div>
+        </div>
+      </div>
+
+      {/* Équipements */}
+      {(announcement.piscine || announcement.jardin || announcement.parking || announcement.ascenseur || announcement.climatisation) && (
+        <div className="flex flex-wrap gap-1 pt-3 border-t border-gray-100">
+          {announcement.piscine && (
+            <div className="flex items-center gap-1 px-2 py-1 bg-blue-50 rounded text-xs text-blue-700">
+              <Waves className="w-3 h-3" />
+              <span>{t('propertyCard.amenities.piscine')}</span>
+            </div>
+          )}
+          {announcement.jardin && (
+            <div className="flex items-center gap-1 px-2 py-1 bg-green-50 rounded text-xs text-green-700">
+              <TreePine className="w-3 h-3" />
+              <span>{t('propertyCard.amenities.jardin')}</span>
+            </div>
+          )}
+          {announcement.parking && (
+            <div className="flex items-center gap-1 px-2 py-1 bg-gray-50 rounded text-xs text-gray-700">
+              <Car className="w-3 h-3" />
+              <span>{t('propertyCard.amenities.parking')}</span>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+
+  // Desktop Table Component
+  const DesktopTable = () => (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-      {/* Table Header */}
-      <div className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+      {/* Table Header - caché sur mobile */}
+      <div className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 hidden lg:block">
         <div className="grid grid-cols-12 gap-4 px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider">
           <div className="col-span-3">{t('propertyCard.headers.property')}</div>
           <div className="col-span-2">{t('propertyCard.headers.typeTransaction')}</div>
@@ -84,11 +243,11 @@ function PropertyCard({
           filteredAnnouncements.map((announcement) => (
             <div 
               key={announcement.id} 
-              className="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors group"
+              className="hidden lg:grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors group"
             >
               {/* Propriété (Image + Titre) */}
               <div className="col-span-3 flex items-center gap-3">
-                <div className="relative w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100">
+                <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
                   {announcement.image_principale_url ? (
                     <img
                       src={announcement.image_principale_url}
@@ -98,23 +257,13 @@ function PropertyCard({
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                      <Home className="w-8 h-8 text-gray-400" />
+                      <Home className="w-6 h-6 text-gray-400" />
                     </div>
                   )}
                   
-                  {/* Badges sur l'image */}
                   {announcement.en_vedette && (
-                    <div className="absolute top-1 left-1 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-md p-1">
-                      <Star className="w-3 h-3 text-white fill-current" />
-                    </div>
-                  )}
-                  
-                  {announcement.created_at && (
-                    <div className="absolute bottom-1 left-1 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-xs text-gray-700 font-medium">
-                      {new Date(announcement.created_at).toLocaleDateString('fr-FR', { 
-                        day: '2-digit', 
-                        month: 'short' 
-                      })}
+                    <div className="absolute top-1 left-1 bg-gradient-to-r from-yellow-400 to-amber-500 rounded p-1">
+                      <Star className="w-2 h-2 text-white fill-current" />
                     </div>
                   )}
                 </div>
@@ -169,13 +318,6 @@ function PropertyCard({
                     <span className="text-xs font-semibold text-purple-700">{announcement.chambres}</span>
                   </div>
                 )}
-                
-                {announcement.salles_de_bain > 0 && (
-                  <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 rounded-lg">
-                    <Bath className="w-3.5 h-3.5 text-cyan-600" />
-                    <span className="text-xs font-semibold text-cyan-700">{announcement.salles_de_bain}</span>
-                  </div>
-                )}
               </div>
 
               {/* Prix & Contact */}
@@ -214,42 +356,6 @@ function PropertyCard({
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
-
-              {/* Amenities Row (Full Width Below) */}
-              {(announcement.piscine || announcement.jardin || announcement.parking || announcement.ascenseur || announcement.climatisation) && (
-                <div className="col-span-12 flex gap-2 pt-3 border-t border-gray-100">
-                  {announcement.piscine && (
-                    <div className="flex items-center gap-1 px-2 py-1 bg-blue-50 rounded-lg text-xs text-blue-700">
-                      <Waves className="w-3 h-3" />
-                      <span>{t('propertyCard.amenities.piscine')}</span>
-                    </div>
-                  )}
-                  {announcement.jardin && (
-                    <div className="flex items-center gap-1 px-2 py-1 bg-green-50 rounded-lg text-xs text-green-700">
-                      <TreePine className="w-3 h-3" />
-                      <span>{t('propertyCard.amenities.jardin')}</span>
-                    </div>
-                  )}
-                  {announcement.parking && (
-                    <div className="flex items-center gap-1 px-2 py-1 bg-gray-50 rounded-lg text-xs text-gray-700">
-                      <Car className="w-3 h-3" />
-                      <span>{t('propertyCard.amenities.parking')}</span>
-                    </div>
-                  )}
-                  {announcement.ascenseur && (
-                    <div className="flex items-center gap-1 px-2 py-1 bg-orange-50 rounded-lg text-xs text-orange-700">
-                      <Building className="w-3 h-3" />
-                      <span>{t('propertyCard.amenities.ascenseur')}</span>
-                    </div>
-                  )}
-                  {announcement.climatisation && (
-                    <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 rounded-lg text-xs text-cyan-700">
-                      <Snowflake className="w-3 h-3" />
-                      <span>{t('propertyCard.amenities.climatisation')}</span>
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
           ))
         ) : (
@@ -269,7 +375,7 @@ function PropertyCard({
 
       {/* Table Footer with Count */}
       {filteredAnnouncements.length > 0 && (
-        <div className="bg-gray-50 border-t border-gray-200 px-6 py-3">
+        <div className="bg-gray-50 border-t border-gray-200 px-6 py-3 hidden lg:block">
           <div className="flex items-center justify-between text-sm text-gray-600">
             <span className="font-medium">
               {t('propertyCard.footer.total')}: <span className="text-gray-900 font-bold">{filteredAnnouncements.length}</span> {t('propertyCard.footer.properties')}
@@ -292,6 +398,58 @@ function PropertyCard({
         </div>
       )}
     </div>
+  );
+
+  return (
+    <>
+      {/* Version Desktop */}
+      <DesktopTable />
+      
+      {/* Version Mobile */}
+      <div className="lg:hidden space-y-4">
+        {filteredAnnouncements.length > 0 ? (
+          filteredAnnouncements.map((announcement) => (
+            <MobilePropertyCard 
+              key={announcement.id} 
+              announcement={announcement} 
+            />
+          ))
+        ) : (
+          <div className="text-center py-12 px-4 bg-white rounded-xl border border-gray-200">
+            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center">
+              <Home className="w-8 h-8 text-blue-600" />
+            </div>
+            <h3 className="text-lg font-bold text-gray-900 mb-2">
+              {t('propertyCard.noProperties')}
+            </h3>
+            <p className="text-gray-500 text-sm">
+              {t('propertyCard.adjustSearch')}
+            </p>
+          </div>
+        )}
+        
+        {/* Footer Mobile */}
+        {filteredAnnouncements.length > 0 && (
+          <div className="bg-white rounded-xl border border-gray-200 p-4">
+            <div className="text-center text-sm text-gray-600 mb-3">
+              <span className="font-medium">
+                {t('propertyCard.footer.total')}: <span className="text-gray-900 font-bold">{filteredAnnouncements.length}</span> {t('propertyCard.footer.properties')}
+              </span>
+            </div>
+            <div className="flex justify-center gap-4 text-xs">
+              <span className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                {filteredAnnouncements.filter(a => a.statut === 'disponible').length} {t('propertyCard.footer.available')}
+              </span>
+              <span className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                {filteredAnnouncements.filter(a => a.statut === 'loué').length} {t('propertyCard.footer.rented')}
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

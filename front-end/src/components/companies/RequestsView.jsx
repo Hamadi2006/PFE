@@ -16,7 +16,8 @@ import {
     X,
     TrendingUp,
     Clock,
-    MessageSquare
+    MessageSquare,
+    MoreVertical
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import RequestModal from './RequestModal';
@@ -31,6 +32,7 @@ function RequestsView() {
     const [infoModal, setInfoModal] = useState(false);
     const [req, setReq] = useState(null);
     const [showFilters, setShowFilters] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(null);
     
     const [filters, setFilters] = useState({
         dateFrom: '',
@@ -117,14 +119,6 @@ function RequestsView() {
         });
     };
 
-    const formatTime = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleTimeString('fr-FR', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    };
-
     const formatPrice = (price) => {
         return new Intl.NumberFormat('fr-FR').format(price);
     };
@@ -152,6 +146,330 @@ function RequestsView() {
         return filters.dateFrom || filters.dateTo || filters.minPrice || 
                filters.maxPrice || filters.city || filters.sortBy !== 'date-desc';
     };
+
+    // Mobile Card Component
+    const MobileRequestCard = ({ request }) => (
+        <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-4">
+            {/* Header avec client et actions */}
+            <div className="flex justify-between items-start">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                        {request.nom_complet?.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-900 text-sm truncate">
+                            {request.nom_complet}
+                        </h3>
+                        <p className="text-xs text-gray-500 truncate">{request.email}</p>
+                        {request.message && (
+                            <div className="flex items-center gap-1 mt-1">
+                                <MessageSquare className="w-3 h-3 text-green-600" />
+                                <span className="text-xs text-green-600 font-medium">
+                                    {t('RequestViewTraductionFinal.table.client.hasMessage')}
+                                </span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                
+                <div className="relative">
+                    <button
+                        onClick={() => setMobileMenuOpen(mobileMenuOpen === request.id ? null : request.id)}
+                        className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                        <MoreVertical className="w-4 h-4 text-gray-500" />
+                    </button>
+                    
+                    {mobileMenuOpen === request.id && (
+                        <div className="absolute right-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-10 w-40">
+                            <a 
+                                href={`tel:${request.telephone}`}
+                                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 w-full text-left"
+                            >
+                                <Phone className="w-3 h-3 text-green-600" />
+                                {t('RequestViewTraductionFinal.actions.call')}
+                            </a>
+                            <a 
+                                href={`mailto:${request.email}`}
+                                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 w-full text-left"
+                            >
+                                <Mail className="w-3 h-3 text-blue-600" />
+                                {t('RequestViewTraductionFinal.actions.email')}
+                            </a>
+                            <button 
+                                onClick={() => {
+                                    setInfoModal(true);
+                                    setReq(request);
+                                    setMobileMenuOpen(null);
+                                }}
+                                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 w-full text-left"
+                            >
+                                <Eye className="w-3 h-3 text-gray-600" />
+                                {t('RequestViewTraductionFinal.actions.viewDetails')}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* Propriété */}
+            <div className="flex gap-3">
+                <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+                    {request.image_principale ? (
+                        <img
+                            src={`http://localhost:8000/storage/${request.image_principale}`}
+                            alt={request.titre}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                        />
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                            <Building className="w-6 h-6 text-gray-400" />
+                        </div>
+                    )}
+                </div>
+                <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-gray-900 text-sm truncate">
+                        {request.titre}
+                    </h4>
+                    <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
+                        <MapPin className="w-3 h-3" />
+                        <span className="truncate">{request.ville}</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Contact et Prix */}
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                    <div className="flex items-center gap-1.5 text-xs text-gray-700">
+                        <Phone className="w-3 h-3 text-green-600" />
+                        <span className="truncate">{request.telephone}</span>
+                    </div>
+                    <div className="text-xs text-gray-500 font-mono">
+                        {t('RequestViewTraductionFinal.table.contact.reference')}{request.id}
+                    </div>
+                </div>
+                
+                <div className="space-y-1">
+                    <div className="flex items-center gap-1">
+                        <DollarSign className="w-3.5 h-3.5 text-green-600" />
+                        <span className="text-sm font-bold text-gray-900">
+                            {formatPrice(request.prix)}
+                        </span>
+                        <span className="text-xs text-gray-500">
+                            {t('RequestViewTraductionFinal.table.price.currency')}
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs text-gray-500">
+                        <Clock className="w-3 h-3" />
+                        <span>{formatDate(request.created_at)}</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Actions rapides */}
+            <div className="flex justify-between pt-3 border-t border-gray-100">
+                <a 
+                    href={`tel:${request.telephone}`}
+                    className="flex items-center gap-1 px-3 py-1.5 bg-green-50 text-green-600 rounded-lg text-xs font-medium hover:bg-green-100 transition-colors"
+                >
+                    <Phone className="w-3 h-3" />
+                    {t('RequestViewTraductionFinal.actions.call')}
+                </a>
+                <a 
+                    href={`mailto:${request.email}`}
+                    className="flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium hover:bg-blue-100 transition-colors"
+                >
+                    <Mail className="w-3 h-3" />
+                    {t('RequestViewTraductionFinal.actions.email')}
+                </a>
+                <button 
+                    onClick={() => {
+                        setInfoModal(true);
+                        setReq(request);
+                    }}
+                    className="flex items-center gap-1 px-3 py-1.5 bg-gray-900 text-white rounded-lg text-xs font-medium hover:bg-gray-800 transition-colors"
+                >
+                    <Eye className="w-3 h-3" />
+                    {t('RequestViewTraductionFinal.actions.viewDetails')}
+                </button>
+            </div>
+        </div>
+    );
+
+    // Desktop Table Component
+    const DesktopTable = () => (
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            {/* Table Header */}
+            <div className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 hidden lg:block">
+                <div className="grid grid-cols-12 gap-4 px-6 py-3.5 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    <div className="col-span-3">
+                        {t('RequestViewTraductionFinal.table.headers.client')}
+                    </div>
+                    <div className="col-span-3">
+                        {t('RequestViewTraductionFinal.table.headers.property')}
+                    </div>
+                    <div className="col-span-2">
+                        {t('RequestViewTraductionFinal.table.headers.contact')}
+                    </div>
+                    <div className="col-span-2">
+                        {t('RequestViewTraductionFinal.table.headers.priceDate')}
+                    </div>
+                    <div className="col-span-2 text-center">
+                        {t('RequestViewTraductionFinal.table.headers.actions')}
+                    </div>
+                </div>
+            </div>
+
+            {/* Table Body */}
+            <div className="divide-y divide-gray-100">
+                {currentRequests.length > 0 ? (
+                    currentRequests.map((request) => (
+                        <div 
+                            key={request.id} 
+                            className="hidden lg:grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors group"
+                        >
+                            {/* Client */}
+                            <div className="col-span-3 flex items-center gap-3">
+                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                                    {request.nom_complet?.charAt(0).toUpperCase()}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="font-semibold text-gray-900 text-sm truncate">
+                                        {request.nom_complet}
+                                    </p>
+                                    <p className="text-xs text-gray-500 truncate">{request.email}</p>
+                                    {request.message && (
+                                        <div className="flex items-center gap-1 mt-1">
+                                            <MessageSquare className="w-3 h-3 text-green-600" />
+                                            <span className="text-xs text-green-600 font-medium">
+                                                {t('RequestViewTraductionFinal.table.client.hasMessage')}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Propriété */}
+                            <div className="col-span-3 flex items-center gap-3">
+                                <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+                                    {request.image_principale ? (
+                                        <img
+                                            src={`http://localhost:8000/storage/${request.image_principale}`}
+                                            alt={request.titre}
+                                            className="w-full h-full object-cover"
+                                            loading="lazy"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center">
+                                            <Building className="w-6 h-6 text-gray-400" />
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="font-semibold text-gray-900 text-sm truncate">
+                                        {request.titre}
+                                    </p>
+                                    <div className="flex items-center gap-1 text-xs text-gray-500 mt-0.5">
+                                        <MapPin className="w-3 h-3" />
+                                        <span className="truncate">{request.ville}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Contact */}
+                            <div className="col-span-2 flex flex-col justify-center">
+                                <div className="flex items-center gap-1.5 text-xs text-gray-700 mb-1">
+                                    <Phone className="w-3 h-3 text-green-600" />
+                                    <span className="truncate">{request.telephone}</span>
+                                </div>
+                                <span className="text-xs text-gray-500 font-mono">
+                                    {t('RequestViewTraductionFinal.table.contact.reference')}{request.id}
+                                </span>
+                            </div>
+
+                            {/* Prix & Date */}
+                            <div className="col-span-2 flex flex-col justify-center">
+                                <div className="flex items-center gap-1 mb-1">
+                                    <DollarSign className="w-3.5 h-3.5 text-green-600" />
+                                    <span className="text-sm font-bold text-gray-900">
+                                        {formatPrice(request.prix)}
+                                    </span>
+                                    <span className="text-xs text-gray-500">
+                                        {t('RequestViewTraductionFinal.table.price.currency')}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-1 text-xs text-gray-500">
+                                    <Clock className="w-3 h-3" />
+                                    <span>{formatDate(request.created_at)}</span>
+                                </div>
+                            </div>
+
+                            {/* Actions */}
+                            <div className="col-span-2 flex items-center justify-center gap-2">
+                                <a 
+                                    href={`tel:${request.telephone}`}
+                                    className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-all hover:scale-110"
+                                    title={t('RequestViewTraductionFinal.actions.call')}
+                                >
+                                    <Phone className="w-4 h-4" />
+                                </a>
+                                <a 
+                                    href={`mailto:${request.email}`}
+                                    className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all hover:scale-110"
+                                    title={t('RequestViewTraductionFinal.actions.email')}
+                                >
+                                    <Mail className="w-4 h-4" />
+                                </a>
+                                <button 
+                                    onClick={() => {
+                                        setInfoModal(true);
+                                        setReq(request);
+                                    }}
+                                    className="p-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-all hover:scale-110"
+                                    title={t('RequestViewTraductionFinal.actions.viewDetails')}
+                                >
+                                    <Eye className="w-4 h-4" />
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className="text-center py-16 px-4">
+                        <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center">
+                            <Building className="w-10 h-10 text-blue-600" />
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">
+                            {t('RequestViewTraductionFinal.table.emptyState.title')}
+                        </h3>
+                        <p className="text-gray-500 text-sm">
+                            {t('RequestViewTraductionFinal.table.emptyState.message')}
+                        </p>
+                    </div>
+                )}
+            </div>
+
+            {/* Table Footer */}
+            {currentRequests.length > 0 && (
+                <div className="bg-gray-50 border-t border-gray-200 px-6 py-3 hidden lg:block">
+                    <div className="flex items-center justify-between text-sm text-gray-600">
+                        <span>
+                            {t('RequestViewTraductionFinal.table.pagination.showing')}{' '}
+                            <span className="font-semibold text-gray-900">{indexOfFirstItem + 1}</span>{' '}
+                            {t('RequestViewTraductionFinal.table.pagination.to')}{' '}
+                            <span className="font-semibold text-gray-900">
+                                {Math.min(indexOfLastItem, filteredRequests.length)}
+                            </span>{' '}
+                            {t('RequestViewTraductionFinal.table.pagination.of')}{' '}
+                            <span className="font-semibold text-gray-900">{filteredRequests.length}</span>{' '}
+                            {t('RequestViewTraductionFinal.table.pagination.demands')}
+                        </span>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 
     if (!DemandeBySociete) {
         return (
@@ -183,11 +501,11 @@ function RequestsView() {
                             </p>
                         </div>
                         <div className="flex items-center gap-3">
-                            <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-2.5 rounded-xl shadow-sm">
+                            <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-xl shadow-sm">
                                 <div className="flex items-center gap-2">
                                     <TrendingUp size={18} />
-                                    <span className="text-xl font-bold">{filteredRequests.length}</span>
-                                    <span className="text-sm opacity-90">{t('RequestViewTraductionFinal.header.stats')}</span>
+                                    <span className="text-lg md:text-xl font-bold">{filteredRequests.length}</span>
+                                    <span className="text-xs md:text-sm opacity-90">{t('RequestViewTraductionFinal.header.stats')}</span>
                                 </div>
                             </div>
                         </div>
@@ -195,7 +513,7 @@ function RequestsView() {
                 </div>
 
                 {/* Search and Filter Bar */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mb-6">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-5 mb-6">
                     <div className="flex flex-col lg:flex-row gap-3">
                         <div className="flex-1 relative">
                             <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
@@ -212,14 +530,14 @@ function RequestsView() {
                         </div>
                         <button 
                             onClick={() => setShowFilters(!showFilters)}
-                            className={`relative px-5 py-2.5 rounded-lg font-medium transition-all flex items-center gap-2 text-sm ${
+                            className={`relative px-4 py-2.5 rounded-lg font-medium transition-all flex items-center gap-2 text-sm ${
                                 showFilters 
                                     ? 'bg-blue-600 text-white' 
                                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                             }`}
                         >
                             <Filter size={18} />
-                            <span>{t('RequestViewTraductionFinal.search.filters')}</span>
+                            <span className="hidden sm:inline">{t('RequestViewTraductionFinal.search.filters')}</span>
                             {hasActiveFilters() && (
                                 <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
                             )}
@@ -228,11 +546,11 @@ function RequestsView() {
 
                     {/* Filters Panel */}
                     {showFilters && (
-                        <div className="mt-5 pt-5 border-t border-gray-200">
+                        <div className="mt-4 md:mt-5 pt-4 md:pt-5 border-t border-gray-200">
                             <div className="flex items-center justify-between mb-4">
                                 <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
                                     <Filter size={18} />
-                                    {t('RequestViewTraductionFinal.search.filterOptions')}
+                                    <span className="text-sm md:text-base">{t('RequestViewTraductionFinal.search.filterOptions')}</span>
                                 </h3>
                                 {hasActiveFilters() && (
                                     <button 
@@ -245,7 +563,7 @@ function RequestsView() {
                                 )}
                             </div>
                             
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                                 <div>
                                     <label className="block text-xs font-medium text-gray-700 mb-1.5">
                                         {t('RequestViewTraductionFinal.filters.dateFrom')}
@@ -343,185 +661,41 @@ function RequestsView() {
                     )}
                 </div>
 
-                {/* Table */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    {/* Table Header */}
-                    <div className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                        <div className="grid grid-cols-12 gap-4 px-6 py-3.5 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            <div className="col-span-3">
-                                {t('RequestViewTraductionFinal.table.headers.client')}
-                            </div>
-                            <div className="col-span-3">
-                                {t('RequestViewTraductionFinal.table.headers.property')}
-                            </div>
-                            <div className="col-span-2">
-                                {t('RequestViewTraductionFinal.table.headers.contact')}
-                            </div>
-                            <div className="col-span-2">
-                                {t('RequestViewTraductionFinal.table.headers.priceDate')}
-                            </div>
-                            <div className="col-span-2 text-center">
-                                {t('RequestViewTraductionFinal.table.headers.actions')}
-                            </div>
-                        </div>
-                    </div>
+                {/* Desktop Table */}
+                <DesktopTable />
 
-                    {/* Table Body */}
-                    <div className="divide-y divide-gray-100">
-                        {currentRequests.length > 0 ? (
-                            currentRequests.map((request) => (
-                                <div 
-                                    key={request.id} 
-                                    className="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors group"
-                                >
-                                    {/* Client */}
-                                    <div className="col-span-3 flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                                            {request.nom_complet?.charAt(0).toUpperCase()}
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="font-semibold text-gray-900 text-sm truncate">
-                                                {request.nom_complet}
-                                            </p>
-                                            <p className="text-xs text-gray-500 truncate">{request.email}</p>
-                                            {request.message && (
-                                                <div className="flex items-center gap-1 mt-1">
-                                                    <MessageSquare className="w-3 h-3 text-green-600" />
-                                                    <span className="text-xs text-green-600 font-medium">
-                                                        {t('RequestViewTraductionFinal.table.client.hasMessage')}
-                                                    </span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    {/* Propriété */}
-                                    <div className="col-span-3 flex items-center gap-3">
-                                        <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                                            {request.image_principale ? (
-                                                <img
-                                                    src={`http://localhost:8000/storage/${request.image_principale}`}
-                                                    alt={request.titre}
-                                                    className="w-full h-full object-cover"
-                                                    loading="lazy"
-                                                />
-                                            ) : (
-                                                <div className="w-full h-full flex items-center justify-center">
-                                                    <Building className="w-6 h-6 text-gray-400" />
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="font-semibold text-gray-900 text-sm truncate">
-                                                {request.titre}
-                                            </p>
-                                            <div className="flex items-center gap-1 text-xs text-gray-500 mt-0.5">
-                                                <MapPin className="w-3 h-3" />
-                                                <span className="truncate">{request.ville}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Contact */}
-                                    <div className="col-span-2 flex flex-col justify-center">
-                                        <div className="flex items-center gap-1.5 text-xs text-gray-700 mb-1">
-                                            <Phone className="w-3 h-3 text-green-600" />
-                                            <span className="truncate">{request.telephone}</span>
-                                        </div>
-                                        <span className="text-xs text-gray-500 font-mono">
-                                            {t('RequestViewTraductionFinal.table.contact.reference')}{request.id}
-                                        </span>
-                                    </div>
-
-                                    {/* Prix & Date */}
-                                    <div className="col-span-2 flex flex-col justify-center">
-                                        <div className="flex items-center gap-1 mb-1">
-                                            <DollarSign className="w-3.5 h-3.5 text-green-600" />
-                                            <span className="text-sm font-bold text-gray-900">
-                                                {formatPrice(request.prix)}
-                                            </span>
-                                            <span className="text-xs text-gray-500">
-                                                {t('RequestViewTraductionFinal.table.price.currency')}
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center gap-1 text-xs text-gray-500">
-                                            <Clock className="w-3 h-3" />
-                                            <span>{formatDate(request.created_at)}</span>
-                                        </div>
-                                    </div>
-
-                                    {/* Actions */}
-                                    <div className="col-span-2 flex items-center justify-center gap-2">
-                                        <a 
-                                            href={`tel:${request.telephone}`}
-                                            className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-all hover:scale-110"
-                                            title={t('RequestViewTraductionFinal.actions.call')}
-                                        >
-                                            <Phone className="w-4 h-4" />
-                                        </a>
-                                        <a 
-                                            href={`mailto:${request.email}`}
-                                            className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all hover:scale-110"
-                                            title={t('RequestViewTraductionFinal.actions.email')}
-                                        >
-                                            <Mail className="w-4 h-4" />
-                                        </a>
-                                        <button 
-                                            onClick={() => {
-                                                setInfoModal(true);
-                                                setReq(request);
-                                            }}
-                                            className="p-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-all hover:scale-110"
-                                            title={t('RequestViewTraductionFinal.actions.viewDetails')}
-                                        >
-                                            <Eye className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <div className="text-center py-16 px-4">
-                                <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center">
-                                    <Building className="w-10 h-10 text-blue-600" />
-                                </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                                    {t('RequestViewTraductionFinal.table.emptyState.title')}
-                                </h3>
-                                <p className="text-gray-500 text-sm">
-                                    {t('RequestViewTraductionFinal.table.emptyState.message')}
-                                </p>
+                {/* Mobile Cards */}
+                <div className="lg:hidden space-y-4">
+                    {currentRequests.length > 0 ? (
+                        currentRequests.map((request) => (
+                            <MobileRequestCard 
+                                key={request.id} 
+                                request={request} 
+                            />
+                        ))
+                    ) : (
+                        <div className="text-center py-12 px-4 bg-white rounded-xl border border-gray-200">
+                            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center">
+                                <Building className="w-8 h-8 text-blue-600" />
                             </div>
-                        )}
-                    </div>
-
-                    {/* Table Footer */}
-                    {currentRequests.length > 0 && (
-                        <div className="bg-gray-50 border-t border-gray-200 px-6 py-3">
-                            <div className="flex items-center justify-between text-sm text-gray-600">
-                                <span>
-                                    {t('RequestViewTraductionFinal.table.pagination.showing')}{' '}
-                                    <span className="font-semibold text-gray-900">{indexOfFirstItem + 1}</span>{' '}
-                                    {t('RequestViewTraductionFinal.table.pagination.to')}{' '}
-                                    <span className="font-semibold text-gray-900">
-                                        {Math.min(indexOfLastItem, filteredRequests.length)}
-                                    </span>{' '}
-                                    {t('RequestViewTraductionFinal.table.pagination.of')}{' '}
-                                    <span className="font-semibold text-gray-900">{filteredRequests.length}</span>{' '}
-                                    {t('RequestViewTraductionFinal.table.pagination.demands')}
-                                </span>
-                            </div>
+                            <h3 className="text-lg font-bold text-gray-900 mb-2">
+                                {t('RequestViewTraductionFinal.table.emptyState.title')}
+                            </h3>
+                            <p className="text-gray-500 text-sm">
+                                {t('RequestViewTraductionFinal.table.emptyState.message')}
+                            </p>
                         </div>
                     )}
                 </div>
 
                 {/* Pagination */}
                 {totalPages > 1 && (
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mt-6">
-                        <div className="flex items-center justify-between">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-5 mt-6">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                             <button
                                 onClick={() => paginate(currentPage - 1)}
                                 disabled={currentPage === 1}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all text-sm ${
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all text-sm w-full sm:w-auto justify-center ${
                                     currentPage === 1
                                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                         : 'bg-blue-600 text-white hover:bg-blue-700'
@@ -531,7 +705,7 @@ function RequestsView() {
                                 <span>{t('RequestViewTraductionFinal.actions.previous')}</span>
                             </button>
                             
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1 flex-wrap justify-center">
                                 {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
                                     let pageNum;
                                     if (totalPages <= 5) {
@@ -548,7 +722,7 @@ function RequestsView() {
                                         <button
                                             key={pageNum}
                                             onClick={() => paginate(pageNum)}
-                                            className={`w-9 h-9 rounded-lg font-medium transition-all text-sm ${
+                                            className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg font-medium transition-all text-sm ${
                                                 currentPage === pageNum
                                                     ? 'bg-blue-600 text-white'
                                                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -563,7 +737,7 @@ function RequestsView() {
                             <button
                                 onClick={() => paginate(currentPage + 1)}
                                 disabled={currentPage === totalPages}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all text-sm ${
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all text-sm w-full sm:w-auto justify-center ${
                                     currentPage === totalPages
                                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                         : 'bg-blue-600 text-white hover:bg-blue-700'
