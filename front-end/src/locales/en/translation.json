@@ -1225,7 +1225,77 @@
     "title": "Top Properties",
     "noData": "No data"
   }
-}
+},
+  "RequestViewTraductionFinal": {
+    "header": {
+      "title": "Customer Requests",
+      "subtitle": "Information request management",
+      "stats": "request(s)"
+    },
+    "search": {
+      "placeholder": "Search by name, email, city, property...",
+      "filters": "Filters",
+      "filterOptions": "Filter options",
+      "reset": "Reset"
+    },
+    "filters": {
+      "dateFrom": "Start date",
+      "dateTo": "End date",
+      "minPrice": "Min price (MAD)",
+      "maxPrice": "Max price (MAD)",
+      "city": "City",
+      "sortBy": "Sort by",
+      "sortOptions": {
+        "dateDesc": "Date (recent)",
+        "dateAsc": "Date (oldest)",
+        "priceDesc": "Price (descending)",
+        "priceAsc": "Price (ascending)",
+        "nameAsc": "Name (A-Z)",
+        "nameDesc": "Name (Z-A)"
+      },
+      "cityPlaceholder": "Ex: Rabat",
+      "pricePlaceholder": "0"
+    },
+    "table": {
+      "headers": {
+        "client": "Client",
+        "property": "Property",
+        "contact": "Contact",
+        "priceDate": "Price & Date",
+        "actions": "Actions"
+      },
+      "client": {
+        "hasMessage": "Has a message"
+      },
+      "contact": {
+        "reference": "Ref #"
+      },
+      "price": {
+        "currency": "MAD"
+      },
+      "emptyState": {
+        "title": "No requests found",
+        "message": "Try adjusting your search filters"
+      },
+      "pagination": {
+        "showing": "Showing",
+        "to": "to",
+        "of": "of",
+        "demands": "request(s)"
+      }
+    },
+    "actions": {
+      "previous": "Previous",
+      "next": "Next",
+      "viewDetails": "View details",
+      "call": "Call",
+      "email": "Email"
+    },
+    "loading": "Loading...",
+    "status": {
+      "hasMessage": "Has a message"
+    }
+  }
 
 }
 

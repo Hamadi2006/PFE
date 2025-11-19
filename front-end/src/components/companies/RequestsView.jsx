@@ -158,7 +158,7 @@ function RequestsView() {
             <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
                 <div className="text-center">
                     <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-gray-200 border-t-blue-600 mb-4"></div>
-                    <p className="text-lg font-medium text-gray-700">Chargement...</p>
+                    <p className="text-lg font-medium text-gray-700">{t('RequestViewTraductionFinal.loading')}</p>
                 </div>
             </div>
         );
@@ -176,10 +176,10 @@ function RequestsView() {
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                         <div>
                             <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
-                                Demandes Clients
+                                {t('RequestViewTraductionFinal.header.title')}
                             </h1>
                             <p className="text-sm text-gray-600">
-                                Gestion des demandes d'information
+                                {t('RequestViewTraductionFinal.header.subtitle')}
                             </p>
                         </div>
                         <div className="flex items-center gap-3">
@@ -187,7 +187,7 @@ function RequestsView() {
                                 <div className="flex items-center gap-2">
                                     <TrendingUp size={18} />
                                     <span className="text-xl font-bold">{filteredRequests.length}</span>
-                                    <span className="text-sm opacity-90">demande(s)</span>
+                                    <span className="text-sm opacity-90">{t('RequestViewTraductionFinal.header.stats')}</span>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +201,7 @@ function RequestsView() {
                             <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                             <input
                                 type="text"
-                                placeholder="Rechercher par nom, email, ville, propriété..."
+                                placeholder={t('RequestViewTraductionFinal.search.placeholder')}
                                 value={searchTerm}
                                 onChange={(e) => {
                                     setSearchTerm(e.target.value);
@@ -219,7 +219,7 @@ function RequestsView() {
                             }`}
                         >
                             <Filter size={18} />
-                            <span>Filtres</span>
+                            <span>{t('RequestViewTraductionFinal.search.filters')}</span>
                             {hasActiveFilters() && (
                                 <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
                             )}
@@ -232,7 +232,7 @@ function RequestsView() {
                             <div className="flex items-center justify-between mb-4">
                                 <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
                                     <Filter size={18} />
-                                    Options de filtrage
+                                    {t('RequestViewTraductionFinal.search.filterOptions')}
                                 </h3>
                                 {hasActiveFilters() && (
                                     <button 
@@ -240,14 +240,16 @@ function RequestsView() {
                                         className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all"
                                     >
                                         <X size={14} />
-                                        Réinitialiser
+                                        {t('RequestViewTraductionFinal.search.reset')}
                                     </button>
                                 )}
                             </div>
                             
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                                 <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">Date début</label>
+                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">
+                                        {t('RequestViewTraductionFinal.filters.dateFrom')}
+                                    </label>
                                     <input
                                         type="date"
                                         value={filters.dateFrom}
@@ -257,7 +259,9 @@ function RequestsView() {
                                 </div>
                                 
                                 <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">Date fin</label>
+                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">
+                                        {t('RequestViewTraductionFinal.filters.dateTo')}
+                                    </label>
                                     <input
                                         type="date"
                                         value={filters.dateTo}
@@ -267,10 +271,12 @@ function RequestsView() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">Prix min (MAD)</label>
+                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">
+                                        {t('RequestViewTraductionFinal.filters.minPrice')}
+                                    </label>
                                     <input
                                         type="number"
-                                        placeholder="0"
+                                        placeholder={t('RequestViewTraductionFinal.filters.pricePlaceholder')}
                                         value={filters.minPrice}
                                         onChange={(e) => handleFilterChange('minPrice', e.target.value)}
                                         className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
@@ -278,10 +284,12 @@ function RequestsView() {
                                 </div>
                                 
                                 <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">Prix max (MAD)</label>
+                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">
+                                        {t('RequestViewTraductionFinal.filters.maxPrice')}
+                                    </label>
                                     <input
                                         type="number"
-                                        placeholder="0"
+                                        placeholder={t('RequestViewTraductionFinal.filters.pricePlaceholder')}
                                         value={filters.maxPrice}
                                         onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
                                         className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
@@ -289,10 +297,12 @@ function RequestsView() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">Ville</label>
+                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">
+                                        {t('RequestViewTraductionFinal.filters.city')}
+                                    </label>
                                     <input
                                         type="text"
-                                        placeholder="Ex: Rabat"
+                                        placeholder={t('RequestViewTraductionFinal.filters.cityPlaceholder')}
                                         value={filters.city}
                                         onChange={(e) => handleFilterChange('city', e.target.value)}
                                         className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
@@ -300,18 +310,32 @@ function RequestsView() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">Trier par</label>
+                                    <label className="block text-xs font-medium text-gray-700 mb-1.5">
+                                        {t('RequestViewTraductionFinal.filters.sortBy')}
+                                    </label>
                                     <select
                                         value={filters.sortBy}
                                         onChange={(e) => handleFilterChange('sortBy', e.target.value)}
                                         className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                                     >
-                                        <option value="date-desc">Date (récent)</option>
-                                        <option value="date-asc">Date (ancien)</option>
-                                        <option value="price-desc">Prix (décroissant)</option>
-                                        <option value="price-asc">Prix (croissant)</option>
-                                        <option value="name-asc">Nom (A-Z)</option>
-                                        <option value="name-desc">Nom (Z-A)</option>
+                                        <option value="date-desc">
+                                            {t('RequestViewTraductionFinal.filters.sortOptions.dateDesc')}
+                                        </option>
+                                        <option value="date-asc">
+                                            {t('RequestViewTraductionFinal.filters.sortOptions.dateAsc')}
+                                        </option>
+                                        <option value="price-desc">
+                                            {t('RequestViewTraductionFinal.filters.sortOptions.priceDesc')}
+                                        </option>
+                                        <option value="price-asc">
+                                            {t('RequestViewTraductionFinal.filters.sortOptions.priceAsc')}
+                                        </option>
+                                        <option value="name-asc">
+                                            {t('RequestViewTraductionFinal.filters.sortOptions.nameAsc')}
+                                        </option>
+                                        <option value="name-desc">
+                                            {t('RequestViewTraductionFinal.filters.sortOptions.nameDesc')}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -324,11 +348,21 @@ function RequestsView() {
                     {/* Table Header */}
                     <div className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                         <div className="grid grid-cols-12 gap-4 px-6 py-3.5 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            <div className="col-span-3">Client</div>
-                            <div className="col-span-3">Propriété</div>
-                            <div className="col-span-2">Contact</div>
-                            <div className="col-span-2">Prix & Date</div>
-                            <div className="col-span-2 text-center">Actions</div>
+                            <div className="col-span-3">
+                                {t('RequestViewTraductionFinal.table.headers.client')}
+                            </div>
+                            <div className="col-span-3">
+                                {t('RequestViewTraductionFinal.table.headers.property')}
+                            </div>
+                            <div className="col-span-2">
+                                {t('RequestViewTraductionFinal.table.headers.contact')}
+                            </div>
+                            <div className="col-span-2">
+                                {t('RequestViewTraductionFinal.table.headers.priceDate')}
+                            </div>
+                            <div className="col-span-2 text-center">
+                                {t('RequestViewTraductionFinal.table.headers.actions')}
+                            </div>
                         </div>
                     </div>
 
@@ -353,7 +387,9 @@ function RequestsView() {
                                             {request.message && (
                                                 <div className="flex items-center gap-1 mt-1">
                                                     <MessageSquare className="w-3 h-3 text-green-600" />
-                                                    <span className="text-xs text-green-600 font-medium">A un message</span>
+                                                    <span className="text-xs text-green-600 font-medium">
+                                                        {t('RequestViewTraductionFinal.table.client.hasMessage')}
+                                                    </span>
                                                 </div>
                                             )}
                                         </div>
@@ -393,7 +429,7 @@ function RequestsView() {
                                             <span className="truncate">{request.telephone}</span>
                                         </div>
                                         <span className="text-xs text-gray-500 font-mono">
-                                            Réf #{request.id}
+                                            {t('RequestViewTraductionFinal.table.contact.reference')}{request.id}
                                         </span>
                                     </div>
 
@@ -404,7 +440,9 @@ function RequestsView() {
                                             <span className="text-sm font-bold text-gray-900">
                                                 {formatPrice(request.prix)}
                                             </span>
-                                            <span className="text-xs text-gray-500">MAD</span>
+                                            <span className="text-xs text-gray-500">
+                                                {t('RequestViewTraductionFinal.table.price.currency')}
+                                            </span>
                                         </div>
                                         <div className="flex items-center gap-1 text-xs text-gray-500">
                                             <Clock className="w-3 h-3" />
@@ -417,14 +455,14 @@ function RequestsView() {
                                         <a 
                                             href={`tel:${request.telephone}`}
                                             className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-all hover:scale-110"
-                                            title="Appeler"
+                                            title={t('RequestViewTraductionFinal.actions.call')}
                                         >
                                             <Phone className="w-4 h-4" />
                                         </a>
                                         <a 
                                             href={`mailto:${request.email}`}
                                             className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all hover:scale-110"
-                                            title="Email"
+                                            title={t('RequestViewTraductionFinal.actions.email')}
                                         >
                                             <Mail className="w-4 h-4" />
                                         </a>
@@ -434,7 +472,7 @@ function RequestsView() {
                                                 setReq(request);
                                             }}
                                             className="p-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-all hover:scale-110"
-                                            title="Voir détails"
+                                            title={t('RequestViewTraductionFinal.actions.viewDetails')}
                                         >
                                             <Eye className="w-4 h-4" />
                                         </button>
@@ -447,10 +485,10 @@ function RequestsView() {
                                     <Building className="w-10 h-10 text-blue-600" />
                                 </div>
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                                    Aucune demande trouvée
+                                    {t('RequestViewTraductionFinal.table.emptyState.title')}
                                 </h3>
                                 <p className="text-gray-500 text-sm">
-                                    Essayez d'ajuster vos filtres de recherche
+                                    {t('RequestViewTraductionFinal.table.emptyState.message')}
                                 </p>
                             </div>
                         )}
@@ -461,11 +499,15 @@ function RequestsView() {
                         <div className="bg-gray-50 border-t border-gray-200 px-6 py-3">
                             <div className="flex items-center justify-between text-sm text-gray-600">
                                 <span>
-                                    Affichage de <span className="font-semibold text-gray-900">{indexOfFirstItem + 1}</span> à{' '}
+                                    {t('RequestViewTraductionFinal.table.pagination.showing')}{' '}
+                                    <span className="font-semibold text-gray-900">{indexOfFirstItem + 1}</span>{' '}
+                                    {t('RequestViewTraductionFinal.table.pagination.to')}{' '}
                                     <span className="font-semibold text-gray-900">
                                         {Math.min(indexOfLastItem, filteredRequests.length)}
                                     </span>{' '}
-                                    sur <span className="font-semibold text-gray-900">{filteredRequests.length}</span> demande(s)
+                                    {t('RequestViewTraductionFinal.table.pagination.of')}{' '}
+                                    <span className="font-semibold text-gray-900">{filteredRequests.length}</span>{' '}
+                                    {t('RequestViewTraductionFinal.table.pagination.demands')}
                                 </span>
                             </div>
                         </div>
@@ -486,7 +528,7 @@ function RequestsView() {
                                 }`}
                             >
                                 <ArrowLeft size={16} />
-                                <span>Précédent</span>
+                                <span>{t('RequestViewTraductionFinal.actions.previous')}</span>
                             </button>
                             
                             <div className="flex items-center gap-2">
@@ -527,7 +569,7 @@ function RequestsView() {
                                         : 'bg-blue-600 text-white hover:bg-blue-700'
                                 }`}
                             >
-                                <span>Suivant</span>
+                                <span>{t('RequestViewTraductionFinal.actions.next')}</span>
                                 <ArrowRight size={16} />
                             </button>
                         </div>

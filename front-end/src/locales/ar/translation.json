@@ -1112,5 +1112,75 @@
     "title": "أفضل العقارات",
     "noData": "لا توجد بيانات"
   }
-}
+},
+  "RequestViewTraductionFinal": {
+    "header": {
+      "title": "طلبات العملاء",
+      "subtitle": "إدارة طلبات المعلومات",
+      "stats": "طلب (طلبات)"
+    },
+    "search": {
+      "placeholder": "البحث بالاسم، البريد الإلكتروني، المدينة، العقار...",
+      "filters": "الفلاتر",
+      "filterOptions": "خيارات التصفية",
+      "reset": "إعادة التعيين"
+    },
+    "filters": {
+      "dateFrom": "تاريخ البداية",
+      "dateTo": "تاريخ النهاية",
+      "minPrice": "أدنى سعر (درهم)",
+      "maxPrice": "أعلى سعر (درهم)",
+      "city": "المدينة",
+      "sortBy": "ترتيب حسب",
+      "sortOptions": {
+        "dateDesc": "التاريخ (الأحدث)",
+        "dateAsc": "التاريخ (الأقدم)",
+        "priceDesc": "السعر (تنازلي)",
+        "priceAsc": "السعر (تصاعدي)",
+        "nameAsc": "الاسم (أ-ي)",
+        "nameDesc": "الاسم (ي-أ)"
+      },
+      "cityPlaceholder": "مثال: الرباط",
+      "pricePlaceholder": "0"
+    },
+    "table": {
+      "headers": {
+        "client": "العميل",
+        "property": "العقار",
+        "contact": "الاتصال",
+        "priceDate": "السعر والتاريخ",
+        "actions": "الإجراءات"
+      },
+      "client": {
+        "hasMessage": "لديه رسالة"
+      },
+      "contact": {
+        "reference": "مرجع #"
+      },
+      "price": {
+        "currency": "درهم"
+      },
+      "emptyState": {
+        "title": "لم يتم العثور على طلبات",
+        "message": "حاول تعديل فلاتر البحث"
+      },
+      "pagination": {
+        "showing": "عرض",
+        "to": "إلى",
+        "of": "من",
+        "demands": "طلب (طلبات)"
+      }
+    },
+    "actions": {
+      "previous": "السابق",
+      "next": "التالي",
+      "viewDetails": "عرض التفاصيل",
+      "call": "اتصال",
+      "email": "بريد إلكتروني"
+    },
+    "loading": "جاري التحميل...",
+    "status": {
+      "hasMessage": "لديه رسالة"
+    }
+  }
 }

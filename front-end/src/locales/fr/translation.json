@@ -1261,5 +1261,75 @@
     "title": "Top Propriétés",
     "noData": "Aucune donnée"
   }
-}
+},
+  "RequestViewTraductionFinal": {
+    "header": {
+      "title": "Demandes Clients",
+      "subtitle": "Gestion des demandes d'information",
+      "stats": "demande(s)"
+    },
+    "search": {
+      "placeholder": "Rechercher par nom, email, ville, propriété...",
+      "filters": "Filtres",
+      "filterOptions": "Options de filtrage",
+      "reset": "Réinitialiser"
+    },
+    "filters": {
+      "dateFrom": "Date début",
+      "dateTo": "Date fin",
+      "minPrice": "Prix min (MAD)",
+      "maxPrice": "Prix max (MAD)",
+      "city": "Ville",
+      "sortBy": "Trier par",
+      "sortOptions": {
+        "dateDesc": "Date (récent)",
+        "dateAsc": "Date (ancien)",
+        "priceDesc": "Prix (décroissant)",
+        "priceAsc": "Prix (croissant)",
+        "nameAsc": "Nom (A-Z)",
+        "nameDesc": "Nom (Z-A)"
+      },
+      "cityPlaceholder": "Ex: Rabat",
+      "pricePlaceholder": "0"
+    },
+    "table": {
+      "headers": {
+        "client": "Client",
+        "property": "Propriété",
+        "contact": "Contact",
+        "priceDate": "Prix & Date",
+        "actions": "Actions"
+      },
+      "client": {
+        "hasMessage": "A un message"
+      },
+      "contact": {
+        "reference": "Réf #"
+      },
+      "price": {
+        "currency": "MAD"
+      },
+      "emptyState": {
+        "title": "Aucune demande trouvée",
+        "message": "Essayez d'ajuster vos filtres de recherche"
+      },
+      "pagination": {
+        "showing": "Affichage de",
+        "to": "à",
+        "of": "sur",
+        "demands": "demande(s)"
+      }
+    },
+    "actions": {
+      "previous": "Précédent",
+      "next": "Suivant",
+      "viewDetails": "Voir détails",
+      "call": "Appeler",
+      "email": "Email"
+    },
+    "loading": "Chargement...",
+    "status": {
+      "hasMessage": "A un message"
+    }
+  }
 }
