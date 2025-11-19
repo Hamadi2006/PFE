@@ -35,12 +35,12 @@ export default function AddAdminModal({ onClose }) {
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      showAlert("Le fichier n'est pas une image");
+      showAlert(t("adminsAddModal.modal.alerts.notImage"));
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      showAlert("La taille du fichier dépasse 5MB");
+      showAlert(t("adminsAddModal.modal.alerts.fileTooLarge"));
       return;
     }
 
@@ -48,7 +48,7 @@ export default function AddAdminModal({ onClose }) {
     const reader = new FileReader();
     reader.onloadend = () => setImagePreview(reader.result);
     reader.readAsDataURL(file);
-  }, [showAlert]);
+  }, [showAlert, t]);
 
   const removeImage = useCallback(() => {
     setImage(null);
@@ -59,12 +59,12 @@ export default function AddAdminModal({ onClose }) {
     e.preventDefault();
 
     if (!image) {
-      showAlert("Veuillez sélectionner une image");
+      showAlert(t("adminsAddModal.modal.alerts.noImage"));
       return;
     }
 
     if (formData.mot_de_passe !== formData.mot_de_passe_confirmation) {
-      showAlert("Les mots de passe ne correspondent pas");
+      showAlert(t("adminsAddModal.modal.alerts.passwordsMismatch"));
       return;
     }
 
@@ -88,14 +88,14 @@ export default function AddAdminModal({ onClose }) {
         par: admin.nom_complet
       }]);
 
-      showAlert("Administrateur ajouté avec succès !", "success");
+      showAlert(t("adminsAddModal.modal.alerts.success"), "success");
       setTimeout(onClose, 2000);
     } catch (error) {
-      showAlert(error.response?.data?.message || "Erreur lors de l'ajout");
+      showAlert(error.response?.data?.message || t("adminsAddModal.modal.alerts.error"));
     } finally {
       setLoading(false);
     }
-  }, [formData, image, onClose, setLastActivitys, showAlert]);
+  }, [formData, image, onClose, setLastActivitys, showAlert, t]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/30">
@@ -110,7 +110,7 @@ export default function AddAdminModal({ onClose }) {
               <UserPlus className="w-4 h-4" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900">
-              {t("admins.modal.title")}
+              {t("adminsAddModal.modal.title")}
             </h3>
           </div>
           <button
@@ -147,17 +147,19 @@ export default function AddAdminModal({ onClose }) {
             <label className="block mt-3">
               <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
               <span className="text-sm text-blue-600 hover:text-blue-700 cursor-pointer font-medium">
-                Choisir une photo
+                {t("adminsAddModal.modal.form.choosePhoto")}
               </span>
             </label>
-            <p className="text-xs text-gray-500 mt-1">PNG, JPG, GIF (max 5MB)</p>
+            <p className="text-xs text-gray-500 mt-1">
+              {t("adminsAddModal.modal.form.imageFormats")}
+            </p>
           </div>
 
           {/* Personal Info */}
           <div className="space-y-4">
             <h4 className="font-medium text-gray-900 flex items-center gap-2">
               <Users className="w-4 h-4 text-blue-500" />
-              Informations personnelles
+              {t("adminsAddModal.modal.sections.personalInfo")}
             </h4>
             
             <div className="grid grid-cols-2 gap-3">
@@ -166,7 +168,7 @@ export default function AddAdminModal({ onClose }) {
                 name="nom"
                 value={formData.nom}
                 onChange={handleInputChange}
-                placeholder="Nom *"
+                placeholder={t("adminsAddModal.modal.form.lastName")}
                 className="col-span-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
               />
@@ -175,7 +177,7 @@ export default function AddAdminModal({ onClose }) {
                 name="prenom"
                 value={formData.prenom}
                 onChange={handleInputChange}
-                placeholder="Prénom *"
+                placeholder={t("adminsAddModal.modal.form.firstName")}
                 className="col-span-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
               />
@@ -186,7 +188,7 @@ export default function AddAdminModal({ onClose }) {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              placeholder="Email *"
+              placeholder={t("adminsAddModal.modal.form.email")}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
@@ -196,7 +198,7 @@ export default function AddAdminModal({ onClose }) {
               name="telephone"
               value={formData.telephone}
               onChange={handleInputChange}
-              placeholder="Téléphone *"
+              placeholder={t("adminsAddModal.modal.form.phone")}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
@@ -206,7 +208,7 @@ export default function AddAdminModal({ onClose }) {
           <div className="space-y-4">
             <h4 className="font-medium text-gray-900 flex items-center gap-2">
               <Shield className="w-4 h-4 text-blue-500" />
-              Sécurité
+              {t("adminsAddModal.modal.sections.security")}
             </h4>
             
             <input
@@ -214,7 +216,7 @@ export default function AddAdminModal({ onClose }) {
               name="mot_de_passe"
               value={formData.mot_de_passe}
               onChange={handleInputChange}
-              placeholder="Mot de passe *"
+              placeholder={t("adminsAddModal.modal.form.password")}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
               minLength="8"
@@ -225,7 +227,7 @@ export default function AddAdminModal({ onClose }) {
               name="mot_de_passe_confirmation"
               value={formData.mot_de_passe_confirmation}
               onChange={handleInputChange}
-              placeholder="Confirmer le mot de passe *"
+              placeholder={t("adminsAddModal.modal.form.confirmPassword")}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
               minLength="8"
@@ -237,8 +239,8 @@ export default function AddAdminModal({ onClose }) {
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <option value="admin">Admin</option>
-              <option value="super_admin">Super Admin</option>
+              <option value="admin">{t("adminsAddModal.modal.roles.admin")}</option>
+              <option value="super_admin">{t("adminsAddModal.modal.roles.superAdmin")}</option>
             </select>
           </div>
 
@@ -250,7 +252,7 @@ export default function AddAdminModal({ onClose }) {
               className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium"
               disabled={loading}
             >
-              Annuler
+              {t("adminsAddModal.modal.buttons.cancel")}
             </button>
             <button
               type="submit"
@@ -260,12 +262,12 @@ export default function AddAdminModal({ onClose }) {
               {loading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Ajout...
+                  {t("adminsAddModal.modal.buttons.adding")}
                 </>
               ) : (
                 <>
                   <UserPlus className="w-4 h-4" />
-                  Ajouter
+                  {t("adminsAddModal.modal.buttons.add")}
                 </>
               )}
             </button>

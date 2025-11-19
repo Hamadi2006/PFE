@@ -1295,7 +1295,126 @@
     "status": {
       "hasMessage": "Has a message"
     }
+  },
+    "adminsTable": {
+    "list": {
+      "title": "Administrators"
+    },
+    "table": {
+      "headers": {
+        "admin": "Administrator",
+        "contact": "Contact",
+        "role": "Role",
+        "createdAt": "Created At",
+        "actions": "Actions"
+      }
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "status": {
+      "admin": "Admin",
+      "superAdmin": "Super Admin"
+    },
+    "emptyState": "No administrators found"
+  },
+    "adminsAddModal": {
+    "modal": {
+      "title": "Add Administrator",
+      "sections": {
+        "personalInfo": "Personal Information",
+        "security": "Security"
+      },
+      "form": {
+        "firstName": "First Name *",
+        "lastName": "Last Name *",
+        "email": "Email *",
+        "phone": "Phone *",
+        "password": "Password *",
+        "confirmPassword": "Confirm Password *",
+        "role": "Role",
+        "choosePhoto": "Choose a photo",
+        "imageFormats": "PNG, JPG, GIF (max 5MB)"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "add": "Add",
+        "adding": "Adding..."
+      },
+      "alerts": {
+        "noImage": "Please select an image",
+        "notImage": "The file is not an image",
+        "fileTooLarge": "File size exceeds 5MB",
+        "passwordsMismatch": "Passwords do not match",
+        "success": "Administrator added successfully!",
+        "error": "Error while adding"
+      },
+      "roles": {
+        "admin": "Admin",
+        "superAdmin": "Super Admin"
+      }
+    }
+  },
+    "adminUpdateModal": {
+    "title": "Update Administrator",
+    "infoCards": {
+      "creation": "Creation",
+      "lastConnection": "Last Connection",
+      "neverConnected": "Never Connected"
+    },
+    "image": {
+      "changePhoto": "Change photo",
+      "formats": "PNG, JPG, GIF (max 5MB)"
+    },
+    "sections": {
+      "personalInfo": "Personal Information",
+      "security": "Security",
+      "permissions": "Permissions"
+    },
+    "form": {
+      "firstName": "First Name *",
+      "lastName": "Last Name *",
+      "email": "Email *",
+      "phone": "Phone",
+      "password": "New Password",
+      "passwordHint": "Leave empty to keep current password",
+      "role": {
+        "admin": "Admin",
+        "subAdmin": "Sub-Admin"
+      },
+      "status": {
+        "active": "Account active",
+        "inactive": "Account inactive"
+      }
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "update": "Update",
+      "updating": "Updating..."
+    },
+    "alerts": {
+      "fileTooLarge": "File size exceeds 5MB",
+      "successMessage": "Administrator updated successfully!",
+      "errorMessage": "Error while updating"
+    }
+  },
+    "AdminDeleteModal": {
+    "title": "Confirm Deletion",
+    "content": {
+      "confirmMessage": "Delete {{name}}?",
+      "warningTitle": "Irreversible Action",
+      "warningDescription": "The administrator and all their data will be permanently deleted."
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting..."
+    },
+    "alerts": {
+      "success": "Administrator deleted successfully!",
+      "error": "Error while deleting"
+    }
   }
-
 }
 

@@ -1331,5 +1331,125 @@
     "status": {
       "hasMessage": "A un message"
     }
+  },
+    "adminsTable": {
+    "list": {
+      "title": "Administrateurs"
+    },
+    "table": {
+      "headers": {
+        "admin": "Administrateur",
+        "contact": "Contact",
+        "role": "Rôle",
+        "createdAt": "Créé le",
+        "actions": "Actions"
+      }
+    },
+    "actions": {
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    },
+    "status": {
+      "admin": "Admin",
+      "superAdmin": "Super Admin"
+    },
+    "emptyState": "Aucun administrateur trouvé"
+  },
+  "adminsAddModal": {
+    "modal": {
+      "title": "Ajouter un administrateur",
+      "sections": {
+        "personalInfo": "Informations personnelles",
+        "security": "Sécurité"
+      },
+      "form": {
+        "firstName": "Prénom *",
+        "lastName": "Nom *",
+        "email": "Email *",
+        "phone": "Téléphone *",
+        "password": "Mot de passe *",
+        "confirmPassword": "Confirmer le mot de passe *",
+        "role": "Rôle",
+        "choosePhoto": "Choisir une photo",
+        "imageFormats": "PNG, JPG, GIF (max 5MB)"
+      },
+      "buttons": {
+        "cancel": "Annuler",
+        "add": "Ajouter",
+        "adding": "Ajout..."
+      },
+      "alerts": {
+        "noImage": "Veuillez sélectionner une image",
+        "notImage": "Le fichier n'est pas une image",
+        "fileTooLarge": "La taille du fichier dépasse 5MB",
+        "passwordsMismatch": "Les mots de passe ne correspondent pas",
+        "success": "Administrateur ajouté avec succès !",
+        "error": "Erreur lors de l'ajout"
+      },
+      "roles": {
+        "admin": "Admin",
+        "superAdmin": "Super Admin"
+      }
+    }
+  },
+    "adminUpdateModal": {
+    "title": "Modifier l'administrateur",
+    "infoCards": {
+      "creation": "Création",
+      "lastConnection": "Dernière connexion",
+      "neverConnected": "Jamais connecté"
+    },
+    "image": {
+      "changePhoto": "Changer la photo",
+      "formats": "PNG, JPG, GIF (max 5MB)"
+    },
+    "sections": {
+      "personalInfo": "Informations personnelles",
+      "security": "Sécurité",
+      "permissions": "Permissions"
+    },
+    "form": {
+      "firstName": "Prénom *",
+      "lastName": "Nom *",
+      "email": "Email *",
+      "phone": "Téléphone",
+      "password": "Nouveau mot de passe",
+      "passwordHint": "Laissez vide pour garder l'actuel mot de passe",
+      "role": {
+        "admin": "Admin",
+        "subAdmin": "Sous-admin"
+      },
+      "status": {
+        "active": "Compte actif",
+        "inactive": "Compte inactif"
+      }
+    },
+    "buttons": {
+      "cancel": "Annuler",
+      "update": "Modifier",
+      "updating": "Mise à jour..."
+    },
+    "alerts": {
+      "fileTooLarge": "La taille du fichier dépasse 5MB",
+      "successMessage": "Administrateur modifié avec succès !",
+      "errorMessage": "Erreur lors de la modification"
+    }
+  },
+  "AdminDeleteModal": {
+    "title": "Confirm Deletion",
+    "content": {
+      "confirmMessage": "Delete {{name}}?",
+      "warningTitle": "Irreversible Action",
+      "warningDescription": "The administrator and all their data will be permanently deleted."
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting..."
+    },
+    "alerts": {
+      "success": "Administrator deleted successfully!",
+      "error": "Error while deleting"
+    }
   }
 }

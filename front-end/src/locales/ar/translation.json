@@ -1182,5 +1182,175 @@
     "status": {
       "hasMessage": "لديه رسالة"
     }
+  },
+  "companiesTable": {
+  "empty": {
+    "title": "لا توجد شركات",
+    "description": "لم يتم العثور على أي شركات في قاعدة البيانات."
+  },
+  "header": {
+    "title": "شركات الشركاء",
+    "count": " شركة مُعثر عليها",
+    "count_plural": " شركات مُعثر عليها",
+    "status": "النظام نشط"
+  },
+  "columns": {
+    "company": "الشركة",
+    "contact": "جهة الاتصال",
+    "location": "الموقع",
+    "status": "الحالة",
+    "actions": "الإجراءات"
+  },
+  "notProvided": "غير مُقدم",
+  "notSpecified": "غير محدد",
+  "contact": "جهة الاتصال",
+  "active": "نشط",
+  "actions": {
+    "view": "عرض التفاصيل",
+    "edit": "تعديل",
+    "delete": "حذف"
+  },
+  "footer": {
+    "lastUpdate": "آخر تحديث",
+    "items": "عنصر",
+    "items_plural": "عناصر"
+  }
+},
+"companyInfo": {
+  "email": "البريد الإلكتروني",
+  "phone": "رقم الهاتف",
+  "address": "العنوان",
+  "website": "الموقع الإلكتروني",
+  "city": "المدينة",
+  "createdAt": "تاريخ الإنشاء"
+},
+ "adminsTable": {
+    "list": {
+      "title": "المسؤولون"
+    },
+    "table": {
+      "headers": {
+        "admin": "المسؤول",
+        "contact": "الاتصال",
+        "role": "الدور",
+        "createdAt": "تاريخ الإنشاء",
+        "actions": "الإجراءات"
+      }
+    },
+    "actions": {
+      "edit": "تعديل",
+      "delete": "حذف"
+    },
+    "status": {
+      "admin": "مسؤول",
+      "superAdmin": "مسؤول رئيسي"
+    },
+    "emptyState": "لم يتم العثور على مسؤولين"
+  },
+    "adminsAddModal": {
+    "modal": {
+      "title": "إضافة مسؤول",
+      "sections": {
+        "personalInfo": "المعلومات الشخصية",
+        "security": "الأمان"
+      },
+      "form": {
+        "firstName": "الاسم *",
+        "lastName": "اللقب *",
+        "email": "البريد الإلكتروني *",
+        "phone": "الهاتف *",
+        "password": "كلمة المرور *",
+        "confirmPassword": "تأكيد كلمة المرور *",
+        "role": "الدور",
+        "choosePhoto": "اختر صورة",
+        "imageFormats": "PNG, JPG, GIF (الحد الأقصى 5MB)"
+      },
+      "buttons": {
+        "cancel": "إلغاء",
+        "add": "إضافة",
+        "adding": "جاري الإضافة..."
+      },
+      "alerts": {
+        "noImage": "الرجاء اختيار صورة",
+        "notImage": "الملف ليس صورة",
+        "fileTooLarge": "حجم الملف يتجاوز 5MB",
+        "passwordsMismatch": "كلمات المرور غير متطابقة",
+        "success": "تمت إضافة المسؤول بنجاح!",
+        "error": "خطأ أثناء الإضافة"
+      },
+      "roles": {
+        "admin": "مسؤول",
+        "superAdmin": "مسؤول رئيسي"
+      }
+    }
+  },
+    "adminUpdateModal": {
+    "title": "تحديث المسؤول",
+    "infoCards": {
+      "creation": "تاريخ الإنشاء",
+      "lastConnection": "آخر اتصال",
+      "neverConnected": "لم يتم الاتصال مطلقًا"
+    },
+    "image": {
+      "changePhoto": "تغيير الصورة",
+      "formats": "PNG, JPG, GIF (الحد الأقصى 5MB)"
+    },
+    "sections": {
+      "personalInfo": "المعلومات الشخصية",
+      "security": "الأمان",
+      "permissions": "الصلاحيات"
+    },
+    "form": {
+      "firstName": "الاسم *",
+      "lastName": "اللقب *",
+      "email": "البريد الإلكتروني *",
+      "phone": "الهاتف",
+      "password": "كلمة المرور الجديدة",
+      "passwordHint": "اتركه فارغًا للحفاظ على كلمة المرور الحالية",
+      "role": {
+        "admin": "مسؤول",
+        "subAdmin": "مسؤول مساعد"
+      },
+      "status": {
+        "active": "الحساب نشط",
+        "inactive": "الحساب غير نشط"
+      }
+    },
+    "buttons": {
+      "cancel": "إلغاء",
+      "update": "تحديث",
+      "updating": "جاري التحديث..."
+    },
+    "alerts": {
+      "fileTooLarge": "حجم الملف يتجاوز 5MB",
+      "successMessage": "تم تحديث المسؤول بنجاح!",
+      "errorMessage": "خطأ أثناء التحديث"
+    }
+  },
+   "AdminDeleteModal": {
+    "title": "تأكيد الحذف",
+    "content": {
+      "confirmMessage": "حذف {{name}}؟",
+      "warningTitle": "إجراء لا رجعة فيه",
+      "warningDescription": "سيتم حذف المسؤول وجميع بياناته بشكل دائم."
+    },
+    "buttons": {
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "deleting": "جاري الحذف..."
+    },
+    "alerts": {
+      "success": "تم حذف المسؤول بنجاح!",
+      "error": "خطأ أثناء الحذف"
+    }
+  },
+    "deleteCompany": {
+    "title": "حذف الشركة",
+    "confirm": "حذف الشركة",
+    "warning": "هذا الإجراء لا رجعة فيه. سيتم فقدان جميع البيانات المرتبطة.",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "deleting": "جاري الحذف...",
+    "success": "تم حذف الشركة بنجاح"
   }
 }
