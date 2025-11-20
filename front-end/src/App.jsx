@@ -18,7 +18,8 @@ import ServicePage from "./components/Pages/ServicePage";
 import PartnerLogin from "./components/companies/PartnerLogin";
 import PartnerDashboard from "./components/companies/Dashboard";
 import CompanieAuth from "./midleware/CompanieAuth";
-
+import SocietiesPage from "./components/Pages/SocietiesPage";
+import SocieteInfoPage from "./components/Pages/SocieteInfoPage";
 
 function App() {
   const navigate = useNavigate();
@@ -108,7 +109,8 @@ function App() {
                 <Route path="/immobilier/:id/information" element={<InfoPage />} />
                 <Route path="*" element={<div>404 Not Found</div>} />
                 <Route path="/services" element={<ServicePage />} />
-
+                <Route path="/society" element={<SocietiesPage />} />
+                <Route path="/company/:nom" element={<SocieteInfoPage />} />
               </Routes>
               <Footer />
             </>
@@ -137,6 +139,7 @@ function App() {
         path="/partner-dashboard"
         element={<CompanieAuth><PartnerDashboard /></CompanieAuth>}
       />
+
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
     </>

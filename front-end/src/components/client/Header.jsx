@@ -49,9 +49,10 @@ function Header() {
             <Link to="/services"href="#services" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
               {t('services')}
             </Link>
-            <a href="#contact" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
-              {t('contact')}
-            </a>
+
+            <Link to="/society" className="text-gray-700 hover:text-cyan-600 font-medium transition-colors">
+              {t('society')}
+            </Link>
 
             {/* Lang Dropdown Desktop */}
             <div className="relative">
@@ -131,34 +132,34 @@ function Header() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 space-y-2">
-            <a
-              href="#accueil"
+            <Link
+              to="/"
               className="block py-2 px-4 rounded-lg hover:bg-cyan-50 text-gray-700 hover:text-cyan-600"
               onClick={() => setMobileMenuOpen(false)}
             >
               {t('home')}
-            </a>
-            <a
-              href="#immobilier"
+            </Link>
+            <Link
+              to="/immobilier"
               className="block py-2 px-4 rounded-lg hover:bg-cyan-50 text-gray-700 hover:text-cyan-600"
               onClick={() => setMobileMenuOpen(false)}
             >
               {t('real_estate')}
-            </a>
-            <a
-              href="#services"
+            </Link>
+            <Link
+              to="/services"
               className="block py-2 px-4 rounded-lg hover:bg-cyan-50 text-gray-700 hover:text-cyan-600"
               onClick={() => setMobileMenuOpen(false)}
             >
               {t('services')}
-            </a>
-            <a
-              href="#contact"
+            </Link>
+            <Link
+              to="/contact"
               className="block py-2 px-4 rounded-lg hover:bg-cyan-50 text-gray-700 hover:text-cyan-600"
               onClick={() => setMobileMenuOpen(false)}
             >
               {t('contact')}
-            </a>
+            </Link>
           </nav>
         )}
       </div>
