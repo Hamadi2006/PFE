@@ -1,62 +1,69 @@
-// ==================== HeroFilter.jsx ====================
-
-import React from "react";
 import { Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import {useFilters} from "../../context/FilterContext";
+import {
+  propertyTypeOptions,
+  transactionOptions,
+} from "./filters/propertyFilterOptions";
+import usePropertyFilterControls from "./filters/usePropertyFilterControls";
+
+function getOptionLabel(t, option) {
+  return option.labelKey ? t(option.labelKey) : option.label;
+}
+
 function HeroFilter() {
   const { t } = useTranslation();
-  const { filters, setFilters } = useFilters();
+  const { filters, updateFilter } = usePropertyFilterControls();
 
   return (
     <section className="bg-gradient-to-r from-cyan-600 to-cyan-400 py-16 text-white">
       <div className="container mx-auto px-6">
-        <h1 className="text-4xl md:text-5xl font-bold">{t("heroFilter.title")}</h1>
+        <h1 className="text-4xl md:text-5xl font-bold">
+          {t("heroFilter.title")}
+        </h1>
         <p className="mt-4 text-xl opacity-90">{t("heroFilter.subtitle")}</p>
 
         <div className="mt-8 bg-white rounded-lg shadow-2xl p-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {/* Recherche */}
             <div className="relative">
               <input
                 type="text"
                 value={filters.search}
-                onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                onChange={(event) => updateFilter("search", event.target.value)}
                 className="w-full pl-4 pr-4 py-3 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-cyan-600 focus:outline-none"
                 placeholder={t("heroFilter.searchPlaceholder")}
               />
             </div>
 
-            {/* Type de bien */}
             <select
               value={filters.type}
-              onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+              onChange={(event) => updateFilter("type", event.target.value)}
               className="px-4 py-3 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-cyan-600 focus:outline-none"
             >
-              <option value="">{t("heroFilter.allTypes")}</option>
-              <option value="villa">{t("heroFilter.villa")}</option>
-              <option value="appartement">{t("heroFilter.apartment")}</option>
-              <option value="maison">Maison</option>
-              <option value="studio">Studio</option>
-              <option value="riad">{t("heroFilter.riad")}</option>
-              <option value="terrain">{t("heroFilter.land")}</option>
-              <option value="bureau">{t("heroFilter.office")}</option>
-              <option value="commerce">Commerce</option>
+              {propertyTypeOptions.map((option) => (
+                <option key={option.value || "all"} value={option.value}>
+                  {getOptionLabel(t, option)}
+                </option>
+              ))}
             </select>
 
-            {/* Transaction */}
             <select
               value={filters.transaction}
-              onChange={(e) => setFilters({ ...filters, transaction: e.target.value })}
+              onChange={(event) =>
+                updateFilter("transaction", event.target.value)
+              }
               className="px-4 py-3 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-cyan-600 focus:outline-none"
             >
-              <option value="">{t("heroFilter.saleRent")}</option>
-              <option value="vente">{t("heroFilter.sale")}</option>
-              <option value="location">{t("heroFilter.rent")}</option>
+              {transactionOptions.map((option) => (
+                <option key={option.value || "all"} value={option.value}>
+                  {getOptionLabel(t, option)}
+                </option>
+              ))}
             </select>
 
-            {/* Bouton Recherche */}
-            <button className="bg-cyan-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-cyan-700 transition flex items-center justify-center">
+            <button
+              className="bg-cyan-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-cyan-700 transition flex items-center justify-center"
+              type="button"
+            >
               <Search className="w-5 h-5 mr-2" />
               {t("heroFilter.search")}
             </button>
@@ -68,6 +75,3 @@ function HeroFilter() {
 }
 
 export default HeroFilter;
-
-
-

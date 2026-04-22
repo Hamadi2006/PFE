@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { CompanyContext } from "../../context/ComapanieContext";
-import axios from 'axios';
+import { CompanyContext } from "../../context/contextValues";
 import { Link } from 'react-router-dom';
 import { MapPin, Building2, Home, BadgeCheck, Calendar, DollarSign, ChevronRight, AlertCircle } from 'lucide-react';
+import { getStorageUrl } from '../../utils/authStorage';
+import { fetchImmobiliersBySociete } from '../../services/immobilierService';
 
 const SocieteInfoPage = () => {
     const { nom } = useParams();
@@ -20,12 +21,10 @@ const SocieteInfoPage = () => {
         if (!company) return;
 
         setLoading(true);
-        axios
-            .get(`http://127.0.0.1:8000/api/immobilier/Bysociete/${company.id}`)
-            .then(response => {
-                setAnnonces(response.data.data || []);
+        fetchImmobiliersBySociete(company.id)
+            .then(data => {
+                setAnnonces(data || []);
                 setLoading(false);
-                console.log("API data:", response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -35,9 +34,7 @@ const SocieteInfoPage = () => {
     }, [company]);
 
     const getLogoUrl = (logoPath) => {
-        if (!logoPath) return null;
-        if (logoPath.startsWith('http')) return logoPath;
-        return `http://localhost:8000/storage/${logoPath}`;
+        return getStorageUrl(logoPath) || null;
     };
 
     const getCompanyInitials = (nom) => {
@@ -189,9 +186,9 @@ const SocieteInfoPage = () => {
                                 >
                                     {/* Image */}
                                     <div className="relative h-48 bg-gradient-to-br from-slate-200 to-slate-100 overflow-hidden">
-                                        {annonce.image_principale ? (
+                                        {getStorageUrl(annonce.image_principale_url || annonce.image_principale) ? (
                                             <img
-                                                src={`http://localhost:8000/storage/${annonce.image_principale}`}
+                                                src={getStorageUrl(annonce.image_principale_url || annonce.image_principale)}
                                                 alt={annonce.title}
                                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                                             />

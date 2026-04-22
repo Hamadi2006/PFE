@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { X, Building2, Mail, Phone, MapPin, Globe, CheckCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { getStorageUrl } from '../../utils/authStorage';
 
 const CompanyInfoModal = ({ company, isOpen, onClose }) => {
   
@@ -46,7 +47,7 @@ const CompanyInfoModal = ({ company, isOpen, onClose }) => {
             <div className="relative">
               {company.logo ? (
                 <img
-                  src={`http://localhost:8000/storage/${company.logo}`}
+                  src={getStorageUrl(company.logo)}
                   alt={company.nom}
                   className="w-16 h-16 rounded-full object-cover border-3 border-white/60 shadow-lg"
                   onError={(e) => {

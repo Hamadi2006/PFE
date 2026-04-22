@@ -1,13 +1,14 @@
 import React, { useContext, useState, useCallback } from 'react';
-import axios from 'axios';
 import { GlobaleContext } from '../../context/GlobaleContext';
 import { useTranslation } from 'react-i18next';
+import { getAuthHeader, getCompanyAuth } from '../../utils/authStorage';
+import { createImmobilier } from '../../services/immobilierService';
 
 function AddImmobilier({ isOpen, onClose }) {
   const { t } = useTranslation();
   
-  const companie = JSON.parse(localStorage.getItem('companie'));
-  const societe_id = companie.id;
+  const companie = getCompanyAuth()?.company;
+  const societe_id = companie?.id;
   const { setAlertSucc, setAlertFail, setAlertMsg } = useContext(GlobaleContext);
   
   const [data, setData] = useState({
@@ -63,6 +64,13 @@ function AddImmobilier({ isOpen, onClose }) {
 
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
+
+    if (!societe_id) {
+      setAlertFail(true);
+      setAlertMsg("Session societe introuvable. Veuillez vous reconnecter.");
+      setTimeout(() => setAlertFail(false), 3000);
+      return;
+    }
     
     try {
       const formData = new FormData();
@@ -87,12 +95,11 @@ function AddImmobilier({ isOpen, onClose }) {
         }
       });
 
-      await axios.post(
-        "http://localhost:8000/api/immobilier",
+      await createImmobilier(
         formData,
         {
           headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token"),
+            ...getAuthHeader("company"),
             "Content-Type": "multipart/form-data"
           }
         }

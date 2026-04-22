@@ -1,9 +1,10 @@
 // modals/DeleteConfirmModal.jsx
 import { AlertCircle, X, Trash2 } from 'lucide-react';
-import axios from 'axios';
 import { useState, useContext, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GlobaleContext } from "../../context/GlobaleContext";
+import { deleteAdmin } from '../../services/adminService';
+import { getAuthHeader } from '../../utils/authStorage';
 
 export default function DeleteConfirmModal({ admin, onClose }) {
   const { t } = useTranslation();
@@ -14,7 +15,9 @@ export default function DeleteConfirmModal({ admin, onClose }) {
     setLoading(true);
 
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/admin/${admin.id}`);
+      await deleteAdmin(admin.id, {
+        headers: getAuthHeader("admin"),
+      });
       
       const currentAdmin = JSON.parse(localStorage.getItem('user'));
       setLastActivitys(prev => [...prev, { 

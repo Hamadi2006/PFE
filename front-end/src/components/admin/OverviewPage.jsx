@@ -1,9 +1,11 @@
 import { Home, Building2, Users, Mail, Settings, HelpCircle, Activity, TrendingUp, Clock } from 'lucide-react';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { UserContext } from '../../context/UserContext';
-import { ImmobilierContext } from '../../context/ImmobilierContext';
-import { DemandesContext } from '../../context/DemandeContext';
+import {
+  DemandesContext,
+  ImmobilierContext,
+  UserContext,
+} from '../../context/contextValues';
 import { GlobaleContext } from '../../context/GlobaleContext';
 
 function OverviewPage() {

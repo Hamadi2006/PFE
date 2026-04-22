@@ -1,19 +1,160 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { MapPin, Square, Bed, Bath, Eye, Edit, Trash2 } from "lucide-react";
 import PropertyModal from "./PropertyModal";
 import EditPropertyModal from "./EditPropertyModal";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
-import axios from "axios";
 import { GlobaleContext } from "../../context/GlobaleContext";
+import { ImmobilierContext } from "../../context/contextValues";
+import {
+  getAdminAuth,
+  getAuthHeader,
+  getErrorMessage,
+  getStorageUrl,
+} from "../../utils/authStorage";
+import {
+  deleteImmobilier,
+  updateImmobilier,
+} from "../../services/immobilierService";
+
+const STATUS_ALIASES = {
+  "loué": "loue",
+  "louÃ©": "loue",
+  "réservé": "reserve",
+  "rÃ©servÃ©": "reserve",
+};
+
+const ALLOWED_VALUES = {
+  type: ["appartement", "maison", "villa", "studio", "terrain", "bureau", "commerce"],
+  transaction: ["vente", "location"],
+  statut: ["disponible", "reserve", "vendu", "loue"],
+};
+
+function normalizeStatus(value) {
+  return STATUS_ALIASES[value] || value || "disponible";
+}
+
+function isBlank(value) {
+  return value === "" || value === null || value === undefined;
+}
+
+function validateNumber(
+  errors,
+  data,
+  field,
+  label,
+  { required = false, integer = false, min, max } = {}
+) {
+  const value = data[field];
+
+  if (isBlank(value)) {
+    if (required) errors[field] = `${label} est requis`;
+    return;
+  }
+
+  const numericValue = Number(value);
+  if (!Number.isFinite(numericValue)) {
+    errors[field] = `${label} doit etre un nombre`;
+    return;
+  }
+
+  if (integer && !Number.isInteger(numericValue)) {
+    errors[field] = `${label} doit etre un entier`;
+    return;
+  }
+
+  if (min !== undefined && numericValue < min) {
+    errors[field] = `${label} doit etre superieur ou egal a ${min}`;
+  }
+
+  if (max !== undefined && numericValue > max) {
+    errors[field] = `${label} doit etre inferieur ou egal a ${max}`;
+  }
+}
+
+function validateUpdatePayload(data) {
+  const errors = {};
+  const currentYear = new Date().getFullYear();
+
+  if (!data.titre?.trim()) {
+    errors.titre = "Le titre est requis";
+  } else if (data.titre.trim().length < 5) {
+    errors.titre = "Le titre doit contenir au moins 5 caracteres";
+  }
+
+  if (!ALLOWED_VALUES.type.includes(data.type)) {
+    errors.type = "Le type de bien selectionne n'est pas valide";
+  }
+
+  if (!ALLOWED_VALUES.transaction.includes(data.transaction)) {
+    errors.transaction = "Le type de transaction selectionne n'est pas valide";
+  }
+
+  const statut = normalizeStatus(data.statut);
+  if (!ALLOWED_VALUES.statut.includes(statut)) {
+    errors.statut = "Le statut selectionne n'est pas valide";
+  }
+
+  if (!data.ville?.trim() || data.ville.trim().length < 2) {
+    errors.ville = "La ville est requise";
+  }
+
+  validateNumber(errors, data, "prix", "Le prix", { required: true, min: 0 });
+  validateNumber(errors, data, "surface", "La surface", { required: true, min: 0 });
+  validateNumber(errors, data, "latitude", "La latitude", { min: -90, max: 90 });
+  validateNumber(errors, data, "longitude", "La longitude", { min: -180, max: 180 });
+  validateNumber(errors, data, "chambres", "Le nombre de chambres", {
+    integer: true,
+    min: 0,
+    max: 50,
+  });
+  validateNumber(errors, data, "salles_de_bain", "Le nombre de salles de bain", {
+    integer: true,
+    min: 0,
+    max: 20,
+  });
+  validateNumber(errors, data, "annee_construction", "L'annee de construction", {
+    integer: true,
+    min: 1800,
+    max: currentYear + 5,
+  });
+  validateNumber(errors, data, "etage", "L'etage", {
+    integer: true,
+    min: -5,
+    max: 200,
+  });
+  validateNumber(errors, data, "nombre_etages", "Le nombre d'etages", {
+    integer: true,
+    min: 1,
+    max: 200,
+  });
+
+  if (
+    data.email_contact &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email_contact)
+  ) {
+    errors.email_contact = "L'email de contact n'est pas valide";
+  }
+
+  return errors;
+}
 
 export default function Immobilier({ immobilier }) {
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const admin = JSON.parse(localStorage.getItem("user"));
-  const { setAlertSucc, setAlertFail, setAlertMsg ,    lastActivitys,
-    setLastActivitys,} = useContext(GlobaleContext);
+  const admin = getAdminAuth()?.user;
+  const { setImmobilier } = useContext(ImmobilierContext);
+  const {
+    setAlertSucc,
+    setAlertFail,
+    setAlertMsg,
+    lastActivitys,
+    setLastActivitys,
+  } = useContext(GlobaleContext);
+
+  const getAdminName = () =>
+    [admin?.prenom, admin?.nom].filter(Boolean).join(" ") || "Systeme";
 
   const handleView = (e, property) => {
     e.stopPropagation();
@@ -33,79 +174,108 @@ export default function Immobilier({ immobilier }) {
     setIsDeleteModalOpen(true);
   };
 
-  // Fonction pour gérer la mise à jour - appelée par le modal
   const handleUpdate = async (formData, imagePrincipale) => {
     try {
-      const formDataToSend = new FormData();
+      const validationErrors = validateUpdatePayload(formData);
+      if (Object.keys(validationErrors).length > 0) {
+        const firstError = Object.values(validationErrors)[0];
+        setAlertMsg(firstError);
+        setAlertFail(true);
+        throw new Error(firstError);
+      }
 
-      // Ajouter toutes les données du formulaire
-      Object.keys(formData).forEach((key) => {
-        const value = formData[key];
-        
-        // Ne pas envoyer les valeurs vides
-        if (value === "" || value === null || value === undefined) {
-          return;
-        }
-        
-        // Convertir les booléens en 0 ou 1 pour Laravel
-        if (typeof value === 'boolean') {
-          formDataToSend.append(key, value ? '1' : '0');
+      const formDataToSend = new FormData();
+      const normalizedData = {
+        ...formData,
+        statut: normalizeStatus(formData.statut),
+      };
+
+      Object.keys(normalizedData).forEach((key) => {
+        const value = normalizedData[key];
+
+        if (isBlank(value)) return;
+
+        if (typeof value === "boolean") {
+          formDataToSend.append(key, value ? "1" : "0");
         } else {
           formDataToSend.append(key, value);
         }
       });
 
-      // Ajouter l'image si elle existe
       if (imagePrincipale) {
         formDataToSend.append("image_principale", imagePrincipale);
       }
 
-      // Laravel nécessite _method pour PUT avec FormData
       formDataToSend.append("_method", "PUT");
 
-      // Envoyer la requête
-      const response = await axios.post(
-        `http://localhost:8000/api/immobilier/${selectedProperty.id}`,
+      const response = await updateImmobilier(
+        selectedProperty.id,
         formDataToSend,
         {
           headers: {
+            ...getAuthHeader("admin"),
             "Content-Type": "multipart/form-data",
+            Accept: "application/json",
           },
         }
       );
 
       if (response.data.success) {
-        setLastActivitys([...lastActivitys, {date : new Date(), action : "Modifier une propriete : " + selectedProperty.titre,par : admin.nom_complet}]);
-        setAlertMsg("Propriété mise à jour avec succès");
+        setLastActivitys([
+          ...lastActivitys,
+          {
+            date: new Date(),
+            action: "Modifier une propriete : " + selectedProperty.titre,
+            par: getAdminName(),
+          },
+        ]);
+
+        if (response.data?.data) {
+          setImmobilier((prev) =>
+            prev.map((property) =>
+              property.id === response.data.data.id ? response.data.data : property
+            )
+          );
+        }
+
+        setAlertMsg("Propriete mise a jour avec succes");
         setAlertSucc(true);
         setIsEditModalOpen(false);
-        setTimeout(() => {
-        }, 1500);
+        setSelectedProperty(null);
       }
     } catch (error) {
-      console.error("Erreur lors de la mise à jour:", error);
-      setAlertMsg(
-        error.response?.data?.message ||
-          "Erreur lors de la mise à jour de la propriété"
-      );
+      console.error("Erreur lors de la mise a jour:", error.response?.data || error);
+      setAlertMsg(getErrorMessage(error, "Erreur lors de la mise a jour de la propriete"));
       setAlertFail(true);
+      throw error;
     }
   };
-  const admine = JSON.parse(localStorage.getItem("user"));
+
   const confirmDelete = () => {
     if (!selectedProperty) return;
 
-    axios
-      .delete(`http://localhost:8000/api/immobilier/${selectedProperty.id}`)
+    deleteImmobilier(selectedProperty.id, {
+      headers: getAuthHeader("admin"),
+    })
       .then((res) => {
-        setLastActivitys([...lastActivitys, {date : new Date(), action : "Supprimer une propriete ",par : admine.nom_complet}]);
-        console.log("Propriété supprimée avec succès", res);
-        setAlertMsg("Propriété supprimée avec succès");
+        setLastActivitys([
+          ...lastActivitys,
+          {
+            date: new Date(),
+            action: "Supprimer une propriete",
+            par: getAdminName(),
+          },
+        ]);
+        setImmobilier((prev) =>
+          prev.filter((property) => property.id !== selectedProperty.id)
+        );
+        console.log("Propriete supprimee avec succes", res);
+        setAlertMsg("Propriete supprimee avec succes");
         setAlertSucc(true);
       })
       .catch((err) => {
-        console.error("Erreur lors de la suppression de la propriété", err);
-        setAlertMsg("Erreur lors de la suppression de la propriété");
+        console.error("Erreur lors de la suppression de la propriete", err);
+        setAlertMsg(getErrorMessage(err, "Erreur lors de la suppression de la propriete"));
         setAlertFail(true);
       })
       .finally(() => {
@@ -117,15 +287,20 @@ export default function Immobilier({ immobilier }) {
   return (
     <>
       <div className="space-y-4">
-        {immobilier.map((property) => (
+        {immobilier.map((property) => {
+          const imageUrl = getStorageUrl(
+            property.image_principale_url || property.image_principale
+          );
+
+          return (
           <div
             key={property.id}
             className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all hover:shadow-xl border-2 border-transparent hover:border-blue-200"
           >
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 p-3 sm:p-4">
-              {property.image_principale ? (
+              {imageUrl ? (
                 <img
-                  src={`http://localhost:8000/storage/${property.image_principale}`}
+                  src={imageUrl}
                   alt={property.titre}
                   className="w-full sm:w-40 md:w-48 h-48 sm:h-32 md:h-40 object-cover rounded-lg flex-shrink-0"
                 />
@@ -195,7 +370,7 @@ export default function Immobilier({ immobilier }) {
                     <button
                       onClick={(e) => handleView(e, property)}
                       className="text-blue-600 hover:text-blue-700"
-                      title="Voir les détails"
+                      title="Voir les details"
                     >
                       <Eye className="w-5 h-5" />
                     </button>
@@ -218,17 +393,16 @@ export default function Immobilier({ immobilier }) {
               </div>
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
 
-      {/* Modal détails */}
       <PropertyModal
         property={selectedProperty}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
 
-      {/* Modal modification */}
       <EditPropertyModal
         property={selectedProperty}
         isOpen={isEditModalOpen}
@@ -239,7 +413,6 @@ export default function Immobilier({ immobilier }) {
         onUpdate={handleUpdate}
       />
 
-      {/* Modal confirmation suppression */}
       <ConfirmDeleteModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}

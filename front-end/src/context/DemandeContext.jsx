@@ -1,43 +1,45 @@
-import React, { createContext, useContext,useState,useEffect } from "react";
-import axios from "axios";
-
-export  const DemandesContext = createContext();
+import { useCallback } from "react";
+import useEventVersion from "../hooks/useEventVersion";
+import usePollingResource from "../hooks/usePollingResource";
+import { DemandesContext } from "./contextValues";
+import {
+  fetchDemandes,
+  fetchDemandesBySociete,
+} from "../services/demandeService";
+import {
+  AUTH_CHANGED_EVENT,
+  getAuthHeader,
+  getCompanyId,
+} from "../utils/authStorage";
 
 export const DemandesProvider = ({ children }) => {
-    const  [demandes,setdemandes] = useState([]);
-    const [DemandeBySociete,setDemandeBySociete] = useState([]);
-//http://127.0.0.1:8000/api/demande
+  const companyAuthVersion = useEventVersion(AUTH_CHANGED_EVENT);
 
-const companie = JSON.parse(localStorage.getItem("companie"));
+  const loadDemandes = useCallback(() => fetchDemandes(), []);
 
-useEffect(() => {
-    const fetchData = () => {
-      axios
-        .get("http://127.0.0.1:8000/api/demande")
-        .then((res) => setdemandes(res.data.data))
-        .catch((err) => console.log(err));
-    };
+  const loadCompanyDemandes = useCallback(
+    () =>
+      fetchDemandesBySociete(getCompanyId(), {
+        headers: getAuthHeader("company"),
+      }),
+    []
+  );
 
-    fetchData(); 
-    const interval = setInterval(fetchData, 10000); 
+  const [demandes, setdemandes] = usePollingResource({
+    fetchResource: loadDemandes,
+  });
 
-    return () => clearInterval(interval); 
-  }, []);
-useEffect(()=>{
-    const fetchData = () => {
-        axios
-          .get("http://127.0.0.1:8000/api/demande/Bysociete/" + companie.id)
-          .then((res) => setDemandeBySociete(res.data.data))
-          .catch((err) => console.log(err));
-      };
-      fetchData(); 
-      const interval = setInterval(fetchData, 10000); 
-      return () => clearInterval(interval); 
-    },[companie.id])
-    
-    return (
-        <DemandesContext.Provider value={{ demandes, setdemandes,DemandeBySociete,setDemandeBySociete}}>
-            {children}
-        </DemandesContext.Provider>
-    );
-}
+  const [DemandeBySociete, setDemandeBySociete] = usePollingResource({
+    fetchResource: loadCompanyDemandes,
+    refreshKey: companyAuthVersion,
+    resetOnError: true,
+  });
+
+  return (
+    <DemandesContext.Provider
+      value={{ demandes, setdemandes, DemandeBySociete, setDemandeBySociete }}
+    >
+      {children}
+    </DemandesContext.Provider>
+  );
+};

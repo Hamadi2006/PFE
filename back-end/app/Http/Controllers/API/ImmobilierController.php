@@ -12,6 +12,29 @@ use Illuminate\Support\Str;
 
 class ImmobilierController extends Controller
 {
+    private function normalizeImages($images): array
+    {
+        if (!$images) {
+            return [];
+        }
+
+        if (is_array($images)) {
+            return array_values(array_filter($images));
+        }
+
+        if (is_string($images)) {
+            $decoded = json_decode($images, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                return $this->normalizeImages($decoded);
+            }
+
+            return [$images];
+        }
+
+        return [];
+    }
+
     /**
      * Store a new property listing
      */
@@ -63,7 +86,8 @@ class ImmobilierController extends Controller
             'titre.required' => 'Le titre est requis',
             'titre.min' => 'Le titre doit contenir au moins 5 caractères',
             'titre.max' => 'Le titre ne peut pas dépasser 200 caractères',
-            'societe_id.required' => 'Le societe_id est requis',
+            'societe_id.required' => 'La societe est requise',
+            'societe_id.exists' => 'La societe selectionnee n\'existe pas',
             'type.required' => 'Le type de bien est requis',
             'type.in' => 'Le type de bien sélectionné n\'est pas valide',
             'transaction.required' => 'Le type de transaction est requis',
@@ -142,8 +166,7 @@ class ImmobilierController extends Controller
                     $images[] = $imagePath;
                 }
                 
-                // Store images as JSON in database
-                $immobilier->images = json_encode($images);
+                $immobilier->images = $images;
                 $immobilier->save();
             }
 
@@ -285,8 +308,7 @@ public function update(Request $request, $id)
             $deletedImages = json_decode($request->deleted_images, true);
             
             if (is_array($deletedImages) && count($deletedImages) > 0) {
-                // Get current images array
-                $currentImages = json_decode($immobilier->images, true) ?? [];
+                $currentImages = $this->normalizeImages($immobilier->images);
                 
                 // Remove deleted images from storage
                 foreach ($deletedImages as $deletedPath) {
@@ -298,15 +320,13 @@ public function update(Request $request, $id)
                     });
                 }
                 
-                // Update images field with remaining images
-                $immobilier->images = json_encode(array_values($currentImages));
+                $immobilier->images = array_values($currentImages);
             }
         }
 
         // Handle new additional images
         if ($request->hasFile('images')) {
-            // Get current images array
-            $currentImages = json_decode($immobilier->images, true) ?? [];
+            $currentImages = $this->normalizeImages($immobilier->images);
             
             $newImagesPaths = [];
             
@@ -324,7 +344,7 @@ public function update(Request $request, $id)
                 $allImages = array_slice($allImages, 0, 10);
             }
             
-            $immobilier->images = json_encode(array_values($allImages));
+            $immobilier->images = array_values($allImages);
         }
 
         // Save all changes
@@ -337,12 +357,6 @@ public function update(Request $request, $id)
         $immobilier->image_principale_url = $immobilier->image_principale 
             ? asset('storage/' . $immobilier->image_principale) 
             : null;
-
-        // Parse images and create URLs
-        $imagesArray = json_decode($immobilier->images, true) ?? [];
-        $immobilier->images_urls = array_map(function($path) {
-            return asset('storage/' . $path);
-        }, $imagesArray);
 
         return response()->json([
             'success' => true,
@@ -381,7 +395,7 @@ public function update(Request $request, $id)
 
             // Delete gallery images
             if ($immobilier->images) {
-                $images = json_decode($immobilier->images, true);
+                $images = $this->normalizeImages($immobilier->images);
                 foreach ($images as $image) {
                     Storage::disk('public')->delete($image);
                 }

@@ -1,40 +1,39 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react';
+import { getStorageUrl, getStorageUrls } from '../../utils/authStorage';
 
 const ImageGallery = ({ property }) => {
   const { t } = useTranslation();
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
   
-  // Parse les images depuis le JSON string
-  const parseImages = () => {
-    try {
-      if (property.images && typeof property.images === 'string') {
-        return JSON.parse(property.images);
-      }
-      return property.images_urls || [];
-    } catch (error) {
-      console.error('Error parsing images:', error);
-      return [];
-    }
-  };
+  const allImages = useMemo(() => {
+    const mainImageUrl = getStorageUrl(
+      property.image_principale_url || property.image_principale
+    );
+    const secondaryImages = property.images_urls?.length
+      ? property.images_urls
+      : property.images;
 
-  const secondaryImages = parseImages();
-  const mainImageUrl = `http://localhost:8000/storage/${property.image_principale}`;
-  const secondaryImagesUrls = secondaryImages.map(img => `http://localhost:8000/storage/${img}`);
+    return [mainImageUrl, ...getStorageUrls(secondaryImages)].filter(Boolean);
+  }, [property]);
   
-  const allImages = [mainImageUrl, ...secondaryImagesUrls];
-  
-  const [currentImage, setCurrentImage] = useState(mainImageUrl);
+  const [currentImage, setCurrentImage] = useState(allImages[0] || '');
   const [activeIndex, setActiveIndex] = useState(0);
   const [sliderPosition, setSliderPosition] = useState(0);
   
   const visibleImages = 6;
 
+  useEffect(() => {
+    setCurrentImage(allImages[0] || '');
+    setActiveIndex(0);
+    setSliderPosition(0);
+  }, [allImages]);
+
   // Auto-play functionality
   useEffect(() => {
-    if (!autoPlay) return;
+    if (!autoPlay || allImages.length <= 1) return;
     
     const interval = setInterval(() => {
       setActiveIndex(prev => {

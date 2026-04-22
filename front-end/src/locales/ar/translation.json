@@ -4,6 +4,69 @@
   "services": "الخدمات",
   "contact": "اتصل بنا",
   "society": "الشركاء",
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "account": "الحساب",
+    "logout": "تسجيل الخروج",
+    "mobileMenu": "فتح القائمة"
+  },
+  "clientAuth": {
+    "logoAlt": "شعار SakanCom",
+    "eyebrow": "مساحة العميل",
+    "signIn": {
+      "title": "تسجيل دخول العميل",
+      "subtitle": "ادخل إلى مساحتك لمتابعة عمليات البحث والطلبات.",
+      "submit": "تسجيل الدخول",
+      "loading": "جار تسجيل الدخول...",
+      "success": "تم تسجيل الدخول بنجاح.",
+      "footerText": "ليس لديك حساب بعد؟"
+    },
+    "signUp": {
+      "title": "إنشاء حساب عميل",
+      "subtitle": "سجل للوصول إلى مساحتك الشخصية في SakanCom.",
+      "submit": "إنشاء الحساب",
+      "loading": "جار الإنشاء...",
+      "success": "تم إنشاء الحساب بنجاح.",
+      "footerText": "لديك حساب بالفعل؟"
+    },
+    "logout": {
+      "success": "تم تسجيل الخروج بنجاح."
+    },
+    "modal": {
+      "eyebrow": "تسجيل الدخول مطلوب",
+      "title": "سجل الدخول لإرسال الطلب",
+      "subtitle": "ستبقى معلوماتك داخل النموذج. سجل الدخول هنا وسيتم إرسال الطلب تلقائيا.",
+      "close": "إغلاق نافذة تسجيل الدخول"
+    },
+    "fields": {
+      "name": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "passwordConfirmation": "تأكيد كلمة المرور"
+    },
+    "placeholders": {
+      "name": "اسمك",
+      "email": "you@example.com",
+      "password": "********"
+    },
+    "actions": {
+      "togglePassword": "إظهار أو إخفاء كلمة المرور"
+    },
+    "errors": {
+      "nameRequired": "الاسم مطلوب.",
+      "emailRequired": "البريد الإلكتروني مطلوب.",
+      "emailInvalid": "البريد الإلكتروني غير صالح.",
+      "passwordRequired": "كلمة المرور مطلوبة.",
+      "passwordMin": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.",
+      "passwordConfirmation": "كلمتا المرور غير متطابقتين.",
+      "authRequired": "يرجى تسجيل الدخول للوصول إلى حسابك.",
+      "generic": "حدث خطأ."
+    }
+  },
+  "clientAccount": {
+    "title": "Espace Compte"
+  },
   "hero": {
     "title": "مشروعك العقاري هو أولويتنا.",
     "brand": "مع SakanCom.ma",
@@ -601,6 +664,7 @@
     "phone": "الهاتف",
     "message": "الرسالة",
     "sendRequest": "إرسال الطلب",
+    "sendingRequest": "جار إرسال الطلب...",
     "call": "الاتصال",
     "whatsapp": "واتساب",
     "contactedBy": "تواصل من خلال",

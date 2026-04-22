@@ -1,15 +1,23 @@
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import { GlobaleContext } from "../context/GlobaleContext";
-export default function CompanieAuth({children}) {
-    const tokenCompanie = localStorage.getItem("tokenCompanie");
-    const {setAlertSucc,setAlertFail,setAlertMsg} = useContext(GlobaleContext);
-    const navigate = useNavigate();
-    if(!tokenCompanie){
-        setAlertFail(true);
-        setAlertMsg("Veuillez vous connecter");
-        navigate("/partner-login",{replace:true});
+import { getCompanyAuth } from "../utils/authStorage";
+
+export default function CompanieAuth({ children }) {
+  const location = useLocation();
+  const { setAlertFail, setAlertMsg } = useContext(GlobaleContext);
+  const auth = getCompanyAuth();
+
+  useEffect(() => {
+    if (!auth) {
+      setAlertFail(true);
+      setAlertMsg("Veuillez vous connecter");
     }
-    return children;
+  }, [auth, setAlertFail, setAlertMsg]);
+
+  if (!auth) {
+    return <Navigate to="/partner-login" replace state={{ from: location }} />;
+  }
+
+  return children;
 }
-    

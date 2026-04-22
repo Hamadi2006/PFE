@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Demande;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class DemandesController extends Controller
 {
     public function store(Request $request)
     {
+        if (! ($request->user() instanceof User)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Authentification client requise',
+            ], 403);
+        }
+
         $validation =  $request->validate([
             'societe_id' => 'required',
             'immobilier_id' => 'required',

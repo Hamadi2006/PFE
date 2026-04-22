@@ -25,6 +25,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { useTranslation } from "react-i18next";
 import { GlobaleContext } from "../../context/GlobaleContext";
+import { getStorageUrl, parseImageList } from "../../utils/authStorage";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -32,26 +33,21 @@ import "swiper/css/pagination";
 export default function PropertyModal({ property, isOpen, onClose }) {
   const { t } = useTranslation();
   const {
-    alertSucc,
     setAlertSucc,
-    alertFail,
-    setAlertFail,
-    alertMsg,
     setAlertMsg,
   } = useContext(GlobaleContext);
 
   // Mémoïsation des données
   const images = useMemo(() => {
     if (!property) return [];
-    let imagesSecondaires = [];
-    try {
-      if (property.images) {
-        imagesSecondaires = JSON.parse(property.images);
-      }
-    } catch {
-      imagesSecondaires = [];
-    }
-    return [property.image_principale, ...imagesSecondaires].filter(Boolean);
+    const imagesSecondaires = property.images_urls?.length
+      ? property.images_urls
+      : parseImageList(property.images);
+
+    return [
+      property.image_principale_url || property.image_principale,
+      ...imagesSecondaires,
+    ].map(getStorageUrl).filter(Boolean);
   }, [property]);
 
   const features = useMemo(() => [
@@ -153,7 +149,7 @@ export default function PropertyModal({ property, isOpen, onClose }) {
                 {images.map((img, index) => (
                   <SwiperSlide key={index}>
                     <img
-                      src={`http://localhost:8000/storage/${img}`}
+                      src={img}
                       alt={`${property.titre} - Image ${index + 1}`}
                       className="w-full h-full object-cover"
                       loading={index === 0 ? "eager" : "lazy"}
@@ -263,7 +259,9 @@ export default function PropertyModal({ property, isOpen, onClose }) {
                   key={index}
                   className="text-center p-3 bg-gray-50 rounded-xl border border-gray-200"
                 >
-                  <Icon className={`w-6 h-6 mx-auto mb-2 ${color}`} />
+                  {React.createElement(Icon, {
+                    className: `w-6 h-6 mx-auto mb-2 ${color}`,
+                  })}
                   <div className="text-base font-bold text-gray-900">{value}</div>
                   <div className="text-xs text-gray-600 mt-1">{label}</div>
                 </div>
@@ -283,7 +281,9 @@ export default function PropertyModal({ property, isOpen, onClose }) {
                     key={index}
                     className="flex items-center gap-2 px-3 py-2 bg-green-50 text-green-700 text-sm font-medium rounded-lg border border-green-200"
                   >
-                    <Icon className={`w-4 h-4 ${color}`} />
+                    {React.createElement(Icon, {
+                      className: `w-4 h-4 ${color}`,
+                    })}
                     {label}
                   </div>
                 ))}

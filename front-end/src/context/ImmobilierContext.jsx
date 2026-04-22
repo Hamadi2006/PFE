@@ -1,43 +1,49 @@
-import { createContext, useState, useEffect } from "react";
-import axios from "axios";
-
-export const ImmobilierContext = createContext();
+import { useCallback } from "react";
+import useEventVersion from "../hooks/useEventVersion";
+import usePollingResource from "../hooks/usePollingResource";
+import { ImmobilierContext } from "./contextValues";
+import {
+  fetchImmobiliers,
+  fetchImmobiliersBySociete,
+} from "../services/immobilierService";
+import {
+  AUTH_CHANGED_EVENT,
+  getAuthHeader,
+  getCompanyId,
+} from "../utils/authStorage";
 
 export const ImmobilierProvider = ({ children }) => {
-  const [immobilier, setImmobilier] = useState([]);
-  const [immobilieBySociete, setImmobilieBySociete] = useState([]);
-  const companie = JSON.parse(localStorage.getItem("companie"));
-  const societe_id = companie.id;
-  useEffect(() => {
-    const fetchData = () => {
-      axios
-        .get("http://localhost:8000/api/immobilier")
-        .then((res) => setImmobilier(res.data.data))
-        .catch((err) => console.log(err));
-    };
+  const companyAuthVersion = useEventVersion(AUTH_CHANGED_EVENT);
 
-    fetchData(); 
-    const interval = setInterval(fetchData, 1000); 
+  const loadImmobiliers = useCallback(() => fetchImmobiliers(), []);
 
-    return () => clearInterval(interval); 
-  }, []);
+  const loadCompanyImmobiliers = useCallback(
+    () =>
+      fetchImmobiliersBySociete(getCompanyId(), {
+        headers: getAuthHeader("company"),
+      }),
+    []
+  );
 
-  useEffect(() => {
-    const fetchData = () => {
-      axios
-        .get("http://localhost:8000/api/immobilier/Bysociete/" + societe_id)
-        .then((res) => setImmobilieBySociete(res.data.data))
-        .catch((err) => console.log(err));
-    };
+  const [immobilier, setImmobilier] = usePollingResource({
+    fetchResource: loadImmobiliers,
+  });
 
-    fetchData(); 
-    const interval = setInterval(fetchData, 6000); 
-
-    return () => clearInterval(interval); 
-  }, []);
+  const [immobilieBySociete, setImmobilieBySociete] = usePollingResource({
+    fetchResource: loadCompanyImmobiliers,
+    refreshKey: companyAuthVersion,
+    resetOnError: true,
+  });
 
   return (
-    <ImmobilierContext.Provider value={{ immobilier, setImmobilier, immobilieBySociete, setImmobilieBySociete }}>
+    <ImmobilierContext.Provider
+      value={{
+        immobilier,
+        setImmobilier,
+        immobilieBySociete,
+        setImmobilieBySociete,
+      }}
+    >
       {children}
     </ImmobilierContext.Provider>
   );

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ImmobilierController;
 use App\Http\Controllers\DemandesController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\ClientAuthController;
 
 // Route de login admin
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
@@ -24,6 +25,17 @@ Route::post("/admin/store", [AdminController::class, "StoreAdmin"]);
 Route::post("/admin/{id}", [AdminController::class, "update"]);
 
 Route::get("/admin/mail", [MailController::class, "sendMail"]);
+
+// Routes client authentication
+Route::prefix('client')->group(function () {
+    Route::post('/register', [ClientAuthController::class, 'register']);
+    Route::post('/login', [ClientAuthController::class, 'login']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/me', [ClientAuthController::class, 'me']);
+        Route::post('/logout', [ClientAuthController::class, 'logout']);
+    });
+});
 
 // Routes Immobilier (CRUD)
 Route::prefix('immobilier')->group(function () {
@@ -49,7 +61,8 @@ Route::prefix('immobilier')->group(function () {
 }
 );
 // Routes of demandes (CRD)
-Route::post('/demande', [DemandesController::class, 'store']);
+Route::post('/demande', [DemandesController::class, 'store'])
+    ->middleware('auth:sanctum');
 
 Route::get('/demande', [DemandesController::class, 'getDemandes']);
 
@@ -67,4 +80,3 @@ Route::post('/company/auth', [CompaniesController::class, 'authCompany']);
 Route::delete('/company/{id}', [CompaniesController::class, 'deleteCompany']);
 
 Route::post('/company/{id}', [CompaniesController::class, 'updateCompanie']);
-

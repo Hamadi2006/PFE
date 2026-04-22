@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const FeatureItem = ({ icon: Icon, title, description }) => (
   <div className="flex items-start gap-4 group">
     <div className="text-cyan-600 mt-1 group-hover:scale-110 transition-transform duration-200">
-      <Icon size={26} />
+      {React.createElement(Icon, { size: 26 })}
     </div>
     <div>
       <h4 className="font-semibold text-gray-800 group-hover:text-cyan-700">

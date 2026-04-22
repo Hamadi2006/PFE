@@ -1,24 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, Menu, Bell, Building2 } from 'lucide-react';
 import DashboardView from './DashboardView';
 import AnnouncementsView from './AnnouncementsView';
 import SettingsView from './SettingsView';
 import Sidebar from './Sidebar';
-import Header from './Header';
 import RequestsView from './RequestsView';
+import { clearCompanySession, getCompanyAuth } from '../../utils/authStorage';
 
 function PartnerDashboard() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [language, setLanguage] = useState('en');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const companyProfile = JSON.parse(localStorage.getItem("companie"));
+  const companyProfile = getCompanyAuth()?.company || {};
   const announcements = [];
   const logout = () => {
-    localStorage.removeItem("tokenCompanie");
-    localStorage.removeItem("companie");
-    navigate("/partner-login");
+    clearCompanySession();
+    navigate("/partner-login", { replace: true });
   };
 
   const stats = {
@@ -26,9 +24,6 @@ function PartnerDashboard() {
     totalViews: announcements.reduce((sum, a) => sum + a.views, 0),
     closedProperties: announcements.filter(a => a.status === 'closed').length
   };
-  function getPopUpState(bool){
-    setAddPopUpState(bool);
-  }
   return (
     <div className={`flex h-screen bg-gray-50 ${language === 'ar' ? 'rtl' : 'ltr'}`}>
       {/* Sidebar */}
@@ -62,7 +57,6 @@ function PartnerDashboard() {
           <AnnouncementsView
             announcements={announcements}
             language={language}
-            getPopUpState={getPopUpState}
           />
         )}
         {

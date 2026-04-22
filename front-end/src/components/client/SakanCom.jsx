@@ -14,11 +14,30 @@ import {
   MessageCircle
 } from 'lucide-react';
 
+const initialFilters = {
+  search: '',
+  type: '',
+  transaction: '',
+  priceMin: '',
+  priceMax: '',
+  surfaceMin: '',
+  surfaceMax: '',
+  city: '',
+  amenities: {
+    piscine: false,
+    jardin: false,
+    parking: false,
+    ascenseur: false,
+    climatisation: false
+  }
+};
+
 const SakanCom = () => {
   const [selectedBedrooms, setSelectedBedrooms] = useState([]);
   const [selectedBathrooms, setSelectedBathrooms] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [viewMode, setViewMode] = useState('grid');
+  const [filters, setFilters] = useState(initialFilters);
   
 
   const properties = [
@@ -71,23 +90,7 @@ const SakanCom = () => {
   const resetFilters = () => {
     setSelectedBedrooms([]);
     setSelectedBathrooms([]);
-    setFilters({
-      search: '',
-      type: '',
-      transaction: '',
-      priceMin: '',
-      priceMax: '',
-      surfaceMin: '',
-      surfaceMax: '',
-      city: '',
-      amenities: {
-        piscine: false,
-        jardin: false,
-        parking: false,
-        ascenseur: false,
-        climatisation: false
-      }
-    });
+    setFilters(initialFilters);
   };
 
   const handleAmenityChange = (amenity) => {

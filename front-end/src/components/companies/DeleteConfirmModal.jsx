@@ -1,8 +1,9 @@
 // modals/DeleteConfirmModal.jsx
 import { AlertCircle, X, Trash2 } from 'lucide-react';
-import axios from 'axios';
 import { useState, useContext, useCallback } from 'react';
 import { GlobaleContext } from "../../context/GlobaleContext";
+import { deleteImmobilier } from '../../services/immobilierService';
+import { getAuthHeader } from '../../utils/authStorage';
 
 export default function DeleteConfirmModal({ announcement, onClose }) {
   const [loading, setLoading] = useState(false);
@@ -12,7 +13,9 @@ export default function DeleteConfirmModal({ announcement, onClose }) {
     setLoading(true);
 
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/immobilier/${id}`);
+      await deleteImmobilier(id, {
+        headers: getAuthHeader("company"),
+      });
       
       const currentAdmin = JSON.parse(localStorage.getItem('user'));
       setLastActivitys(prev => [...prev, { 
@@ -35,7 +38,7 @@ export default function DeleteConfirmModal({ announcement, onClose }) {
     } finally {
       setLoading(false);
     }
-  }, [id, onClose, setAlertMsg, setAlertSucc, setLastActivitys]);
+  }, [announcement.titre, id, onClose, setAlertMsg, setAlertSucc, setLastActivitys]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/30">

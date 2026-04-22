@@ -13,6 +13,7 @@ import {
     Printer,
     Share2
 } from 'lucide-react';
+import { getStorageUrl } from '../../utils/authStorage';
 
 const RequestModal = ({ request, isOpen, onClose }) => {
     useEffect(() => {
@@ -78,9 +79,9 @@ const RequestModal = ({ request, isOpen, onClose }) => {
                                 Visuel du bien
                             </div>
                             <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden border">
-                                {request.image_principale ? (
+                                {getStorageUrl(request.image_principale_url || request.image_principale) ? (
                                     <img 
-                                        src={`http://localhost:8000/storage/${request.image_principale}`} 
+                                        src={getStorageUrl(request.image_principale_url || request.image_principale)}
                                         alt={request.titre}
                                         className="w-full h-full object-cover"
                                     />

@@ -2,6 +2,12 @@ export const validateField = (name, value) => {
   let error = '';
 
   switch (name) {
+    case 'societe_id':
+      if (!value) {
+        error = 'Veuillez selectionner une societe';
+      }
+      break;
+
     case 'titre':
       if (!value || value.trim().length === 0) {
         error = 'Le titre est requis';
@@ -70,12 +76,13 @@ export const validateField = (name, value) => {
       }
       break;
 
-    case 'annee_construction':
+    case 'annee_construction': {
       const currentYear = new Date().getFullYear();
       if (value && (parseInt(value) < 1800 || parseInt(value) > currentYear + 5)) {
         error = `L'année doit être entre 1800 et ${currentYear + 5}`;
       }
       break;
+    }
 
     case 'etage':
       if (value && (parseInt(value) < -5 || parseInt(value) > 200)) {
@@ -147,7 +154,7 @@ export const validateField = (name, value) => {
 export const validateForm = (formData) => {
   const newErrors = {};
   
-  const requiredFields = ['titre', 'prix', 'surface', 'ville', 'type', 'transaction'];
+  const requiredFields = ['societe_id', 'titre', 'prix', 'surface', 'ville', 'type', 'transaction'];
   
   requiredFields.forEach(field => {
     const error = validateField(field, formData[field]);

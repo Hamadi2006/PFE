@@ -2,15 +2,14 @@ import React, { useContext } from "react";
 import "./App.css";
 import Header from "./components/client/Header";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import HomePage from "./components/Pages/HomePage"
+import HomePage from "./components/Pages/HomePage";
 import Footer from "./components/client/Footer";
-import Immobilier from "./components/Pages/Immobiler"
+import Immobilier from "./components/Pages/Immobiler";
 import AdminLogin from "./components/admin/LoginPage";
-import axios from "axios";
 import Dash from "./components/admin/Dash";
 import { GlobaleContext } from "./context/GlobaleContext";
 import SuccessAlert from "./components/client/AlertSucc";
-import { UserContext } from "./context/UserContext";
+import { UserContext } from "./context/contextValues";
 import RequireAuth from "./midleware/Auth";
 import FailAlert from "./components/client/FailAlert";
 import InfoPage from "./components/Pages/InfoPage";
@@ -20,6 +19,15 @@ import PartnerDashboard from "./components/companies/Dashboard";
 import CompanieAuth from "./midleware/CompanieAuth";
 import SocietiesPage from "./components/Pages/SocietiesPage";
 import SocieteInfoPage from "./components/Pages/SocieteInfoPage";
+import AccountPage from "./components/Pages/AccountPage";
+import ClientSignIn from "./components/client/auth/ClientSignIn";
+import ClientSignUp from "./components/client/auth/ClientSignUp";
+import ClientAuth from "./midleware/ClientAuth";
+import {
+  getErrorMessage,
+  saveAdminSession,
+} from "./utils/authStorage";
+import { loginAdmin } from "./services/authService";
 
 function App() {
   const navigate = useNavigate();
@@ -31,54 +39,47 @@ function App() {
     alertMsg,
     setAlertMsg,
   } = useContext(GlobaleContext);
-  const { user, setUser, token, setToken, admins } = useContext(UserContext);
-  // Fonction d’authentification admin
-  function AuthAdmin(objet) {
+  const { setUser, setToken } = useContext(UserContext);
+
+  async function AuthAdmin(objet) {
     if (!objet) {
       console.error("No authentication data provided");
-      return;
+      return false;
     }
 
-    axios
-      .post(
-        "http://127.0.0.1:8000/api/admin/login",
-        {
-          email: objet.email,
-          mot_de_passe: objet.password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        }
-      )
-      .then((response) => {
+    try {
+      const response = await loginAdmin(objet);
 
-        if (response.status === 201) {
-          setUser(response.data.user);
-          setToken(response.data.token);
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", JSON.stringify(response.data.user));
-          setAlertSucc(true);
-          setAlertMsg("Authentification réussie !");
-          navigate("/ad-dashboard");
-        } else {
-          console.warn("Authentication failed with status:", response.status);
-          setAlertFail(true);
-          setAlertMsg("Échec d'authentification.");
-        }
-      })
-      .catch((error) => {
-        console.error(
-          "Erreur durant l'authentification:",
-          error.response?.data || error.message
-        );
-        setAlertFail(true);
-        setAlertMsg("Erreur serveur ou identifiants invalides.");
-      });
+      const authenticatedUser = response.data?.user;
+      const authToken = response.data?.token;
+
+      if (!authenticatedUser || !authToken) {
+        throw new Error("Reponse d'authentification incomplete.");
+      }
+
+      if (authenticatedUser.actif === false || authenticatedUser.actif === 0) {
+        throw new Error("Ce compte administrateur est desactive.");
+      }
+
+      saveAdminSession({ token: authToken, user: authenticatedUser });
+      setUser(authenticatedUser);
+      setToken(authToken);
+      setAlertFail(false);
+      setAlertSucc(true);
+      setAlertMsg("Authentification reussie !");
+      navigate("/ad-dashboard", { replace: true });
+      return true;
+    } catch (error) {
+      console.error(
+        "Erreur durant l'authentification:",
+        error.response?.data || error.message
+      );
+      setAlertSucc(false);
+      setAlertFail(true);
+      setAlertMsg(getErrorMessage(error, "Email ou mot de passe invalide."));
+      return false;
+    }
   }
-
 
   return (
     <>
@@ -93,11 +94,10 @@ function App() {
         <FailAlert
           message={alertMsg}
           duration={3000}
-          onClose={() => setAlertSucc(false)}
+          onClose={() => setAlertFail(false)}
         />
       )}
       <Routes>
-        {/* Frontoffice */}
         <Route
           path="/*"
           element={
@@ -107,21 +107,27 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/immobilier" element={<Immobilier />} />
                 <Route path="/immobilier/:id/information" element={<InfoPage />} />
-                <Route path="*" element={<div>404 Not Found</div>} />
                 <Route path="/services" element={<ServicePage />} />
                 <Route path="/society" element={<SocietiesPage />} />
                 <Route path="/company/:nom" element={<SocieteInfoPage />} />
+                <Route path="/sign-in" element={<ClientSignIn />} />
+                <Route path="/sign-up" element={<ClientSignUp />} />
+                <Route
+                  path="/account"
+                  element={
+                    <ClientAuth>
+                      <AccountPage />
+                    </ClientAuth>
+                  }
+                />
+                <Route path="*" element={<div>404 Not Found</div>} />
               </Routes>
               <Footer />
             </>
           }
         />
 
-        {/* Backoffice */}
-        <Route
-          path="/ad-login"
-          element={<AdminLogin AuthAdmin={AuthAdmin} />}
-        />
+        <Route path="/ad-login" element={<AdminLogin AuthAdmin={AuthAdmin} />} />
 
         <Route
           path="/ad-dashboard"
@@ -131,14 +137,16 @@ function App() {
             </RequireAuth>
           }
         />
-      <Route
-        path="/partner-login"
-        element={<PartnerLogin   />}
-      />
-      <Route
-        path="/partner-dashboard"
-        element={<CompanieAuth><PartnerDashboard /></CompanieAuth>}
-      />
+
+        <Route path="/partner-login" element={<PartnerLogin />} />
+        <Route
+          path="/partner-dashboard"
+          element={
+            <CompanieAuth>
+              <PartnerDashboard />
+            </CompanieAuth>
+          }
+        />
 
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>

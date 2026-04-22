@@ -1,23 +1,14 @@
-import { createContext, useState, useEffect } from "react";
-import axios from "axios";
-
-export const CompanyContext = createContext();
+import { useCallback } from "react";
+import usePollingResource from "../hooks/usePollingResource";
+import { CompanyContext } from "./contextValues";
+import { fetchCompanies } from "../services/companyService";
 
 export const CompanyProvider = ({ children }) => {
-  const [companies, setCompanies] = useState([]);
+  const loadCompanies = useCallback(() => fetchCompanies(), []);
 
-  useEffect(() => {
-    const fetchData = () => {
-      axios
-        .get("http://127.0.0.1:8000/api/company")
-        .then((res) => setCompanies(res.data))
-        .catch(console.error);
-    };
-
-    fetchData();
-    const interval = setInterval(fetchData, 10000);
-    return () => clearInterval(interval);
-  }, []);
+  const [companies, setCompanies] = usePollingResource({
+    fetchResource: loadCompanies,
+  });
 
   return (
     <CompanyContext.Provider value={{ companies, setCompanies }}>

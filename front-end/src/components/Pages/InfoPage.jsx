@@ -7,7 +7,7 @@ import Amenities from "../client/Amenities";
 import AdditionalDetails from "../client/AdditionalDetails";
 import ContactCard from "../client/ContactCard";
 import PropertyMap from "../client/PropertyMap";
-import {ImmobilierContext} from "../../context/ImmobilierContext";
+import { ImmobilierContext } from "../../context/contextValues";
 
 const InfoPage = () => {
   const { id } = useParams();

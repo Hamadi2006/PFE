@@ -1,7 +1,6 @@
 // AdminsPage.jsx
 import { useContext, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { UserContext } from '../../context/UserContext';
+import { UserContext } from '../../context/contextValues';
 import AccessDenied from './AccessDenied';
 
 import AdminHeader from './AdminHeader';
@@ -16,7 +15,6 @@ import DeleteConfirmModal from './DeleteConfirmModal';
 
 function AdminsPage() {
   const user = JSON.parse(localStorage.getItem('user'));
-  const { t } = useTranslation();
   const { admins } = useContext(UserContext);
 
   const [showAddModal, setShowAddModal] = useState(false);

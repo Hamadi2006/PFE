@@ -3,9 +3,15 @@
 // ========================================
 
 import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 import { GlobaleContext } from '../../context/GlobaleContext';
 import { useTranslation } from 'react-i18next';
+import {
+  getAuthHeader,
+  getStoragePath,
+  getStorageUrl,
+  getStorageUrls,
+} from '../../utils/authStorage';
+import { updateImmobilier } from '../../services/immobilierService';
 
 function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
   const { t } = useTranslation();
@@ -81,21 +87,12 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
         email_contact: propertyData.email_contact || ''
       });
 
-      setMainImage(propertyData.image_principale_url || null);
+      setMainImage(getStorageUrl(propertyData.image_principale_url || propertyData.image_principale));
       setMainImageFile(null);
 
-      let imagesArray = [];
-      if (propertyData.images) {
-        try {
-          const imagePaths = JSON.parse(propertyData.images);
-          imagesArray = imagePaths.map(path => 
-            `http://localhost:8000/storage/${path}`
-          );
-        } catch (e) {
-          console.error('Error parsing images:', e);
-        }
-      }
-      setAdditionalImages(imagesArray);
+      setAdditionalImages(
+        getStorageUrls(propertyData.images_urls?.length ? propertyData.images_urls : propertyData.images)
+      );
       
       setNewImages([]);
       setNewImageFiles([]);
@@ -146,7 +143,7 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
   
   const removeExistingImage = (index) => {
     const imageUrl = additionalImages[index];
-    const imagePath = imageUrl.replace('http://localhost:8000/storage/', '');
+    const imagePath = getStoragePath(imageUrl);
     setDeletedImages(prev => [...prev, imagePath]);
     
     const updated = additionalImages.filter((_, i) => i !== index);
@@ -193,11 +190,12 @@ function UpdateImmobilier({ isOpen, onClose, selectedAnnouncement }) {
       
       submitData.append('_method', 'PUT');
       
-      const response = await axios.post(
-        `http://localhost:8000/api/immobilier/${selectedAnnouncement.id}`,
+      const response = await updateImmobilier(
+        selectedAnnouncement.id,
         submitData,
         {
           headers: {
+            ...getAuthHeader("company"),
             'Content-Type': 'multipart/form-data',
           }
         }

@@ -1,3 +1,6 @@
+import React from "react";
+import { CheckCircle } from "lucide-react";
+
 const PricingCard = ({ icon: Icon, title, price, priceDesc, features, isPopular = false }) => {
   return (
     <div className={`bg-orange-50 p-8 rounded-lg shadow-lg border-2 ${isPopular ? 'border-cyan-600' : 'border-transparent hover:border-cyan-600'} transition relative`}>
@@ -7,7 +10,9 @@ const PricingCard = ({ icon: Icon, title, price, priceDesc, features, isPopular 
         </div>
       )}
       <div className="text-center">
-        <Icon className="text-cyan-600 text-5xl mx-auto" />
+        {React.createElement(Icon, {
+          className: "text-cyan-600 text-5xl mx-auto",
+        })}
         <h3 className="mt-4 text-2xl font-bold text-gray-800">{title}</h3>
         <div className="mt-6">
           <span className="text-4xl font-bold text-cyan-600">{price}</span>

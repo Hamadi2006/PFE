@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { MapPin, Building2, ChevronRight, Search, SlidersHorizontal, Mail, Phone, Globe } from 'lucide-react';
-import { CompanyContext } from '../../context/ComapanieContext';
+import { CompanyContext } from '../../context/contextValues';
 import { Link } from 'react-router-dom';
+import { getStorageUrl } from '../../utils/authStorage';
 
 const RealEstateCompanies = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,9 +32,7 @@ const RealEstateCompanies = () => {
   };
 
   const getLogoUrl = (logoPath) => {
-    if (!logoPath) return null;
-    if (logoPath.startsWith('http')) return logoPath;
-    return `http://localhost:8000/storage/${logoPath}`;
+    return getStorageUrl(logoPath) || null;
   };
 
   const getCompanyInitials = (nom) => {

@@ -1,15 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus, Search } from 'lucide-react';
-import axios from 'axios';
-import { GlobaleContext } from '../../context/GlobaleContext';
-import { ImmobilierContext } from '../../context/ImmobilierContext';
+import { ImmobilierContext } from '../../context/contextValues';
 import PropertyCard from './PropertyCard.jsx';
 import AddImmobilier from './AddImmobilier.jsx';
 import UpdateImmobilier from './UpdateImmobilier.jsx';
 import DeleteConfirmModal from './DeleteConfirmModal.jsx';
 
-const AnnouncementsView = ({getPopUpState}) => {
+const AnnouncementsView = () => {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [openAddPopUp, setOpenAddPopUp] = useState(false);
@@ -18,12 +16,6 @@ const AnnouncementsView = ({getPopUpState}) => {
   const { immobilieBySociete } = useContext(ImmobilierContext);
   const [openDeletePopUp, setOpenDeletePopUp] = useState(false);
   const [selectedAnnouncementDelete, setSelectedAnnouncementDelete] = useState(null);
-  const {
-    setAlertSucc,
-    setAlertFail,
-    setAlertMsg,
-  } = useContext(GlobaleContext);
-
   // Fonction pour mapper les données API
   const mapApiToAnnouncement = (apiData) => ({
     id: apiData.id,
@@ -65,27 +57,6 @@ const AnnouncementsView = ({getPopUpState}) => {
     ? immobilieBySociete.map(item => mapApiToAnnouncement(item))
     : [];
 
-  // Fonction pour supprimer une propriété
-  const handleDeleteAnnouncement = async (id) => {
-    if (window.confirm(t('announcementsView.confirmDelete'))) {
-      try {
-        await axios.delete(`http://localhost:8000/api/immobilier/${id}`, {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
-          },
-        });
-        
-        setAlertSucc(true);
-        setAlertMsg(t('announcementsView.deleteSuccess'));
-        setTimeout(() => setAlertSucc(false), 3000);
-      } catch (error) {
-        console.error(error);
-        setAlertFail(true);
-        setAlertMsg(t('announcementsView.deleteError'));
-        setTimeout(() => setAlertFail(false), 3000);
-      }
-    }
-  };
 
   // Filtrer les annonces
   const filteredAnnouncements = mappedAnnouncements.filter(ann =>
@@ -134,7 +105,6 @@ const AnnouncementsView = ({getPopUpState}) => {
       <div className="space-y-4">
         <PropertyCard 
           filteredAnnouncements={filteredAnnouncements}
-          handleDeleteAnnouncement={handleDeleteAnnouncement}
           openUpdatePopUp={openUpdatePopUp}
           setOpenUpdatePopUp={setOpenUpdatePopUp}
           setSelectedAnnouncement={setSelectedAnnouncement} 

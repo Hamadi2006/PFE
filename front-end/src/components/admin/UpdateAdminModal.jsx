@@ -1,8 +1,9 @@
 import { useState, useContext, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { X, Edit, Users, Shield, Upload, Calendar, Activity, Phone, Mail, Lock, Eye, EyeOff } from "lucide-react";
-import axios from "axios";
 import { GlobaleContext } from "../../context/GlobaleContext";
+import { getAuthHeader, getStorageUrl } from "../../utils/authStorage";
+import { updateAdmin } from "../../services/adminService";
 
 export default function UpdateAdminModal({ admin, onClose }) {
   const { t } = useTranslation();
@@ -11,7 +12,7 @@ export default function UpdateAdminModal({ admin, onClose }) {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [imagePreview, setImagePreview] = useState(admin?.photo ? `http://localhost:8000/storage/${admin.photo}` : "");
+  const [imagePreview, setImagePreview] = useState(getStorageUrl(admin?.photo));
   
   const [formData, setFormData] = useState({
     nom: admin?.nom || "",
@@ -61,7 +62,15 @@ export default function UpdateAdminModal({ admin, onClose }) {
     try {
       const data = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
-        if (key === 'password' && !value.trim()) return; // Skip empty password
+        if (key === 'password') {
+          if (!value.trim()) return;
+          data.append('mot_de_passe', value);
+          return;
+        }
+        if (key === 'role') {
+          data.append(key, value === 'admin' ? 'Admin' : value);
+          return;
+        }
         if (key === 'actif') {
           data.append(key, value ? 1 : 0);
         } else {
@@ -73,11 +82,15 @@ export default function UpdateAdminModal({ admin, onClose }) {
         data.append("photo", image);
       }
 
-      const response = await axios.post(
-        `http://localhost:8000/api/admin/${admin.id}`,
+      const response = await updateAdmin(
+        admin.id,
         data,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            ...getAuthHeader("admin"),
+            "Content-Type": "multipart/form-data",
+            Accept: "application/json",
+          },
         }
       );
 

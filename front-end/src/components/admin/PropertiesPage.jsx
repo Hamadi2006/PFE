@@ -1,10 +1,9 @@
-import axios from "axios";
 import React, { useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Building2, Plus, X } from "lucide-react";
 import { GlobaleContext } from "../../context/GlobaleContext";
 import { usePropertyForm } from "../hooks/usePropertyForm";
-import { CompanyContext } from "../../context/ComapanieContext";
+import { CompanyContext } from "../../context/contextValues";
 import {
   BasicInfoSection,
   LocationSection,
@@ -13,9 +12,15 @@ import {
   ImagesSection,
   ContactSection,
 } from "../PropertyForm";
-import { ImmobilierContext } from "../../context/ImmobilierContext";
+import { ImmobilierContext } from "../../context/contextValues";
 import ImmobilierAdmin from "./Immobilier";
 import { CompanieSelect } from "./CompanieSelect";
+import {
+  getAdminAuth,
+  getAuthHeader,
+  getErrorMessage,
+} from "../../utils/authStorage";
+import { createImmobilier } from "../../services/immobilierService";
 
 const INITIAL_FORM_DATA = {
   societe_id : "",
@@ -50,14 +55,11 @@ const INITIAL_FORM_DATA = {
 
 export default function PropertiesPage() {
   const { t } = useTranslation();
-  const { immobilier } = useContext(ImmobilierContext);
+  const { immobilier, setImmobilier } = useContext(ImmobilierContext);
   const [showAddModal, setShowAddModal] = useState(false);
 const {
-    alertSucc,
     setAlertSucc,
-    alertFail,
     setAlertFail,
-    alertMsg,
     setAlertMsg,
     lastActivitys,
     setLastActivitys,
@@ -74,7 +76,7 @@ const {
     resetForm,
     validateAllFields,
   } = usePropertyForm(INITIAL_FORM_DATA);
-  const admin = JSON.parse(localStorage.getItem("user"));
+  const admin = getAdminAuth()?.user;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -114,16 +116,23 @@ const {
     }
 
   try {
-  const response = await axios.post(
-    "http://localhost:8000/api/immobilier",
+  const response = await createImmobilier(
     submitData,
     {
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: {
+        ...getAuthHeader("admin"),
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+      },
     }
   );
 
   if (response.status === 201) {
-    setLastActivitys([...lastActivitys, { date: new Date(), action: "Ajouter un immobilier : " + formData.titre, par: admin.nom_complet }]);
+    const adminName = [admin?.prenom, admin?.nom].filter(Boolean).join(" ") || "Systeme";
+    setLastActivitys([...lastActivitys, { date: new Date(), action: "Ajouter un immobilier : " + formData.titre, par: adminName }]);
+    if (response.data?.data) {
+      setImmobilier((prev) => [response.data.data, ...prev]);
+    }
     setAlertMsg("Immobilier ajouté avec succès");
     setAlertSucc(true);
     setTimeout(() => setAlertSucc(false), 2000);
@@ -136,17 +145,9 @@ const {
     setTimeout(() => setAlertFail(false), 2000);
   }
 } catch (error) {
-  console.error("❌ Erreur réseau:", error);
+  console.error("Erreur ajout immobilier:", error.response?.data || error);
 
-  if (error.response && error.response.data) {
-    const message =
-      error.response.data.message ||
-      JSON.stringify(error.response.data.errors) ||
-      "Erreur inconnue";
-    setAlertMsg("Erreur de connexion: " + message);
-  } else {
-    setAlertMsg("Erreur de connexion: " + error.message);
-  }
+  setAlertMsg(getErrorMessage(error, "Erreur lors de l'ajout de l'immobilier"));
 
   setAlertFail(true);
   setTimeout(() => setAlertFail(false), 2000);
@@ -250,7 +251,15 @@ const getSocieteId = (id) => {
                 handlers={handlers}
                 t={t}
               />
-              <CompanieSelect companies={companies} handlers={handlers} getSocieteId={getSocieteId} />
+              <CompanieSelect
+                companies={companies}
+                value={formData.societe_id}
+                error={errors.societe_id}
+                touched={touched.societe_id}
+                onBlur={handleBlur}
+                getSocieteId={getSocieteId}
+                disabled={loading}
+              />
               <LocationSection
                 formData={formData}
                 errors={errors}

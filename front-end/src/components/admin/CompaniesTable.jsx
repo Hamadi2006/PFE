@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Eye, Edit, Trash2, Building2, MapPin, Phone, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { getStorageUrl } from "../../utils/authStorage";
 
 export default function CompaniesTable({ companies, onShowCompany, onUpdateCompany, onDeleteCompany }) {
   const { t } = useTranslation();
-  const [hoveredRow, setHoveredRow] = useState(null);
 
   if (!companies.length) {
     return (
@@ -61,8 +61,6 @@ export default function CompaniesTable({ companies, onShowCompany, onUpdateCompa
               <tr 
                 key={company.id || index}
                 className="group hover:bg-blue-50/50 transition-all duration-200 cursor-pointer"
-                onMouseEnter={() => setHoveredRow(index)}
-                onMouseLeave={() => setHoveredRow(null)}
                 onClick={() => onShowCompany(company)}
               >
                 {/* Société */}
@@ -72,7 +70,7 @@ export default function CompaniesTable({ companies, onShowCompany, onUpdateCompa
                       {company.logo ? (
                         <img
                           className="h-12 w-12 rounded-xl object-cover border-2 border-white shadow-sm"
-                          src={`http://localhost:8000/storage/${company.logo}`}
+                          src={getStorageUrl(company.logo)}
                           alt={company.nom}
                           onError={(e) => {
                             e.target.style.display = 'none';

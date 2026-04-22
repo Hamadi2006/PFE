@@ -15,8 +15,9 @@ import {
   Bell,
   CreditCard
 } from 'lucide-react';
+import { getStorageUrl } from '../../utils/authStorage';
 
-const SettingsView = ({ companyProfile, onEditProfile }) => {
+const SettingsView = ({ companyProfile }) => {
   const { t, i18n } = useTranslation();
 
   const changeLanguage = (lng) => {
@@ -51,7 +52,9 @@ const SettingsView = ({ companyProfile, onEditProfile }) => {
   const SettingCard = ({ title, icon: Icon, children, className = '' }) => (
     <div className={`bg-white rounded-xl border border-gray-200 p-4 md:p-6 ${className}`}>
       <div className="flex items-center gap-3 mb-4 md:mb-6">
-        <Icon className="w-5 h-5 text-blue-600 flex-shrink-0" />
+        {React.createElement(Icon, {
+          className: 'w-5 h-5 text-blue-600 flex-shrink-0',
+        })}
         <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
       </div>
       {children}
@@ -61,7 +64,9 @@ const SettingsView = ({ companyProfile, onEditProfile }) => {
   const InfoField = ({ icon: Icon, label, value, isLink = false, fullWidth = false }) => (
     <div className={`space-y-2 ${fullWidth ? 'md:col-span-2' : ''}`}>
       <div className="flex items-center gap-2">
-        <Icon className="w-4 h-4 text-gray-500 flex-shrink-0" />
+        {React.createElement(Icon, {
+          className: 'w-4 h-4 text-gray-500 flex-shrink-0',
+        })}
         <label className="text-sm font-medium text-gray-700">{label}</label>
       </div>
       {isLink && value ? (
@@ -106,7 +111,7 @@ const SettingsView = ({ companyProfile, onEditProfile }) => {
                 <img
                   src={
                     companyProfile.logo
-                      ? `http://localhost:8000/storage/${companyProfile.logo}`
+                      ? getStorageUrl(companyProfile.logo)
                       : '/default-company.png'
                   }
                   alt={companyProfile.nom || 'Company Logo'}

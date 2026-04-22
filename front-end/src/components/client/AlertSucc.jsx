@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { CheckCircle, X } from "lucide-react";
 
 export default function SuccessAlert({
@@ -10,21 +10,21 @@ export default function SuccessAlert({
   const [show, setShow] = useState(initialShow);
   const [closing, setClosing] = useState(false);
 
+  const handleClose = useCallback(() => {
+    setClosing(true);
+    setTimeout(() => {
+      setShow(false);
+      onClose();
+    }, 250);
+  }, [onClose]);
+
   useEffect(() => {
     if (!show) return;
     if (!duration || duration <= 0) return;
 
     const timer = setTimeout(() => handleClose(), duration);
     return () => clearTimeout(timer);
-  }, [show, duration]);
-
-  function handleClose() {
-    setClosing(true);
-    setTimeout(() => {
-      setShow(false);
-      onClose();
-    }, 250);
-  }
+  }, [show, duration, handleClose]);
 
   if (!show) return null;
 

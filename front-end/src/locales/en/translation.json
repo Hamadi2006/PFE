@@ -4,6 +4,69 @@
   "services": "Services",
   "contact": "Contact",
   "society": "Society",
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "account": "Account",
+    "logout": "Logout",
+    "mobileMenu": "Open menu"
+  },
+  "clientAuth": {
+    "logoAlt": "SakanCom logo",
+    "eyebrow": "Client area",
+    "signIn": {
+      "title": "Client sign in",
+      "subtitle": "Access your space to follow your searches and requests.",
+      "submit": "Sign in",
+      "loading": "Signing in...",
+      "success": "Signed in successfully.",
+      "footerText": "Don't have an account yet?"
+    },
+    "signUp": {
+      "title": "Create a client account",
+      "subtitle": "Register to access your personal SakanCom space.",
+      "submit": "Create account",
+      "loading": "Creating...",
+      "success": "Account created successfully.",
+      "footerText": "Already have an account?"
+    },
+    "logout": {
+      "success": "Logged out successfully."
+    },
+    "modal": {
+      "eyebrow": "Sign in required",
+      "title": "Sign in to send the request",
+      "subtitle": "Your form data stays in place. Sign in here and the request will be sent automatically.",
+      "close": "Close sign-in window"
+    },
+    "fields": {
+      "name": "Full name",
+      "email": "Email address",
+      "password": "Password",
+      "passwordConfirmation": "Confirm password"
+    },
+    "placeholders": {
+      "name": "Your name",
+      "email": "you@example.com",
+      "password": "********"
+    },
+    "actions": {
+      "togglePassword": "Show or hide password"
+    },
+    "errors": {
+      "nameRequired": "Name is required.",
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Invalid email.",
+      "passwordRequired": "Password is required.",
+      "passwordMin": "Password must contain at least 8 characters.",
+      "passwordConfirmation": "Passwords do not match.",
+      "authRequired": "Please sign in to access your account.",
+      "generic": "An error occurred."
+    }
+  },
+  "clientAccount": {
+    "title": "Account Space"
+  },
 
   "hero": {
     "title": "Your real estate project, our priority.",
@@ -569,6 +632,7 @@
     "phone": "Phone",
     "message": "Nachricht",
     "sendRequest": "Anfrage senden",
+    "sendingRequest": "Sending request...",
     "call": "Anrufen",
     "whatsapp": "WhatsApp",
     "contactedBy": "Kontaktiert von",

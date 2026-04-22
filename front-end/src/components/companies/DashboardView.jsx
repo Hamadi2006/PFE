@@ -15,8 +15,10 @@ import {
   Percent,
   ChevronRight
 } from 'lucide-react';
-import { DemandesContext } from '../../context/DemandeContext';
-import { ImmobilierContext } from '../../context/ImmobilierContext';
+import {
+  DemandesContext,
+  ImmobilierContext,
+} from '../../context/contextValues';
 
 const DashboardImmobilier = ({ setActiveTab }) => {
   const { t, i18n } = useTranslation();

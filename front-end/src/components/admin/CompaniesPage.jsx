@@ -4,28 +4,78 @@ import AddCompanyModal from "./AddCompanyModal";
 import CompaniesTable from "./CompaniesTable";
 import CompanyInfoModal from "./CompanyInfoModal";
 import UpdateCompanyModal from "./UpdateCompanyModal";
-import axios from "axios";
-import { CompanyContext } from "../../context/ComapanieContext";
+import { CompanyContext } from "../../context/contextValues";
 import DeleteCompanyModal from "./DeleteCompanyModal";
 import { useTranslation } from "react-i18next";
+import { GlobaleContext } from "../../context/GlobaleContext";
+import {
+  getAuthHeader,
+  getErrorMessage,
+} from "../../utils/authStorage";
+import { createCompany } from "../../services/companyService";
 
 export default function CompaniesPage() {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
-  const { companies = [] } = useContext(CompanyContext);
+  const { companies = [], setCompanies } = useContext(CompanyContext);
+  const { setAlertSucc, setAlertFail, setAlertMsg } = useContext(GlobaleContext);
   const [infoCompanyModal, setInfoCompanyModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleAddCompany = (newCompany) => {
-    axios
-      .post("http://127.0.0.1:8000/api/company/store", newCompany, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((res) => console.log(res.data))
-      .catch((err) => console.error(err));
+  const handleAddCompany = async (newCompany) => {
+    const payload = new FormData();
+
+    Object.entries(newCompany).forEach(([key, value]) => {
+      if (key === "password_confirmation") return;
+      if (value === null || value === undefined || value === "") return;
+      payload.append(key, value);
+    });
+
+    try {
+      const res = await createCompany(payload, {
+        headers: {
+          ...getAuthHeader("admin"),
+          "Content-Type": "multipart/form-data",
+          Accept: "application/json",
+        },
+      });
+
+      const createdCompany = res.data?.data;
+      if (createdCompany) {
+        setCompanies((prev) => [...prev, createdCompany]);
+      }
+
+      setAlertFail(false);
+      setAlertSucc(true);
+      setAlertMsg("Societe creee avec succes");
+      return createdCompany;
+    } catch (err) {
+      setAlertSucc(false);
+      setAlertFail(true);
+      setAlertMsg(getErrorMessage(err, "Erreur lors de la creation de la societe"));
+      throw err;
+    }
+  };
+
+  const handleCompanyUpdated = (updatedCompany) => {
+    if (!updatedCompany?.id) return;
+
+    setCompanies((currentCompanies) =>
+      currentCompanies.map((company) =>
+        company.id === updatedCompany.id ? updatedCompany : company
+      )
+    );
+  };
+
+  const handleCompanyDeleted = (deletedCompany) => {
+    if (!deletedCompany?.id) return;
+
+    setCompanies((currentCompanies) =>
+      currentCompanies.filter((company) => company.id !== deletedCompany.id)
+    );
   };
 
   // 🔍 Filtrer les sociétés
@@ -120,9 +170,7 @@ export default function CompaniesPage() {
             company={selectedCompany}
             isOpen={showUpdateModal}
             onClose={() => setShowUpdateModal(false)}
-            onUpdate={(companyData) => {
-              console.log("Données mises à jour:", companyData);
-            }}
+            onUpdated={handleCompanyUpdated}
           />
         )}
 
@@ -131,9 +179,7 @@ export default function CompaniesPage() {
             company={selectedCompany}
             isOpen={showDeleteModal}
             onClose={() => setShowDeleteModal(false)}
-            onDelete={(companyData) => {
-              console.log("Données supprimées:", companyData);
-            }}
+            onDeleted={handleCompanyDeleted}
           />
         )}
       </div>

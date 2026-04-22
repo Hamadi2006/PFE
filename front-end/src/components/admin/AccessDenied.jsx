@@ -1,11 +1,7 @@
 import React from "react";
 import { Lock } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 export default function AccessDenied() {
-    const navigate = useNavigate();
-
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <div className="text-center max-w-md">

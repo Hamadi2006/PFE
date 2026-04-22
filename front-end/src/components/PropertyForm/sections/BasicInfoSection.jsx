@@ -1,12 +1,8 @@
 import React from 'react';
 import { FormInput, FormSelect, FormTextarea } from '../index';
-import {CompanyContext} from '../../../context/ComapanieContext';
-import { useContext } from 'react';
-import { CompanieSelect } from '../../admin/CompanieSelect';
 
 
 export const BasicInfoSection = ({ formData, errors, touched, handlers, t }) => {
-  const {companies} = useContext(CompanyContext);
   const typeOptions = [
     { value: 'appartement', label: t('properties2.types.appartement') },
     { value: 'maison', label: t('properties2.types.maison') },

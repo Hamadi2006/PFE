@@ -2,6 +2,7 @@
 import { Users, Mail, Phone, Calendar, Edit, Trash2, Shield, MoreVertical } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { getStorageUrl } from "../../utils/authStorage";
 
 export default function AdminTable({ admins, onEdit, onDelete }) {
   const { t } = useTranslation();
@@ -14,8 +15,7 @@ export default function AdminTable({ admins, onEdit, onDelete }) {
       day: "numeric",
     });
 
-  const getImageUrl = (imagePath) =>
-    imagePath ? `http://localhost:8000/storage/${imagePath}` : null;
+  const getImageUrl = (imagePath) => getStorageUrl(imagePath);
 
   const getInitials = (nom, prenom) =>
     `${nom?.charAt(0) || ""}${prenom?.charAt(0) || ""}`.toUpperCase();

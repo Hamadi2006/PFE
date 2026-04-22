@@ -1,26 +1,23 @@
-import axios from 'axios';
-import { Home, Building2, Users, Mail, Settings, HelpCircle, Activity, TrendingUp, Clock, MapPin, Phone, Eye, Trash2 } from 'lucide-react';
-import { DemandesContext } from '../../context/DemandeContext';
+import { Mail, Clock, MapPin, Phone, Trash2 } from 'lucide-react';
+import { DemandesContext } from '../../context/contextValues';
 import { useContext, useState } from 'react';
 import { GlobaleContext } from '../../context/GlobaleContext';
 import { useTranslation } from 'react-i18next';
+import { getStorageUrl } from '../../utils/authStorage';
+import { deleteDemande } from '../../services/demandeService';
 
 function RequestsPage() {
   const { t } = useTranslation();
 
   const {
-    alertSucc,
     setAlertSucc,
-    alertFail,
     setAlertFail,
-    alertMsg,
     setAlertMsg,
-        lastActivitys,
+    lastActivitys,
     setLastActivitys,
   } = useContext(GlobaleContext);
   const admin = JSON.parse(localStorage.getItem('user'));
-  const { demandes } = useContext(DemandesContext); 
-  const [selectedDemande, setSelectedDemande] = useState(null);
+  const { demandes, setdemandes } = useContext(DemandesContext);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -43,11 +40,21 @@ function RequestsPage() {
     if (!window.confirm(t('confirm_delete'))) return;
 
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/demande/${demandeId}`);
+      await deleteDemande(demandeId);
+      setdemandes((currentDemandes) =>
+        currentDemandes.filter((demande) => demande.id !== demandeId)
+      );
       setAlertSucc(true);
       setAlertMsg(t('delete_success'));
       setTimeout(() => setAlertSucc(false), 3000);
-      setLastActivitys([...lastActivitys, { date: new Date(), action: "Supprimer une demande",par : admin.nom_complet}]);
+      setLastActivitys([
+        ...lastActivitys,
+        {
+          date: new Date(),
+          action: "Supprimer une demande",
+          par: admin.nom_complet,
+        },
+      ]);
     } catch (error) {
       console.error(error);
       setAlertFail(true);
@@ -81,7 +88,7 @@ function RequestsPage() {
                   <div className="md:col-span-1">
                     <div className="bg-slate-100 rounded-lg overflow-hidden h-48 md:h-full">
                       <img 
-                        src={`http://localhost:8000/storage/${demande.image_principale}`} 
+                        src={getStorageUrl(demande.image_principale_url || demande.image_principale)}
                         alt={demande.titre}
                         className="w-full h-full object-cover"
                       />

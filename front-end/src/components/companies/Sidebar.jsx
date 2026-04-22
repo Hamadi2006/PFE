@@ -11,8 +11,10 @@ import {
   X,
   ChevronLeft
 } from 'lucide-react';
-import { ImmobilierContext } from "../../context/ImmobilierContext";
-import { DemandesContext } from '../../context/DemandeContext';
+import {
+  DemandesContext,
+  ImmobilierContext,
+} from '../../context/contextValues';
 
 const Sidebar = ({
   activeTab,
@@ -20,13 +22,15 @@ const Sidebar = ({
   sidebarCollapsed,
   setSidebarCollapsed,
   companyProfile,
-  stats,
   logout
 }) => {
   const { t } = useTranslation();
-  const { immobilier, immobilieBySociete } = React.useContext(ImmobilierContext);
+  const { immobilieBySociete } = React.useContext(ImmobilierContext);
   const { DemandeBySociete } = React.useContext(DemandesContext);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const companyName = companyProfile?.nom || companyProfile?.name || "Societe";
+  const companySpecialty =
+    companyProfile?.statut || companyProfile?.specialty || companyProfile?.ville || "";
 
   // Fermer le sidebar mobile quand on change d'onglet
   const handleTabClick = (tab) => {
@@ -78,10 +82,10 @@ const Sidebar = ({
               </div>
               <div className="min-w-0 flex-1">
                 <h2 className="font-bold text-gray-800 text-sm truncate">
-                  {companyProfile.name}
+                  {companyName}
                 </h2>
                 <p className="text-xs text-gray-500 truncate">
-                  {companyProfile.specialty}
+                  {companySpecialty}
                 </p>
               </div>
             </div>
@@ -173,8 +177,8 @@ const Sidebar = ({
                 <Home className="w-6 h-6 text-blue-600" />
               </div>
               <div>
-                <h2 className="font-bold text-slate-800 text-lg">{companyProfile.name}</h2>
-                <p className="text-slate-600 text-sm">{companyProfile.specialty}</p>
+                <h2 className="font-bold text-slate-800 text-lg">{companyName}</h2>
+                <p className="text-slate-600 text-sm">{companySpecialty}</p>
               </div>
             </div>
             <button

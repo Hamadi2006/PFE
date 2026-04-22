@@ -19,15 +19,12 @@ import {
   Eye,
   MoreVertical
 } from 'lucide-react';
+import { getStorageUrl } from '../../utils/authStorage';
 
 function PropertyCard({ 
   filteredAnnouncements, 
-  openModal, 
   setSelectedAnnouncement, 
-  openUpdatePopUp, 
   setOpenUpdatePopUp, 
-  handleDeleteAnnouncement, 
-  openDeletePopUp, 
   setOpenDeletePopUp, 
   setSelectedAnnouncementDelete 
 }) {
@@ -66,15 +63,18 @@ function PropertyCard({
     }
   };
 
+  const getAnnouncementImageUrl = (announcement) =>
+    getStorageUrl(announcement.image_principale_url || announcement.image_principale);
+
   // Mobile Card Component
   const MobilePropertyCard = ({ announcement }) => (
     <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-4">
       {/* Header avec image et statut */}
       <div className="flex gap-3">
         <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-          {announcement.image_principale_url ? (
+          {getAnnouncementImageUrl(announcement) ? (
             <img
-              src={announcement.image_principale_url}
+              src={getAnnouncementImageUrl(announcement)}
               alt={announcement.titre}
               className="w-full h-full object-cover"
               loading="lazy"
@@ -248,9 +248,9 @@ function PropertyCard({
               {/* Propriété (Image + Titre) */}
               <div className="col-span-3 flex items-center gap-3">
                 <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                  {announcement.image_principale_url ? (
+                  {getAnnouncementImageUrl(announcement) ? (
                     <img
-                      src={announcement.image_principale_url}
+                      src={getAnnouncementImageUrl(announcement)}
                       alt={announcement.titre}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       loading="lazy"

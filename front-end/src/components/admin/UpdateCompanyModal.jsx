@@ -1,23 +1,21 @@
 import React, { useState, useCallback } from "react";
 import { X, Building2, Upload, MapPin, Phone, Mail, Globe, Save, Edit } from "lucide-react";
-import axios from "axios";
 import { useContext } from "react";
 import { GlobaleContext } from "../../context/GlobaleContext";
 import { useTranslation } from "react-i18next";
+import { getAuthHeader, getErrorMessage, getStorageUrl } from "../../utils/authStorage";
+import { updateCompany } from "../../services/companyService";
 
-export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate }) {
+export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdated }) {
     const { t } = useTranslation();
     const {
-        alertSucc,
         setAlertSucc,
-        alertFail,
         setAlertFail,
-        alertMsg,
         setAlertMsg,
     } = useContext(GlobaleContext);
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(null);
-    const [imagePreview, setImagePreview] = useState(company?.logo ? `http://localhost:8000/storage/${company.logo}` : "");
+    const [imagePreview, setImagePreview] = useState(getStorageUrl(company?.logo));
 
     const [formData, setFormData] = useState({
         nom: company?.nom || "",
@@ -39,7 +37,7 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
                 ville: company.ville || "",
                 site_web: company.site_web || "",
             });
-            setImagePreview(company.logo ? `http://localhost:8000/storage/${company.logo}` : "");
+            setImagePreview(getStorageUrl(company.logo));
             setImage(null);
         }
     }, [company]);
@@ -71,7 +69,7 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
 
     const removeImage = useCallback(() => {
         setImage(null);
-        setImagePreview(company?.logo ? `http://localhost:8000/storage/${company.logo}` : "");
+        setImagePreview(getStorageUrl(company?.logo));
     }, [company]);
 
     const handleSubmit = useCallback(async (e) => {
@@ -86,33 +84,28 @@ export default function UpdateCompanyModal({ company, isOpen, onClose, onUpdate 
                 companyId: company.id // Inclure l'ID pour référence
             };
 
-            axios.post('http://localhost:8000/api/company/' + company.id, updatedData, {
+            const response = await updateCompany(company.id, updatedData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    ...getAuthHeader("admin"),
+                    "Content-Type": "multipart/form-data",
+                    Accept: "application/json",
                 },
-            })
-                .then(response => {
-                    console.log("Données récupérées:", response.data);
-                    setAlertSucc(true);
-                    setAlertMsg(t("updateCompany.success"));
-                    setTimeout(() => setAlertSucc(false), 3000);
-                    onClose();
-                })
-                .catch(error => {
-                    console.error("Erreur:", error);
-                    setAlertFail(true);
-                    setAlertMsg(t("updateCompany.error"));
-                    setTimeout(() => setAlertFail(false), 3000);
-                    onClose();
-                })
+            });
+            onUpdated?.(response.data?.data || { ...company, ...formData });
+            setAlertSucc(true);
+            setAlertMsg(t("updateCompany.success"));
+            setTimeout(() => setAlertSucc(false), 3000);
+            onClose();
 
         } catch (error) {
             console.error("Erreur:", error);
-            alert(t("updateCompany.dataError"));
+            setAlertFail(true);
+            setAlertMsg(getErrorMessage(error, t("updateCompany.error")));
+            setTimeout(() => setAlertFail(false), 3000);
         } finally {
             setLoading(false);
         }
-    }, [formData, image, company, onUpdate, onClose, t, setAlertSucc, setAlertFail, setAlertMsg]);
+    }, [formData, image, company, onClose, onUpdated, t, setAlertSucc, setAlertFail, setAlertMsg]);
 
     if (!isOpen) return null;
 

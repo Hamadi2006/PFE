@@ -2,8 +2,13 @@
 import { useState, useContext, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { X, UserPlus, Users, Shield, Upload, Camera } from "lucide-react";
-import axios from "axios";
 import { GlobaleContext } from "../../context/GlobaleContext";
+import {
+  getAdminAuth,
+  getAuthHeader,
+  getErrorMessage,
+} from "../../utils/authStorage";
+import { createAdmin } from "../../services/adminService";
 
 export default function AddAdminModal({ onClose }) {
   const { t } = useTranslation();
@@ -69,29 +74,36 @@ export default function AddAdminModal({ onClose }) {
     }
 
     setLoading(true);
-    const admin = JSON.parse(localStorage.getItem('user'));
+    const admin = getAdminAuth()?.user;
 
     try {
       const data = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
+        if (key === "mot_de_passe_confirmation") return;
         data.append(key, value);
       });
       data.append("photo", image);
 
-      await axios.post("http://localhost:8000/api/admin/store", data, {
-        headers: { "Content-Type": "multipart/form-data" },
+      await createAdmin(data, {
+        headers: {
+          ...getAuthHeader("admin"),
+          "Content-Type": "multipart/form-data",
+          Accept: "application/json",
+        },
       });
 
+      const adminName =
+        [admin?.prenom, admin?.nom].filter(Boolean).join(" ") || "Systeme";
       setLastActivitys(prev => [...prev, {
         date: new Date(),
         action: `Ajout admin: ${formData.nom} ${formData.prenom}`,
-        par: admin.nom_complet
+        par: adminName
       }]);
 
       showAlert(t("adminsAddModal.modal.alerts.success"), "success");
       setTimeout(onClose, 2000);
     } catch (error) {
-      showAlert(error.response?.data?.message || t("adminsAddModal.modal.alerts.error"));
+      showAlert(getErrorMessage(error, t("adminsAddModal.modal.alerts.error")));
     } finally {
       setLoading(false);
     }

@@ -1,29 +1,34 @@
 import React from "react";
 import { X, AlertTriangle, Trash2 } from "lucide-react";
-import axios from "axios";
 import { useContext } from "react";
 import { GlobaleContext } from "../../context/GlobaleContext";
 import { useTranslation } from "react-i18next";
+import { deleteCompany } from "../../services/companyService";
+import { getAuthHeader, getErrorMessage } from "../../utils/authStorage";
 
-export default function DeleteCompanyModal({ company, isOpen, onClose, onConfirm }) {
+export default function DeleteCompanyModal({ company, isOpen, onClose, onDeleted }) {
   const { t } = useTranslation();
   const [loading, setLoading] = React.useState(false);
-    const {
-        alertSucc,
-        setAlertSucc,
-        alertFail,
-        setAlertFail,
-        alertMsg,
-        setAlertMsg,
-    } = useContext(GlobaleContext);
+  const {
+    setAlertSucc,
+    setAlertFail,
+    setAlertMsg,
+  } = useContext(GlobaleContext);
   const handleConfirm = async () => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8000/api/company/${company.id}`);
+      await deleteCompany(company.id, {
+        headers: getAuthHeader("admin"),
+      });
+      onDeleted?.(company);
       setAlertSucc(true);
       setAlertMsg(t("deleteCompany.success"));
       setTimeout(() => setAlertSucc(false), 3000);
       onClose();
+    } catch (error) {
+      setAlertFail(true);
+      setAlertMsg(getErrorMessage(error, t("deleteCompany.error")));
+      setTimeout(() => setAlertFail(false), 3000);
     } finally {
       setLoading(false);
     }

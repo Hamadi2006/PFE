@@ -1,5 +1,5 @@
 import React, { useContext, useState, useMemo } from 'react';
-import { DemandesContext } from "../../context/DemandeContext";
+import { DemandesContext } from "../../context/contextValues";
 import { 
     Search, 
     Phone, 
@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import RequestModal from './RequestModal';
+import { getStorageUrl } from '../../utils/authStorage';
 
 function RequestsView() {
     const { t } = useTranslation();
@@ -215,9 +216,9 @@ function RequestsView() {
             {/* Propriété */}
             <div className="flex gap-3">
                 <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                    {request.image_principale ? (
+                    {getStorageUrl(request.image_principale_url || request.image_principale) ? (
                         <img
-                            src={`http://localhost:8000/storage/${request.image_principale}`}
+                            src={getStorageUrl(request.image_principale_url || request.image_principale)}
                             alt={request.titre}
                             className="w-full h-full object-cover"
                             loading="lazy"
@@ -354,9 +355,9 @@ function RequestsView() {
                             {/* Propriété */}
                             <div className="col-span-3 flex items-center gap-3">
                                 <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                                    {request.image_principale ? (
+                                    {getStorageUrl(request.image_principale_url || request.image_principale) ? (
                                         <img
-                                            src={`http://localhost:8000/storage/${request.image_principale}`}
+                                            src={getStorageUrl(request.image_principale_url || request.image_principale)}
                                             alt={request.titre}
                                             className="w-full h-full object-cover"
                                             loading="lazy"

@@ -2,15 +2,12 @@ import React, { useState, useEffect, useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { X, Upload, MapPin, Home, Ruler, Bath, Bed, Calendar, Layers, Star, Save, Edit } from "lucide-react";
 import { GlobaleContext } from "../../context/GlobaleContext";
+import { getErrorMessage, getStorageUrl } from "../../utils/authStorage";
 
 export default function EditPropertyModal({ property, isOpen, onClose, onUpdate }) {
   const { t } = useTranslation();
   const {
-    alertSucc,
-    setAlertSucc,
-    alertFail,
     setAlertFail,
-    alertMsg,
     setAlertMsg,
   } = useContext(GlobaleContext);
   
@@ -76,9 +73,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
         email_contact: property.email_contact || "",
       });
       setImagePreview(
-        property.image_principale
-          ? `http://localhost:8000/storage/${property.image_principale}`
-          : null
+        getStorageUrl(property.image_principale_url || property.image_principale)
       );
       setImagePrincipale(null);
     }
@@ -115,9 +110,7 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
   const removeImage = useCallback(() => {
     setImagePrincipale(null);
     setImagePreview(
-      property?.image_principale 
-        ? `http://localhost:8000/storage/${property.image_principale}`
-        : null
+      getStorageUrl(property?.image_principale_url || property?.image_principale)
     );
   }, [property]);
 
@@ -140,11 +133,11 @@ export default function EditPropertyModal({ property, isOpen, onClose, onUpdate 
         dataToSend.longitude = parseFloat(dataToSend.longitude);
       }
 
-      onUpdate(dataToSend, imagePrincipale);
+      await onUpdate(dataToSend, imagePrincipale);
     } catch (error) {
       console.error("Erreur:", error);
       setAlertFail(true);
-      setAlertMsg(t('AdminUpdateProperty.dataError'));
+      setAlertMsg(getErrorMessage(error, t('AdminUpdateProperty.dataError')));
       setTimeout(() => setAlertFail(false), 3000);
     } finally {
       setLoading(false);

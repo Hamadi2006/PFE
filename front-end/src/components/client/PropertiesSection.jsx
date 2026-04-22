@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { Bed, Bath, ChevronRight, MapPin, Ruler } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { ImmobilierContext } from "../../context/ImmobilierContext";
+import { ImmobilierContext } from "../../context/contextValues";
+import { getStorageUrl } from "../../utils/authStorage";
 
 function PropertiesSection() {
   const { t } = useTranslation();
@@ -29,7 +30,7 @@ function PropertiesSection() {
     >
       <div className="relative overflow-hidden">
         <img
-          src={property.image_principale_url}
+          src={getStorageUrl(property.image_principale_url || property.image_principale)}
           alt={property.titre}
           className="w-full h-32 sm:h-48 lg:h-56 object-cover group-hover:scale-110 transition-transform duration-500"
         />

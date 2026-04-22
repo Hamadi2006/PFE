@@ -4,6 +4,69 @@
   "services": "Services",
   "contact": "Contact",
   "society": "Société",
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "account": "Compte",
+    "logout": "Déconnexion",
+    "mobileMenu": "Ouvrir le menu"
+  },
+  "clientAuth": {
+    "logoAlt": "Logo SakanCom",
+    "eyebrow": "Espace client",
+    "signIn": {
+      "title": "Connexion client",
+      "subtitle": "Accédez à votre espace pour suivre vos recherches et vos demandes.",
+      "submit": "Se connecter",
+      "loading": "Connexion...",
+      "success": "Connexion réussie.",
+      "footerText": "Vous n'avez pas encore de compte ?"
+    },
+    "signUp": {
+      "title": "Créer un compte client",
+      "subtitle": "Inscrivez-vous pour accéder à votre espace personnel SakanCom.",
+      "submit": "Créer le compte",
+      "loading": "Création...",
+      "success": "Compte créé avec succès.",
+      "footerText": "Vous avez déjà un compte ?"
+    },
+    "logout": {
+      "success": "Déconnexion réussie."
+    },
+    "modal": {
+      "eyebrow": "Connexion requise",
+      "title": "Connectez-vous pour envoyer la demande",
+      "subtitle": "Vos informations restent dans le formulaire. Connectez-vous ici, puis la demande sera envoyée automatiquement.",
+      "close": "Fermer la fenêtre de connexion"
+    },
+    "fields": {
+      "name": "Nom complet",
+      "email": "Adresse email",
+      "password": "Mot de passe",
+      "passwordConfirmation": "Confirmer le mot de passe"
+    },
+    "placeholders": {
+      "name": "Votre nom",
+      "email": "vous@example.com",
+      "password": "********"
+    },
+    "actions": {
+      "togglePassword": "Afficher ou masquer le mot de passe"
+    },
+    "errors": {
+      "nameRequired": "Le nom est requis.",
+      "emailRequired": "L'email est requis.",
+      "emailInvalid": "Email invalide.",
+      "passwordRequired": "Le mot de passe est requis.",
+      "passwordMin": "Le mot de passe doit contenir au moins 8 caractères.",
+      "passwordConfirmation": "Les mots de passe ne correspondent pas.",
+      "authRequired": "Veuillez vous connecter pour accéder à votre compte.",
+      "generic": "Une erreur est survenue."
+    }
+  },
+  "clientAccount": {
+    "title": "Espace Compte"
+  },
   "hero": {
     "title": "Votre projet immobilier, notre priorité.",
     "brand": "Avec SakanCom.ma",
@@ -603,6 +666,7 @@
     "phone": "Téléphone",
     "message": "Message",
     "sendRequest": "Envoyer la demande",
+    "sendingRequest": "Envoi en cours...",
     "call": "Appeler",
     "whatsapp": "WhatsApp",
     "contactedBy": "Contacté par",

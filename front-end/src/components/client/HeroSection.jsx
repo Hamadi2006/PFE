@@ -2,7 +2,8 @@ import React, { useState, useContext,useMemo } from "react";
 import { Search, MapPin, Home } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ImmobilierContext } from "../../context/ImmobilierContext";
+import { ImmobilierContext } from "../../context/contextValues";
+import { getStorageUrl } from "../../utils/authStorage";
 
 function HeroSection() {
   const { t } = useTranslation();
@@ -65,7 +66,7 @@ function HeroSection() {
                   {/* Image */}
                   <div className="relative flex-shrink-0">
                     <img
-                      src={`http://localhost:8000/storage/${item.image_principale}`}
+                      src={getStorageUrl(item.image_principale_url || item.image_principale)}
                       alt={item.titre}
                       className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded-lg group-hover:shadow-md transition"
                     />
